@@ -1,0 +1,7 @@
+*.latexmkrc
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+
+phd.pdf
