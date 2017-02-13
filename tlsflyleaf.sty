@@ -622,6 +622,7 @@
 \RequirePackage{eso-pic}          % Make background texture (picture and page style)
 \RequirePackage{pgffor}           % Make loop for in LaTeX
 \RequirePackage{geometry}         % Change geometry
+\@ifclassloaded{memoir} {\DisemulatePackage{setspace}} {}
 \RequirePackage{setspace}         % interline
 \RequirePackage{calc}             % allow use of '-',+','/' ans '*' to make simple lenght computation
 \RequirePackage{etoolbox}         % Need at least for ifstrequal, ifnumgreater (include in mdframed)

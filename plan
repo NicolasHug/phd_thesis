@@ -1,0 +1,36 @@
+Intro
+
+  - philo
+  - ML
+  - Proportions, principe d'inférence analogique, etc
+
+System de reco
+
+  - Présentation
+  - ISMIS
+  - IEEE
+  - justif resultat par LFA : y a pas de proportions messieurs-dammes
+
+
+Face aux résultats peu convaincants, remise en question du principe d'inférence
+analogique. Montrer avec les histoires de variance qu'avec la prop arithmetique
+dans R, sans rien pour controler, ça fait absoluement n'importe quoi. Mettre
+schéma de la gaussienne qui s'applati, et faire une expé avec un problème de
+classif linéairement séaparable : on remplie l'écran avec du vert et du rouge.
+
+MAIS CA A LAIR DE MARCHER DANS LE BOOLEEN. POURUQOI ???????? C'est ce à quoi on
+va essayer de répondre.
+
+ECAI : 2 étapes. D'abord on étend puis on fait knn. On va s'intéresser à
+l'extension.
+
+IJCAI. Les fonctions correctement prédites sont les fonctions affines
+Parler du test BLR.
+Extension au cas nominal ?
+Parler des clones ?
+Mentioner que dans R ce sont aussi les fonctions linéaires, avec la proportion
+arithmétique.
+
+
+Caser quelque part les petits notebook avec les cubes (si intéressant), au
+moins les histoires de dénombrement.
