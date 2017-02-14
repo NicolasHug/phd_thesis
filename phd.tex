@@ -10,8 +10,29 @@
 \begin{document}
 \makeflyleaf
 
+\pagenumbering{roman}
+
+\input{acknowledgements.tex}
+
+\clearemptydoublepage
 \input{abstract.tex}
 
+\clearemptydoublepage
+\listoftables
+
+\clearpage
+\listoffigures
+
+\clearemptydoublepage
+\renewcommand{\contentsname}{Table of Contents}
+\maxtocdepth{subsection}
+\tableofcontents*
+\addtocontents{toc}{\par\nobreak \mbox{}\hfill{\bf Page}\par\nobreak}
+
+\pagenumbering{arabic}
+
 \input{introduction.tex}
+
+\input{recommender_systems.tex}
 
 \end{document}

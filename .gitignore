@@ -6,5 +6,11 @@
 *.idx
 *.ilg
 *.ind
+*.lof
+*.lot
+*.toc
+
+*.swp
+*.bak
 
 phd.pdf
