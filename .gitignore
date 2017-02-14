@@ -3,5 +3,8 @@
 *.fdb_latexmk
 *.fls
 *.log
+*.idx
+*.ilg
+*.ind
 
 phd.pdf

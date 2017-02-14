@@ -1,0 +1,34 @@
+% Oscar's command (it works): Fills blank pages until next odd-numbered page.
+% Used to emulate single-sided frontmatter. This will work for title, abstract
+% and declaration. Though the contents sections will each start on an
+% odd-numbered page they will spill over onto the even-numbered pages if
+% extending beyond one page (hopefully, this is ok).
+\newcommand{\clearemptydoublepage}{\newpage{\thispagestyle{empty}\cleardoublepage}}
+
+% My caption style
+\newcommand{\mycaption}[2][\@empty]{
+	\captionnamefont{\scshape}
+	\changecaptionwidth
+	\captionwidth{0.9\linewidth}
+	\captiondelim{.\:}
+	\indentcaption{0.75cm}
+	\captionstyle[\centering]{}
+	\setlength{\belowcaptionskip}{10pt}
+	\ifx \@empty#1 \caption{#2}\else \caption[#1]{#2}
+}
+
+% My subcaption style
+\newcommand{\mysubcaption}[2][\@empty]{
+	\subcaptionsize{\small}
+	\hangsubcaption
+	\subcaptionlabelfont{\rmfamily}
+	\sidecapstyle{\raggedright}
+	\setlength{\belowcaptionskip}{10pt}
+	\ifx \@empty#1 \subcaption{#2}\else \subcaption[#1]{#2}
+}
+
+%An initial of the very first character of the content
+\newcommand{\initial}[1]{%
+	\lettrine[lines=3,lhang=0.33,nindent=0em]{
+		\color{gray}
+     		{\textsc{#1}}}{}}
