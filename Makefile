@@ -12,3 +12,4 @@ view:
 
 clean:
 	latexmk -CA
+	rm -rf phd.bbl phd.glg phd.glo phd.gls	phd.ist

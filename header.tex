@@ -99,3 +99,49 @@
 }
 \makeatother
 \chapterstyle{daleifmodif}
+
+% Glossary entries
+\newglossaryentry{U_i}
+{
+  name={\ensuremath{\Ui}},
+  description={is the set of all users that have rated item $i$}
+}
+
+\newglossaryentry{U_ij}
+{
+  name={\ensuremath{\Uij}},
+  description={is the set of all users that have rated items $i$ and $j$}
+}
+
+\newglossaryentry{I_u}
+{
+  name={\ensuremath{\Iu}},
+  description={is the set of all items rated by user $u$}
+}
+
+\newglossaryentry{I_uv}
+{
+  name={\ensuremath{\Iuv}},
+  description={is the set of all items rated by users $u$ and $v$}
+}
+
+\newglossaryentry{R}
+{
+  name={\ensuremath{R}},
+  description={is the set of all ratings $r_{ui}$ known by the system}
+}
+
+\newglossaryentry{r_ui}
+{
+  name={\ensuremath{\rui}},
+  description={is the rating that user $u$ gave to item $i$}
+}
+
+\newglossaryentry{hat{r_ui}}
+{
+  name={\ensuremath{\predrui}},
+  description={is the estimation of $\rui$}
+}
+
+% After all the glossary entries
+\makeglossaries

@@ -17,11 +17,15 @@
 \clearemptydoublepage
 \input{abstract.tex}
 
+
 \clearemptydoublepage
 \listoftables
 
 \clearpage
 \listoffigures
+
+\glsaddall % Add all glossary entries even if they're not refered to with \gls
+\printglossary[title={List of Symbols}]
 
 \clearemptydoublepage
 \renewcommand{\contentsname}{Table of Contents}
@@ -34,5 +38,10 @@
 \input{introduction.tex}
 
 \input{recommender_systems.tex}
+
+\backmatter
+\bibliographystyle{siam}
+\refstepcounter{chapter}
+\bibliography{biblio.bib}
 
 \end{document}
