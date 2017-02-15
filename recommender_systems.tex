@@ -38,89 +38,87 @@ instance {\it coverage} measuring what is the range of items in the catalogue
 that could be recommended, or {\it serendipity} measuring in some sense the
 surprise that a user could get when a new item is suggested.
 
-\section{Background on recommender systems}\label{backReco}
-The aim of a recommendation system is to provide users with lists of relevant
-personalized items.
-Let us now formalize the problem.
+\section{Background on recommender systems}
+\label{sec:background_RS}
 
-\subsection{Problem formalization}
+The aim of a recommendation system is to provide users with lists of relevant
+personalized items.  Let us now formalize the problem.
+
+\subsection{Problem formalization and notation}
 Let $U$ be a set of users and $I$ a set of items. For some pairs $(u,i) \in U
-\times I$, a rating  $r_{ui}$ is supposed to have been given by $u$ to express
-whether she likes the item $i$ or not. 
-It is quite common that  $r_{ui} \in [1, 5]$, 5 meaning a strong preference for
+\times I$, a rating  $\rui$ is supposed to have been given by $u$ to express
+whether she likes the item $i$ or not.
+It is quite common that  $\rui \in [1, 5]$, 5 meaning a strong preference for
 item $i$, 1 meaning a strong rejection, and 3 meaning indifference, or just an
 average note.  Let us denote by $R$ the set of ratings recorded in the system. It
 is well known that, in real systems, the size of $R$ is very small with regard
 to the potential number of ratings which is $|U| \times |I|$, as a lot of
 ratings are missing. In the following, $U_i$ denotes the set of users that have
 rated item $i$, and $I_u$ is the set of items that
-user $u$ has rated. 
+user $u$ has rated.
 
 To recommend items to users, a recommender system will proceed as follows:
 \begin{enumerate}
-\item Using a prediction algorithm $A$, estimate the unknown ratings $r_{ui}$
-(i.e. $r_{ui} \notin R$). This estimation $A(u, i)$ is usually denoted
-$\hat{r}_{ui}$.  
+\item Using a prediction algorithm $A$, estimate the unknown ratings $\rui$
+(i.e. $\rui \notin R$). This estimation $A(u, i)$ is usually denoted
+$\predrui$.
 \item Using a recommendation strategy $S$ and in the light of the previously
 estimated ratings, recommend items to users. For instance, a basic yet
 common strategy is to suggest to user $u$ the items $i \notin I_u$ with the
-highest $\hat{r}_{ui}$.
+highest $\predrui$.
 \end{enumerate}
-The two main prediction techniques are commonly referred to as {\it
-content-based} and {\it collaborative filtering}, that we both briefly review
-below.
 
-%depending on the techniques
-%deployed by their prediction algorithm $A$. Hybrid methods actually are a mix
-%of collaborative and content-based techniques. We will here give a short
-%overview of content-based and collaborative filtering techniques, without
-%lingering too much over current content-based ones as they have shown to be
-%outperformed by collaborative techniques.
+Traditionnaly, prediction algorithms are considered to belong to one of the two
+main families of prediction techniques, refered to as \textbf{content-based}
+methods and \textbf{collaborative filtering} methods, that we both review
+below. Note that in practice, real world recomender systems usually use a mix
+of both methods, and are refered to as \textbf{hybrid} methods.
 
 \subsection{Content-based techniques}
+\label{sec:content-based}
 
 Content-based algorithms use the metadata of users and items to estimate a
 rating. Metadata are external information that can be collected. Typically:
+
 \begin{itemize}
-\item  for users: gender, age, occupation, location (zip code), etc.
+\item for users: gender, age, occupation, location (zip code), etc.
 \item for items: it depends on the type of items, but in the case of movies, it
-could be their genre, main actors, film director, etc.  \end{itemize}
- 
+  could be their genre, main actors, film director, etc.
+\end{itemize}
+
 Based on these metadata, a content-based system will try to find items that are
 similar to the ones for which the target user has already expressed a
 preference (for instance by giving a high rating). This implies the need for a
-similarity measure between items.  A lot of options are available for such
-metrics. They will not be discussed here as our method is of a collaborative
-nature. 
+similarity measure between items. A lot of options are available for such
+metrics.
+\todo{Détailler (TF-IDF etc)}
 
-Indeed, a well-known drawback of content-based techniques is their tendency to
+A well-known drawback of content-based techniques is their tendency to
 recommend only items that users may already know, and therefore the
-recommendations lack in novelty, surprise and diversity. In the following, we
-only use collaborative filtering techniques, so we do not consider the use of
-any metadata.
+recommendations lack in novelty, surprise and diversity. Also, they tend to
+output much less accurate prediction the collaborative filtering methods. This
+is why recent works have mostly focused on this kind of techniques.
 
 \subsection{Collaborative filtering techniques}
-\label{CollabFil}
+\label{sec:collaborative_filtering}
 By collaborative filtering, we mean here algorithms that only rely on the set
-of known ratings $R$ to make a prediction: to predict $r_{ui} \notin R$, the
-algorithm $A$ will output $\hat{r}_{ui}$ based on $R$ or on a carefully chosen
+of known ratings $R$ to make a prediction: to predict $\rui \notin R$, the
+algorithm $A$ will output $\predrui$ based on $R$ or on a carefully chosen
 subset.  The main difference between collaborative and content-based method is
 that in the former, metadata of items and users are not used, and in the latter
-the only ratings we may take into account are that of the target user.  A
-popular collaborative filtering technique is neighbourhood-based, that we
-describe here in its simplest form.
+the only ratings we may take into account are that of the target user.
 
-%The neighbourhood-based approaches have proven
-%to be fairly accurate. 
-To estimate the rating of a user $u$ for an item $i$, we
-select $N_i^k(u)$, the set of $k$ users that are most similar to $u$ and that
-have rated $i$. Here again, there is a need for a similarity measure (between
-users, and based on their respective ratings). The estimation of $r_{ui}$ is computed as follows:
-$$\hat{r}_{ui} = \aggr{v \in N_i^k(u)}r_{vi},$$
-where the aggregate function $\aggr{}$ is usually a mean weighted by the similarity between $u$
-and $v$. A more sophisticated prediction, popularized by
+\subsubsection{The neighborhood approach}
+\todo{Detail all this}
+To estimate the rating of a user $u$ for an item $i$, we select $N_i^k(u)$, the
+set of $k$ users that are most similar to $u$ and that have rated $i$. Here
+again, there is a need for a similarity measure (between users, and based on
+their respective ratings). The estimation of $\rui$ is computed as follows:
+$$\predrui = \aggr{v \in N_i^k(u)}r_{vi},$$
+where the aggregate function $\aggr{}$ is usually a mean weighted by the
+similarity between $u$ and $v$. A more sophisticated prediction, popularized by
 \cite{BelKorSIGKDD2007} is as follows:
-$$\hat{r}_{ui} = b_{ui} + \aggr{v \in N_i^k(u)}(r_{vi} - b_{vi}),$$
+$$\predrui = b_{ui} + \aggr{v \in N_i^k(u)}(r_{vi} - b_{vi}),$$
 where $b_{ui}$ is a baseline (or bias) related to user $u$ and item $i$. It
 is supposed to model how $u$ tends to give higher (or lower) ratings than the
 average of ratings $\mu$, as well as how $i$ tends to be rated higher or lower
@@ -129,17 +127,20 @@ technique tends to model local relationships in the data.
 
 Note that it is perfectly possible to proceed in an item-based way. Indeed,
 rather than looking for users similar to $u$, one may look for items similar to
-$i$, which leads to formulas dual of the above ones. 
+$i$, which leads to formulas dual of the above ones.
 
+\subsubsection{Matrix factorization}
+
+\todo{Detail all this}
 The matrix factorization approach is heavily inspired by singular value
 decomposition (SVD): it postulates the existence of $f$ factors/criterias
 (whose nature is not necessarily known) that determine the value of any rating
-$r_{ui}$.  A user $u$ is modeled as a vector $p_u \in \mathbb{R}^f$, where each
+$\rui$.  A user $u$ is modeled as a vector $p_u \in \mathbb{R}^f$, where each
 component of $p_u$ models the importance of the corresponding factor for $u$.
 Similarly, an item $i$ is modeled as a vector $q_i \in \mathbb{R}^f$, where
 each component of $q_i$ models how well $i$ fits the corresponding criteria.
-From then, a rating prediction $\hat{r}_{ui}$ is calculated as the dot product
-of the two vectors $p_u$ and $q_i$: $$\hat{r}_{ui} = p_u^t \cdot q_i$$ For the
+From then, a rating prediction $\predrui$ is calculated as the dot product
+of the two vectors $p_u$ and $q_i$: $$\predrui = p_u^t \cdot q_i$$ For the
 interested reader, see the work of
 \cite{Funk2006,KorACM2010} The number of factors being set,
 the problem is here to estimate the vectors $p_u$ and $q_i$ for every possible
@@ -149,40 +150,46 @@ squares and stochastic gradient descent, first popularized by \cite{Funk2006}.
 Contrary to the neighbourhood-based approach, the matrix factorization
 technique tends to model global aspects of the data.  Matrix factorization and
 neighbourhood based techniques have been successfully mixed in the works of
-\cite{KorACM2010}.  
+\cite{KorACM2010}.
 
 
 \subsection{Recommender system
 evaluation}\label{eval} Providing an accurate measure of the overall quality of
 a recommender system is not a simple task and diverse viewpoints have to be
-considered (see \cite{RecoSystemHandbook} for an extensive survey). 
+considered (see \cite{RecoSystemHandbook} for an extensive survey).
 % Obviously
 %accuracy is an important matter as  any system includes a prediction algorithm,
 %but other properties are also desirable in order  to deploy an effective
 %recommendation engine.
 
-
-
 \paragraph{Accuracy\\}
 The performance of the algorithm $A$ is usually evaluated in terms of accuracy,
-which measures how close the rating prediction $\hat{r}_{ui}$ is to the true
-rating value $r_{ui}$, for every possible prediction. To evaluate the accuracy
+which measures how close the rating prediction $\predrui$ is to the true
+rating value $\rui$, for every possible prediction. To evaluate the accuracy
 of a prediction algorithm, one usually follows the classical machine learning
-framework: the set of ratings $R$ is divided into two disjoint sets $R_{train}$
-and $R_{test}$, and the algorithm $A$ has to predict ratings in $R_{test}$
-based on the ones belonging to $R_{train}$.
+framework: the set of ratings $R$ is divided into two disjoint sets $\Rtrain$
+and $\Rtest$, and the algorithm $A$ has to predict ratings in $\Rtest$
+based on the ones belonging to $\Rtrain$.
 
-The Root Mean Squared Error (RMSE) is a very common indicator of how accurate
-an algorithm is, and is calculated as follows:
-$$\text{RMSE}(A) = \sqrt{\frac{1}{|R_{test}|}\sum_{r_{ui} \in
-R_{test}}(\hat{r}_{ui} - r_{ui})^2}$$
-%Another common indicator for accuracy is the Mean Absolute Error (MAE), where
-%important errors are not penalized more than small ones:
-%$$\text{MAE}(A) = \frac{1}{|R_{test}|}\sum_{r_{ui} \in R_{test}}|\hat{r}_{ui} -
-%r_{ui}|.$$
+The Root Mean Squared Error (RMSE) is probably the most common indicator of
+how accurate an algorithm is, and is calculated as follows:
+$$\text{RMSE}(A) = \sqrt{\frac{1}{|\Rtest|} \cdot \sum_{\rui \in
+\Rtest}(\predrui - \rui)^2}.$$
+
+Another common indicator for accuracy is the Mean Absolute Error (MAE), where
+important errors are not penalized more than small ones:
+$$\text{MAE}(A) = \frac{1}{|\Rtest|} \cdot \sum_{\rui \in \Rtest}|\predrui -
+\rui|.$$
+
+In order to have reliable estimates of the accuracy measures, $k$-folds
+cross-validation procedures are often used: the set of all ratings $R$ is
+devided into $k$ disjoint sets ; at each of the $k$ iterations, $\Rtrain$ is set
+to the $k^{\text{th}}$ subset and $\Rtest$ is set as the $k - 1$ remaining
+ones. The reported RMSE (or MAE) is then the average of the $k$ measures.
 
 To better reflect the user-system interaction, other precision-oriented metrics
-are generally used in order to provide a more informed view.
+are sometimes used in order to provide a more informed view.
+\todo{Mieux parler des critiques faites à RMSE et MAE}
 
 \paragraph{Precision and recall\\}
 Precision and recall help measuring the ability of a system to provide
@@ -190,13 +197,13 @@ relevant recommendations.
 In the following, we denote by $I_{S}$ the set of items that the strategy
 $S$ will suggest to the users using the predictions coming from $A$. For
 ratings in the interval $[1, 5]$, a simple strategy could be for example to
-recommend an item $i$ to user $u$ if the estimation rating $\hat{r}_{ui}$ is
-greater than $4$.  $$I_S = \{i \in I | \exists u \in U, \hat{r}_{ui} \geq
+recommend an item $i$ to user $u$ if the estimation rating $\predrui$ is
+greater than $4$.  $$I_S = \{i \in I | \exists u \in U, \predrui \geq
 4\}.$$
 
 Let $I_{relev}$ be the set of items that are actually relevant to users (i.e.
 the set of items that would have been recommended to users if all the
-predictions made by $A$ were exact). 
+predictions made by $A$ were exact).
 The precision of the system is defined as the fraction of recommended items that
 are relevant to the users:
 $$\text{Precision} = \frac{|I_{S} \cap I_{relev}|}{|I_{S}|},$$
@@ -207,7 +214,7 @@ $$\text{Recall} = \frac{|I_{S} \cap I_{relev}|}{|I_{relev}|},$$
 If accurate predictions are crucial, it is widely agreed that it is
 insufficient for deploying an effective recommendation engine. Indeed, still
 other dimensions are worth estimating in order to get a complete picture of the
-performance of a system.
+performance of a system
 \cite{NeeRieKonACM2006,HerKonJohTerRieACM2004,KamBriRecSys2014}.
 For instance, one may naturally expect from a recommender system
 not only to be accurate, but also to be surprising, and to be able to recommend
@@ -229,7 +236,9 @@ $$\text{Coverage} = \frac{|I_{S}|}{|I|}.$$
 
 \paragraph{Surprise\\}
 Users expect a recommender system to be surprising: recommending an extremely
-popular item is not really helpful. Following the works of \cite{KamBriRecSys2014}, surprise of a recommendation can be evaluated with the help of the pointwise mutual
+popular item is not really helpful. Following the works of
+\cite{KamBriRecSys2014}, surprise of a recommendation can be evaluated with the
+help of the pointwise mutual
 information (PMI). The PMI between two items $i$ and $j$ is defined as follows:
 $$PMI(i, j) = -\log_2 \frac{p(i, j)}{p(i)p(j)} / \log_2 p(i, j),$$
 where $p(i)$ and $p(j)$  represent the probabilities for the items to be rated
@@ -238,7 +247,7 @@ together: $p(i) = \tfrac{|U_i|}{|U|}$ and $p(i, j) = \tfrac{|U_i \cup
 U_j|}{|U|}$. PMI values fluctuate between the interval $[-1, 1]$, $-1$ meaning
 that $i$ and $j$ are never rated together and $1$ meaning that they are always
 rated together. To estimate the surprise of recommending an item $i$ to a user
-$u$ we have two choices: 
+$u$ we have two choices:
 \begin{itemize}
 \item either to take the maximum of the PMI values for $i$ and all
 other items rated by $u$, with $Surp^{max}(u, i) = \max\limits_{j\in I_u} PMI(i, j)$
@@ -248,3 +257,564 @@ other items rated by $u$, with $Surp^{max}(u, i) = \max\limits_{j\in I_u} PMI(i,
 \end{itemize}
 Then the overall capacity of a recommender to surprise its users is the mean of the
 surprise values for all predictions.
+
+\section{Analogical recommendation}
+\label{sec:analogical_recommendation}
+
+The main idea is that if an analogical proportion stands between four
+users $a, b, c, d$, meaning that for each item $j$ that they have commonly
+rated, the analogical proportion $r_{aj} : r_{bj} :: r_{cj} : r_{dj}$ holds,
+then it should also hold for an item $i$ that $a, b, c$ have rated but $d$ has
+not (i.e. $r_{di}$ is the missing component). This leads us to estimate
+$r_{di}$ as the solution $x = \hat{r}_{di}$ of the following analogical equation:
+$$r_{ai} : r_{bi} :: r_{ci} : x.$$
+\noindent
+Given a pair $(u,i)$ such that $r_{ui} \notin R$, the main procedure is as
+follows:
+\begin{enumerate}
+\item find the set of 3-tuples of users $a, b, c$ such that an analogical proportion
+stands between $a, b, c,$ and $u$ and such that the equation $r_{ai} : r_{bi} :: r_{ci} : x$
+is solvable.
+\item solve the equation $r_{ai} : r_{bi} :: r_{ci} : x$ and consider the solution
+$x$ as a candidate rating for $r_{ui}$.
+\item set $\hat{r}_{ui}$ as an aggregate of all candidate ratings.
+\end{enumerate}
+
+\subsection{An algorithm using arithmetic proportion}
+In the following, let $I_{abcu}$ be the set of items $i$ that users $a, b, c,$
+and $u$ have commonly rated: $r_{ai} \in R, r_{bi} \in R, r_{ci} \in R$ and
+$r_{ui}\in R$.
+The first step simply states that users $a, b, c$ and $u$, considered as
+vectors of ratings, constitute a parallelogram.  This condition is a bit strong
+and we may want to relax it by allowing some deformation of this parallelogram.
+This can be done by choosing another condition, such as $||(a-b) - (c-d)|| \leq
+\lambda$ where $\lambda$ is a suitable threshold and $||.||$ denotes the
+Euclidean norm.
+
+Another modification to the algorithm would be to only search for the users
+$a, b,$ and $c$ in a subset of $U$. One may consider the set of the $k$-nearest
+neighbours of $d$, using the assumption that neighbours are the most relevant
+users to estimate a recommendation for $d$.
+
+Obviously, analogical proportion may be applied in an item-based way rather
+than in a user-based way, as in the case of standard techniques. Both views
+will be considered in the experimentation.
+
+\subsubsection{Implementation}
+
+In our implementation, we consider the basic definition of analogy using the
+arithmetic definition in $\mathbb{R}^n$: $\vec{a}:\vec{b}::\vec{c}:\vec{d}
+\iff \vec{a}-\vec{b}=\vec{c}-\vec{d}$.
+Given 4 users, they are represented as real vectors of dimension $m$, where $m$
+is the number of item they have rated in common. This dimension can
+change with the 4-tuples of users that we consider. 
+Then, the threshold $\lambda$ has to be a function of this dimension $m$,
+as the range of values that $||.||$ may take depends on it. Using
+cross-validation, we have found that $\lambda = \frac{3}{2} \cdot\sqrt{m}$ showed the
+best results and acts as a kind of normalization factor.
+Our pseudo-code is described in
+Algorithm \ref{algo:analogical_reco}.
+ \begin{algorithm}[!ht]
+     \caption{Analogy}
+       \label{algo:analogical_reco}
+       \begin{algorithmic}
+
+      \STATE {\bf Input}: A set of known ratings $R$, a user $u$, an item
+      $i$ such that $r_{ui} \notin R$.
+      \STATE {\bf Output}: $\hat{r}_{ui}$, an estimation of $r_{ui}$
+
+      \STATE {\bf Init}:
+      \STATE $C = \varnothing$ \quad \quad // list of candidate ratings
+      \FORALL{
+        users $a, b, c$ such that\\ 
+        \begin{enumerate} 
+        \item $r_{ai} \in R, r_{bi} \in R, r_{ci} \in R$
+        \item $r_{ai} - r_{bi} = r_{ci} - x$ is solvable  // i.e. the solution $x \in [1,5]$
+        \item $||(a-b)-(c-d)||\leq \lambda$ // Analogy almost stands between $a,b,c,d$ considered as real vectors
+        \end{enumerate}
+      }
+      
+      \STATE  $x \leftarrow r_{ci} - r_{ai} + r_{bi}$
+      \STATE $C \gets C \cup \{x\}$ \quad // add x as a candidate rating
+	  \ENDFOR
+
+    \STATE $\hat{r}_{ui} = \aggr{x \in C} x$
+
+\end{algorithmic}
+\end{algorithm}
+
+Some options are available at this stage. 
+
+Here again, there is no need to choose the Euclidean norm (i.e. $L_2$ norm) as
+other norms also make sense: $L_1$ norm using the absolute value of the
+components or even $L_\infty$ using the maximum of the absolute value of the
+components. These options have not been tested so far.
+
+We have considered a strict condition for the solvability of the equation
+$r_{ai} - r_{bi} = r_{ci} - x$: as the exact arithmetic result $x=r_{ci} +
+r_{bi} -r_{ai}$ does not necessarily belong to the scale interval $[1,5]$, we
+consider solvability only when $r_{ai}=r_{bi}$ or $r_{ai}=r_{ci}$. In both
+cases, we ensure the solution $x \in [1,5]$.
+
+\subsection{Experiments and results}
+\label{results}
+
+Our algorithm \textit{Analogy} ($k=20$) is compared to the neighbourhood-based algorithms
+described in section \ref{CollabFil}, referred to as \textit{kNN} for the basic
+model and \textit{Bsln-kNN} for the extended model using a baseline predictor
+(with $k=40$). For each of the algorithms, we have estimated the metrics described
+in section \ref{eval}. The recommendation strategy $S$ is to recommend $i$ to
+$u$ if $\hat{r}_{ui} \geq 4$.
+
+\paragraph{Dataset\\}
+We have tested and compared our algorithm on the Movielens-100K
+dataset\footnote{http://grouplens.org/datasets/movielens/}, composed of 100,000
+ratings from 1000 users on 1700 movies. Each rating belongs to the interval
+$[1, 5]$.
+
+\paragraph{Evaluation protocol\\}
+In order to obtain meaningful measures, we have run a five-folds
+cross-validation procedure: for each of the five steps, the set of ratings $R$ is
+split into two disjoint sets $R_{train}$ and $R_{test}$, $R_{train}$ containing
+five times more ratings than $R_{test}$. The reported measures are averaged
+over the five steps.
+
+\paragraph{Results and comments\\}
+
+Table \ref{table:res} shows the performances of the algorithms applied in a
+user-based way. Similar experiments have been led in a movie-based setting, exhibiting
+very similar results, slightly worse for RMSE (about 5\permil higher).
+
+\begin{table}[!ht]
+\centering
+\caption{Performance of algorithms}
+\label{table:res}
+\begin{tabular}{| c || c | c | c | c | c | c | c | c |}
+\hline
+& RMSE & Prec & Rec & Cov & $Surp^{max}$ & $Surp^{avg}$ & Time \\
+\hline
+Analogy   & .898 & 89.1 & 43.3 & 31.2 & 0.433 & 0.199 & 2h \\
+%Pattern & .927 & 84.9 & 50.0 & 47.7 & 0.433 & 0.198 & 5h \\
+kNN     & .894 & 89.1 & 44.1 & 27.8 & 0.432 & 0.198 & 10s \\
+Bsln-kNN & .865 & 88.4 & 44.0 & 44.7 & 0.431 & 0.199 & 10s \\
+\hline
+\end{tabular}
+
+\end{table}
+
+As expected, the Bsln-kNN algorithm is more accurate than the basic
+collaborative filtering method (KNN). The two classical collaborative
+algorithms perform better than the new proposed analogy-based method in terms
+of RMSE. Still, there seems to be some room for improvement for the analogical
+approach, with the help of a careful analysis of the behaviour of the
+algorithm.
+
+As for performances other than RMSE, we see that the figures obtained by the
+three algorithms are quite close. Regarding surprise, which is a delicate
+notion to grasp, one may also wonder if the used measure is fully appropriate.
+
+As usual, analogy-based algorithms suffer from their inherent cubic complexity.
+In the case of recommender systems where millions of users/items are involved,
+this is also a serious issue. 
+
+\section{Clones}
+
+Considering analogy between four users has shown to be computationally
+intensive, thus not really suitable for recommendation purposes, where time is
+a highly critical dimension. Yet, other forms of analogy can be addressed in
+the recommendation task, based on the observation that some users may be more
+inclined to give good (or bad) ratings than others. Indeed, ratings are in no
+way absolute and greatly depend on the subjective appreciation each user has
+about the rating scale. In the $[1, 5]$ scale for example, two users $u$ and
+$v$ might semantically agree on an item $i$ describing it as $bad$, but there
+is a chance that this agreement is not perfectly reflected in the ratings: $u$
+might have rated $i$ with $r_{ui} = 1$ and $v$ with $r_{vi} = 3$, simply
+because from $v$' point of view $3$ is a \textit{bad} rating, while for $u$ a
+rating of $3$ would simply mean \textit{decent} or \textit{good enough}.  In
+the following, we refer such users that \textit{semantically} agree on their
+common items (but not necessarily \textit{numerically}) as \textit{clones}, as
+illustrated in Figure \ref{FIG_CLONES}. Please note that the word $clone$ is
+not used here to mean \textit{strictly identical}, but more in the sense that
+two clones are two users following parallel paths.
+
+\todo{use nicer colors for plot?}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=4in]{figures/clones.pdf}
+\caption{Bob is a perfect clone of Alice.}
+\label{FIG_CLONES}
+\end{figure}
+
+It is obvious that in collaborative filtering, clones are of great interest when
+it comes to predict a user's ratings, and yet the information they provide is
+often discarded.  The principle underlying the analogical clone-based view is
+the following: for predicting a missing rating for $u$ we not only look at its
+nearest neighbors, but also to those $v$ whose rating are such that $r_{ui} =
+r_{vi} + t_{vu}$ where $t_{vu}$ is a more or less constant \textit{correction
+term} that can be either positive or negative.
+
+In the next two sections, we investigate this idea of a clone-based prediction,
+first when ratings are viewed as numerical quantities in section
+\ref{NUMERICAL_POV}, and then when they have an ordinal meaning only in
+section \ref{ORDINAL_POV}.
+
+\subsection{Ratings as numerical quantities}
+\label{NUMERICAL_POV}
+
+In the following, we define $C_i(u)$ as the set of users that are clones of $u$
+and that have rated item $i$.  From the previous definitions, one can easily
+derive a very general collaborative filtering framework for predicting a user's
+rating by taking into account its clones:
+$$\predrui = \text{aggregation}(r_{vi} + t_{vu}), \quad \forall v \in
+C_i(u),$$
+where $t_{vu}$ is a \textit{correction term} that we need to add to $v$'s
+ratings so that they correspond to those of $u$. We clearly have a
+generalization of the $k$-NN approach, which we could write as:
+$$\predrui = \text{aggregation}(r_{vi} + t_{vu}), \quad \forall v \in \{v \in C_i(u)
+  | t_{vu} = 0\}.$$
+
+Following this general framework, one can construct a great variety of
+algorithms with various level of complexity. In the next subsections, we
+propose a very straightforward algorithm, and a more efficient one.
+
+\subsubsection{A straightforward prediction algorithm}
+\label{STRAIGHTFORWARD}
+
+In its most simple form, a user $v$ can be considered to be a $t$-clone of $u$ if
+the ratings of $v$ differ from those of $u$ from a constant $t$:
+\begin{equation}
+v \in t\text{-}C(u) \iff \forall i \in I_{uv}, r_{ui} = r_{vi} + t.
+\end{equation}
+From then on, computing $\predrui$ amounts to finding all the users $v$ that
+satisfy this criteria, and computing an aggregation of their rating for $i$,
+which can simply be a mean. We implemented this basic algorithm described by
+algorithm \ref{algo_straight}, and referred to as \textit{Bruteforce}.
+
+ \begin{algorithm}[!ht]
+   \caption{\textit{Bruteforce}}
+       \label{algo_straight}
+       \begin{algorithmic}
+
+      \STATE {\bf Input}: A set of known ratings $R$, a user $u$, an item
+      $i$ such that $r_{ui} \notin R$.
+      \STATE {\bf Output}: $\hat{r}_{ui}$, an estimation of $r_{ui}$
+
+      \STATE {\bf Init}:
+      \STATE $C = \varnothing$ \quad \quad // list of candidate ratings
+      \FORALL{ users $v \in U_i$}
+        \FORALL{$t$}
+          \IF{$v \in t\text{-Clones}(u)$}
+          \STATE $C \gets C \cup \{r_{vi} + t\}$ \quad // add x as a candidate rating
+          \ENDIF
+        \ENDFOR
+	    \ENDFOR
+    \STATE $\hat{r}_{ui} = \aggr{x \in C} x$
+\end{algorithmic}
+\end{algorithm}
+
+Of course, one may want to relax the definition of a $t$-clone, as the current
+one is too strict and only very few users will satisfy this criteria. In our
+implementation, we chose the following condition:
+$$v \in t\text{-}C(u) \iff \sum_{i \in I_{uv}} |(r_{ui} - r_{vi}) - t| \leq |I_{uv}|.$$
+This amounts to accept $v$ as a $t$-clone of $u$ if on average, $r_{ui} -
+r_{vi}$ is equal to $t$ with a margin of $1$.
+
+The values of $t$ clearly depend on the rating scale. The dataset on which we
+tested our algorithms use the $[1, 5]$ interval, so possible values for $t$
+that were considered are integer values between $[-4, 4]$.
+
+This is obviously a very rough algorithm, to which one could point out numerous
+flaws, but its purpose is to show that even such a basic clone-based approach
+can lead to better results than a basic neighborhood method.
+
+\subsubsection{Modeling clones with the similarity measure}
+\label{MODELING_CLONES}
+Another option to consider clones is to use the well known neighborhood-based
+formula, and capture their effect inside an appropriate similarity measure. The
+general neighborhood formula is as follows \cite{RecoSystemHandbook}:
+
+$$\predrui = \frac{\sum_{v \in N_i^k(u)} r_{vi} \cdot sim(u, v)}{\sum_{v \in
+  N_i^k(u)} sim(u, v)},$$
+where $N_i^k(u)$ is the set of the $k$ nearest neighbors of $u$ that have rated
+$i$. So, we move from a crisp view of the set of clones to a fuzzy one. In
+fact, the above formula looks very similar to the interpolation principle
+underlying Takagi-Sugeno fuzzy controller where similarity degree is viewed as
+a fuzzy membership grade \cite{TakSug85}.
+
+The above formula is commonly used with classical similarity metrics such as
+Pearson or cosine similarity, or inverse of MSD (Mean Squared Difference, which is
+a distance).
+However, these similarities are not plainly satisfactory when it comes to
+clones. Indeed with these metrics, two users are considered to be close if
+their common ratings are often the same, but two perfect clones $u$ and $v$
+with a significant correction term $t_{vu}$ would be considered as far from
+each other, thus involving a loss of information.
+
+A simple choice to measure how two users relate as clones can be the following:
+$$Clone\_dist(u, v) =  \frac{1}{|I_{uv}|} \cdot \sum\limits_{i \in I_{uv}}
+((r_{ui} - r_{vi}) - \mu_{uv})^2$$
+where $\mu_{vu}$ is the mean difference between ratings of $u$ and $v$:
+$$\mu_{uv}= \frac{1}{|I_{uv}|}\sum_{i \in I_{uv}} (r_{ui} - r_{vi}).$$
+
+One can understand this distance in two ways:
+\begin{itemize}
+\item it can be regarded as the variance of the difference of ratings between
+  $u$ and $v$,
+\item or it can be regarded as a simple MSD measure ($\text{MSD}(u, v) =
+  \frac{1}{|I_{uv}|} \cdot \sum\limits_{i \in I_{uv}}
+  (r_{ui} - r_{vi})^2$)
+ to which the mean difference of ratings between $u$ and $v$ has been
+ subtracted.
+  \end{itemize}
+
+As our measure $Clone\_dist$ is a distance, it is necessary to transform it
+into a similarity measure. Common choice is to take its inverse (while accounting for zero division): $Clone\_sim(u,
+v) = \frac{1}{Clone\_dist(u, v) + 1}$.
+
+Once we know how to find the clones of a user, it is a simple matter to output
+a prediction using the classical neighborhood approach:
+$$\predrui = \frac{\sum_{v \in N_i^k(u)} (r_{vi} + \mu_{uv}) \cdot sim\_clone(u,
+v)}{\sum_{v \in N_i^k(u)} sim\_clone(u, v)}.$$
+
+This algorithm will be referred to as $CloneA$. For the sake of completeness,
+we also tried the same formula but with a more basic similarity metric that
+does not care about clones: MSD. This algorithm is referred to as $CloneB$.
+
+\subsubsection{Current practices in neighborhood-based methods}
+
+A simple and efficient formula using neighborhood technique, popularized by
+\cite{KorACM2010} is the following:
+$$\predrui = b_{ui} + \frac{\sum_{v \in N_i^k(u)} (r_{vi} - b_{vi}) \cdot
+sim(u, v)} {\sum_{v \in N_i^k(u)}sim(u, v)}.$$
+It is based on a simple $k$-NN approach, where are added the $b_{ui}$ terms,
+called \textit{baselines}: $b_{ui} = \mu + b_u + b_i$. $\mu$ is the global mean
+of all ratings in $R$. The $b_u$ term is intended to capture users propensity
+to give ratings higher or lower than the global mean $\mu$, and the same goes
+for items with $b_i$: some items tend to be rated higher than others. Baselines
+are computed by solving a least squares problem:
+$$ \min\limits_{b_u, b_i} \sum_{r_{ui} \in R} (r_{ui} - (\mu + b_u + b_i))^2,$$
+which can be achieved efficiently by stochastic gradient descent, or
+alternating least squares.
+
+Among recommended similarity metrics, this one is of particular interest:
+$$\text{sim}(u, v) = \frac
+{ \sum\limits_{i \in I_{uv}} (r_{ui} -  b_{ui}) \cdot (r_{vi} - b_{vi})}
+{\sqrt{\sum\limits_{i \in I_{uv}} (r_{ui} -  b_{ui})^2} \cdot
+\sqrt{\sum\limits_{i \in I_{uv}} (r_{vi} -  b_{vi})^2}}.$$
+
+It is simply a Pearson correlation coefficient, except that instead of
+centering ratings by their means, they are centered with the baseline
+predictors. An intuitive and illuminating way to look at this algorithm as a
+whole is to see that it conceptually follows these steps:
+\begin{enumerate}
+  \item Compute $R'$, the set of all ratings normalized by the corresponding
+    baseline: $r'_{ui} = r_{ui} - b_{ui}$.  $R'$ can be regarded as the set
+    where all ratings are given from the same frame of reference, thus
+    discarding any bias.  In $R'$, ratings can then be considered as absolute.
+  \item Using $R'$, compute similarities between users using the cosine similarity (the
+    cosine similarity is the same as the Pearson correlation coefficient,
+    except that quantities are not centered).
+  \item Output a prediction using the basic $k$-NN formula. As this prediction
+    belongs to the same space of $R'$ where ratings have no bias, it needs to
+    be transposed back to the space of $R$ (for performance evaluation
+    purposes).
+\end{enumerate}
+
+In what follows, this algorithm is referred to as $k$-NNbsl.
+
+It is very clear that the use of the baseline predictors is motivated by the
+same reasons one would want to consider clones in a rating prediction
+algorithms. This means that $k$-NNbsl implicitly takes the idea of clones into account, and thus a form of analogical reasoning.
+Differences and resemblances of these two approaches are discussed
+in the next section.
+
+\subsubsection{Experiments and discussion}
+\label{expeDiscuss}
+
+We evaluated the performance of the aforementioned algorithms in terms of MAE
+and RMSE on two datasets, the movielens-100K and movielens-1M
+datasets\footnote{http://grouplens.org/datasets/movielens}, containing
+$100,000$ and $1M$ ratings respectively. Results are shown in tables
+\ref{table:res100k} and \ref{table:res1M} and where calculated using 5-folds
+cross-validation. For each of these algorithms, the number of neighbors or
+clones used to output a prediction is $k = 40$, except for the bruteforce
+algorithm where the number of clones can not be controlled.
+\begin{table}[!ht]
+\centering
+\caption{Performance of algorithms on the Movielens-100k dataset}
+\label{table:res100k}
+\begin{tabular}{| c || c | c | c | c | c | c |}
+\toprule
+     &  k-NN & Bruteforce & Clone A & Clone B & $k$-NNbsl\\
+\midrule
+RMSE & .9763 &   .9461    &   .9353 &  .9311  &  .9338   \\
+MAE  & .7705 &   .8576    &   .7327 &  .7321  &  .7337   \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!ht]
+\centering
+\caption{Performance of algorithms on the Movielens-1M dataset}
+\label{table:res1M}
+\begin{tabular}{| c || c | c | c | c | c | c |}
+  \toprule
+     &  k-NN & Bruteforce & Clone A & Clone B & $k$-NNbsl\\
+  \midrule
+RMSE & .9216 &           .&   .8996 &  .8969  &  .8879\\
+MAE  & .7252 &           .&   .7057 &  .7050  &  .7005\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+It is very clear that even a very straightforward approach of the clone-based
+recommendation principle significantly outperforms the most basic $k$-NN
+algorithm. It is however a lot heavier to compute, thus not very suitable for
+real world recommendation purposes (its performances on the Movielens-1M
+dataset simply could not be computed). The two other clone-based algorithms
+however, have the exact same complexity of any $k$-NN-based algorithm which is
+a significant improvement from the algorithm described in section
+\ref{ANALOGY_USERS}.
+
+Surprisingly enough, out of the two Clone algorithms, it is the one that does
+not care about clones in its similarity measure that achieves the best results.
+This might be due to the fact that in the neighborhood based on MSD, $\mu_{uv}$
+is necessarily small and thus easier to estimate in a statistical significant
+way.
+
+Performances of the Clone algorithms are close to those of the state of the
+art $k$-NNbsl algorithm. It is however important to understand that these
+algorithms differ on the following points:
+\begin{itemize}
+\item The Clone algorithms do not address item bias, which is a significant
+  drawback. It may not be unreasonable to believe that incorporating item bias
+  in the prediction would lead to better results.
+\item There is a subtle yet meaningful difference of interpretation between the
+  biases induced by both algorithms. In the clone algorithm, biases are all
+  pairwise, meaning that they involve two users, and they are computed on items
+  that both users have rated. As for the $k$-NNbsl algorithm, there is no such
+  thing as a pairwise bias. Bias for a given user is computed using only its
+  own ratings, and is a result of a global optimization problem involving the
+  global mean of all ratings, which means that every single rating in $R$ has
+  an impact on the bias.
+\item On the biggest dataset (Movielens-1M), the $k$-NNbsl algorithm appears to
+  achieve better accuracy than the other algorithms, while this is not the case
+  for the small dataset. A possible explanation is that as baselines are
+  computed on the whole training set, they tend to capture most of the noise
+  when the training set gets bigger, thus improving accuracy compared to more
+  heuristic-based approach.
+\end{itemize}
+
+It should also be noted that in fact, it is recommended to perform a shrinkage
+on the similarity measure of algorithm $k$-NNbsl, in order to take into account
+the number of common items between two users: the more items they share, the
+more confident we are when computing their similarity \cite{KorACM2010}. Such
+an approach can improve significantly both RMSE and MAE of the algorithm.
+Similarly, in the clone-based approach, it might be of interest to discount
+clones that rely on a too small number of common items.
+
+\section{Towards an ordinal view of ratings}
+\label{ORDINAL_POV}
+
+We may wonder if one can devise a counterpart of the numerical clone-based
+approach, which would be compatible with an ordinal view of the ratings.
+Indeed, an extreme way for unbiasing and comparing two sets of ratings is to
+forget about their numerical values, and only consider their rankings.  The
+idea of viewing ratings in a ordinal manner has been advocated in
+\cite{KorenOrdRec}.
+In this section, we discuss an ordinal counterpart of the analogical approach
+previously presented.  Analogical reasoning with ordinal data has first been
+proposed in \cite{MicletBarbot09}, yet with a different concern.
+
+\subsection{An algorithm for rank prediction}
+Indeed the idea that ``\textit{the rating of user $u$ for item $i$ is to the
+rating of user $v$ for item $i$ as the rating of user $u$ for item $j$ is to
+the rating of user $v$ for item $j$}’’ may be understood  as well in an ordinal
+manner. This leads to state that ``\textit{the relative ranking of item $i$
+  among the ratings given by user $u$  is to the relative ranking of item $i$
+  among the ratings given by user $v$ as the relative ranking of item $j$ among
+  the ratings given by user $u$  is to the relative ranking of item $j$ among
+the ratings given by user $v$}.
+
+This means that we need to compare the rankings given by two users $u$ and $v$
+on their common items. In the following, $\rho_{ui}$ denotes the relative
+ranking of item $i$ out of all the items rated by $u$. Our goal is to estimate
+all values of $\rho_{ui}$, for any user and any item. The main steps of a
+possible algorithm is as follows:
+\begin{enumerate}
+  \item Compute similarities between users, based on their rankings. A very
+    popular similarity ranking measure is the Spearman's rank correlation
+    coefficient, or Spearman's rho.
+  \item Compute an estimated rank $\hat{\rho}_{ui}$ as an aggregation of all the
+    rankings $\rho_{vi}$ extracted from the $k$ nearest neighbors (using
+    Spearman's rho as similarity):
+    $$\hat{\rho}_{ui} = \frac{\sum_{v \in N_i^k(u)} \rho_{vi} \cdot
+    sim(u, v)}{\sum_{v \in N_i^k(u)} sim(u, v)}.$$
+\end{enumerate}
+
+This is obviously very similar to the neighborhood approach described in
+section \ref{MODELING_CLONES}, but instead of predicting a rating, we output a
+predicted rank. This approach is denoted as \textit{RankAnlg}.
+
+
+\subsection{Experiments}
+
+We evaluated the performance of our algorithm and compared it to other
+previously described approaches, using the exact same evaluation protocol as in
+section \ref{expeDiscuss}. The Movielens-1m dataset was not benchmarked, as our
+algorithm is too computationally intensive.
+
+RMSE and MAE are good measure for evaluation rating prediction accuracy, but
+are not suitable when it comes to evaluate rankings. A better measure is the
+Fraction of Concordant Pair, which evaluates the probability that given any two
+items $i$ and $j$ rated by any user $u$, the system has correctly estimated
+whether $u$ prefers $i$ over $j$ or the inverse. To compute the FCP, we need to
+intermediate measures. $c_u$ defines the number of concordant pairs for user
+$u$, and $d_u$ its number of discordant pairs. The FCP is then computed over all
+users as the proportion of concordant pairs.
+
+\begin{align*}
+&c_u = \{(i, j) \in I^2 \quad s.t. \quad \predrui > \predruj \text{ and }
+r_{ui} > r_{uj}\}\\
+&d_u = \{(i, j) \in I^2 \quad s.t. \quad \predrui \geq \predruj \text{ and }
+r_{ui} < r_{uj}\}\\
+&FCP = \frac{\sum\limits_{u \in U} c_u}{\sum\limits_{u \in U} c_u + \sum\limits_{u \in U} d_u}
+\end{align*}
+Note that $\predrui$ here may represent either a rating prediction or a
+ranking prediction $\hat{\rho_{ui}}$.
+
+Results are reported in table \ref{table:res100kRank}.
+
+\begin{table}[!ht]
+\centering
+\caption{Performance of algorithms on the Movielens-100k dataset (ranking
+evaluation)}
+\label{table:res100kRank}
+\begin{tabular}{| c || c | c | c |}
+\toprule
+     & RankAnlg &  k-NN & $k$-NNbsl\\
+\midrule
+FCP  &  .7063   & .7096 &  .7163   \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Unfortunately, even a basic algorithm that was not designed for ranking
+prediction performs better in terms of FCP. To explain this difference, one may
+look at the distribution of average support over all the predictions, as shown
+on figure \ref{FIG_SUPPORT}. Between
+two users $u$ and $v$, the support is defined as the number of common items
+($|I_{uv}|$), which was used to compute the similarity between $u$ and $v$. For
+a given prediction $\predrui$, the average support is the average of all the
+supports $|I_{uv}|$ over all users $v \in N_i^k(u)$.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=2.5in]{figures/support.pdf}
+\caption{Distribution of average support.}
+\label{FIG_SUPPORT}
+\end{figure}
+
+The use Spearman's rho tends to provide with neighbors that have smaller
+support, thus leading to a less significant and less accurate estimation of the
+neighborhood, which may explain the differences in performance.
