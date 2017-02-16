@@ -721,10 +721,10 @@ approach, which would be compatible with an ordinal view of the ratings.
 Indeed, an extreme way for unbiasing and comparing two sets of ratings is to
 forget about their numerical values, and only consider their rankings.  The
 idea of viewing ratings in a ordinal manner has been advocated in
-\cite{KorenOrdRec}.
+\cite{KorSillRECSYS11}.
 In this section, we discuss an ordinal counterpart of the analogical approach
 previously presented.  Analogical reasoning with ordinal data has first been
-proposed in \cite{MicletBarbot09}, yet with a different concern.
+proposed in \cite{MicBarCAP09}, yet with a different concern.
 
 \subsubsection{An algorithm for rank prediction}
 Indeed the idea that ``\textit{the rating of user $u$ for item $i$ is to the
@@ -842,7 +842,7 @@ d'\'evaluer la {\it qualité} d'une règle d'association, comme  la
 
 Les méthodes d'extraction de telles règles ont fait l'objet de nombreuses
 études. L'algorithme {\it Apriori} 
-\cite{agrawal} est probablement le plus connu mais il en existe d'autres.
+\cite{AgrSriVLDB94} est probablement le plus connu mais il en existe d'autres.
 L'idée   est de fixer un seuil minimum $\alpha$ pour le support et de chercher dans
 $2^I$ les itemsets dont le support dépasse $\alpha$, pour obtenir un ensemble
 $S$ d'itemsets fréquents. Cette recherche est facilitée par le fait que
@@ -1017,4 +1017,6 @@ celles qui ressortent de l'échelle binaire, montrant ainsi la cohérence des
 deux approches. La m\'ediocre qualit\'e des proportions analogiques trouv\'ees, 
 m\^eme si elles sont statistiquement significatives, 
 ne permet pas d'utiliser raisonnablement l'inf\'erence analogique dans cet exemple. 
-Ceci  tend \`a expliquer a posteriori pourquoi une approche pour la pr\'ediction de notes manquantes, bas\'ee sur la recherche de triplets analogiques, avait obtenu des r\'esultats modestes \cite{HugPR15}.
+Ceci  tend \`a expliquer a posteriori pourquoi une approche pour la
+pr\'ediction de notes manquantes, bas\'ee sur la recherche de triplets
+analogiques, avait obtenu des r\'esultats modestes \cite{HugPraRicISMIS15}.

@@ -1,6 +1,6 @@
 \chapter{Analogy-preserving functions}
 
-\cite{HugPraRicSerECAI2016} have proved that this kind of analogical
+\cite{HugPraRicSerECAI16} have proved that this kind of analogical
 classification process can be formalized via two conceptual steps: first an
 {\it analogical  extension} of the training set is performed (as detailed in
 Section \ref{analogy}), and then a $k$-NN-like algorithm is applied to this
@@ -46,12 +46,12 @@ examples. We may build a new example starting from
     $f(a)$.
 \item With two examples, the previous option is still available and leads to
   interpolate the new example from the two given ones.  A somehow different
-    option is the Feature Knockout procedure \cite{WolMar2004}, which amounts
+    option is the Feature Knockout procedure \cite{WolMar04}, which amounts
     to build a third example obtained by modifying a randomly chosen feature
     of the first example with that of the second one.  This way to
     proceed enjoys nice properties and appears to be equivalent to a popular
     regularization (Tikhonov) technique in the case of linear regression.  A
-    related idea is used in a recent proposal \cite{BouPraRicECAI2016} which
+    related idea is used in a recent proposal \cite{BouPraRicECAI16} which
     introduces a measure of oddness w.r.t. a class that is computed on the
     basis of pairs made of two nearest neighbors in the same class; this is
     equivalent to replace the two neighbors by a fictitious representative of
@@ -61,7 +61,7 @@ examples. We may build a new example starting from
   remain available and lead to build a fourth example which is somehow
     in-between the three other ones: we still have some kind of interpolation.
     A quite different idea is to extrapolate the fourth item on the basis of
-    analogical proportion \cite{BayMouMicAnqECML2007}.  In this perspective,
+    analogical proportion \cite{BayMouMicAnqECML07}.  In this perspective,
     this fourth element is not necessarily in the neighborhood of the three
     others.
 \end{enumerate}
@@ -129,7 +129,7 @@ binary function $f(x_1,x_2)= x_1 \wedge x_2$, along with $\mathbf{a},
 solvable, yet the solution is $y=0$, which  is different from $f(\mathbf{d})=1$
 so $f$ is not AP. This actually comes from the fact that analogical proportions
 are not stable by conjunction combination. It is also the case for the
-disjunction \cite{PraRicLU2013}.
+disjunction \cite{PraRicLU13}.
 
 \begin{table}[ht]
 $\begin{array}{|c|cc|c|}
@@ -186,7 +186,7 @@ identification of inessential variables. For example, $f(x_1, x_2, x_3) = x_1
 \wedge x_3$ and $g(x_1, x_2)  = x_1 \wedge x_2$ are equivalent functions. Note
 that two equivalent functions necessarily have the same number of essential
 variables. For further background in the theory of essential variables of
-functions, see \cite{CouceiroTCS2008,CouceiroDM2009,SalomaaAASF1963,WillardDM1996}.
+functions, see \cite{CouceiroTCS08, CouceiroDM09, SalomaaAASF63, WillardDM96}.
 
 In our demonstrations, we will use the following property:
 
@@ -302,7 +302,7 @@ positive integers $I$, where $|I|$ is called the \textbf{degree} of
 $\mathbf{x}_I$.   We take the convention that $1$ is the empty monomial
 $\mathbf{x}_\emptyset $. A \textbf{ polynomial} is a sum of monomials and its
 degree is the largest degree of its monomials.  It is well-known
-\cite{StoneAlgebra1936,ZhegalkinAlgebra1927} that any function
+\cite{StoneAlgebra36,ZhegalkinAlgebra27} that any function
 $f:\mathbb{B}^m\rightarrow \mathbb{B}$ is uniquely represented by a polynomial,
 also called the Algebraic Normal Form: $$f(x_1,\ldots,x_m)=\sum_{I\subseteq
 \{1,\ldots,m\}}a_I\cdot \mathbf{x}_I$$ where each $a_I$ belongs to
@@ -404,7 +404,7 @@ P_{\mathbf{x}\in \mathbf{E}^*_S(f)}\left[\albl{\mathbf{x}}_f =
 f(\mathbf{x})\right]$. By definition, $\omega=1$ for all $S$ iff $f$ is AP.
 Note that there exist statistical tests allowing the practitioner to query a
 partially-known function to find out if it is $\epsilon$-close to L (see for
-instance \cite{BluLubRub1993}).\todo{BLR marche que pour fonctions lineaires
+instance \cite{BluLubRub93}).\todo{BLR marche que pour fonctions lineaires
 mais OSEF car omega de f = omega f + 1 et si f lineaire alors f + 1 est affine
 donc on peut se contenter de BLR}. Therefore, studying $\omega$ w.r.t. $\epsilon$
 is clearly of interest.

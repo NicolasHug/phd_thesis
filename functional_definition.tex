@@ -131,12 +131,12 @@ Let us note that $A_E^Y(S)$ is never explicitly computed. Instead, we look for
 every 3-tuple in $S$ and check if they belong to $R_S^Y(x)$.
 Clearly, this is a supervised learning setting, where sample instances are
 stored for future use, without any generalization process. Conservative
-classifiers are Instance Based Learners
-as described in \cite{Aggar2014}.
-Therefore, analogical learner ranges among the category of Instance Based Learners.
+classifiers are Instance Based Learners as described in \cite{Agg14}.
+Therefore, analogical learner ranges among the category of Instance Based
+Learners.
 
 Let us sketch an example coming from
-\cite{StrYvoReport2005} where an analogical relation is defined on the set of
+\cite{StrYvoReport05} where an analogical relation is defined on the set of
 words over a finite alphabet. The learning task is to learn the conjugation of
 English verbs. Solving the analogical equation $view:reviewer::search:y$ leads
 to $researcher$, using the definition of the analogy and the concatenation
@@ -165,7 +165,7 @@ elements outside $A_E^Y(S)$ i.e. elements which do not constitute a perfect anal
 with elements in $S$.  To this end, we can try to measure to what extent such
 elements are far from building a perfect analogy with those in $S$.
 The concept of {\it analogical dissimilarity}, first  defined in
-\cite{BayMicDel2007}, will be useful to  quantify in some sense how far a
+\cite{BayMicDelIJCAI07}, will be useful to  quantify in some sense how far a
 relation $a:b::c:d$ is from being a valid analogy.
 We keep the initial notation $AD(a,b,c,d)$ to
 denote the analogical dissimilarity between 4 elements.  Some  minimal
@@ -199,7 +199,7 @@ As a measure of \textit{how poorly an analogical proportion holds}, the
 analogical dissimilarity will help to define more flexible classifiers.  The
 main underlying idea is to consider {\it approximate} analogies which are not
 valid stricto sensu, but not too far to be valid.
-In \cite{BayMicDel2007}, after defining analogical dissimilarity,  the authors
+In \cite{BayMicDelIJCAI07}, after defining analogical dissimilarity,  the authors
 build an extended classifier allowing classification of elements that do not
 belong to $A_E^Y(S)$.  Algorithm \ref{algo_extended} gives a description of
 their classifier.
@@ -225,13 +225,13 @@ their classifier.
 
 This algorithm is similar to the conservative one but, instead of looking for
 pure analogies, we allow for some analogies not to be perfect when we need to.
-In their implementation \cite{BayMicDel2007}, the authors actually look for
+In their implementation \cite{BayMicDelIJCAI07}, the authors actually look for
 all the 3-tuples that have the same analogical dissimilarity as the $k$th one:
 this allows them to fit with the previous conservative approach. For the sake of
 simplicity, we have chosen to
 ignore this small detail in our explanation.
 
-In \cite{BayMicDel2007}, the authors evaluated this classifier on a Boolean setting
+In \cite{BayMicDelIJCAI07}, the authors evaluated this classifier on a Boolean setting
 $\mathbb{B}^m$ over 8 benchmarks from the UCI repository.  This approach led to
 remarkable results in terms of accuracy, when compared to off-the-shelf
 standard classifiers.
@@ -263,7 +263,7 @@ finding the closest vertex $d'=c-a+b$  from $x$ for any $(a, b, c) \in S^3$.
 Denoting $\delta$ the $L_1$ distance, $AD(a,b,c,d) =\delta(a-b,c-d) =
 \delta(d,d')$,
 In the case where $k=1$, the
-works of \cite{BayMicDel2007} will predict $\hat{x}$ as the label $\dot{d'}$ of
+works of \cite{BayMicDelIJCAI07} will predict $\hat{x}$ as the label $\dot{d'}$ of
 this summit $d'$. \todo{verifier. C'etait en comm}
 it is then natural to consider what we call the \textit{nearest analogical
 neighbour} (or \textbf{nan}) of $x$ from a sample $S$ as the element of
@@ -288,7 +288,7 @@ neighbour: $\nan(x, S) = x \text{ iff } x \in A_E^Y(S)$. Therefore, it is easy
 to see that this rule is a generalisation of the conservative approach.
 Instead of using only one nearest analogical neighbour, we can consider the set
 of the $k$ nearest analogical neighbours, and implement a majority vote as it is
-done in \cite{MicBayDelJAIR2008}.
+done in \cite{MicBayDelJAIR08}.
 
 The above definition leads to understand the process of analogical classification as follows:
 \begin{enumerate}
@@ -348,7 +348,7 @@ Now, let us consider  $x^{(i)}$ an i.i.d. sequence of random variables in
 $\mathbb{R}^m$, where $\mathbb{R}^m$ is equipped with a probability measure
 denoted $P$. As the set $S_n=\{x^{(i)}, ~ i \in [1, n]\}$ is random, then
 $\nan(x,S_n)$ can also be considered as a random element of $X$.  We then are
-in the exactly same context as the work of Cover \& Hart (\cite{CovHar1967}), and
+in the exactly same context as the work of Cover \& Hart (\cite{CovHarTIT67}), and
 we obtain the same result:
 \begin{property}\label{propconvergence}
 $plim_{n \to \infty}(\nan(x,S_n))=x$ almost surely,
@@ -356,7 +356,7 @@ $plim_{n \to \infty}(\nan(x,S_n))=x$ almost surely,
 where $plim$ is the probability limit operator.
 
 {\it Proof}:
-Exactly the same proof  as in \cite{CovHar1967} could be applied.  But it is
+Exactly the same proof  as in \cite{CovHarTIT67} could be applied.  But it is
 simpler to remember that $\delta(x, \nan(x,S_n)) \leq \delta(x, \nn(x,S_n))$. Then,
 for a given $x$, the convergence in probability of $\delta(x,
 \nn(x,S_n))$ to $0$ implies the convergence in probability of $\delta(x,
@@ -372,7 +372,7 @@ Let us note the following points:
   proven the result for any separable metric space, without any additional
   information. In fact, we cannot follow these lines here just because there is
   no known way to define an analogical dissimilarity on a metric space, without
-  the help of other structure or operator (see \cite{MicBayDelJAIR2008} for a
+  the help of other structure or operator (see \cite{MicBayDelJAIR08} for a
   detailed discussion on this issue).
 \item This result does not say anything regarding the prediction accuracy of
   $1\mbox{-nan}$ prediction rule as it is rather different than the
@@ -380,7 +380,7 @@ Let us note the following points:
   \ref{accuracy}.
 \item We have to be careful about the interpretation of this property in terms
   of machine learning. Indeed, a stronger property is proved in
-  \cite{CovHar1967}: for an {\it integrable} function $f$  over $\mathbb{R}^m$
+  \cite{CovHarTIT67}: for an {\it integrable} function $f$  over $\mathbb{R}^m$
   w.r.t. the probability measure $P$, the expectation of
   $f(\nn(x,S_n))- f(x)$ converges to 0 when $n$ goes to infinity.
   This means that asymptotically, the nearest neighbour of $x$ has the same
@@ -415,7 +415,9 @@ fundamental difference is that the set $A_E^Y(S)$ is also made of elements
 whose label is predicted and is not 100\% sure.
 
 \subsection{VC-dimension}\label{vcdim}
-The notion of VC-dimension was originally defined by Vapnik and Chervonenkis \cite{Vapnik1998}, and introduced into learnability theory by Blumer et al. \cite{Blumer1989}. Roughly speaking, the VC-dimension of a class of learners is a numerical measure of their discrimination power. It appears that this number is strongly linked to the confidence interval between the empirical risk (i.e. the error a learner makes on the sample set) and the true risk (the error a learner makes on the whole universe $X$). As such, the VC-dimension of a class of learners is an essential element of their theoretical study.
+The notion of VC-dimension was originally defined by Vapnik and Chervonenkis
+\cite{Vap98}, and introduced into learnability theory by Blumer et al.
+\cite{BluEhrHauWarACM89}. Roughly speaking, the VC-dimension of a class of learners is a numerical measure of their discrimination power. It appears that this number is strongly linked to the confidence interval between the empirical risk (i.e. the error a learner makes on the sample set) and the true risk (the error a learner makes on the whole universe $X$). As such, the VC-dimension of a class of learners is an essential element of their theoretical study.
 We consider a universe $X$ (usually a Cartesian product to represent the data) and a
 family $\mathcal{H}=\{h_i \subseteq X|i \in I\}$ of subsets of $X$.
 The elements of $\mathcal{H}$ will be referred as hypothesis or models.
@@ -558,9 +560,9 @@ $B$, using a different sample set each time (respectively $S$ and $A_E^*$):
 \end{align*}
 The value $\acc(\NN_S, A)$ is the accuracy of $\NN_S$ over all the elements in
 $A$. A theoretical study of this accuracy has been done in
-\cite{LanIbaIJCAI1993} when the size of $A$ is known.  Regarding
+\cite{LanIbaIJCAI93} when the size of $A$ is known.  Regarding
 $\acc(\NN_{A_E^*}, B)$, this is the accuracy of $1$-nn when the sample set is
-noisy, and has been studied in \cite{OkaYugIJCAI1997}. This last formula leads
+noisy, and has been studied in \cite{OkaYugIJCAI97}. This last formula leads
 to the consistent facts:
 \begin{enumerate}
 \item The smaller $A_E^*$ (i.e. analogical reasoning does not
@@ -659,7 +661,7 @@ the training set.}
 
 Table \ref{TABLE_MONK} shows the same metrics for the Monk datasets and
 also report the results of the Analogical Proportion Classifier (\textit{APC})
-from \cite{MicBayDelJAIR2008}, which corresponds to algorithm
+from \cite{MicBayDelJAIR08}, which corresponds to algorithm
 \ref{algo_extended} with $k=100$.
 
 \begin{table}
@@ -811,7 +813,7 @@ in a Boolean setting. Some important points remain to be investigated, such as:
 \item Leaving the field of classification, can we provide a clear strategy for
   transfer learning with analogy? Indeed, the central goal of transfer
     learning is to identify and exploit analogies between source and target
-    domains \cite{Pan}.
+    domains \cite{PanYanTKDE10}.
 \end{itemize}
 \noindent
 These points definitely constitute interesting challenges for future works.
