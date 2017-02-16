@@ -4,7 +4,7 @@ compile:
 	latexmk phd.tex
 
 work:
-	terminator&
+	terminator -x vim &
 	latexmk -pvc phd.tex
 
 view:
