@@ -1,0 +1,714 @@
+%
+%Article pour LFA2016
+%A compiler avec pdflatex
+%
+
+\documentclass[a4paper,12pt]{article}
+\usepackage[latin9]{inputenc} % utiliser utf8, latin 9 ou autre suivant encoding utilisé
+\usepackage[francais]{babel}
+\usepackage[OT1]{fontenc}       
+\usepackage{graphicx}
+\usepackage{lfa10}  %% paquet à récupérer sur le site de la conf
+\usepackage{times}
+\usepackage{algorithm,algorithmic}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\renewcommand{\figurename}{Figure~}
+\renewcommand{\tablename}{Tableau~}
+\date{}
+
+\title{Proportions analogiques : créativité et fouille de données\\[1.3em]
+       Analogical proportions : creativity  and data mining
+}
+
+%\title{ Fouille de règles analogiques \\[1.3em]
+%       Mining analogical rules
+%}
+
+\author{\small
+%%        \begin{tabular}[t]{cc}
+%%      pour trois auteurs      
+      \begin{tabular}[t]{c@{\extracolsep{5em}}c@{\extracolsep{6em}}c@{\extracolsep{6em}}c}
+%%      pour quatre auteurs ...
+        Nicolas Hug${}^1$  & Henri Prade${}^1$ & Gilles Richard${}^1$  & Mathieu Serrurier${}^1$   
+        \end{tabular}
+        ~\\
+        \hspace{-1.2cm}${}^1$        \small{Institut de Recherche en Informatique de Toulouse (IRIT),
+Université Paul Sabatier, 
+118 route de Narbonne,
+31062 Toulouse Cedex 9}  \\
+         ~\\
+        \small{hug@irit.fr} \small{prade@irit.fr}  \small{richard@irit.fr}  \small{serrurier@irit.fr}
+     }
+       
+
+
+
+\parskip 3mm
+\maketitle
+
+
+\thispagestyle{empty}
+
+\doubleresume{Une proportion analogique est un énoncé de la forme $A$ est
+  à $B$ comme $C$ est à $D$, o\`u $A, B, C, D$ sont des vecteurs de valeurs
+  booléennes ou numériques. Ce type d'énoncé exprime que $A$ diffère
+  de $B$ comme $C$ diffère de $D$ (et vice-versa). Le fait que des
+  proportions analogiques soient satisfaites pour certaines variables permet
+  d'extrapoler qu'une telle relation tient pour d'autres et ainsi de prédire
+  des valeurs manquantes. Une autre propriété remarquable est que, étant
+  donnés trois vecteurs $A, B, C$, il en existe au plus un $D$,
+  généralement différent des trois premiers qui forme avec eux une
+  proportion analogique.  Cette  propriété est à la base de capacités
+  créatives qui sont discutées ici. Elles peuvent être aussi 
+  intéressantes pour des systèmes de recommandation, et aider à fournir
+  des explicationse. Par ailleurs, si des proportions analogiques
+  tiennent sur un ensemble de données, cela constitue une information qui m\'erite que l'on s'y int\'eresse.  Il est donc naturel de chercher à  extraire de telles proportions, comme on chercherait des règles
+  d'association. Nous proposons un algorithme qui extrait des proportions
+  analogiques. }
+%Des règles logiques simples peuvent être extraites de règles
+  %d'association. En fait, on peut considèrer une règle d'association $a
+  %\rightarrow b$ comme une approximation statistique d'une implication
+  %logique. Une telle règle capture un lien entre $a$ et $b$.  Les analogies
+  %sont aussi des relations logiques entre 4 items qui s'ecrivent $a:b::c:d$ et
+  %se lisent $a$ est à $b$ comme $c$ est à $d$. Il est donc naturel de
+  %chercher à les extraire d'un ensemble de données. Dans ce papier, nous
+  %proposons un algorithme qui extrait ces règles. Nous montrons aussi que
+  %ces règles peuvent être utilisées en pratique pour des systèmes de
+  %recommandation, et peuvent aider à fournir des explications pour une
+  %recommandation particulière.} {Analogie, Système de recommandation,
+  %règles analogiques.}
+{Proportion analogique; créativité; fouille de données.} {An analogical
+  proportion  is a  statement of the form $A$ is to $B$ as $C$ is to $D$,
+  where $A, B, C, D$ are  vectors   of Boolean or numerical values. This type
+  of statement expresses that $A$ differs from $B$ as $C$ differs from $D$ (and
+  vice-versa). When analogical proportions hold for some variables, it may be
+  used as  a basis for extrapolating that such a relation should hold as well
+  for other variables and thus predicting missing values. Another  remarkable
+  property is that given  three  vectors $A, B, C$, there exists at most one
+  $D$, generally different from  $A, B, C$ that altogether form an analogical
+  proportion.  This property is at the basis of the creative  capabilities that
+  are discussed here. These proportions may be  of interest in
+  recommendation systems, and may help providing explanations.
+ Besides, when  analogical  proportions hold in  data, it
+  highlights a kind of analogical independence.  It is then natural to look for
+  extracting such proportions from a data set, in the same way one may look for
+  association rules. We propose an algorithm that extracts analogical
+  proportions. 
+  %Since analogical proportions are just logical relations linking 4 elements
+  %in a statement $a:b::c:d$ that can be read $a$ is to $b$ as $c$ is to $d$, it
+  %is natural to check if we can extract their counterpart from a given dataset.
+  %In this paper, we develop an algorithm to extract what we call {\it
+  %analogical rules}. We also show how these rules could be used in practice in
+  %a recommendation system, and help to provide explanation to a given
+  %recommendation.  
+  } 
+  {Analogical proportion; creativity; data mining.}
+
+\section{Introduction}\vspace{-0.5cm}
+L'analogie est étymologiquement une identité de rapports. C'est ce
+qu'exprime précisément la proportion analogique, connue dès
+l'Antiquité, qui est un énoncé liant quatre termes, de la forme ``$A$ est
+à $B$ comme $C$ est à $D$'', construit sur le modèle de la proportion
+géométrique entre nombres ($\frac{A}{B}=\frac{C}{D}$). Une telle proportion
+est notée traditionnellement  $A:B::C:D$. Alors que dans la cadre
+numérique, ce type de proportion est à la base de la règle de trois, elle
+n'a en dehors de l'arithmétique qu'une valeur argumentative, ou explicative
+sans avoir de rôle véritable au plan de l'inférence. Telle était la
+situation jusqu'au travail pionnier de  Klein  \cite{KLein1983}. 
+
+Depuis  vingt ans, une série de travaux \cite{LepageAndoSau96,Cornuejols1996,
+LepageHDR2003,StrYvoTAL2006,MicBayDel2008,MicPraECSQARU2009,PraRicLU2013,PraRicIFCOLOG2014}
+ont conduit à des modélisations ensemblistes, numériques, ou logiques des
+proportions analogiques, pour des vecteurs $A, B, C, D$ à composantes
+booléennes ou numériques. On peut résoudre des équations en $X$ o\`u
+$A:B::C:X$ doit être valide. Ceci est à la base du mode inférentiel
+suivant. Etant donnés trois vecteurs connus $A, B, C$ à $n$ composantes et
+un vecteur $X$ connu seulement sur $p < n$ composantes, on peut inférer la
+valeur des $ $ composantes inconnues en résolvant des équations
+analogiques, quand leur unique solution existe, pourvu qu'une proportion
+analogique tienne entre les quatre vecteurs pour les $p$ autres composantes.
+Ces $n-p$ composantes  peuvent par exemple correspondre à la classe de $X$ en
+classification \cite{MicBayDel2008}, ou décrire le contenu d'une case vide
+dans un rébus  \cite{CorPraRicECAI2012}. Dans les deux cas, il s'agit d'un
+problème de \emph{prédiction}, reposant sur le principe que des
+régularités analogiques pour certains attributs observées sur les
+données, devraient continuer de s'appliquer à  d'autres attributs. Cela
+permet aussi de compléter des valeurs manquantes dans une base de données
+\cite{DBLP:conf/ipmu/BeltranJP14}. 
+
+Ce principe inférentiel est moins rigide que l'idée de dépendance
+fonctionnelle: si deux vecteurs sont égaux sur un sous-ensemble de
+composantes, ils sont \emph{nécessairement} égaux sur un autre
+sous-ensemble de composantes. Une formalisation de l'inférence analogique
+propo-sée dans \cite{DavRus1987} reposait sur ce principe. Une version
+relaxée de cette idée à la fois en termes de similarité et de
+possibilité s'appuie sur le principe : ``plus deux vecteurs sont
+\emph{similaires} sur un sous-ensemble de composantes, plus il est
+\emph{possible} qu'ils soient similaires sur un autre sous-ensemble
+(déterminé) de composantes''. Cela peut être vu comme une forme de
+raisonnement à partir de cas, et permet d'estimer des valeurs manquantes sous
+forme imprécise ou floue  \cite{ArrPlaPraTes1989}. 
+
+La différence principale entre le raisonnement à partir de cas et le
+raisonnement à base de proportions analogiques  est  la suivante : le premier
+rapproche un vecteur incomplet $X$ décrivant une ``situation'', mais pas sa
+``solution'' associée, à des vecteurs complets ``situation - solution'',
+pris un par un \cite{Prade2008},  pour extrapoler des solutions plausibles pour
+la situation du vecteur incomplet; le second type de raisonnement rapproche le
+vecteur incomplet $X$ à des vecteurs $A, B, C$ pris trois par trois. 
+
+Ce dispositif basé sur des triplets, s'il offre une base plus riche pour
+trouver des valeurs manquantes, a des dispositions pour la
+\emph{créativité} qui excèdent celles du  raisonnement à partir de cas.
+Cette capacité est due au fait que la proportion analogique est tout autant
+affaire de similarité que de dissimilarité, tandis que le raisonnement à
+partir de cas repose essentiellement sur la similarité. En effet, à partir
+de \emph{trois} vecteurs  $A, B, C$, on peut par analogie en construire un quatrième
+$X$ entièrement différent, pourvu que composante par composante il soit
+possible de trouver $X$ tel que $A:B::C:X$ tienne (rappelons que l'équation
+en proportion analogique peut ne pas avoir de solution), alors que le
+raisonnement à partir de cas ne peut pas produire à partir d'\emph{un} cas connu
+un  nouveau cas virtuel.
+%vecteur à  $n$ composantes à partir d'une base de vecteurs de même
+%taille. 
+
+Créer c'est souvent transposer (recopier !) des choses connues dans un
+contexte nouveau. C'est ce que permettent les proportions analogiques.  Ainsi
+l'exemple simple de l'être imaginaire qu'est le centaure, mi-homme,
+mi-cheval, fournit une proportion analogique \emph{continue} (cas o\`u $B=C$):
+``l'homme est au centaure ce que le centaure est au cheval'' (i.e., le centaure
+est un \emph{moyen} terme entre l'homme et le cheval).\footnote{D'une certaine
+fa\c{c}on le centaure est effectivement la solution de l'équation
+$homme:X::X:cheval$. On pourra en effet vérifier que sur les deux composantes
+\texttt{humain} et  \texttt{chevalin} des proportions analogiques tiennent
+effectivement:
+
+\small
+$\begin{array}{ccc}
+& humain & chevalin \\
+\hline
+homme & 1 & 0 \\
+centaure & 1/2 & 1/2    \\
+centaure & 1/2 & 1/2  \\
+cheval & 0 & 1
+\end{array}
+$
+%\vspace{0.2cm}\caption{Boolean encoding of the illustrative example}
+\label{centaure}
+}
+
+``Par imagination artificielle nous désignerons l'élaboration
+d'assemblages, plus ou moins complexes, par un programme réalisant une
+exploration (déterministe ou aléatoire) d'un univers combinatoire,
+contenant généralement un nombre très élevé de tels assemblages''
+écrivait Kaufmann en 1969 \cite{Kaufmann69}.\footnote{Il est curieux de
+constater qu'A. Kaufmann qui introduisit les ensembles flous en France au
+début des années 1970, les mentionne une première fois dans un colloque
+sur la créativité   \cite{Collective70}; il commencera d'ailleurs par les
+appliquer à cette problématique  \cite{KaufCoolsTDub}.} Pour explorer ces
+univers combinatoires l'auteur avait recours à l'aléatoire et à
+l'exploration de voisinages au sens de Hamming. La  proportion analogique,
+elle, prend appui sur l'existant pour extrapoler ou interpoler $X$ (selon qu'on
+cherche à valider $A:B::C:X$ ou  $A:X::X:D$) des vecteurs  représentant de
+nouveaux items, plutôt que de créer des assemblages arbitraires. 
+
+Comme dans le cas des règles d'association, les proportions analogiques ne
+permettent pas de prédire de manière certaine.  Mais de par leur capacité
+créative, elles peuvent  présenter un intérêt pour la recommandation,
+en aidant à proposer des produits différents de ceux habituellement
+considérés. Notons qu'on peut envisager d'utiliser les proportions
+analogiques de deux manières différentes. Soit il
+s'agit de la conception d'un \emph{nouveau} produit, et seuls les triplets $A, B, C$
+sont susceptibles d'être dans la base de données, et on cherche alors à
+produire  $X$ tel que $A:B::C:X$ tienne. Soit sur la base des produits
+existants, on recherche des proportions analogiques $A:B::C:D$ qui tiennent
+afin de pouvoir proposer $D$ à un usager qui ne connaitrait que $A, B, C$, et
+de souligner la nouveauté de $D$ qui diffère de $C$ de la même manière
+que $A$ diffère de $B$. Dans les deux cas, les proportions analogiques
+portent en elles une valeur explicative qui mérite en effet d'être
+exploitée.  
+ 
+Il est ainsi naturel de se poser la question de l'extraction automatique de
+proportions analogiques en partant d'une base de données quelconque. La
+recherche d'analogies exactes a déjà été envisagée dans le contexte de l'analyse
+formelle de concepts \cite{MicPraGue2011}. Dans ce papier, nous utilisons 
+l'algorithme Apriori \cite{agrawal} pour extraire de manière efficace tous les quadruplets cachés dans un ensemble de données, susceptibles de constituer des proportions analogiques (que nous \'evaluons ensuite de diverses mani\`eres). 
+
+L'article est structuré de la manière suivante. Dans la Section \ref{def},
+nous rappelons les principaux éléments nécessaires à la compréhension
+du problème, à savoir les notions d'analogies (plus précisément de
+proportions analogiques), et de règle d'association.  En Section \ref{algo}, nous développons notre algorithme et
+ses variantes possibles.  En Section \ref{expe}, nous indiquons les résultats
+de nos premières expériences.  
+%En
+%%dans la Section \ref{usage}, nous discutons d'utilisations possibles et 
+% conclusion, nous esquissons de nouvelles pistes de recherche concernant  l' extraction des des proportions analogiques et leur int\'er\^et  en mati\`ere de cr\'eativit\'e et d'explication.
+
+
+
+\section{Définitions générales }\label{def}
+Nous décrivons dans les sous-sections suivantes les principaux éléments
+nécessaires à la compréhension du problème en commen\c{c}ant par la
+notion de proportion analogique.
+
+
+\subsection{Proportions analogiques} \vspace{-0.5cm}
+Une proportion analogique, ou ici \emph{analogie},  ``$A$ est à $B$ ce que $C$
+est à $D$" exprime une relation  entre les paires $(A, B)$ et $(C, D)$, ainsi
+qu'entre les paires $(A, C)$ et $(B, D)$ en appliquant la permutation centrale
+de $B$ et $C$. On peut trouver de nombreux exemples naturels de telles
+proportions analogiques, comme par exemple ``le veau est à la vache ce que le
+poulain est à la jument", ou encore ``le pinceau est au peintre ce que la craie
+est au professeur". Cependant, ce n'est que récemment que des définitions
+formelles ont été proposées pour les proportions analogiques, dans des cadres
+très différents \cite{StroppaYvon2006,LepageHDR2003,MicPraECSQARU2009}. Dans
+cette section, nous donnons un bref résumé de la formalisation des proportions
+analogiques qui nous aideront à décrire nos algorithmes par la suite. Pour une
+introduction générale, voir
+\cite{PraRicLU2013,PraRicECSQARU2013,PraRicIFCOLOG2014}.
+
+Etant données les valeurs $a,b,c,d$ de quatre items d'une même variable
+booléenne ou numérique, il est entendu depuis Aristote qu'une proportion
+analogique est une relation quaternaire  satisfaisant les trois axiomes
+:\vspace{-0.2cm}
+
+$a:b::a:b$ (réflexivité)\vspace{-0.2cm}
+
+$a:b::c:d \!\!\implies  \!\!c:d::a:b$ (symétrie)\vspace{-0.2cm}
+
+$a:b::c:d \!\!\implies\!\! a:c::b:d$ (permut. centrale)
+
+En effet la notion de proportion analogique s'inspire directement de celle de
+proportion géométrique pour les nombres : sur $\mathbb{R}$ on peut définir
+$a:b::c:d$ comme  $ \! \frac{a}{b}= \frac{c}{d} \! \! \iff\! \!  ad\!  =\! bc$.
+
+Il existe plusieurs modèles de proportions analogiques, dépendant du domaine de
+définition. 
+%Lorsque le domaine est fixé, $T(a,b,c,d)$ s'écrit plus simplement
+%$a:b::c:d$.  
+
+- Domaine $\mathbb{B}=\{0,1\}$:  $a:b::c:d \\ \iff  (a \wedge \neg b \equiv c
+\wedge \neg d) \wedge (b \wedge \neg a \equiv d \wedge \neg c)\\ \iff   (a
+\wedge d \equiv b \wedge c) \wedge (a \vee d \equiv b \vee c)$.
+
+La $1^{\small{\mbox{ère}}}$ expression met en évidence des égalités
+entre différences.  La $2^{\small{\mbox{nde}}}$ insiste sur les similatités
+entre les extrêmes et les moyens.
+
+-  Domaine $\mathbb{B}^n$ (vecteurs à $n$ composantes):\\
+$\vec{a}:\vec{b}::\vec{c}:\vec{d} \iff \forall i \in [1,n], \
+a_i:b_i::c_i:d_i$. C'est une extension directe du cas booléen.
+
+\hspace{-0.1cm}Sur des composantes numériques  on peut utiliser :
+
+- Domaine $\mathbb{R}$: $a:b::c:d \\  \iff a-b= c-d \iff a + d= b + c$
+(proportion arithmétique)\footnote{Cette définition coincide sur $\{0,1\}$
+avec le cas booléen. Des extensions en logique multivaluée  des deux
+expressions booléennes ci-dessus ont été proposées; elles coincident sur
+$[0,1]$ avec la proportion arithmétique \cite{DuboisPR16}.}. 
+
+-  Domaine $\mathbb{R}^n$:\\ $\vec{a}:\vec{b}::\vec{c}:\vec{d} \iff
+\vec{a}-\vec{b} = \vec{c}-\vec{d}$. Ce qui étend la proportion arithmétique
+aux vecteurs réels, et $\vec{a}, \vec{b}, \vec{c}, \vec{d}$ forment un
+parallélogramme.
+
+
+D'autres définitions existent pour les matrices, les concepts formels, les
+treillis, etc \cite{StroppaYvon2006,LepageHDR2003,MicBarJeu2013}.
+
+\vspace{-0.2cm}\paragraph{Résolution d'équation\\}
+A partir de trois éléments $a, b, c$, le problème de la résolution d'équation
+analogique consiste à trouver un quatrième élément $x$ de telle sorte que la
+proportion $a:b::c:x$ soit valide. 
+
+Dans le cas des proportions booléennes, le problème n'a pas toujours de solution : bien
+qu'il soit facile de compléter  $1:0::1:x$ pour construire une proportion
+valide, il n'existe pas de solution à l'équation $1:0::0:x$\footnote{Dans le
+cas booléen, la proportion $a:b::c:d$ est vraie pour seulement 6 
+quadruplets (sur $2^4$ possibles).}. Par contre, toute proportion arithmétique
+$a:b::c:x$ se complète avec $x=c +b -a$ dans $\mathbb{R}$.
+
+\vspace{-0.2cm}\paragraph{Inférence analogique\\}
+Le raisonnement analogique peut être vu comme un moyen d'inférer de nouvelles
+connaissances à partir de proportions analogiques observées. Nous formalisons
+ici ce raisonnement dans le cas où les éléments $\vec{a},\vec{b},\vec{c},
+\vec{d}$ sont des vecteurs de $\mathbb{R}^n$ ou de $\mathbb{B}^n$. Le
+\textit{saut analogique} est un principe d'inférence non sûr
+qui postule que pour quatre vecteurs $\vec{a},\vec{b},\vec{c},\vec{d}$ tels
+que la proportion est vraie sur certaines composantes, alors la proportion reste vraie
+aussi sur les composantes restantes. On peut formuler cela de la manière
+suivante (où $\vec{a} = (a_1, a_2, \cdots a_n)$ et $J \subset [1,n]$) :
+$$\frac{\forall j \in J, a_j:b_j::c_j:d_j}{\forall i \in [1,n] \setminus J,
+a_i:b_i::c_i:d_i} \ (\text{saut analogique)}$$    
+\noindent
+Ce principe amène à une règle de prédiction dans le contexte suivant :
+On a 4 vecteurs $\vec{a},\vec{b},\vec{c}, \vec{d}$ où $\vec{d}$ n'est que
+partiellement connu : seules les composantes de $\vec{d}$ dont les indices sont
+dans $J$ sont connues. En utilisant l'inférence analogique, on peut prédire les composantes
+manquantes de $\vec{d}$ en résolvant l'ensemble des équations (pourvu qu'elles soient solubles)
+$\forall i \in [1,n] \setminus J, \quad a_i:b_i::c_i:d_i=1.$
+
+Dans le cas où les éléments sont tels que leur dernière composante est une
+classe (ou label), appliquer ce raisonnement sur $\vec{d}$
+revient à prédire une classe candidate pour $\vec{d}$. Lorsque l'on peut
+trouver plusieurs triplets $\vec{a},\vec{b},\vec{c}$ qui satisfont la
+proportion analogique sur les indices dans $J$, il est possible d'obtenir
+plusieurs classes candidates et il est alors nécessaire de faire un choix (par une
+procédure de vote ou n'importe quelle technique d'aggrégation), afin d'obtenir
+une seule et unique classe. Ce principe d'inférence a été
+appliqué avec succès à des problèmes de classification \cite{BayMicDel2007}.
+
+\vspace{-0.2cm}\subsection{Créativité, explication et
+indépendance}\vspace{-0.3cm} En dehors de la prédiction de valeurs
+inconnues, la proportionalité analogique offre une base pour créer une
+nouvelle entité $X$ à partir de 3 autres  $A, B,C$. Dès que $A\neq B$ et
+$A\neq C$, $X$ solution de la contrainte $A:B::C:X$ sera différent de $A$,
+$B$, et $C$. Ceci est illustré sur l'exemple de l'``invention'' de $X=$
+crème  aux pommes sur la base de l'existence de $A=$  tarte au citron, $B=$
+crème au citron, et $C=$ tarte aux pommes, avec le codage évident suivant:
+%\begin{table}[ht]
+
+%\vspace{0.1cm}
+{\small
+$\begin{array}{cccccccc}
+& \mbox{p\^ate}   & \mbox{crè.} & \mbox{citr.} & \mbox{pom.} & \mbox{des.} & \mbox{fr.} & \mbox{jus}\\
+\hline
+ \mbox{tarte  citron} & 1 & 0 & 1 & 0 & 1 & 1&1\\
+\mbox{crème citron} & 0 & 1 & 1 & 0 & 1 &1 &1\\
+\mbox{tarte pom.} & 1 & 0 & 0 & 1 & 1 &1 &1\\
+\hline
+\mbox{crème  pom.} & 0 & 1 & 0 & 1 &1 &1 &1
+\end{array}
+\vspace{0.1cm}
+$}
+ Le calcul de $X$ peut s'accompagner de l'explication: on fait de la tarte
+  aussi bien que de la crème, deux desserts,  avec le citron qui est un fruit
+  à jus, on fait de la tarte avec la pomme qui est un fruit à jus, pourquoi
+  ne pas considérer la  crème à la pomme?
+
+On peut observer sur cet exemple que sur certains attributs, $A, B, C$ sont
+  égaux, ce qui forme un contexte. Dans ce contexte, la proportionalité
+  analogique exprime une forme d'\emph{indépendance} (ana)logique, au sens
+  o\`u  dans cet exemple, la variable p\^ate  (et aussi crème) est
+  indépendante de la variable  citron (et aussi pomme):  dans le contexte on
+  trouve aussi bien de la tarte au citron que de la crème au citron.
+
+
+
+
+
+
+%\vspace{0.2cm}\caption{Boolean encoding of the illustrative example}
+%\label{illustrationCoding}
+%\end{table}
+
+%
+%\subsection{Systèmes de recommandation}
+%
+%L'objectif d'un système de recommandation est de fournir à un utilisateur une
+%liste personnalisée d'articles susceptibles de l'intéresser. 
+%
+%%Soit $U$ un ensemble d'utilisateurs et $I$ un ensemble d'articles. Pour
+%%certaines paires $(u, i) \in U \times I$, on connait la note $r_{ui}$, qui
+%%exprime l'intérêt que l'utilisateur $u$ porte à l'article $i$. Nous dénotons l'ensemble des notes connues
+%%du système par $R$.  $U_i$ est
+%%l'ensemble des utilisateurs qui ont noté l'article $i$, et symétriquement
+%%$I_u$ représente l'ensemble des articles que $u$ a notés.
+%%
+%%Pour recommander des articles aux utilisateurs, un système de recommandation
+%%procède ainsi:
+%%
+%%1. Avec un algorithme $A$, estimer les notes $r_{ui}$ inconnues (c.à.d.
+%%$r_{ui} \notin R$). Cette estimation  $A(u, i)$ est communément notée
+%%$\hat{r}_{ui}$.
+%%
+%%2. Avec une stratégie de recommandation $S$ et à la lumière des notes
+%%précédemment estimées, recommander des articles aux utilisateurs. Par exemple,
+%%une stratégie très basique mais assez courante est de suggérer à $u$ les
+%%articles $i$ pour lesquels $\hat{r}_{ui}$ est le plus grand.
+%
+%
+%Les 2 principales familles de systèmes de recommandation sont d\^ites:
+%\textit{basée sur le contenu} quand on utilise des méta-données sur les utilisateurs (age, 
+%sexe, zipcode,etc.) ou les items (prix, auteur s'il s'agit d'un livre ou film, etc.),
+%ou par \textit{filtrage collaboratif}, méthodes plus populaires, o\`u les prédictions sont faites sur la base de
+%{\it voisinage} des utilisateurs ou des objets.
+%
+%L'utilisation des proportions analogiques pour les systèmes de recommandation
+%a été étudiée dans \cite{HugPR15}.
+%Les auteurs suivent strictement le principe du saut analogique entre les utilisateurs pour faire des prédictions.
+%
+%%The main idea is that if an analogical proportion stands between four users $a,
+%%b, c, d$, meaning that for each item $j$ that they have commonly rated, the
+%%analogical proportion $r_{aj} : r_{bj} :: r_{cj} : r_{dj}$ holds, then it
+%%should also hold for an item $i$ that $a, b, c$ have rated but $d$ has not
+%%(i.e. $r_{di}$ is the missing component). This leads us to estimate $r_{di}$ as
+%%the solution $x = \hat{di}$ of the following analogical equation:
+%%$$r_{ai} : r_{bi} :: r_{ci} : x.$$
+%%\noindent
+%%Given a pair $(u,i)$ such that $r_{ui} \notin R$ (i.e. there is no available
+%%rating from user $u$ for item $i$), the main procedure is as follows:
+%%\begin{enumerate}
+%%\item find the set of 3-tuples of users $a, b, c$ such that an analogical
+%%  proportion stands between $a, b, c,$ and $u$ and such that the equation
+%%  $r_{ai} : r_{bi} :: r_{ci} : x$ is solvable.
+%%\item solve the equation $r_{ai} : r_{bi} :: r_{ci} : x$ and consider the
+%%solution $x$ as a candidate rating for $r_{ui}$.  \item set $\hat{ui}$ as an
+%%  aggregate of all candidate ratings.
+%%\end{enumerate}
+%%
+%%This technique has shown to be not too far from basic collaborative filtering
+%%approaches \cite{HugPR15}, but suffers of its inherent cubic complexity which makes it
+%%impossible to look for every possible 3-tuples of users, thus compromising the
+%%prediction accuracy.
+%
+\vspace{-0.3cm}\subsection{Règles d'association}\vspace{-0.3cm}
+Les règles d'association sont des informations extraites d'une base de
+données qui révèlent des dépendances entre produits (aussi appelés
+items).  Par exemple, partant
+de la règle d'association $a \rightarrow b$  (si on achète $a$ alors il y a
+de grandes chances que l'on achète $b$), un système de recommandation peut
+suggérer $b$ dès lors qu'on a acheté $a$ mais pas encore $b$.  On définit
+une règle d'association comme suit:
+
+Soit $I= \{i_1,i_2,...,i_m \}$ un ensemble d'items. Soit $T= \{t_1, t_2,...,t_n
+\}$ un (multi)-ensemble de transactions, i.e.,  $t_i \subseteq  I$. Une règle
+d'association s'exprime sous la forme $X \rightarrow Y$ o\`u $X \subset I ,~ Y
+\subset I, $ et $X \cap Y = \emptyset$.  $X$ et $Y$ sont des ensembles d'items
+(appelés par la suite \textit{itemsets}), et le \emph{support} $supp(X)$ d'un
+itemset $X$ est défini comme la proportion de
+transactions qui le contiennent.  Un certain nombre de mesures permettent
+d'\'evaluer la {\it qualité} d'une règle d'association, comme  la
+\emph{confiance} qui s'exprime sous la forme $\frac{supp( X \cup Y)}{supp(X)}$.
+
+Les méthodes d'extraction de telles règles ont fait l'objet de nombreuses
+études. L'algorithme {\it Apriori} 
+\cite{agrawal} est probablement le plus connu mais il en existe d'autres.
+L'idée   est de fixer un seuil minimum $\alpha$ pour le support et de chercher dans
+$2^I$ les itemsets dont le support dépasse $\alpha$, pour obtenir un ensemble
+$S$ d'itemsets fréquents. Cette recherche est facilitée par le fait que
+tout sous-ensemble d'un itemset fréquent est aussi fréquent.
+
+On se fixe alors un nouveau seuil $\beta$ pour la confiance.  Dès lors que
+l'on dispose d'un itemset $IS$ de $S$, on peut chercher toutes les partitions
+de $IS$ sous la forme $X \cup Y = IS$, calculer la confiance de la règle $X
+\rightarrow Y$, ne garder cette règle que si sa confiance dépasse le seuil
+$\beta$.
+
+L'algorithme retourne finalement un ensemble de règles d'association
+respectant les critères de qualité exigés, et fournissant donc un certain
+nombre d'informations sur les liens entre les éléments de la base de
+données.
+%Sur le mode des proportions analogiques, on admettra que {\it le dentifrice
+%est à la brosse à dent ce que le beurre est à la biscotte}.  Dans ce
+%cas, on peut penser recommander à quelqu'un ayant acheté dentifrice,
+%brosse à dent et beurre, d'acheter des biscottes. Sur quelle base?  Sur la
+%base que la relation liant dentifrice et brosse à dent est la même que
+%celle liant beurre et biscottes. 
+Au même titre que les règles d'association, la détection de proportions
+analogiques dans une base de données est une information supplémentaire
+fournie aux détenteurs de la base.  Dans la section suivante, nous 
+utilisons l'algorithme {\it Apriori} pour extraire d'une base des proportions
+analogiques.
+
+\vspace{-0.3cm}\section{Trouver des analogies}\label{algo}\vspace{-0.3cm}
+Dans la suite, on recherche des analogies dans une base de données dédiée à la
+recommandation.
+L'objectif d'un système de recommandation est de fournir à un utilisateur une
+liste personnalisée d'articles susceptibles de l'intéresser.  Soit $U$ un
+ensemble d'utilisateurs et $I$ un ensemble d'items. Pour certaines paires $(u,
+i) \in U \times I$, on connait la note $r_{ui}$, qui exprime l'intérêt que
+l'utilisateur $u$ porte à l'item $i$ : on trouvera souvent $r_{ui} \in
+[\text{aime, n'aime pas}]$ ou bien $r_{ui} \in [1, 2, 3, 4, 5]$. Nous dénotons l'ensemble des notes
+connues du système par $R$.
+% Pour recommander des articles aux utilisateurs, un
+%système de recommandation procède ainsi: i) avec un algorithme $A$, on estime
+%les notes $r_{ui}$ inconnues (c.à.d.  $r_{ui} \notin R$);  
+%Cette estimation  $A(u, i)$ est communément notée $\hat{r}_{ui}$.
+%ii) Avec une stratégie de recommandation $S$ et au vu des notes précédemment
+%estimées, recommander des items aux utilisateurs. 
+%Par exemple, une stratégie très basique mais assez courante est de suggérer à
+%$u$ les articles $i$ pour lesquels $\hat{r}_{ui}$ est le plus grand.
+
+
+Notre approche s'applique donc au cas o\`u peu de notes sont connues.  Considérons
+4 items  $A, B, C$ et $D$ pour lesquels on cherche à savoir s'ils constituent
+une analogie valide, sans avoir pour l'instant d'idée sur l'ordre dans lequel
+on doit les considérer. Comme pour les règles d'association, la notion de
+support demeure puisque ces 4 items constituent un 4-itemset.  Par
+définition:
+
+%\small
+$Supp(\{A, B, C, D \})= \frac{|U_{ABCD}|}{|U|}$, où $U_{ABCD}$ est l'ensemble
+des utilisateurs qui ont conjointement noté $A, B, C,$ et $D$.
+
+%Dans le cas d'une base de données de films comme MovieLens, le support de 4
+%films $\{a, b, c, d \}$ est simplement la proportion d'utilisateurs ayant vu
+%ces 4 films. 
+Naturellement, comme pour les règles d'association, on peut ne
+s'intéresser qu'aux analogies dont le support est supérieur à un certain
+seuil $\alpha$.  Ensuite, pour un itemset $\{A, B, C, D \}$ de support
+supérieur au seuil $\alpha$ que l'on s'est fixé, et ayant à notre
+disposition une relation analogique permettant d'affirmer si, par exemple,
+$A:B::C:D$ est valide ou non, on cherche quelles sont les analogies possibles. 
+
+On sait qu'il y a 4! = 24 permutations possibles de $\{A, B, C, D \}$,
+correspondant à 24 analogies possibles. Cependant, compte tenu des
+propriétés de l'analogie, un certain nombre d'entre elles sont
+équivalentes et mènent à 3 classes de 8 analogies équivalentes
+représentées par:
+\begin{itemize}
+\item $A:B::C:D$
+\item $A:B::D:C$
+\item $A:D::C:B$
+\end{itemize}
+Il convient donc de ne chercher que ces trois classes d'analogies.  Pour ce
+faire, on pourra se donner une fonction $f$ évaluant la qualité d'une
+analogie, un autre seuil de qualité $\beta$, et ne retenir, parmi les trois
+options possibles que celles dont la qualité dépasse le seuil $\beta$. Ce que
+nous appelons la qualité ici joue le rôle de la confiance pour les règles
+d'association.  En clair $A:B::C:D$ est retenue comme analogie  valide si et
+seulement si $f(A:B::C:D) \geq \beta$.  A la fin de cette procédure, on obtient
+donc un ensemble d'analogies qui représentent des relations entre quatre items.
+
+\subsubsection{Exemples de fonction de qualité}
+Tous les 4-itemsets considérés $A, B, C, D$ sont représentés par
+des vecteur de notes.  La dimension de ces vecteurs est égale au nombre
+d'utilisateurs ayant noté les quatre items.  Cela nous donne plusieurs options
+pour mesurer la qualité d'une proportion $A:B::C:D$, qui dépend de la nature
+des analogies considérées et donc implicitement de l'échelle de notes.
+
+Dans le cas d'une échelle binaire ($r_{ui} \in [\text{aime, n'aime pas}]$), on
+pourra choisir pour $f$ la proportion de composantes pour lesquelles l'analogie
+tient parfaitement.  Si l'échelle est numérique, on dispose de plusieurs
+techniques pour évaluer l'exactitude d'une proportion entre quatre réels, qui
+donneront des valeurs entre 0 et 1. Là aussi, on peut envisager une
+aggrégation de ces valeurs de vérité.  Toujours si l'échelle est réelle et en
+utilisant la proportion arithmétique, on sait que $A, B, C, D$ forment un
+parallèlogramme ssi l'analogie est parfaite. La qualité d'une analogie
+$A:B::C:D$ est donc inversement proportionnelle à la déformation du
+parallélogramme dans $\mathbb{R}^n$, que l'on peut calculer en termes de
+distance euclidienne.  Enfin, en adoptant un point de vue statistique on peut aussi
+s'intéresser à la probabilité d'observer $A:B::C:D$, et considérer que la
+proportion est crédible si elle a peu de chance d'être dûe au hasard (voir
+Section \ref{expe}).
+
+\subsubsection{Algorithme}
+L'algorithme d'extraction de règles analogiques est alors calqué sur le modèle
+d'extraction de règles d'association : on se donne une fonction de qualité $f$,
+et deux seuils $\alpha$ et $\beta$. 
+
+D'abord, on calcule tous les 4-itemsets de support supérieur au seuil $\alpha$
+à   l'aide de l'algorithme \textit{Apriori}.  Pour chaque itemset retenu,
+on calcule la qualité des trois formes possibles non équivalentes d'analogie, et on garde celles dont
+la qualité dépasse le seuil $\beta$.
+%
+%\begin{enumerate}
+%\item Entrée: une relation d'analogie, une fonction de qualité $f$, deux seuils
+%  $\alpha$ et $\beta$.
+%\item Calculer tous les 4-itemsets de support supérieur au seuil $\alpha$ à
+%  l'aide l'algorithm \textit{Apriori}.
+%\item Pour chaque itemset retenu, calculer, parmi les 3 formes possibles non
+%  équivalentes d'analogie, celles dont la qualité dépasse le seuil $\beta$.
+%\item Sortie : la liste des règles analogiques retenues.
+%\end{enumerate}
+
+\section{Premières expériences}\label{expe} 
+
+Nous avons expérimenté cet algorithme sur la base de données
+Movielens\footnote{\href{http://grouplens.org/datasets/movielens/}{http://grouplens.org/datasets/movielens/}},
+constituée de $100~000$ notes de $1700$ films par $1000$ utilisateurs. Chaque
+note appartient à l'échelle $[1, 2, 3, 4, 5]$, mais nous l'avons ramenée à une
+échelle binaire de la façon suivante : un utilisateur $u$ aime un film s'il lui
+a attribué une note supérieure à $\mu_u$, où $\mu_u$ est la note moyenne que
+$u$ donne aux films qu'il a vus.
+
+En plus de choisir un critère de support minimal, nous avons aussi imposé un
+support maximal : les films très populaires vus par beaucoup de monde font
+généralement consensus (les gens les apprécient), et ont peu de chance de
+construire des analogies intéressantes. Cela a de plus l'avantage de réduire
+l'espace de recherche, et donc accélerer significativement la recherche de
+4-itemsets. De plus, toujours dans le but d'éviter de construire des analogies
+trop triviales, on ne retient pas les proportions de la forme $x:x::x:x$.
+
+En choisissant un support minimal de 40 et un support maximal de 150, nous
+obtenons les mesures de qualités (calculées comme la proportion d'analogies 
+parfaites) illustrées par la figure \ref{qualite}. Comme on peut le voir, la
+meilleure proportion a une qualité d'environ $40$\%, ce qui peut paraître peu
+convainquant. Néanmoins, en remarquant que pour une composante il y a 4 chances
+sur 16 d'obtenir une analogie significative (on ignore les $x:x::x:x$), et en supposant que les composantes sont
+indépendantes les unes des autres, le nombre de composantes pour lesquelles
+l'analogie est vraie suit une loi binomiale de paramètres $\mathcal{B}(40,
+\frac{1}{4})$, où $40$ est la dimension des vecteurs. Sous ces hypothèses, la
+probabilité d'obtenir $40$\% ou plus d'analogies parfaites est de $0.026$, ce qui
+tend à montrer qu'un tel quadruplet d'items reste significatif, en cela que la
+proportion analogique observée a peu de chance d'être due au hasard.
+
+\begin{figure}[h]
+  \vspace{-0.4cm}
+\caption{Qualité des proportions trouvées}
+\label{qualite}
+\includegraphics[scale=0.6]{zob.pdf}
+\vspace{-0.4cm}
+\end{figure}
+Les mêmes expériences ont été menées en gardant l'échelle de notes numérique
+($[1, 2, 3, 4, 5]$) et en utilisant une expression multivaluée de l'analogie.
+Les meilleures proportions obtenues s'avèrent être globalement les mêmes que
+celles qui ressortent de l'échelle binaire, montrant ainsi la cohérence des
+deux approches. La m\'ediocre qualit\'e des proportions analogiques trouv\'ees, 
+m\^eme si elles sont statistiquement significatives, 
+ne permet pas d'utiliser raisonnablement l'inf\'erence analogique dans cet exemple. 
+Ceci  tend \`a expliquer a posteriori pourquoi une approche pour la pr\'ediction de notes manquantes, bas\'ee sur la recherche de triplets analogiques, avait obtenu des r\'esultats modestes \cite{HugPR15}.
+
+%\section{Utilisations possibles}\label{usage}
+
+
+%\textcolor{red}{Dans le cas o\`u la matrice que l'on considère est binaire
+%avec toutes les valeurs connues, alors bien s\^ur le support de tout itemset
+%est égal à 1 et la notion de support au sens usuel perd son intérêt.
+%Cela signifie par exemple que tous les utilisateurs ont vu tous les films et
+%ont donné un avis positif ou négatif pour tous les films. tel  Il faut donc
+%reconsidérer cette notion de support plus précisément}
+%
+%
+
+\section{Conclusion}\label{conc}
+Comme on vient de le voir, trouver de bonnes proportions analogiques \`a des fins de pr\'ediction, peut s'av\'erer difficile (voire illusoire) dans le cas de situations peu inform\'ees (peu de notes connues). Cependant, dans le cas o\`u les items sont compl\`etement d\'ecrits, on peut rechercher aussi des proportions analogiques entre items valid\'ees sur un nombre suffisant d'attributs pertinents. 
+Une fois identifiées, des analogies semblent pouvoir aider à la recommandation. Ainsi,
+si on considère un usager qu'on sait par ailleurs m\'econtent des items $A$ et $C$, mais satisfait de l'item $B$,
+alors on peut lui sugg\'erer un item $D$ pourvu 
+ que $A:B::C:D$ soit une analogie. Cela signifie  que $D$ diffère de $C$
+comme  $B$ diffère de $A$.  
+En conséquence, on peut raisonnablement recommander
+$D$ à l'usager sur cette base : en effet, $D$ est tout autant étranger à $C$ que
+$B$ l'est à $A$. Ce genre de recommandation fait particulièrement sens si la
+règle d'association $B \to D$ a un support trop faible. De plus, la
+proportion analogique peut servir de base à une justification de la
+recommandation en termes d'attributs significatifs, indépendamment de toute base
+statistique.
+
+
+
+
+%\begin{thebibliography}{9}
+%\small{
+%\bibitem{conference}  L. Effa,  T. Ory. Des articles sur les ensembles flous. 
+%\emph{Actes des Rencontres Francophones sur la Logique Floue et ses Applications (LFA), 
+%2002}, pp. 11-296.
+%\bibitem{livre}  U. Nexpert. \emph{Le livre}. Son éditeur, son édition, 1929.
+%\bibitem{revue}  I. Troiseu-Pami.  Un article intéressant. \emph{Journal
+%de Spirou}, 17(3) : 1-100, 1987.
+%}
+%\end{thebibliography}
+%\newpage
+\bibliographystyle{plain}
+{\small\bibliography{biblio,biblioRecSys}}
+
+\end{document}

@@ -33,9 +33,7 @@
 		\color{gray}
      		{\textsc{#1}}}{}}
 
-% aggregate
 \newcommand{\aggr}[1]{\underset{#1}{\operatorname{aggr}}\;}
-
 \newcommand{\rui}{r_{ui}}
 \newcommand{\ruj}{r_{uj}}
 \newcommand{\rvi}{r_{vi}}
@@ -47,3 +45,25 @@
 \newcommand{\Iuv}{I_{uv}}
 \newcommand{\Rtrain}{R_{\text{train}}}
 \newcommand{\Rtest}{R_{\text{test}}}
+\newcommand*\albl[1]{\overline{#1}}
+\newcommand*\nan[0]{1\mbox{-nan}} %pour 1nan
+\newcommand*\knan[0]{k\mbox{-nan}} %pour knan
+\newcommand*\NaN[0]{\mbox{NaN}} %pour NaN
+\newcommand*\nn[0]{1\mbox{-nn}} %pour 1nn
+\newcommand*\NN[0]{\mbox{NN}} %pour NN
+\newcommand*\acc[0]{\mbox{Acc}} %pour Acc
+\newcommand\given[1][]{\:#1\vert\:} %pour proba conditionnelle
+% pour equal by def
+\newcommand\eqdef{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily
+def}}}{=}}}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}} % sais pas
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\plim}{\mathit{p}-lim}
+\DeclareMathOperator{\ess}{ess}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{property}{Property}
+\newtheorem{problem}{Problem}

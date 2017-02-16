@@ -10,7 +10,7 @@
 \begin{document}
 \makeflyleaf
 
-\pagenumbering{roman}
+\frontmatter % use roman numbering for front matter.
 
 \input{acknowledgements.tex}
 
@@ -33,11 +33,15 @@
 \tableofcontents*
 \addtocontents{toc}{\par\nobreak \mbox{}\hfill{\bf Page}\par\nobreak}
 
-\pagenumbering{arabic}
+\mainmatter % from now on, use arabic numbering for pages
 
 \input{introduction.tex}
 
 \input{recommender_systems.tex}
+
+\input{functional_definition.tex}
+
+\input{analogy_preserving_functions.tex}
 
 \backmatter
 \bibliographystyle{siam}

@@ -713,7 +713,7 @@ an approach can improve significantly both RMSE and MAE of the algorithm.
 Similarly, in the clone-based approach, it might be of interest to discount
 clones that rely on a too small number of common items.
 
-\section{Towards an ordinal view of ratings}
+\subsection{Towards an ordinal view of ratings}
 \label{ORDINAL_POV}
 
 We may wonder if one can devise a counterpart of the numerical clone-based
@@ -726,7 +726,7 @@ In this section, we discuss an ordinal counterpart of the analogical approach
 previously presented.  Analogical reasoning with ordinal data has first been
 proposed in \cite{MicletBarbot09}, yet with a different concern.
 
-\subsection{An algorithm for rank prediction}
+\subsubsection{An algorithm for rank prediction}
 Indeed the idea that ``\textit{the rating of user $u$ for item $i$ is to the
 rating of user $v$ for item $i$ as the rating of user $u$ for item $j$ is to
 the rating of user $v$ for item $j$}’’ may be understood  as well in an ordinal
@@ -757,7 +757,7 @@ section \ref{MODELING_CLONES}, but instead of predicting a rating, we output a
 predicted rank. This approach is denoted as \textit{RankAnlg}.
 
 
-\subsection{Experiments}
+\subsubsection{Experiments}
 
 We evaluated the performance of our algorithm and compared it to other
 previously described approaches, using the exact same evaluation protocol as in
@@ -818,3 +818,203 @@ supports $|I_{uv}|$ over all users $v \in N_i^k(u)$.
 The use Spearman's rho tends to provide with neighbors that have smaller
 support, thus leading to a less significant and less accurate estimation of the
 neighborhood, which may explain the differences in performance.
+
+\section{Mining analogical proportions}
+
+\subsection{Règles d'association}
+Les règles d'association sont des informations extraites d'une base de
+données qui révèlent des dépendances entre produits (aussi appelés
+items).  Par exemple, partant
+de la règle d'association $a \rightarrow b$  (si on achète $a$ alors il y a
+de grandes chances que l'on achète $b$), un système de recommandation peut
+suggérer $b$ dès lors qu'on a acheté $a$ mais pas encore $b$.  On définit
+une règle d'association comme suit:
+
+Soit $I= \{i_1,i_2,...,i_m \}$ un ensemble d'items. Soit $T= \{t_1, t_2,...,t_n
+\}$ un (multi)-ensemble de transactions, i.e.,  $t_i \subseteq  I$. Une règle
+d'association s'exprime sous la forme $X \rightarrow Y$ o\`u $X \subset I ,~ Y
+\subset I, $ et $X \cap Y = \emptyset$.  $X$ et $Y$ sont des ensembles d'items
+(appelés par la suite \textit{itemsets}), et le \emph{support} $supp(X)$ d'un
+itemset $X$ est défini comme la proportion de
+transactions qui le contiennent.  Un certain nombre de mesures permettent
+d'\'evaluer la {\it qualité} d'une règle d'association, comme  la
+\emph{confiance} qui s'exprime sous la forme $\frac{supp( X \cup Y)}{supp(X)}$.
+
+Les méthodes d'extraction de telles règles ont fait l'objet de nombreuses
+études. L'algorithme {\it Apriori} 
+\cite{agrawal} est probablement le plus connu mais il en existe d'autres.
+L'idée   est de fixer un seuil minimum $\alpha$ pour le support et de chercher dans
+$2^I$ les itemsets dont le support dépasse $\alpha$, pour obtenir un ensemble
+$S$ d'itemsets fréquents. Cette recherche est facilitée par le fait que
+tout sous-ensemble d'un itemset fréquent est aussi fréquent.
+
+On se fixe alors un nouveau seuil $\beta$ pour la confiance.  Dès lors que
+l'on dispose d'un itemset $IS$ de $S$, on peut chercher toutes les partitions
+de $IS$ sous la forme $X \cup Y = IS$, calculer la confiance de la règle $X
+\rightarrow Y$, ne garder cette règle que si sa confiance dépasse le seuil
+$\beta$.
+
+L'algorithme retourne finalement un ensemble de règles d'association
+respectant les critères de qualité exigés, et fournissant donc un certain
+nombre d'informations sur les liens entre les éléments de la base de
+données.
+%Sur le mode des proportions analogiques, on admettra que {\it le dentifrice
+%est à la brosse à dent ce que le beurre est à la biscotte}.  Dans ce
+%cas, on peut penser recommander à quelqu'un ayant acheté dentifrice,
+%brosse à dent et beurre, d'acheter des biscottes. Sur quelle base?  Sur la
+%base que la relation liant dentifrice et brosse à dent est la même que
+%celle liant beurre et biscottes. 
+Au même titre que les règles d'association, la détection de proportions
+analogiques dans une base de données est une information supplémentaire
+fournie aux détenteurs de la base.  Dans la section suivante, nous 
+utilisons l'algorithme {\it Apriori} pour extraire d'une base des proportions
+analogiques.
+
+\subsection{Trouver des analogies}
+Dans la suite, on recherche des analogies dans une base de données dédiée à la
+recommandation.
+L'objectif d'un système de recommandation est de fournir à un utilisateur une
+liste personnalisée d'articles susceptibles de l'intéresser.  Soit $U$ un
+ensemble d'utilisateurs et $I$ un ensemble d'items. Pour certaines paires $(u,
+i) \in U \times I$, on connait la note $r_{ui}$, qui exprime l'intérêt que
+l'utilisateur $u$ porte à l'item $i$ : on trouvera souvent $r_{ui} \in
+[\text{aime, n'aime pas}]$ ou bien $r_{ui} \in [1, 2, 3, 4, 5]$. Nous dénotons l'ensemble des notes
+connues du système par $R$.
+% Pour recommander des articles aux utilisateurs, un
+%système de recommandation procède ainsi: i) avec un algorithme $A$, on estime
+%les notes $r_{ui}$ inconnues (c.à.d.  $r_{ui} \notin R$);  
+%Cette estimation  $A(u, i)$ est communément notée $\hat{r}_{ui}$.
+%ii) Avec une stratégie de recommandation $S$ et au vu des notes précédemment
+%estimées, recommander des items aux utilisateurs. 
+%Par exemple, une stratégie très basique mais assez courante est de suggérer à
+%$u$ les articles $i$ pour lesquels $\hat{r}_{ui}$ est le plus grand.
+
+
+Notre approche s'applique donc au cas o\`u peu de notes sont connues.  Considérons
+4 items  $A, B, C$ et $D$ pour lesquels on cherche à savoir s'ils constituent
+une analogie valide, sans avoir pour l'instant d'idée sur l'ordre dans lequel
+on doit les considérer. Comme pour les règles d'association, la notion de
+support demeure puisque ces 4 items constituent un 4-itemset.  Par
+définition:
+
+%\small
+$Supp(\{A, B, C, D \})= \frac{|U_{ABCD}|}{|U|}$, où $U_{ABCD}$ est l'ensemble
+des utilisateurs qui ont conjointement noté $A, B, C,$ et $D$.
+
+%Dans le cas d'une base de données de films comme MovieLens, le support de 4
+%films $\{a, b, c, d \}$ est simplement la proportion d'utilisateurs ayant vu
+%ces 4 films. 
+Naturellement, comme pour les règles d'association, on peut ne
+s'intéresser qu'aux analogies dont le support est supérieur à un certain
+seuil $\alpha$.  Ensuite, pour un itemset $\{A, B, C, D \}$ de support
+supérieur au seuil $\alpha$ que l'on s'est fixé, et ayant à notre
+disposition une relation analogique permettant d'affirmer si, par exemple,
+$A:B::C:D$ est valide ou non, on cherche quelles sont les analogies possibles. 
+
+On sait qu'il y a 4! = 24 permutations possibles de $\{A, B, C, D \}$,
+correspondant à 24 analogies possibles. Cependant, compte tenu des
+propriétés de l'analogie, un certain nombre d'entre elles sont
+équivalentes et mènent à 3 classes de 8 analogies équivalentes
+représentées par:
+\begin{itemize}
+\item $A:B::C:D$
+\item $A:B::D:C$
+\item $A:D::C:B$
+\end{itemize}
+Il convient donc de ne chercher que ces trois classes d'analogies.  Pour ce
+faire, on pourra se donner une fonction $f$ évaluant la qualité d'une
+analogie, un autre seuil de qualité $\beta$, et ne retenir, parmi les trois
+options possibles que celles dont la qualité dépasse le seuil $\beta$. Ce que
+nous appelons la qualité ici joue le rôle de la confiance pour les règles
+d'association.  En clair $A:B::C:D$ est retenue comme analogie  valide si et
+seulement si $f(A:B::C:D) \geq \beta$.  A la fin de cette procédure, on obtient
+donc un ensemble d'analogies qui représentent des relations entre quatre items.
+
+\subsubsection{Exemples de fonction de qualité}
+Tous les 4-itemsets considérés $A, B, C, D$ sont représentés par
+des vecteur de notes.  La dimension de ces vecteurs est égale au nombre
+d'utilisateurs ayant noté les quatre items.  Cela nous donne plusieurs options
+pour mesurer la qualité d'une proportion $A:B::C:D$, qui dépend de la nature
+des analogies considérées et donc implicitement de l'échelle de notes.
+
+Dans le cas d'une échelle binaire ($r_{ui} \in [\text{aime, n'aime pas}]$), on
+pourra choisir pour $f$ la proportion de composantes pour lesquelles l'analogie
+tient parfaitement.  Si l'échelle est numérique, on dispose de plusieurs
+techniques pour évaluer l'exactitude d'une proportion entre quatre réels, qui
+donneront des valeurs entre 0 et 1. Là aussi, on peut envisager une
+aggrégation de ces valeurs de vérité.  Toujours si l'échelle est réelle et en
+utilisant la proportion arithmétique, on sait que $A, B, C, D$ forment un
+parallèlogramme ssi l'analogie est parfaite. La qualité d'une analogie
+$A:B::C:D$ est donc inversement proportionnelle à la déformation du
+parallélogramme dans $\mathbb{R}^n$, que l'on peut calculer en termes de
+distance euclidienne.  Enfin, en adoptant un point de vue statistique on peut aussi
+s'intéresser à la probabilité d'observer $A:B::C:D$, et considérer que la
+proportion est crédible si elle a peu de chance d'être dûe au hasard (voir
+Section \ref{expe}).
+
+\subsubsection{Algorithme}
+L'algorithme d'extraction de règles analogiques est alors calqué sur le modèle
+d'extraction de règles d'association : on se donne une fonction de qualité $f$,
+et deux seuils $\alpha$ et $\beta$. 
+
+D'abord, on calcule tous les 4-itemsets de support supérieur au seuil $\alpha$
+à   l'aide de l'algorithme \textit{Apriori}.  Pour chaque itemset retenu,
+on calcule la qualité des trois formes possibles non équivalentes d'analogie, et on garde celles dont
+la qualité dépasse le seuil $\beta$.
+
+\begin{enumerate}
+\item Entrée: une relation d'analogie, une fonction de qualité $f$, deux seuils
+  $\alpha$ et $\beta$.
+\item Calculer tous les 4-itemsets de support supérieur au seuil $\alpha$ à
+  l'aide l'algorithm \textit{Apriori}.
+\item Pour chaque itemset retenu, calculer, parmi les 3 formes possibles non
+  équivalentes d'analogie, celles dont la qualité dépasse le seuil $\beta$.
+\item Sortie : la liste des règles analogiques retenues.
+\end{enumerate}
+
+\subsection{Premières expériences}
+
+Nous avons expérimenté cet algorithme sur la base de données
+Movielens\footnote{http://grouplens.org/datasets/movielens/},
+constituée de $100~000$ notes de $1700$ films par $1000$ utilisateurs. Chaque
+note appartient à l'échelle $[1, 2, 3, 4, 5]$, mais nous l'avons ramenée à une
+échelle binaire de la façon suivante : un utilisateur $u$ aime un film s'il lui
+a attribué une note supérieure à $\mu_u$, où $\mu_u$ est la note moyenne que
+$u$ donne aux films qu'il a vus.
+
+En plus de choisir un critère de support minimal, nous avons aussi imposé un
+support maximal : les films très populaires vus par beaucoup de monde font
+généralement consensus (les gens les apprécient), et ont peu de chance de
+construire des analogies intéressantes. Cela a de plus l'avantage de réduire
+l'espace de recherche, et donc accélerer significativement la recherche de
+4-itemsets. De plus, toujours dans le but d'éviter de construire des analogies
+trop triviales, on ne retient pas les proportions de la forme $x:x::x:x$.
+
+En choisissant un support minimal de 40 et un support maximal de 150, nous
+obtenons les mesures de qualités (calculées comme la proportion d'analogies 
+parfaites) illustrées par la figure \ref{qualite}. Comme on peut le voir, la
+meilleure proportion a une qualité d'environ $40$\%, ce qui peut paraître peu
+convainquant. Néanmoins, en remarquant que pour une composante il y a 4 chances
+sur 16 d'obtenir une analogie significative (on ignore les $x:x::x:x$), et en supposant que les composantes sont
+indépendantes les unes des autres, le nombre de composantes pour lesquelles
+l'analogie est vraie suit une loi binomiale de paramètres $\mathcal{B}(40,
+\frac{1}{4})$, où $40$ est la dimension des vecteurs. Sous ces hypothèses, la
+probabilité d'obtenir $40$\% ou plus d'analogies parfaites est de $0.026$, ce qui
+tend à montrer qu'un tel quadruplet d'items reste significatif, en cela que la
+proportion analogique observée a peu de chance d'être due au hasard.
+
+\begin{figure}[h]
+  \vspace{-0.4cm}
+\caption{Qualité des proportions trouvées}
+\label{qualite}
+\includegraphics[scale=0.6]{figures/quality_of_proportions.pdf}
+\vspace{-0.4cm}
+\end{figure}
+Les mêmes expériences ont été menées en gardant l'échelle de notes numérique
+($[1, 2, 3, 4, 5]$) et en utilisant une expression multivaluée de l'analogie.
+Les meilleures proportions obtenues s'avèrent être globalement les mêmes que
+celles qui ressortent de l'échelle binaire, montrant ainsi la cohérence des
+deux approches. La m\'ediocre qualit\'e des proportions analogiques trouv\'ees, 
+m\^eme si elles sont statistiquement significatives, 
+ne permet pas d'utiliser raisonnablement l'inf\'erence analogique dans cet exemple. 
+Ceci  tend \`a expliquer a posteriori pourquoi une approche pour la pr\'ediction de notes manquantes, bas\'ee sur la recherche de triplets analogiques, avait obtenu des r\'esultats modestes \cite{HugPR15}.
