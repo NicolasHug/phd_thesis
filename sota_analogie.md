@@ -5,30 +5,102 @@ Historique et modèles existants sans proportions
 ------------------------------------------------
 Aristote, puis rien jusqu'au 20e en gros.
 
-SMT, Les allemands Kuhnberger & Gust)
-Polya,
-Hesse,
-Carbonell (tous un peu différents)
-Indurkhya
+- Davies & Russel. Tentative de formaliser l'analogie en logique de premier
+  ordre (modèle évidemment symbolique). La question était de savoir étant
+  donnés deux objets s et t ayant une propriété P, lorsque s a Q alors sous
+  quelles conditions peut-on déduire sans erreur que t a Q aussi. Les
+  conditions sont trouvées et sont très restrictives (on est proche d'une
+  dépendance fonctionnelle).
+
+- SMT de Gentner. Fait partie des approches symboliques.
+
+- Holyoak et Thagard avec analogical constraint mapping approach, et l'engine
+  qui s'appelle ACME. Fait partie des approches connexionistes.
+
+- Kuhnberger & Gust. Un peu plus dans la même lignée SMT qui ajoute des
+  éléments de la logique du second ordre avec le Heuristic Driven Theory
+  Projection (HDTP) (par rapport au modèle de Davies & Russel). Ils définissent
+  les proportions analogiques dans leur framework ainsi que la résolution
+  d'équation basée sur de l'anti-unification. Il y a un chapitre entier sur
+  HDTP dans le bouquin.
+
+- Polya. Mathématicien. On doit sans doute la première formalisation à Polya
+  qui a étudié le rôle de l'analogie dans la résolution de problèmes
+  mathématiques (How to Solve it - bouquin de 200 pages et induction and
+  analogy in mathematics).
+
+- Hesse. Philosophe Une autre formalisation sur les proportions analogiques. A
+  bossé sur la résolution d'équation (avec des trellis visiblemnet) dans on
+  defining analogy, dont la vue sera reprise plus tard par Henri et Miclet.
+
+- Carbonell - Semble surtout concerner CBR??
+
+- Indurkhya. Semble avoir le même point de vue que Holyoak et Thagard. Semble
+  aussi faire de l'unification comme Kuhnberger & Gust.
+
+- Les travaux de Cornuejols.
 
 
 Les proportions analogiques
 ---------------------------
 
-1. Sans modèle formel: Evans, Copycat de Mitchell, Rumelhart
-2. Avec modèle : Lepage, S & Y, Miclet, Gilles et Henri
+1. Sans modèle formel:
+
+- Evans. Pionier dans la résolution de puzzles avec l'analogie. ref: A
+  heuristic program to solve geometry-analogy problems (la même). Son programme
+  trouvait le meilleur candidat à une equation analogique entre formes
+  géométriques mais sans modèle. Ca a fait des petits avec des refs de
+  O'Donogue et O'Hara. A mettre dans les applications???
+
+- Copycat de Mitchell. Modèle hybride (à la fois symbolique ET connexioniste).
+
+- Rumelhart & Abrahamson. Je connais.
+
+2. Avec modèle :
+
+- Lepage. Dans un contexte de théorie des ensembles a formalisé
+  les analogies qui respecterait les 3 axiomes dans le but de faire de la
+  linguistique (Pioneer work).
+
+- S & Y. Travaux ensuite repris par S & Y, qui ont proposé d'autres définitions
+  qui s'avèrent équivalentes.
+
+- Puis Miclet avec Barbot et d'autres pour les semi groupes, les trellis etc.
+
+- Enfin, proportions analogiques booléennes.
 
 Applications des proportions
 ============================
 
 (Peut être à fusionner avec les deux précédentes)
 
-- Tests de QI (Ragni, Gilles et Henri, Gentner, Lovett)
+- Tests de QI (Carpenter le premier puis Lovett & All qui appliquent SMT avec
+  SME, puis papier william).
 - Word 2 vect
-- Linguistique (S & Y)
 - Classif (Miclet, Gilles & Henri)
+- Reco systems (Takagi & all)
+- Linguistique (S & Y)
+- Traduction automatique (Langlais, Lepage)
+- Kling: Première tentative de preuve automatique avec analogie (A paradigme
+  for reasoning by analogy), puis suivis par de nombreux autres.
 
 Parler de CBR et des diff. (1.5 page dit Henri)
+
+Il faut aussi absolument que l'on parle de transfer learning et dire que c'est
+pas ce qu'on fait...
+
+
+Les trucs que je sais pas où mettre :
+=====================================
+
+Deux  modèles algébriques (avec ou sans proportions ??):
+- Indurkya, An algebraic approach to modeling analogical projection in pattern
+  perception - J. exp. theor. artif. intell.  2003
+- Kuhnberger & Gust, An algebraic framework for solving proportional and
+  predictive analogies - ECCS 2003
+- Winston PH, Learning and reasoning by analogy. Commun ACM 1980.
+- Bochenski: apparemment seconde tentative de formalisation après Polya, qui
+  semble se baser vraiment sur la notion de similarité. (ref: On analogy).
 
 -------------------------------------------------------------------------------
 
@@ -38,7 +110,7 @@ Refs à lire :
 - Evans T.G. 1968
 - SMT Gentner
 - Hesse
-- Melanie Mitchell, élève de
+- Melanie Mitchell (Copy Cat), élève de
 - Hofstadter
 - French: the comp. modeling .. 2002
 - J.G. Carbonell
@@ -61,17 +133,17 @@ Overviews:
 - Gilles Henri dans bouquin
 
 
-Résumé de Intro bouquin G&H
-========================
+Résumé de Intro du papier dans bouquin G&H
+==========================================
 
 Quelques tentatives de modèles formels:
 
-- First order logic modeling: Davies & Russel, A logical approach to reasoning by
-analogy - IJCAI 87
+- First order logic modeling: Davies & Russel, A logical approach to reasoning
+  by analogy - IJCAI 87
 
 
-- Second order modeling: Kuhnberger & Gust, metaphors and euristic driven
-  theory projection - TCS 2006
+- Second order modeling: Kuhnberger & Gust, metaphors and huristic driven
+  theory projection  (HDTP)- TCS 2006
 
 - Algebraic oriented frameworks: Indurkhya, An algebraic approach to modeling
   analogical projection in pattern perception - J. exp. theor. artif. intell.
@@ -158,3 +230,106 @@ papier.
 
 Ensuite description d'autres méthodes qui font pas forcément appel à l'analogie
 (je crois).
+
+Résumé Intro du bouquin de G&H
+==============================
+
+Première partie sur les études philosophiques sur l'analogie (en commençant par
+aristote), pour arriver aux études cognitives. Je connais pas une seule ref
+
+Seconde partie, sur les modélisations de l'analogie.
+Comme c'est un process unsound, le nombre de tentatives de formalisation est
+beaucoup plus faible que pour le raisonnement logique. On doit sans doute la
+première formalisation à Polya  qui a étudié le rôle de l'analogie dans la
+résolution de problèmes mathématiques (How to Solve it - bouquin de 200 pages
+et induction and analogy in mathematics). Puis ça parle d'une autre tentative
+de la part de Bochenski (je connais pas) qui semble se baser vraiment sur la
+notion de similarité. Enfin, une vue sur les proportions analogiques a été
+donnée par la philosophe Hesse qui a bossé sur la résolution d'équation (avec
+des trellis visiblemnet) dans on defining analogy, dont la vue sera reprise
+plus tard par Henri et Miclet.
+
+Mention de Piaget qui le premier a cherché une contrepartie logique aux
+proportions numériques, sans jamais parler d'analogie.
+
+Mention de Klein aussi.
+
+Ensuite, renouveau dans la modélisation depuis les 30 dernières années. D'abord
+SMT de Gentner, ensuite the analogical constraint mapping approach de Holyoak
+et Thagard que je connais pas (et visiblement aussi défendu par Indurkhya), et
+l'idée d'analogie de Hofstadter et Mirchell.
+
+Légers détails sur SMT et SME. Ensuite pareil pour analogical contraint
+mapping, et son engine qui s'appelle ACME.
+
+Selon une ref de French (The computational modeling of analogy making), on a 3
+grands groupes de modèles (en fait que 2):
+- Les modèles symboliques qui lient un domaine source avec un domaine cible,
+  généralement sous forme logique (e.g. SME).
+- Les modèles connexionistes comme ACME et LISA (des mêmes gars ou presque)
+- les modèles hybrides uqi mélangent les 2. Exemple typique : Copycat. Mention
+  aussi de Tabletop de French, et NARS de Wang.
+
+Mention que les modèles connexionistes ont une approche graduée des
+similarités, contrairement aux modèles symboliques qui sont souvent trop
+strictes et ne savent souvent reconnaitre que les identités strictes.
+
+Mention de Cornuejols avec son Kolmo. Mention alors de Rumelhart et Abrahamson
+qui eux aussi parlaient de minimimsation de distance.
+
+Mention des travaux de Russel pour formaliser l'analogie en logique de premier
+ordre (modèle évidemment symbolique). La question était de savoir étant donnés
+deux objets s et t ayant une propriété P, lorsque s a Q alors sous quelles
+conditions peut-on déduire sans erreur que t a Q aussi. Les conditions sont
+trouvées et sont très restrictives (on est proche d'une dépendance
+fonctionnelle).
+
+Mention des travaux des allemands Kunhberger et Machin, plus dans la lignée de
+SMT qui ajoute des éléments de la logique du second ordre avec le Heuristic
+Driven Theory Projection (HDTP). Ils définissent les proportions analogiques
+dans leur framework ainsi que la résolution d'équation basée sur de
+l'anti-unification. (Au passage, il y a un chapitre entier sur HDTP dans le
+bouquin). Mention d'inDurkhya qui fait aussi de l'unification.
+
+Mention de Lepage ensuite, qui dans un contexte de théorie des ensembles a
+formalisé les analogies qui respecterait les 3 axiomes dans le but de faire de
+la linguistique. Travaux ensuite repris par S & Y, qui ont proposé d'autres
+définitions qui s'avèrent équivalentes. Ils donnent la def majeur (sur des
+ensembles), et disent que ça a été généralisé après dans des domaines
+algébriques avec les semi groupes, trellis etc. dans les travaux de Miclet
+principalement (avec barbot et d'autres) ainsi que S & Y. Enfin, mention du
+fait que la def pour théorie des ensembles a été redéfinie par Henri et Miclet,
+ce qui mène aux proportions analogiques en logique booléenne puis leurs
+généralisation aux proportions logiques.
+
+
+Enfin troisième partie, les applications computationnelles.
+
+L'utilisation de l'analogie en IA pour résoudre des problèmes a été assez
+florissant dans les années 70-80 pour ensuite prendre la forme de Case Based
+Reasoning.
+
+Première tentative de preuve automatique avec analogie par Kling(A paradigme
+for reasoning by analogy), puis suivis par de nombreux autres que je connais
+  pas.
+
+Mention ensuite de CBR, explication rapide de ce que c'est, avec plein de trucs
+que je connais pas.
+
+Mention ensuite de Machine learning avec comme pioneer work un truc de Becker :
+The modeling of simple analogic and inductive processes in a semantic memory
+system (IJCAI 69) que je connais pas. Ensuite évidemment Miclet et les autres
+trucs de G & H.
+
+On passe ensuite aux tests de QI, avec en premier lieu les travaux de Evans et
+ses puzzles géométriques, qui a fait des petits avec des refs de O'Donogue et
+O'Hara. MEntion ensuite des tests de Raven avec les techniques basés sur SME
+vues dans le papier avec William, puis celles du-dit papier.
+
+Puis mention de la linguistique. Applications à la découverte d'analogies
+lexicales, puis a leurs générations (connais pas les refs).  Aussi, traduction
+automatique avec plein de refs de Langlais puis Lepage.
+
+Mention de l'imagerie (plutôt vision). Connais aucune ref.
+
+Mention du software engineering avec des trucs qui me semblent useless.
