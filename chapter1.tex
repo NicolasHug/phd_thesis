@@ -99,6 +99,35 @@ analogies, it should seem natural to challenge it in some other situations. It
 is indeed quite easy to find analogies were superficial features are the most
 decisive ones \cite{Bar10}.
 
+\paragraph{Analogy as a constraint satisfaction theory\\}
+
+As one of the most influential theories of analogical reasoning, SMT has opened
+the way to various other models such as that of Holyoak and Thagard
+\cite{HolTha89}. Here as well, an analogy is considered to be a mapping between
+two domains $S$ and $T$\footnote{with the exception that the mapping goes here
+from $T$ to $S$.}. Taking over Gentner's systematicity principle (in a relaxed
+form), Holyoak and Thagard exhibit two additional dimensions of importance in
+an analogical process. First, the semantics behind the objects at hand, i.e.
+the meaning that human agents associate with these objects, are taken into
+account. In this theory, the two realtions \textit{ARE\_FRIENDS} and
+\textit{ARE\_ENEMIES} are not the same. This clearly stands in contrast with
+SMT, where all object attributes are simply discarded (along with their
+meanings)\todo{Et va dans le sens de Hesse}. Second, this theory also involves
+the pragmatic considerations of the human agent: the goal and purpose of the
+analogist should somehow guide the mapping process in some direction or
+another. Mappings that serve the purpose of the agent are therefore given
+higher priority than others.
+
+Another main difference with SMT, where the systematicity principle is a fixed,
+inflexible rule, is that here the three dimensions (systematicity, semantic
+similarity and pragmaticity) are interpreted as \textbf{constraints} and not as
+rigid directions. These constraints are only here to guide the mapping process.
+
+Holyoak and Thagard's theory has been implemented in a LISP software called
+ACME (Analogical Constraint Mapping Engine), in a similar fashion as the
+COPYCAT program in that they are both cooperative algorithms.\todo{ref a
+copycat}.
+
 \subsection{Analogy and the Minimum Description Length Principle}
 
 Ockham's razor (also Occam), due to the Franciscan philosopher William
