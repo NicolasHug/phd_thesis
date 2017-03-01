@@ -315,8 +315,6 @@ best results and acts as a kind of normalization factor.
 Our pseudo-code is described in
 Algorithm \ref{algo:analogical_reco}.
  \begin{algorithm}[!ht]
-     \caption{Analogy}
-       \label{algo:analogical_reco}
        \begin{algorithmic}
 
       \STATE {\bf Input}: A set of known ratings $R$, a user $u$, an item
@@ -341,6 +339,8 @@ Algorithm \ref{algo:analogical_reco}.
     \STATE $\hat{r}_{ui} = \aggr{x \in C} x$
 
 \end{algorithmic}
+     \caption{Analogy}
+       \label{algo:analogical_reco}
 \end{algorithm}
 
 Some options are available at this stage. 
@@ -385,10 +385,7 @@ Table \ref{table:res} shows the performances of the algorithms applied in a
 user-based way. Similar experiments have been led in a movie-based setting, exhibiting
 very similar results, slightly worse for RMSE (about 5\permil higher).
 
-\begin{table}[!ht]
-\centering
-\caption{Performance of algorithms}
-\label{table:res}
+\begin{table}[ht]
 \begin{tabular}{| c || c | c | c | c | c | c | c | c |}
 \hline
 & RMSE & Prec & Rec & Cov & $Surp^{max}$ & $Surp^{avg}$ & Time \\
@@ -400,6 +397,8 @@ Bsln-kNN & .865 & 88.4 & 44.0 & 44.7 & 0.431 & 0.199 & 10s \\
 \hline
 \end{tabular}
 
+\caption{Performance of algorithms}
+  \label{Zob}
 \end{table}
 
 As expected, the Bsln-kNN algorithm is more accurate than the basic

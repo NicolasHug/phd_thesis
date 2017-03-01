@@ -100,6 +100,14 @@
 \makeatother
 \chapterstyle{daleifmodif}
 
+
+% Put quotes in italic
+\AtBeginEnvironment{quote}{\itshape}
+
+% Reduce space between enumerate and itemize
+\setlist[enumerate]{topsep=0pt,itemsep=-.5ex,partopsep=1ex,parsep=1ex}
+\setlist[itemize]{topsep=0pt,itemsep=-.5ex,partopsep=1ex,parsep=1ex}
+
 % Glossary entries
 \newglossaryentry{U_i}
 {
