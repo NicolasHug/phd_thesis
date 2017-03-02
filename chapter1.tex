@@ -11,7 +11,9 @@ were the starting point of our research.
 \section{Models without proportions}
 \label{sec:models_without_proportions}
 
-\subsection{Gentner's Structure Mapping Theory}
+\subsection{Analogy as a structural mapping}
+
+\paragraph{Gentner's Structure Mapping Theory\\}
 
 Probably the most influential model of analogical reasoning is the Structure
 Mapping Theory (SMT), introduced by the American cognitive scientist Dedre
@@ -70,7 +72,6 @@ practically implemented in a software called the Structure Mapping Engine (SME)
 \cite{FalForKenGen89} written in LISP, leading to numerous
 applications.\todo{Lovett?} The SME algorithm, in complete accordance with SMT,
 can be conceptually summarized as follows:
-
 \begin{enumerate}
     \item Look for all potential matches between relations in the source domain
       and the target domain.
@@ -79,6 +80,10 @@ can be conceptually summarized as follows:
     \item From each collections, infer some relations that might stand in the
       target domain.
 \end{enumerate}
+In its most simple form, the SME algorithm can be viewed as the finding of a
+maximum common subgraph between two graphs, namely those reprensenting the
+source and the target domains. In such, SME is part of the connectionist
+approaches.
 
 In  \cite{ChaFreHof92}, authors point out various concerns about SMT and SME.
 Among them is the fact SME is too reliant on the (human-made) description
@@ -99,7 +104,7 @@ analogies, it should seem natural to challenge it in some other situations. It
 is indeed quite easy to find analogies were superficial features are the most
 decisive ones \cite{Bar10}.
 
-\paragraph{Analogy as a constraint satisfaction theory\\}
+\paragraph{The Constraint Satisfaction Theory\\}
 
 As one of the most influential theories of analogical reasoning, SMT has opened
 the way to various other models such as that of Holyoak and Thagard
@@ -126,7 +131,26 @@ rigid directions. These constraints are only here to guide the mapping process.
 Holyoak and Thagard's theory has been implemented in a LISP software called
 ACME (Analogical Constraint Mapping Engine), in a similar fashion as the
 COPYCAT program in that they are both cooperative algorithms.\todo{ref a
-copycat}.
+copycat}. Much like SME, ACME is part of the connectionist approaches.
+
+\paragraph{Heuristic-Driven Theory Projection\\}
+
+Another framework where structural mapping is considered the core of an
+analogical process is the so-called Heuristic-Driven Theory Projection proposed
+by Gust, K\"uhnberger and Schmid \cite{GusKunSchTCS06}. While in SME and ACME
+the main algorithm boils down to finding a maximum common subgraph between the
+two domain representations, HDTP banks on a more formal approach. The two
+domains are formally described in first-order logic as a set of facts
+(variable-less formulas such as \textit{TALL(Bob)}) and a set of laws
+(quantified formulas, such as \textit{$\exists x,$ TALL($x$)}). Using an
+anti-unification (generalization) process, the two domains (or theories) $S$
+and $T$ are mapped through a generalized theory $G$ described in a second-order
+logic. As expected from the name of the framework, the way the mapping is
+performed is heuristic-based. From this generalized theory, a transfer of
+knowledge can be applied to the target domain, thus allowing the inference of
+new facts and laws, provided that they are in accordance with the already known
+formulas.  This process of generalization followed by a transfer phase is what
+is called a \textbf{theory projection}.
 
 \subsection{Analogy and the Minimum Description Length Principle}
 
