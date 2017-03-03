@@ -250,3 +250,58 @@ Notice that the terms $y_i$ are not considered in this cost function, because
 they are entirely defined by their corresponding $x_i$ and $f_i$.
 
 parler des applications mais sans doute après COPYCAT?
+
+\section{Models with proportions}
+
+\paragraph{The model of Rumelhart and Abrahamson\\}
+
+At a time where most models of analogy take the form of complex computer
+programs (such as that of Evans detailed in Section \todo{La ref}), the two
+cognitive scientists David Rumelhart and Adele Abrahamsen proposed a simple
+theoretical model of analogical reasoning \cite{RumAbr73}. Their model is of
+great interest for us because as it will become clear, their view of analogy is
+in total accordance with our use of analogy in machine learning (or should we
+say more humbly that our use of analogy is fully complient with their earlier
+model).
+
+\textcolor{red}{On va parler de proportions et de resolution, est ce que ca a
+deja ete mentione avant?}
+
+For Rumelhart and Abrahamsen, a human reasoning process can be defined by two
+components: a memory structure in which the remembered objects are stored, and
+an algorithm that manipulates these data to produce a result. In their paper,
+they define these two components for the analogical reasoning.
+
+With regards to the memory structure, their assumption is that it can be
+considered as an $m$-dimensional Euclidean space. This assumption is originally
+that of Henley \cite{Hen69} who showed, with the help of social experiments,
+that a set of 30 mammals could be fairly well represented in a 3-dimensional
+space with axes ferocity, humaness, and size. It is supposed that the semantic
+similarity that people associate with two concepts is inveresly proportional to
+their distance in the Euclidean space.
+
+Rumelhart and Abrahamsen are interested in the problem of solving an anlogical
+equation (although they never state it in these terms): given three concepts
+$A, B, C$ and a set of solutions $D_1, D_2, \cdots, D_n$, which $D_i$ is the
+best candidate for $A:B::C:D_i$? Their assumption is the following: \textbf{
+for a human agent, the best solution is the closest $D_i$ to the (potentially
+hypothetical) \textit{perfect} solution $I$, defined as $I = C - A + B$}. This
+principle is illustrated in figure \ref{FIG:rumelhart_model}. Diverse social
+experiments are led by the authors to assess the soundness of this hypothesis.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=2.5in]{figures/rumelhart_model.pdf}
+  \caption{Analogical equation solving process as in \cite{RumAbr73}}
+\label{FIG:rumelhart_model}
+\end{figure}
+
+It is clear that this view of the analogical reasoning process is exactly what
+is practically implemented in the experiments of \cite{BayMicDelIJCAI07}, and
+all the more so in ours.\todo{ref avant après?}
+
+\paragraph{The Copycat program\\}
+
+According to its authors, \textit{Copycat's architecture is neither symbolic
+nor connectionist, nor a hybrid of the two; rather, the program has a novel type
+of architecture situated somewhere in between these extremes}.
