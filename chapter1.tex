@@ -178,6 +178,43 @@ new facts and laws, provided that they are in accordance with the already known
 formulas.  This process of generalization followed by a transfer phase is what
 is called a \textbf{theory projection}.
 
+\subsection{Something}
+
+\paragraph{A determination rule for analogical inference\\}
+
+We have seen so far many models of analogical reasoning that mostly rely on
+some heuristic, intangible principles. In constrast with this tendency, Davies
+and Russel proposed a set of conditions required in first order logic for the
+analogical inference process to be sound. Concretly, they provide some
+sufficient conditions that must hold on two properties $P$ and $Q$ for the
+following inference to be sound
+$$\infer{Q(T)}{P(S) \wedge Q(S) & P(T)},$$
+where $S$ and $T$ are the source and target objects. Naturally, this framework
+can perfectly be generalized with many properties $P_1, P_2, \cdots P_n$.
+
+A first obvious option would be to add as a premice the following implication:
+$$\forall x, P(x) \implies Q(x).$$
+But this is unsatisfactory, because in this case the inference simply reduces
+to
+$$\infer{Q(T)}{P(T) & \forall x, P(x) \implies Q(x)},$$ where no use of the
+source $S$ is made. It is clear that this inference can not be reasonably
+considered as an analogy: the additional premise must not lead to a conclusion
+by only involving the target $T$. Some knowledge about the source $S$ must be
+taken into account.
+
+To solve this issue, Davies and Russel introduce what they call the
+\textbf{determination rule} i.e. the fact that the value of $P$ determines that
+of $Q$:
+$$\left(\forall x ~ P(x) \implies Q(x)\right) \vee \left(\forall x ~ P(x) \implies
+\neg Q(x)\right).$$
+This reads as \textit{all $P$'s are $Q$'s, or none of them are}. More
+generally, this relation can be considered as being a functional dependency
+between $P$ and $Q$, i.e. $Q = f(P)$. This determination rule has the two
+required properties: it allows a sound deduction of $Q(T)$, and forces to
+inspect the source $S$ to rule out one of the two parts of the
+conjunction.\textcolor{red}{HOW??? PAS COMPRIS NEED HELP}.
+
+
 
 \section{Models with proportions}
 
