@@ -178,6 +178,111 @@ new facts and laws, provided that they are in accordance with the already known
 formulas.  This process of generalization followed by a transfer phase is what
 is called a \textbf{theory projection}.
 
+
+\section{Models with proportions}
+
+\paragraph{The model of Rumelhart and Abrahamson\\}
+
+At a time where most models of analogy take the form of complex computer
+programs (such as that of Evans detailed in Section \todo{La ref}), the two
+cognitive scientists David Rumelhart and Adele Abrahamsen proposed a simple
+theoretical model of analogical reasoning \cite{RumAbr73}. Their model is of
+great interest for us because as it will become clear, their view of analogy is
+in total accordance with our use of analogy in machine learning (or should we
+say more humbly that our use of analogy is fully complient with their earlier
+model).
+
+\textcolor{red}{On va parler de proportions et de resolution, est ce que ca a
+deja ete mentione avant?}
+
+For Rumelhart and Abrahamsen, a human reasoning process can be defined by two
+components: a memory structure in which the remembered objects are stored, and
+an algorithm that manipulates these data to produce a result. In their paper,
+they define these two components for the analogical reasoning.
+
+With regards to the memory structure, their assumption is that it can be
+considered as an $m$-dimensional Euclidean space. This assumption is originally
+that of Henley \cite{Hen69} who showed, with the help of social experiments,
+that a set of 30 mammals could be fairly well represented in a 3-dimensional
+space with axes ferocity, humaness, and size. It is supposed that the semantic
+similarity that people associate with two concepts is inveresly proportional to
+their distance in the Euclidean space.
+
+Rumelhart and Abrahamsen are interested in the problem of solving an anlogical
+equation (although they never state it in these terms): given three concepts
+$A, B, C$ and a set of solutions $D_1, D_2, \cdots, D_n$, which $D_i$ is the
+best candidate for $A:B::C:D_i$? Their assumption is the following: \textbf{
+for a human agent, the best solution is the closest $D_i$ to the (potentially
+hypothetical) \textit{perfect} solution $I$, defined as $I = C - A + B$}. This
+principle is illustrated in figure \ref{FIG:rumelhart_model}. Diverse social
+experiments are led by the authors to assess the soundness of this hypothesis.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=2.5in]{figures/rumelhart_model.pdf}
+  \caption{Analogical equation solving process as in \cite{RumAbr73}. The
+  solution is here $D_2$.}
+\label{FIG:rumelhart_model}
+\end{figure}
+
+It is clear that this view of the analogical reasoning process is exactly what
+is practically implemented in the experiments of \cite{BayMicDelIJCAI07}, and
+all the more so in ours.\todo{ref avant après?}
+
+\paragraph{The Copycat program\\}
+
+Copycat \cite{Mit93} (see also \cite{HofMit94}) is another famous program that
+performs analogical reasoning tasks, introduced by Melanie Mitchell and Douglas
+Hofstadter. The problems considered by Copycat are the solving of analogical
+equations in a \textit{microworld} of strings of letters. A typical Copycat
+problem looks as follows: $$\mathbf{abc} : \mathbf{abd} :: \mathbf{ijk} : x$$
+
+What should the value of $x$ be? Various answers may be relevent here, such as
+$\mathbf{ijd}$ (replace the right-most letter by $\mathbf{d}$), but the most
+natural answer probably is $\mathbf{ijl}$: replace the right-most letter by its
+successor. How about $\mathbf{zrq}$? Well, not really convincing. The point of
+the authors, however, is that \textit{a priori} every single option should be
+given equal chances of success.
+
+This principle is strongly reflected in the Copycat program which is
+probabilistic in nature: for the same problem, various solutions can be found
+depending on the initial condition. For example the  equation $\mathbf{abd} :
+\mathbf{abd} :: \mathbf{mrrjjj} : x$ leads to $\mathbf{mrrkkk}$ in 70\% of the
+cases (over 1000 experiments), and to $\mathbf{mrjjk}$ 20\% of the time. Other
+less plausible solutions make up the remaining 10\%.
+
+At the beginning of the program, each option is equally available.  Then, on
+the basis of their validity, some hypotheses are given a stronger chance to
+\textit{survive} till the end of the program, while others are discarded.
+Conceptually, this process is emerges from the interoperability of three main
+components: the workspace, the codelets, and the temperature.
+
+\begin{itemize}
+    \item The workspace, is the place where objects and relations live.
+      In the workspace, diverse conceptual structures are built-in:
+      \textit{successor}, \textit{predecessor}, \textit{left-most},
+      \textit{right-most}, \textit{orientation}, etc. When the program starts, none of these
+      structures are activated: this will be the role of the codelets.
+    \item The codelets, are competing agents trying to explore and build
+      perceptual structures and relations between the objects in the workspace.
+      Their behaviour depends on the temparature.
+    \item The temperature could be also defined as the entropy of the
+      system. When relations in the workspace are strong and well established,
+      the temperature is low. At the beginning of the program, the temperature
+      is the highest, leading to a multitude of codelets being run in every
+      single \textit{direction}. This concept of temperature can be viewed as
+      the tradeoff between exploration (trying every possible hypothesis) and
+      exploitation (the actual use of a well established hypothesis). When the
+      temperature goes below a given threshold, the program stops and the
+      current hypothesis is outputed.
+\end{itemize}
+
+Copycat is clearly a complex adaptative system where a global behaviour emerges
+from small, independent parts. According to its authors, \textit{Copycat's
+architecture is neither symbolic nor connectionist, nor a hybrid of the two;
+rather, the program has a novel type of architecture situated somewhere in
+between these extremes}.
+
 \subsection{Analogy and the Minimum Description Length Principle}
 
 Ockham's razor (also Occam), due to the Franciscan philosopher William
@@ -194,10 +299,10 @@ compute or even to estimate), it has shown to be quite influential in the field
 of machine learning, at least from a theoretical point of view.
 
 With this in mind, Antoine Cornuéjols proposed a framework for assessing the
-quality of an analogy \cite{CorMLS96} (see also \cite{CorJFA96}).\todo{Faire lien
-entre ça et AD de Miclet} In these papers, Cornuéjols hypothesizes that the
-best analogy between a source and a target model is the one that minimizes its
-description length, in terms of Kolmogorov complexity.
+quality of an analogy \cite{CorMLS96} (see also \cite{CorJFA96}). In these
+papers, Cornuéjols hypothesizes that the best analogy between a source and a
+target model is the one that minimizes its description length, in terms of
+Kolmogorov complexity.
 
 Let us first first recall some basic knowledge about Kolmogorov complexity,
 before diving into more technical details. The Kolmogorov complexity of a
@@ -249,59 +354,62 @@ where:
 Notice that the terms $y_i$ are not considered in this cost function, because
 they are entirely defined by their corresponding $x_i$ and $f_i$.
 
-parler des applications mais sans doute après COPYCAT?
+Cornuéjols illustrate the plausibility of his model using experiments in the
+microworld of Copycat. After defining the Kolmogorov complexity of the built-in
+relations (\textit{direction}, \textit{length}, etc.), and those of the
+representations of the inputs, the solutions of the analogical equations are
+set as those minimizing the above criteria. The empirical results show that
+this model, in addition to its theoretical appeal due to the proximity with
+MDLP, is at the very least an interesting option to further investigate. In a
+recent work , this model of analogy has been applied to a task of transfer
+learning \cite{CorMur16}.\todo{Faire lien entre ça et AD de Miclet}
 
-\section{Models with proportions}
+\paragraph{Evans' program to solve geometric problems\\}
 
-\paragraph{The model of Rumelhart and Abrahamson\\}
-
-At a time where most models of analogy take the form of complex computer
-programs (such as that of Evans detailed in Section \todo{La ref}), the two
-cognitive scientists David Rumelhart and Adele Abrahamsen proposed a simple
-theoretical model of analogical reasoning \cite{RumAbr73}. Their model is of
-great interest for us because as it will become clear, their view of analogy is
-in total accordance with our use of analogy in machine learning (or should we
-say more humbly that our use of analogy is fully complient with their earlier
-model).
-
-\textcolor{red}{On va parler de proportions et de resolution, est ce que ca a
-deja ete mentione avant?}
-
-For Rumelhart and Abrahamsen, a human reasoning process can be defined by two
-components: a memory structure in which the remembered objects are stored, and
-an algorithm that manipulates these data to produce a result. In their paper,
-they define these two components for the analogical reasoning.
-
-With regards to the memory structure, their assumption is that it can be
-considered as an $m$-dimensional Euclidean space. This assumption is originally
-that of Henley \cite{Hen69} who showed, with the help of social experiments,
-that a set of 30 mammals could be fairly well represented in a 3-dimensional
-space with axes ferocity, humaness, and size. It is supposed that the semantic
-similarity that people associate with two concepts is inveresly proportional to
-their distance in the Euclidean space.
-
-Rumelhart and Abrahamsen are interested in the problem of solving an anlogical
-equation (although they never state it in these terms): given three concepts
-$A, B, C$ and a set of solutions $D_1, D_2, \cdots, D_n$, which $D_i$ is the
-best candidate for $A:B::C:D_i$? Their assumption is the following: \textbf{
-for a human agent, the best solution is the closest $D_i$ to the (potentially
-hypothetical) \textit{perfect} solution $I$, defined as $I = C - A + B$}. This
-principle is illustrated in figure \ref{FIG:rumelhart_model}. Diverse social
-experiments are led by the authors to assess the soundness of this hypothesis.
+The ANALOGY program of Thomas Evans \cite{Eva64} is one of the pioneer work in
+the design of programs capable of analogical reasoning. ANALOGY, written in
+LISP\footnote{And according to its author, the largest LISP program at the
+time!}, is able to solve analogical equations in the form of geometrical
+problems, such as that of Figure \ref{FIG:evans}: given three geometrical
+patterns, choose the fourth among a list of candidates that leads to the best
+proportion.
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=2.5in]{figures/rumelhart_model.pdf}
-  \caption{Analogical equation solving process as in \cite{RumAbr73}}
-\label{FIG:rumelhart_model}
+\includegraphics[width=3in]{figures/evans.pdf}
+\caption{A geometrical analogy problem}
+\label{FIG:evans}
 \end{figure}
 
-It is clear that this view of the analogical reasoning process is exactly what
-is practically implemented in the experiments of \cite{BayMicDelIJCAI07}, and
-all the more so in ours.\todo{ref avant après?}
+The inputs to the program are rough, hand-built low-level descriptions of the
+figures. For example, simple geometric shape such as circles, rectangles or
+triangles are all described with one single primitive:
+\textit{SIMPLE\_CLOSED\_CURVE(\dots)}, where the arguments are the start and
+end of of the (multiple) lines, and their curvatures. The program is then
+devided into two distinct parts.
 
-\paragraph{The Copycat program\\}
+The role of the first part is to build high level representations of the
+figures from these raw descriptions. After identifying coherent shapes (such as
+triangle, square, etc) as independent objects, the program tries to find
+relations of the kind \textit{INSIDE(Obj2, Obj2)} or \textit{ABOVE(Obj1, Obj3)}
+between figures. Finally, similarities between every pair of objects are
+computed. The similarity measure is based on the transformability of the first
+object into the second one, using tradictional geometrical transformations
+(rotation, scale, reflections, etc.). All the information computed by the first
+part are given as input (on punched cards!) to the second part.
 
-According to its authors, \textit{Copycat's architecture is neither symbolic
-nor connectionist, nor a hybrid of the two; rather, the program has a novel type
-of architecture situated somewhere in between these extremes}.
+The second part relates to the analogical solving process per se. Using the
+output of the first part, ANALOGY will try to find a set of rules that
+transform figure $A$ into figure $B$. A rule would for example state
+\textit{REMOVE(Obj1), ROTATE(Obj2, 45\degree), etc.}. Then, by generalizing
+each rule, it tries to establish a correspondance between these rules and those
+transforming $C$ into one of the candidate solutions. The chosen solution is
+that maximizes the resemblance between the two sets of rules.
+
+An interesting fact is that ANALOGY analyses the way to go from $A$ to $B$ and
+applies to go from $C$ to $D$, but it does not make use of \textit{central
+permutation}: it may just as well analyse the way to go from $A$ to $C$ and
+transpose it to go from $B$ to $D$. Note also that in ANALOGY the semantics
+behind the relations and the geometrical objects are not taken into account. In
+this respect, ANALOGY is close to Gentner's Structure Mapping Theory (and
+preexistent by far).
