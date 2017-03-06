@@ -67,3 +67,12 @@ def}}}{=}}}
 \newtheorem{proposition}{Proposition}
 \newtheorem{property}{Property}
 \newtheorem{problem}{Problem}
+
+% For signed quote env
+\def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
+\hbox{}\nobreak\hfil(#1)%
+\parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+\newsavebox\mybox \newenvironment{aquote}[1]
+{\savebox\mybox{#1}\begin{quote}}
+{\signed{\usebox\mybox}\end{quote}}
+

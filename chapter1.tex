@@ -314,6 +314,26 @@ components: the workspace, the codelets, and the temperature.
       current hypothesis is outputed.
 \end{itemize}
 
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=3.5in]{figures/copycat.png}
+\caption{Snapshot of Copycat during an equation solving process. Image taken
+  from \cite{Mit01}.}
+\label{FIG:copycat_snapshot}
+\end{figure}
+
+Figure \ref{FIG:copycat_snapshot} illustrate the internal state of Copycat
+during the solving of $\mathbf{abc} : \mathbf{abd} :: \mathbf{mrrjjj}: x$. 195
+codelets have run so far, so the temperature is average and some structure have
+been properly established, such as the \textit{successor group} $\mathbf{abc}$
+and the \textit{sameness group} $\mathbf{jjj}$. The $\mathbf{rr}$ group is also
+begin defined, though still weaker than the others at this stage. Also, a rule
+describing the change from $\mathbf{abc}$ to $\mathbf{abd}$ has been
+established: \textit{replace the right-most letter by its successor}. Depending
+on the future behaviour of the codelets, this rule with either stick till the
+end of the program or change to lead to the most common prediction $x =
+\mathbf{kkk}$.
+
 Copycat is clearly a complex adaptative system where a global behaviour emerges
 from small, independent parts. According to its authors, \textit{Copycat's
 architecture is neither symbolic nor connectionist, nor a hybrid of the two;
@@ -428,7 +448,7 @@ devided into two distinct parts.
 The role of the first part is to build high level representations of the
 figures from these raw descriptions. After identifying coherent shapes (such as
 triangle, square, etc) as independent objects, the program tries to find
-relations of the kind \textit{INSIDE(Obj2, Obj2)} or \textit{ABOVE(Obj1, Obj3)}
+relations of the kind \textit{INSIDE(Obj1, Obj2)} or \textit{ABOVE(Obj1, Obj3)}
 between figures. Finally, similarities between every pair of objects are
 computed. The similarity measure is based on the transformability of the first
 object into the second one, using tradictional geometrical transformations
@@ -450,3 +470,342 @@ transpose it to go from $B$ to $D$. Note also that in ANALOGY the semantics
 behind the relations and the geometrical objects are not taken into account. In
 this respect, ANALOGY is close to Gentner's Structure Mapping Theory (and
 preexistent by far).
+
+\section{Formal analogical proportions}
+
+An analogical proportion is a statement of the form ``$a$ is to $b$ as $c$ is
+to $d$'' involving analogical relations between the pairs $(a,b)$ and $(c,d)$,
+as well as between the pairs $(a,c)$ and $(b,d)$.  There are numerous examples
+of such statements, with which everybody will more or less agree, such as  ``a
+calf is to a cow as a foal is to a mare'', or ``Paris is to France as Berlin is
+to Germany''. However, it is only rather recently that formal definitions have
+been proposed for analogical proportions in different settings that we briefly
+review here.
+
+It has been agreed since Aristotle time that an analogical proportion $A$ is a
+quaternary relation satisfying the three following axioms:
+
+\begin{enumerate}
+\item $A(a,b,a,b)$ (reflexivity)
+\item $A(a,b,c,d) \implies A(c,d,a,b)$ (symmetry)
+\item $A(a,b,c,d) \implies A(a,c,b,d)$ (central permutation)
+\end{enumerate}
+
+When there is no ambiguity over $A$ and its domain, the infix notation
+$a:b::c:d$ is often used.  Considering again our farm example, the symmetry
+axiom states that if a calf is to a caw as a foal is to a mare, then a foal is
+to a mare as a calf is to a horse, which seems perfectly sound. The central
+permutation axiom leads to the natural consequence that a calf is to a foal as
+a cow is to a mare.
+
+Starting from the assertion $A(a, b, c, d)$ and by successive application of
+the symmetry and central permutation axiom, we arrive to the following eight
+equivalent forms:
+\begin{align*}
+  &A(a, b, c, d)\\
+  &A(c, d, a, b)\\
+  &A(c, a, d, b)\\
+  &A(d, b, c, a)\\
+  &A(d, c, b, a)\\
+  &A(b, a, d, c)\\
+  &A(b, d, a, c)\\
+  &A(a, c, b, d)
+\end{align*}
+
+Note now that there are exactly $4! = 24$ different orderings of $a, b, c, d$.
+We have just seen that $8$ of them form the above equivalence class. There are
+two other equivalence classes (each of $8$ orderings, naturally). The first one
+is \textit{generated} by $A(a, b, d, c)$ and the second one by $A(a, c, d, b)$.
+These theoretical aspects, admittedly tiresome, will however prove useful in
+later investigations (Section \ref{Laref}).
+
+There are various models of analogical proportions, depending on the target
+domain. We will next review some definitions of analogies in settings that are
+of interest for us, but let us first note the following major fact:
+
+\begin{proposition}
+  \label{PROPOS:analogy_for_vectors}
+  Let $A$ be an analogy over a set $X$. We can define an analogy $A^m$
+  over $X^m$ by:
+  $$A^m(\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}) ~ \emph{  if  } ~
+  A(a_i, b_i, c_i, d_i) \emph{ for all } i \in [1, m].$$
+\end{proposition}
+\noindent
+The analogy $A^m$ is thus defined in a component-wise fashion. More often than
+not, $A^m$ will be denoted $A$ for the sake of brevity.
+
+Probably the first use of formal proportions is that of Lepage in
+\cite{Lep04} who, starting from the three aforementioned axioms, formally
+defined analogical proportions over alphabets of letters with the aim of
+generating (analogical) formal languages. His definition have later been
+generalized in the works of Stroppa and Yvon (see \cite{StrYvoCNLL05} and
+\cite{StrYvoREPORT05})\footnote{In the same work, Stroppa and Yvon also laid
+the foundations of analogical learning as used in this thesis (see Section
+\ref{la section})}, who provided an algebraic factorization-based definition of
+analogical proportions in semigroups:
+
+\begin{definition}
+\label{DEF:proportion_semi_group}
+Let $(U, \oplus)$ be a semigroup, i.e. $U$ is a set and $\oplus$ is an
+  associative binary operation. Four elements $a, b, c, d \in U$, are in proportion if
+  there exist some factorization
+  \begin{align*}
+    a &= a_1 \oplus a_2 \oplus \cdots \oplus a_n\\
+    b &= b_1 \oplus b_2 \oplus \cdots \oplus b_n\\
+    c &= c_1 \oplus c_2 \oplus \cdots \oplus c_n\\
+    d &= d_1 \oplus d_2 \oplus \cdots \oplus d_n,
+  \end{align*}
+
+  such that for all $i \in [1, n]$, 
+  $$
+  \begin{cases}
+    a_i = b_i \emph{ and } c_i = d_i\\
+    \emph{or}\\
+    a_i = c_i \emph{ and } b_i = d_i.
+  \end{cases}
+  $$
+\end{definition}
+
+It will be insighful to instanciate $U$ as the set of natural number
+$\mathbb{N}$ and $\oplus$ as the usual multiplication $\times$. In this setting, let's
+consider the prime factorization of:
+
+\begin{align*}
+  a &= 30 = 1 \times 2 \times 3 \times 5\\
+  b &= 60 = 2 \times 2 \times 3 \times 5\\
+  c &= 25 = 1 \times 1 \times 5 \times 5\\
+  d &= 50 = 2 \times 1 \times 5 \times 5
+\end{align*}
+
+For each $i$, we either have $a_i = b_i$ and $c_i = d_i$ ($i = 2, 3, 4$) or
+$a_i = c_i$ and $b_i = d_i$ ($i = 1, 4$). We can then say that $a, b, c, d$ are
+in proportion, i.e. $30: 60 :: 25:50$. We recognize here the classical
+\textbf{geometric proportion}, which states an equality of \textbf{ratios}:
+\begin{definition}
+\label{DEF:geometric_proportion}
+Four real numbers $a, b, c, d$ are in geometric proportion if
+$\frac{a}{b} = \frac{c}{d}$, or equivalently if $a\times d = b \times c$.
+\end{definition}
+
+It should now be clear for the reader why analogical proportions are
+effectively called \textbf{proportions}: it's precisely because they generalize
+the well-known numerical (geometric) proportion to other more complex
+structures.
+
+Note that the geometrical proportion is not the only proportion that deals with
+numbers! Indeed, in sections \ref{LesSectnios} we will make use of the
+\textbf{arithmetic} proportion, which states an equality of
+\textbf{differences}:
+\begin{definition}
+\label{DEF:arithmetic_proportion}
+Four real numbers $a, b, c, d$ are in geometric proportion if
+$a - b = c - d$.
+\end{definition}
+
+\textcolor{red}{parler des parallélogrammes. Fiare un petit dessin. Faire le
+lien avec Rumelhart.}
+
+Beside the use of arithmetic proportion, one of the main focus of this thesis
+is to study that of Boolean proportions, i.e.  proportions than one can built
+from elements of the set $\mathbb{B} = {0, 1}$. Before diving in more details
+into the Boolean proportions, let's first consider the general definition of
+analogy in a set, primarly elaborated in \cite{Lep03} as follows: four subsets
+$A, B, C, D$ of a universal set $X$ are in proportion if $A$ can be transformed
+into $B$ by addind and deleting the same elements as to transform $C$ into $D$.
+A more formal definition have been given in \cite{StrYvoREPORT05}:
+
+\begin{definition}
+  \label{DEF:analogy_set_facto}
+  Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if there exists
+  four subsets $U, V, W$ and $Z$ (not necessarily disjoint) such that:
+  $$
+  \begin{cases}
+    A = U \cup V\\
+    B = U \cup W\\
+    C = Z \cup V\\
+    D = Z \cup W\\
+  \end{cases}
+  $$
+\end{definition}
+
+To go from $A$ to $B$, one needs to add $W$ and remove $V$. To go from $C$ to
+$D$, one needs to do the exact same thing: add $W$ and remove $V$. An
+equivalent definition has been given in \cite{MicPra09}:
+
+\begin{definition}
+  \label{DEF:analogy_set_miclet_henri}
+  Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if:
+  $$
+  A \setminus B = C \setminus D \emph{ and } B \setminus A = D \setminus A
+  $$
+\end{definition}
+
+Definition \ref{DEF:analogy_set_miclet_henri} reads as \textit{$A$ differs from
+$B$ as $C$ differs from $D$, and $B$ differs from $A$ as $D$ differs from $C$},
+which is naturally equivalent to the statement of Definition
+\ref{DEF:analogy_set_facto}. The formula of Definition
+\ref{DEF:analogy_set_miclet_henri} is actually equivalent to the following form
+(not without using various ingenious tweaks): $$A \cup D = B \cup C \text{ and
+} A \cap D = B \cap C.$$
+
+As an example, let's consider $A = \{a, b, c, g\}, B = \{a, b, d, e, g\}, C =
+\{c, f, g\}$ and $D = \{d, e, f, g\}$, as summed-up in Table
+\ref{TAB:analogy_sets}.
+
+\begin{table}[h!]
+\centering
+$$
+\begin{tabular}{| c | c  c  c  c  c  c  c |}
+\toprule
+  & a & b & c & d & e & f & g\\
+\midrule
+  A & \times & \times & \times &  &  &  & \times \\
+  B & \times & \times &  & \times & \times &  & \times\\
+  C &  &  & \times &  &  & \times & \times\\
+  D &  &  &  & \times & \times & \times & \times\\
+\bottomrule
+\end{tabular}
+$$
+\caption{Four sets $A, B, C, D$ in analogical proportion.}
+\label{TAB:analogy_sets}
+\end{table}
+
+Setting $U = \{a, b, g\}, V = \{c\}, W = \{d, e\}$ and $Z = \{f, g\}$, the
+conditions of Definition  \ref{DEF:analogy_set_facto}  are clearly satisfied.
+Also, $A \setminus B = C \setminus D = \{c\} = V$, and $B\setminus A = D
+\setminus C = \{d, e\} = W$. Finally, $A \cup D = B \cup C = \{a, b, c, d, e,
+f, g\}$ and $A\cap D = B\cap C = \{g\}$.
+
+We can also recognize in Table \ref{TAB:analogy_sets} that the conditions of
+Definition \ref{DEF:proportion_semi_group} are satisfied, i.e. for all $i$ we
+have either $A_i = B_i$ and $C_i = D_i$, or $A_i = C_i$ and $B_i = D_i$. As we
+will now see, these two patterns are at the core of the Boolean analogical
+proportions, whose definition directly comes from Definition
+\ref{DEF:analogy_set_miclet_henri} and by considering the set $\{0, 1\}$:
+
+\begin{definition}
+  \label{DEF:boolean_proportion}
+  Four elements $a, b, c, d$ in $\mathbb{B} = \{0, 1\}$ are in proportion if
+  \begin{alignat*}{2}
+    &(a \leftrightarrow b \wedge c \leftrightarrow d) && \vee (a
+    \leftrightarrow c \wedge b \leftrightarrow d), \emph{ or equivalently}\\
+     & (a \wedge d \leftrightarrow b \wedge c) &&\wedge (a \vee  d
+    \leftrightarrow b \vee c),
+  \end{alignat*}
+  where $\leftrightarrow$ stands for the equivalence connective.
+\end{definition}
+
+These scary formulas state the exact same facts as the previous definition,
+i.e. that $a$ differs from $b$ as $c$ differs from $d$ and conversely $b$
+differs from $a$ as $d$ differs from $c$. Again, an equivalent definition is
+that $a, b, c, d$ are in proportion if $a = b$ and $c = d$, or $a = c$ and $b =
+d$.
+
+In a Boolean setting, there are exactly $2^4 = 16$ different valuations of $a,
+b, c, d$. The only $6$ valuations (or \textbf{patterns}) that lead to a valid
+Boolean proportion are illustrated in Table \ref{TAB:six_valid_patterns}.
+
+\begin{table}[t]
+  \centering
+  $$
+  \begin{array}{|cccc|c|}
+    \toprule
+    a & b & c & d &  A(a, b, c, d)\\
+    \midrule
+    0 & 0 & 0 & 0 &   \textbf{1}\\
+    1 & 1 & 1 & 1 &   \textbf{1}\\
+    0 & 0 & 1 & 1 &   \textbf{1}\\
+    1 & 1 & 0 & 0 &   \textbf{1}\\
+    0 & 1 & 0 & 1 &   \textbf{1}\\
+    1 & 0 & 1 & 0 &   \textbf{1}\\
+    \bottomrule
+  \end{array}
+  $$
+  \caption{The six valid patterns of the Boolean proportion.}
+  \label{TAB:six_valid_patterns}
+\end{table}
+
+Table \ref{TAB:six_valid_patterns} provides us with valuable insights. First,
+note that some sort of {\it code independence axiom} is satisfied, which
+guarantees that $0$ and $1$ play symmetric roles:
+
+\begin{property}
+  Let a, b, c, d in $\mathbb{B}$. Then  $a : b :: c : d \iff \neg a :  \neg
+  b ::  \neg c :  \neg d.$
+\end{property}
+
+Also, it appears that the Boolean proportion is equivalent to the arithmetic
+proportion:
+
+\begin{property}
+  Let a, b, c, d in $\mathbb{B}$. Then  $a : b :: c : d \iff a - b = c - d$.
+\end{property}
+
+Note that the geometric proportion offers a necessary condition, but not a
+sufficient one: $a \times d = b\times c$ is satisfied for the pattern $0: 0: 0:
+1$, but it is not a valid analogy. Just like in $\mathbb{R}^m$ the arithmetic
+proportion allows us to think of Boolean proportions as parallelograms, but
+this time in $\mathbb{B}^m$.
+
+\textcolor{red}{mettre des plots de cubes dans B3}
+
+
+
+\paragraph{How many proportions can we build in $\mathbb{B}^m$?\\}
+
+Exactly $6^m$! And it is fairly easy to derive: there are $6$ proportions in
+$\mathbb{B}$. As a proportion in $\mathbb{B}^2$ is the concatenation of any
+two propotions in $\mathbb{B}$, there are exactly $6^2 = 36$ proportions in
+$\mathbb{B}^2$. Because analogical proportions in $\mathbb{B}^m$ are the
+concatenation of $m$ proportions in $\mathbb{B}$ (the proportion is evaluated
+component-wise), one can build $6^m$ proportions in $\mathbb{B}^m$.
+
+But let's now ask a more relevent and challenging question: how many
+\textit{useful} proportions can we build in $\mathbb{B}^m$? By \textit{useful},
+we mean proportions that could be used for classification purposes.
+
+\begin{aquote}{The astute reader, who has been struck by divine light}
+  What a silly question! There are obviously $\frac{6^m}{8} - 4^{m - 1} + 2^{m
+  - 3}$ such proportions! How can you not be aware of the A016283 sequence from
+  the OEIS\footnote{The On-line Encyclopedia of Integer Sequences
+  (http://oeis.org/A016283)}?!
+\end{aquote}
+
+Unfortunately, we, who have not (yet) been struck by divine light, will have to
+derive this formula ourselves. The only proportions
+$\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}$ that are useful for
+classification purposes are those where all elements $\mathbf{a}, \mathbf{b},
+\mathbf{c}, \mathbf{d}$ are distinct.\todo{Expliquer pourquoi selon où on le
+met}
+
+We already know that every proportion in $\mathbb{B}^m$ is a parallelogram, and
+that there are $6^m$ parallelograms. The geometrical interpretation of the
+above statement is that we are here interested only in non-flat parallelgrams,
+i.e. parallelograms involving four distinct vertices. We thus want to exclude
+from the $6^m$ proportions those that comply with one of the three following
+patterns:
+
+\begin{itemize}
+  \item $\mathbf{x}: \mathbf{x} :: \mathbf{x} : \mathbf{x}$
+  \item $\mathbf{x}: \mathbf{x'} :: \mathbf{x} : \mathbf{x'}$
+  \item $\mathbf{x}: \mathbf{x} :: \mathbf{x'} : \mathbf{x'}$
+\end{itemize}
+
+Now, let's count them.
+
+\begin{itemize}
+  \item Every vertex $\mathbf{a}$ will generate a proportion of the form
+    $\mathbf{a}: \mathbf{a} :: \mathbf{a} : \mathbf{a}$, so there are exactly
+    $2^m$ proportions $\mathbf{x}: \mathbf{x} :: \mathbf{x} : \mathbf{x}$,.
+  \item Every pair $(\mathbf{a}, \mathbf{b})$ of vertices will generate a
+    proportion $\mathbf{a}: \mathbf{b} :: \mathbf{a} : \mathbf{b}$, and another
+    proportion $\mathbf{b}: \mathbf{a} :: \mathbf{b} : \mathbf{a}$. There are
+    $\binom{2^m}{2}$ pairs $(\mathbf{a}, \mathbf{b})$, so in total this makes
+    $2\binom{2^m}{2}$ proportions of the form $\mathbf{x}: \mathbf{x'} ::
+    \mathbf{x} : \mathbf{x'}$. 
+  \item Every pair $(\mathbf{a}, \mathbf{b})$ of vertices will also generate a
+    proportion $\mathbf{a}: \mathbf{a} :: \mathbf{b} : \mathbf{b}$, and another
+    proportion $\mathbf{b}: \mathbf{b} :: \mathbf{a} : \mathbf{a}$. There are
+    thus $2\binom{2^m}{2}$ proportions of the form $\mathbf{x}: \mathbf{x} ::
+    \mathbf{x'} : \mathbf{x'}$.
+\end{itemize}
