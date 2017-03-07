@@ -657,7 +657,8 @@ equivalent definition has been given in \cite{MicPra09}:
 Definition \ref{DEF:analogy_set_miclet_henri} reads as \textit{$A$ differs from
 $B$ as $C$ differs from $D$, and $B$ differs from $A$ as $D$ differs from $C$},
 which is naturally equivalent to the statement of Definition
-\ref{DEF:analogy_set_facto}. The formula of Definition
+\ref{DEF:analogy_set_facto}: $A \setminus B = C \setminus D = V$, and $B
+\setminus A = D \setminus A  = W$. The formula of Definition
 \ref{DEF:analogy_set_miclet_henri} is actually equivalent to the following form
 (not without using various ingenious tweaks): $$A \cup D = B \cup C \text{ and
 } A \cap D = B \cap C.$$
@@ -709,6 +710,7 @@ proportions, whose definition directly comes from Definition
   where $\leftrightarrow$ stands for the equivalence connective.
 \end{definition}
 
+\todo{Dire qu'il y a plein d'autres modèles, celui la n'est que le minimal}
 These scary formulas state the exact same facts as the previous definition,
 i.e. that $a$ differs from $b$ as $c$ differs from $d$ and conversely $b$
 differs from $a$ as $d$ differs from $c$. Again, an equivalent definition is
@@ -759,16 +761,107 @@ proportion when we restrict it to $\mathbb{B}$:
   which is not a valid analogy.
 \end{property}
 
-Just like in $\mathbb{R}^m$ the arithmetic proportion allows us to think of
-Boolean proportions as parallelograms, but this time in $\mathbb{B}^m$.
+Just like in $\mathbb{R}^m$, the arithmetic proportion allows us to think of
+Boolean proportions as (potentially \textit{flat}) parallelograms, but this
+time we are restricted to $\mathbb{B}^m$. Figure \ref{FIG:proportions_in_B2}
+illustrates the proportions that one can build in $\mathbb{B}^2$:
+\begin{itemize}
+  \item the proportion $\mathbf{a}: \mathbf{b} :: \mathbf{c} : \mathbf{d}$ and
+    its 7 other equivalent forms, forming the parallelogram
+    $\mathbf{a}\mathbf{b}\mathbf{c}\mathbf{d}$ ;
+  \item the proportions that we can build using any pair of vertices, for
+    example $\mathbf{a} : \mathbf{d} :: \mathbf{a} : \mathbf{d}$. Each of these
+    proportions has three other equivalent forms: in our case $\mathbf{a} :
+    \mathbf{a} :: \mathbf{d} : \mathbf{d}$, $\mathbf{d} : \mathbf{a} ::
+    \mathbf{d} : \mathbf{a}$ and $\mathbf{d} : \mathbf{d} :: \mathbf{a} :
+    \mathbf{a}$ ;
+  \item the four proportions involving each vertex independently, for example
+    $\mathbf{b}:\mathbf{b}::\mathbf{b}:\mathbf{b}$.
+\end{itemize}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=1.5in]{figures/proportions_in_B2.pdf}
+  \caption{Proportions in $\mathbb{B}^2$}
+\label{FIG:proportions_in_B2}
+\end{figure}
+
+All in all, this makes up to $36 = 8 + 6 \times 4 + 4$ proportions, but only $1
++ 6 + 4 = 11$ of them can be considered \textit{unique} (up to equivalence) and
+only one is non-flat\footnote{\textit{flat} proportion are those that make up
+flat parallelograms. This naming convention is actually fortunate, because
+these proportion are in practice absolutely useless.}. In section \ref{TODO},
+we will further investigate the number of unique proportions that can be built
+in $\mathbb{B}^m$.
+
+Going a dimension further can still be insightful. Figure \ref{FIG:cubes_in_B3}
+illustrates the 12 non-flat proportions that exist in $\mathbb{B}^3$. These
+proportions are the paralellograms making up the 6 faces of the $3$-cube, and
+six other \textit{diagnoal} parallelograms. The flat proportions are not (all)
+shown for obvious reasons.
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\linewidth]{figures/cubes_in_B3.pdf}
-  \caption{Proportions in $\mathbb{B}^3$}
+  \caption{The twelve \textit{non-flat} parallelograms in $\mathbb{B}^3$}
 \label{FIG:cubes_in_B3}
 \end{figure}
 
+\paragraph{Machine learning with Boolean proportions\\}
+
+We now have enough backgroud on Boolean proportions to start doing some machine
+learning. Here is our problem. We consider the set $\mathbb{B}^m$ and its $2^m$
+elements. For various $\mathbf{x} \in \mathbb{B}^m$, we know the value of
+$f(\mathbf{x})$, where $f$ is a function from $\mathbb{B}^m$ to $\mathbb{B}$.
+The value $f(\mathbf{x})$ is called the \textbf{class} of $\mathbf{x}$, or its
+\textbf{label}. The set $S \subsetneq \mathbb{B}^m$ of elements for which
+$f(\mathbf{x})$ is known is called the \textbf{training set}. For any element
+$\mathbf{x} \notin S$, $f(\mathbf{x})$ is unknown and our goal is to guess it:
+this is a \textbf{classification problem}.
+
+Suppose we're in $\mathbb{B}^3$ and consider Figure
+\ref{FIG:classification_problem}.
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=3in]{figures/classification_problem.pdf}
+  \caption{What should the value of $f(\mathbf{h})$ be?}
+\label{FIG:classification_problem}
+\end{figure}
+We know the values of $f(\mathbf{x})$ for
+every single $\mathbf{x}$ but $\mathbf{h}$, so $S = \{ \mathbf{a}, \mathbf{b},
+\mathbf{c}, \mathbf{d}, \mathbf{e}, \mathbf{f}, \mathbf{g}\}$. To guess the value of
+$f(\mathbf{h})$, we will use the so-called analogical inference principle,
+which states that if four elements $\mathbf{a}, \mathbf{b}, \mathbf{c},
+\mathbf{d}$ are in proportion, then their class should also be in proportion:
+$$
+\infer{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c})
+: f(\mathbf{d})}{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}
+$$
+
+This is obviously an unsound principle, in that the conclusion does not
+logically follows from the premice. But as we will see in this document, it can
+still be useful.
+
+This principle leads us to look for all 3-tuples $(\mathbf{x}, \mathbf{y},
+\mathbf{z}) \in S^3$ such that $\mathbf{x}:\mathbf{y}::\mathbf{z}:\mathbf{h}$.
+The analogical inference then states that we should have
+$f(\mathbf{x}):f(\mathbf{y})::f(\mathbf{z}):f(\mathbf{h})$. Figure
+\ref{FIG:cubes_in_B3} tells us that there are 6 (non-flat) parallelograms
+involving $\mathbf{h}$ as a vertex. The six corresponding proportions are:
+
+\begin{itemize}
+  \item $\mathbf{b} : \mathbf{d} :: \mathbf{f} : \mathbf{h}$
+  \item $\mathbf{e} : \mathbf{f} :: \mathbf{g} : \mathbf{h}$
+  \item $\mathbf{c} : \mathbf{g} :: \mathbf{d} : \mathbf{h}$
+  \item $\mathbf{a} : \mathbf{b} :: \mathbf{g} : \mathbf{h}$
+  \item $\mathbf{a} : \mathbf{e} :: \mathbf{d} : \mathbf{h}$
+  \item $\mathbf{a} : \mathbf{c} :: \mathbf{f} : \mathbf{h}$
+\end{itemize}
+
+Unfortunately, the first three proportion are of no use here. 
+
+Notice that we have light-heartedly ignored  all the flat proportions. This is
+because...
 
 \paragraph{How many proportions can we build in $\mathbb{B}^m$?\\}
 
