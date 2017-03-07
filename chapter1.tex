@@ -797,7 +797,7 @@ in $\mathbb{B}^m$.
 Going a dimension further can still be insightful. Figure \ref{FIG:cubes_in_B3}
 illustrates the 12 non-flat proportions that exist in $\mathbb{B}^3$. These
 proportions are the paralellograms making up the 6 faces of the $3$-cube, and
-six other \textit{diagnoal} parallelograms. The flat proportions are not (all)
+six other \textit{diagonal} parallelograms. The flat proportions are not (all)
 shown for obvious reasons.
 
 \begin{figure}[!h]
@@ -849,19 +849,95 @@ $f(\mathbf{x}):f(\mathbf{y})::f(\mathbf{z}):f(\mathbf{h})$. Figure
 \ref{FIG:cubes_in_B3} tells us that there are 6 (non-flat) parallelograms
 involving $\mathbf{h}$ as a vertex. The six corresponding proportions are:
 
-\begin{itemize}
+\begin{enumerate}
+  \item $\mathbf{a} : \mathbf{b} :: \mathbf{g} : \mathbf{h}$
+  \item $\mathbf{a} : \mathbf{d} :: \mathbf{e} : \mathbf{h}$
+  \item $\mathbf{a} : \mathbf{c} :: \mathbf{f} : \mathbf{h}$
   \item $\mathbf{b} : \mathbf{d} :: \mathbf{f} : \mathbf{h}$
   \item $\mathbf{e} : \mathbf{f} :: \mathbf{g} : \mathbf{h}$
   \item $\mathbf{c} : \mathbf{g} :: \mathbf{d} : \mathbf{h}$
-  \item $\mathbf{a} : \mathbf{b} :: \mathbf{g} : \mathbf{h}$
-  \item $\mathbf{a} : \mathbf{e} :: \mathbf{d} : \mathbf{h}$
-  \item $\mathbf{a} : \mathbf{c} :: \mathbf{f} : \mathbf{h}$
+\end{enumerate}
+
+Applying the analogical inference principle to the first proportion $\mathbf{a}
+: \mathbf{b} :: \mathbf{g} : \mathbf{h}$ leads to $f(\mathbf{a}) :
+f(\mathbf{b}) :: f(\mathbf{g}) : f(\mathbf{h})$, which is equivalent to:
+$$0:1::0:f(\mathbf{h}).$$ By refering to Table \ref{TAB:six_valid_patterns}, we
+notice that $f(\mathbf{h})$ should be equal to $1$ for the proportion
+$f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{g}) : f(\mathbf{h})$ to be a valid
+one, because $0:1::0:1$. So we keep $1$ in the back of our head as a possible
+candidate for $f(\mathbf{h})$.
+
+What we have just done is the \textbf{solving of an analogical equation}.
+Generally speaking, an analogical equation is a proportion $a:b::c:x$ in a
+context where $x$ is unkown. Determining the value of $x$ is thus the
+\textit{solving} of this equation. Depending on the nature and values of $a, b,
+c, x$, there may or may not exist a solution, and it might not be unique. In
+the case of Boolean values, the solution is solvable for 6 patterns of $a, b,
+c$ (the 6 patterns of Table \ref{TAB:six_valid_patterns} naturally). As we can
+see, the solution is always unique:
+
+\begin{proposition}
+  Let $a, b, c$ in $\mathbb{B}$. The analogical equation
+  $a :b::c:x$
+  is solvable if and only if $a = b$ or $a = c$. The solution $x$ is given by
+  $$
+  \begin{cases}
+    x = c \emph{ if } a = b,\\
+    x = b \emph{ if } a = c,
+  \end{cases}
+  $$
+  or more generally by $x = c - a + b$, because the Boolean proportion is a
+  particular case of arithmetic proportion.
+\end{proposition}
+
+Let's get back to the estimation of $f(\mathbf{h})$. Applying the analogical
+inference principle to the second proportion $\mathbf{a} : \mathbf{d} ::
+\mathbf{e} : \mathbf{h}$ leads $f(\mathbf{a)} : f(\mathbf{d}) :: f(\mathbf{e})
+: f(\mathbf{h})$, and to the solving of $0:0::1:f(\mathbf{h})$. Here again, the
+solution is $1$, just like the candidate of the first proportion.
+The third proportion leads to the soving of $0:1::0:1$, also claming that $1$
+is a good candidate.
+
+And now the fourth proportion $\mathbf{b} : \mathbf{d} :: \mathbf{f} :
+\mathbf{h}$, which leads to $1:0:0:f(\mathbf{h})$. \textbf{This equation is not
+solvable}: neither $1:0::0:1$ nor $1:0::0:0$ are valid proportion. We thus
+simply discard the proportion $\mathbf{b} : \mathbf{d} :: \mathbf{f} :
+\mathbf{h}$ as a potential source of information about $f(\mathbf{h)}$, because
+we are not in position to apply the analogical inference principle. We can
+easily verify that the fifth and sixth (and last!) proportions also lead to
+non-solvable equations.
+
+All in all, we are left with three candidates coming from the first three
+proportions, all of which are equal to $1$. Our guess will thus be that
+$f(\mathbf{h})$ should be equal to $1$. Is this correct? Well in real-world
+settings, there is no way to know for sure, because the ground truth function
+$f$ is unknown (otherwise, there is no point in trying to classify $\mathbf{h}$
+in the first place). The undeniable perks of artificial examples is that we can
+do how we please, and define the function $f$ by
+$$f(\mathbf{x}) = f(x_1, x_2, x_3) = x_1 \oplus x_2 \oplus x_3,$$
+where $\oplus$ denotes the XOR operator, which is both commutative and
+associative: $a \oplus b = (a \wedge \neg b) \vee (\neg a \wedge b)$. So in our
+case, yes, the true value of $f(\mathbf{h})$ is indeed $1$ and our prediction
+is correct.
+
+\begin{itemize}
+  \item Notice that we have so far light-heartedly ignored  all the flat
+    proportions.  This is because none of these proportions allow us to derive
+    a solvable equation. Considering for example $\mathbf{d} : \mathbf{h} ::
+    \mathbf{d} : \mathbf{h}$ would lead to the solving of $f(\mathbf{d}) :
+    f(\mathbf{h}) :: f(\mathbf{d}) : f(\mathbf{h})$, or equivalently of $0 :
+    f(\mathbf{h}) :: 0 : f(\mathbf{h})$. Both values $0$ and $1$ could lead to
+    equally valid proportions here, so there is simply no predictive power in
+    the flat proportions.
+
+  \item On a fait du leave one out
+  \item quest ce qui se passe si les candidates sont pas daccord
+  \item qu'est ce qui se passe si on peut pas trouver d'equation class
+    solvable?
+  \item quelles sont les fonctions pour lesquelles je peux appliquer le
+    principe de manirere sound ?
+  
 \end{itemize}
-
-Unfortunately, the first three proportion are of no use here. 
-
-Notice that we have light-heartedly ignored  all the flat proportions. This is
-because...
 
 \paragraph{How many proportions can we build in $\mathbb{B}^m$?\\}
 
