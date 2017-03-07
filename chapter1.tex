@@ -526,13 +526,12 @@ of interest for us, but let us first note the following major fact:
 \begin{proposition}
   \label{PROPOS:analogy_for_vectors}
   Let $A$ be an analogy over a set $X$. We can define an analogy $A^m$
-  over $X^m$ by:
+  over $X^m$ in a component-wise fashion by:
   $$A^m(\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}) ~ \emph{  if  } ~
   A(a_i, b_i, c_i, d_i) \emph{ for all } i \in [1, m].$$
 \end{proposition}
 \noindent
-The analogy $A^m$ is thus defined in a component-wise fashion. More often than
-not, $A^m$ will be denoted $A$ for the sake of brevity.
+More often than not, $A^m$ will be denoted $A$ for the sake of brevity.
 
 Probably the first use of formal proportions is that of Lepage in
 \cite{Lep04} who, starting from the three aforementioned axioms, formally
@@ -592,18 +591,33 @@ effectively called \textbf{proportions}: it's precisely because they generalize
 the well-known numerical (geometric) proportion to other more complex
 structures.
 
-Note that the geometrical proportion is not the only proportion that deals with
-numbers! Indeed, in sections \ref{LesSectnios} we will make use of the
-\textbf{arithmetic} proportion, which states an equality of
+Note that the geometric proportion is not the only analogical proportion that
+deals with numbers! Indeed, in sections \ref{TODO} we will make use of
+the \textbf{arithmetic} proportion, which states an equality of
 \textbf{differences}:
 \begin{definition}
 \label{DEF:arithmetic_proportion}
-Four real numbers $a, b, c, d$ are in geometric proportion if
-$a - b = c - d$.
+Four real numbers $a, b, c, d$ are in geometric proportion if $a - b = c - d$.
 \end{definition}
 
-\textcolor{red}{parler des parallélogrammes. Fiare un petit dessin. Faire le
-lien avec Rumelhart.}
+Using Proposition \ref{PROPOS:analogy_for_vectors}, four vectors $\mathbf{a},
+\mathbf{b}, \mathbf{c}, \mathbf{d}$ of $\mathbb{R}^m$ are in arithmetic
+proportion if $\mathbf{a} - \mathbf{b} = \mathbf{c} - \mathbf{d}$, i.e. if they
+are the four vertices of a parallelogram, as illustrated in Figure
+\ref{FIG:arithmetic_proportion}.
+
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=2.5in]{figures/arithmetic_proportion.pdf}
+  \caption{$\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}$
+  are in arithmetic proportion if they are the four vertices of a
+  parallelogram.}
+\label{FIG:arithmetic_proportion}
+\end{figure}
+
+Even if they did not state it in these terms, Rumelhart and Abrahamsen (Section
+\ref{TODO}) clearly used the arithmetic proportion for their model of
+analogical reasoning.
 
 Beside the use of arithmetic proportion, one of the main focus of this thesis
 is to study that of Boolean proportions, i.e.  proportions than one can built
@@ -735,20 +749,25 @@ guarantees that $0$ and $1$ play symmetric roles:
 \end{property}
 
 Also, it appears that the Boolean proportion is equivalent to the arithmetic
-proportion:
+proportion when we restrict it to $\mathbb{B}$:
 
 \begin{property}
-  Let a, b, c, d in $\mathbb{B}$. Then  $a : b :: c : d \iff a - b = c - d$.
+  Let a, b, c, d in $\mathbb{B}$. Then  $a : b :: c : d \iff a - b = c - d$.\\
+  Note that the geometric proportion offers a necessary condition, but not a
+  sufficient one: $a \times d = b\times c$ is satisfied by all of the patterns
+  in Table \ref{TAB:six_valid_patterns}, but also for the pattern $0: 0: 0: 1$
+  which is not a valid analogy.
 \end{property}
 
-Note that the geometric proportion offers a necessary condition, but not a
-sufficient one: $a \times d = b\times c$ is satisfied for the pattern $0: 0: 0:
-1$, but it is not a valid analogy. Just like in $\mathbb{R}^m$ the arithmetic
-proportion allows us to think of Boolean proportions as parallelograms, but
-this time in $\mathbb{B}^m$.
+Just like in $\mathbb{R}^m$ the arithmetic proportion allows us to think of
+Boolean proportions as parallelograms, but this time in $\mathbb{B}^m$.
 
-\textcolor{red}{mettre des plots de cubes dans B3}
-
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\linewidth]{figures/cubes_in_B3.pdf}
+  \caption{Proportions in $\mathbb{B}^3$}
+\label{FIG:cubes_in_B3}
+\end{figure}
 
 
 \paragraph{How many proportions can we build in $\mathbb{B}^m$?\\}
