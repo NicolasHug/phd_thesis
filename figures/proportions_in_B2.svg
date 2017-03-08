@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.24748737"
-     inkscape:cx="638.39202"
-     inkscape:cy="343.26824"
+     inkscape:zoom="0.35"
+     inkscape:cx="845.71612"
+     inkscape:cy="89.9684"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -50,7 +50,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -60,7 +60,7 @@
      id="layer1"
      transform="translate(18.635398,-76.45673)">
     <rect
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:5.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:5.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect4136"
        width="502.85715"
        height="502.85715"
@@ -115,7 +115,7 @@
        sodipodi:open="true"
        d="m 543.57241,208.38348 a 22.223356,22.223356 0 0 1 5.04637,-31.01829 22.223356,22.223356 0 0 1 31.01908,5.0415 22.223356,22.223356 0 0 1 -5.03662,31.01987 22.223356,22.223356 0 0 1 -31.02066,-5.03175" />
     <g
-       transform="matrix(11.340136,0,0,11.340136,-2443.5486,-866.42815)"
+       transform="matrix(11.340136,0,0,11.340136,-2540.5232,-866.42815)"
        ns0:text="$\\mathbf{a}$"
        ns0:preamble=""
        id="g4202">
@@ -163,7 +163,7 @@
     </g>
     <g
        id="g4299"
-       transform="matrix(11.340136,0,0,11.340136,-2062.061,-852.78455)"
+       transform="matrix(11.340136,0,0,11.340136,-1947.9138,-852.78455)"
        ns0:preamble=""
        ns0:text="$\\mathbf{b}$">
       <defs
@@ -211,7 +211,7 @@
     <g
        ns0:text="$\\mathbf{d}$"
        ns0:preamble=""
-       transform="matrix(11.340136,0,0,11.340136,-2070.2753,-1234.2131)"
+       transform="matrix(11.340136,0,0,11.340136,-1956.1281,-1234.2131)"
        id="g4398">
       <defs
          id="defs4400">
@@ -256,7 +256,7 @@
     </g>
     <g
        id="g4517"
-       transform="matrix(11.340136,0,0,11.340136,-2444.715,-1247.8567)"
+       transform="matrix(11.340136,0,0,11.340136,-2543.71,-1247.8567)"
        ns0:preamble=""
        ns0:text="$\\mathbf{c}$">
       <defs
@@ -296,7 +296,8 @@
              x="223.43201"
              xlink:href="#textext-865a7081-1"
              width="100%"
-             height="100%" />
+             height="100%"
+             transform="translate(0.17816237,0)" />
         </g>
       </g>
     </g>
@@ -812,5 +813,15 @@
         </g>
       </g>
     </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 60.293175,698.25212 561.57098,194.89685"
+       id="path4476"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5.5999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 59.686972,194.30965 563.04225,695.58744"
+       id="path4476-3"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
