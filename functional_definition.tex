@@ -1,33 +1,62 @@
 \chapter{A functional definition of analogical classifiers}
-In recent works, analogy-based classifiers have been proved quite successful.
-They exhibit good accuracy rates when compared with standard classification
-methods. Nevertheless, a theoretical study of their predictive power has not
-been done so far. One of the main barriers has been the lack of functional
-definition: analogical learners have only algorithmic definitions.  The aim of
-our paper is to complement the empirical studies with a theoretical
-perspective. Using a simplified framework, we first provide a concise
-functional definition of the output of an analogical learner.  Two versions of
-the definition are considered, a strict and a relaxed one.  As far as we know,
-this is the first definition of this kind for analogical learner. Then, taking
-inspiration from results in $k$-NN studies, we examine some analytic
-properties such as convergence and VC-dimension, which are among the basic
-markers in terms of machine learning expressiveness. We then look at what could
-be expected in terms of theoretical accuracy from such a learner, in a Boolean
-setting.  We examine learning curves for artificial domains, providing
-experimental results that illustrate our formulas, and empirically validate our
-functional definition of analogical classifiers.
+\label{CHAP:functional_definition}
+
+\initial{I}n Section \ref{SEC:machine_learning_with_boolean_proportions}, we briefly
+described a basic process of analogical classification in an unformal way,
+making sure that everything went smoothly. In practice, bad things happen,
+always. In this chapter, we will clearly and formally define analogical
+classification, which will help us clarify some of the grey areas of Section
+\ref{SEC:machine_learning_with_boolean_proportions}.
+
+A first form of analogical classifiers has been defined in the works of Stroppa
+and Yvon \cite{StrYvoCNLL05}, which we will refer to as \textbf{conservative
+classifiers}. Another form of analogical classifiers has later been proposed in
+the works of Bayoudh, Delhay and Miclet \cite{MicBayDelJAIR08,
+BayMicDelIJCAI07}, refered-to here as \textbf{extended classifiers}.
+
+Though the theoretical groundations of the conservative and extended
+classifiers have a lot in common (they are both analogical classifiers after
+all), we will see that their practical implementation are actually quite
+different. We will show however that the extended classifier is a
+generalization of the conservative one, and most importantly that these two
+approaches can be factorized into a single, unifying framework.
+
+So far, only algorithmic descriptions of both methods were available. Our
+unifying framework will allow us to give a general and \textbf{functional}
+definition of analogical classifiers, opening the door to some theoretically
+grounded research.
 
 \section{Analogical classification}
-\label{ANALOGICAL_CLASSIFICATION}
-In the context of  classification, items are represented as elements of a universe $X$ having a (unique) label belonging
-to $Y$. For any $x\in X$, $\dot{x}$ denotes the ground
-truth label associated to $x$. The goal of a classifier is, given a sample
-set $S$ (i.e. a set of elements $x \in X$ for which $\dot{x}$ is known), to
-correctly predict the label of other elements $x$ that do not belong to the
-sample set. We call $\hat{x}$ the predicted label of $x$: this is the output of the classifier.
+
+Let us first define the problem of classification, one of the main subfields of
+machine learning. The aim is simple: a classifier has to estimate the class of
+any element given as input on the basis of some other elements for which the
+class is known. Formally, we denote $X$ our universe which is usually a
+Cartesian product of dimension $m$: $X = X_1 \times \ldots \times X_m$. For all
+elements $\mathbf{x}$ in a subset $S \subsetneq X$, the class (or label) of
+$\mathbf{x}$ is known and is denoted $\dot{\mathbf{x}$ or also somtimes
+$f(\mathbf{x})$.
+
+In the context of
+classification, items are represented as elements of a universe $X$ having a
+(unique) label belonging to $Y$. For any $x\in X$,
+$\dot{x}$ denotes the ground truth label associated to $x$. The goal of a
+classifier is, given a sample set $S$ (i.e. a set of elements $x \in X$ for
+which $\dot{x}$ is known), to correctly predict the label of other elements $x$
+that do not belong to the sample set. We call $\hat{x}$ the predicted label of
+$x$: this is the output of the classifier.
+
+
+Formally, we start with a set $S= \{x^{(i)} \in \mathcal{X}| i \in [1,n]\}$ of
+examples ($n$ is supposed to be small), where $x^{(i)}$ is an
+element of a Cartesian product $\mathcal{X} = X_1 \times \ldots \times X_m$.
+For each element  $x^{(i)} \in S$, we associate a target  $f(x^{(i)})=y^{(i)}
+\in Y$.  In the case of regression, $y^{(i)} \in \mathbb{R}$, and in the case
+of classification $y^{(i)}$ belongs to a finite set and is called a class
+or a \textbf{label}.
 
 \subsection{Conservative classifier}
-\label{conservative}
+\label{SEC:conservative_classifier}
 
 Let us first consider what we call a \textit{conservative}
 classifier. Such a classifier is called conservative because it
