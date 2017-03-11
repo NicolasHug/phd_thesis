@@ -1,9 +1,9 @@
 \chapter{A functional definition of analogical classifiers}
 \label{CHAP:functional_definition}
 
-\initial{I}n Section \ref{SEC:machine_learning_with_boolean_proportions}, we briefly
-described a basic process of analogical classification in an unformal way,
-making sure that everything went smoothly. In practice, bad things happen,
+\initial{I}n Section \ref{SEC:machine_learning_with_boolean_proportions}, we
+briefly described a basic process of analogical classification in an unformal
+way, making sure that everything went smoothly. In practice, bad things happen,
 always. In this chapter, we will clearly and formally define analogical
 classification, which will help us clarify some of the grey areas of Section
 \ref{SEC:machine_learning_with_boolean_proportions}.
@@ -34,8 +34,7 @@ any element given as input on the basis of some other elements for which the
 class is known. Formally, we denote $X$ our universe which is usually a
 Cartesian product of dimension $m$: $X = X_1 \times X_2 \times \ldots \times
 X_m$. We have at our disposal a subset $S \subsetneq X$ of $n$ pairs
-$\left(\mathbf{x}, f(\mathbf{x})\right)$, called the \textbf{training set} or
-also the \textbf{sample set}:
+$\left(\mathbf{x}, f(\mathbf{x})\right)$, called the \textbf{training set}.
 $$S= \Set{\left(\mathbf{x}^{(i)}, f(\mathbf{x}^{(i)})\right) \in X^m \times Y |
 i \in [1,n]}.$$
 
@@ -62,7 +61,7 @@ describes conservative classifiers.
 \caption{A Conservative classifier}
 \label{ALGO:conservative_classifier}
   \begin{algorithmic}
-    \STATE {\bf Input}: A sample set $S$ and an element $\mathbf{x} \in X^m
+    \STATE {\bf Input}: A training set $S$ and an element $\mathbf{x} \in X^m
     \setminus S$ for which $f(\mathbf{x})$ is unknown.
     \STATE {\bf Output}: $\hat{f}(\mathbf{x})$, an estimation of
     $f(\mathbf{x})$
@@ -85,17 +84,22 @@ describes conservative classifiers.
 It should be easy to see that the process of Algorithm
 \ref{ALGO:conservative_classifier} is extremely similar to the one we followed
 on our gentle introduction to classification with Boolean proportions in
-Section \ref{SEC:machine_learning_with_boolean_proportions}, but Algorithm
-\ref{ALGO:conservative_classifier} is slightly more general: it allows to deal
-with cases where some of the candidate solutions $y$ do not agree with each
-other.  The fix here is to consider that the prediction $\hat{f}(\mathbf{x})$
-will be the most common candidate solution among all the predictors. This
-definition of analogical classification comes from the work of Stroppa and Yvon
-\cite{StrYvoCNLL05, StrYvoREPORT05}, and to our knowledge it is the first one
-that has every been proposed. We note however that the authors did not
-explicitely state that the class equations must be solvable to be useful.
+Section \ref{SEC:machine_learning_with_boolean_proportions}. Here again the key
+underlying process is the analogical inference principle, which states that if
+four elements are in proportion, then their classes should also be in
+proportion. But Algorithm \ref{ALGO:conservative_classifier} is slightly more
+general than what we have glimpsed in Section
+\ref{SEC:machine_learning_with_boolean_proportions}: it allows to deal with
+cases where some of the candidate solutions $y$ do not agree with each other.
+The fix here is to consider that the prediction $\hat{f}(\mathbf{x})$ will be
+the most common candidate solution among all the predictors. This definition of
+analogical classification comes from the work of Stroppa and Yvon
+\cite{StrYvoCNLL05, StrYvoREPORT05}, and to our knowledge it is the first
+instance of analogical learner that has every been proposed. We note however
+that the authors did not explicitely state that the class equations must be
+solvable to be useful.
 
-Note that if the multiset $C$ is empty, i.e. if we cannot find
+Note that if the multiset $\mathbf{C}(\mathbf{x})$ is empty, i.e. if we cannot find
 $3$-tuples in $S^3$ such that they are in proportion with $\mathbf{x}$ and such
 that the related class equation is solvable, then the value
 $\hat{f}(\mathbf{x})$  is undefined and $\mathbf{x}$ cannot be classified
@@ -104,21 +108,21 @@ $\hat{f}(\mathbf{x})$  is undefined and $\mathbf{x}$ cannot be classified
 At first sight, we are here in a setting where the examples in $S$ are stored
 for future use, without any generalization process.  We will thus consider (for
 now) that the conservative classifier ranges among the category of
-\textbf{lazy learners}, i.e. learners that only rely on the sample set $S$
+\textbf{lazy learners}, i.e. learners that only rely on the training set $S$
 without any actual \textit{learning} stage, or without building any model of
 the data. The most popular instance of lazy learner certainly is the famous
 $k$-NN algorithm.
 
 In the following, we will give a functional definition of $\hat{f}(\mathbf{x})$
 as outputed by a conservative classifier. To this end, we will define two
-crucial concepts: the \textbf{analogical extension} of a sample set $S$, and
+crucial concepts: the \textbf{analogical extension} of a training set $S$, and
 the \textbf{analogical root} of an element $\mathbf{x}$. Both the analogical
 extension and the analogical root were first defined in \cite{StrYvoREPORT05},
 with some minor differences with our definitions.
 
 \begin{definition}
   \label{DEF:analogical_extension}
-  Denoting $S$ a sample set and $f$ the ground truth function of the labels,
+  Denoting $S$ a training set and $f$ the ground truth function of the labels,
   the \textbf{analogical extension} of $S$ using $f$ is:
   $$
   \esf \eqdef \Set{ \mathbf{x} \in X^m |  \exists
@@ -138,10 +142,9 @@ $f$, $\esf$ satisfies some interesting properties: \begin{enumerate}
 \item $S_1 \subseteq S_2 \implies \aext{S_1}{f} \subseteq \aext{S_2}{f}$.
 \end{enumerate}
 
-\noindent
-We will denote by $\esfs$ the set of elements in $\esf$ that are not in $S$:
 \begin{definition}
   \label{DEF:ae_star}
+We will denote by $\esfs$ the set of elements in $\esf$ that are not in $S$:
 $$\esfs \eqdef \esf \setminus S.$$
 \end{definition}
 
@@ -180,7 +183,7 @@ The dual concept of the analogical extension is what we call the
 
 \begin{definition}
   \label{DEF:analogical_root}
-  Denoting $S$ a sample set and $f$ the ground truth function of the labels,
+  Denoting $S$ a training set and $f$ the ground truth function of the labels,
   the \textbf{analogical root} of an element $\mathbf{x} \in X^m$ is:
   $$
   \rsfx \eqdef \Set{(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in S^3 |
@@ -249,7 +252,7 @@ classifier:
 
 \begin{definition}
   \label{DEF:conservative_classifier}
-  Given a sample set $S$ with an underlying ground truth function $f$,
+  Given a training set $S$ with an underlying ground truth function $f$,
   a conservative classifier sets the prediction of an element $\mathbf{x}$ as
   follows:
 
@@ -292,44 +295,63 @@ size of $\esf$ can be drastically greater than that of $S$. This alternative
 view also leads us to reconsider our previous statement about conservative
 classifiers belonging to the class of lazy learners. Here, the computation of
 the analogical extension can be viewed as a generalization process, even if not
-all elements of the universe $X^m$ are affected by this generilzation.
+all elements of the universe $X^m$ are affected by this generalization.
 
-Let us sketch an example coming from
-\cite{StrYvoREPORT05} where an analogical relation is defined on the set of
-words over a finite alphabet. The learning task is to learn the conjugation of
-English verbs. Solving the analogical equation $view:reviewer::search:y$ leads
-to $researcher$, using the definition of the analogy and the concatenation
-operator. Similarly given a sample set $S=\{x_1,x_2,x_3,x_4,x_5\}$ where
+We will end this Section on conservative classifier by sketching a use-case
+described in \cite{StrYvoREPORT05}, where an analogical proportion is defined
+on the set of words over a finite alphabet, and the task is to learn the
+conjugation of English verbs. This setting is slightly different than that of
+classification that we have settled-in, but all definitions and concepts remain
+valid. Here, solving the analogical equation
+$\text{view}:\text{reviewer}::\text{search}:y$ leads to $\text{researcher}$,
+using the definition of the analogy and the concatenation operator. 
+We have a training set $S=\Set{\mathbf{x}^{(1)},\mathbf{x}^{(2)},
+\mathbf{x}^{(3)}, \mathbf{x}^{(4)}, \mathbf{x}^{(5)}}$ where
+$\mathbf{x}^{(1)}=(read,3,reads), \mathbf{x}^{(2)}=(read,G,reading),
+\mathbf{x}^{(3)}=(view,3,views)$, $\mathbf{x}^{(4)}=(view,G,viewing),
+\mathbf{x}^{(5)}=(eat,3,eats)$. $(read,3,reads)$ means that $read$ is
+transformed into $reads$ when conjuguated at the third person singular, and $G$
+stands for the gerund form.
 
-$x_1=(read,3,reads), x_2=(read,G,reading), x_3=(view,3,views)$,
+Given a new element $\mathbf{x}=(eat,G,y)$, $\rsfx=
+\Set{\left(\mathbf{x}^{(1)}, \mathbf{x}^{(2)}, \mathbf{x}^{(3)}\right),
+\left(\mathbf{x}^{(3)},\mathbf{x}^{(4)},\mathbf{x}^{(5)}\right)}$. The
+prediction is as expected $\hat{f}(\mathbf{x})=\text{eating}$, which is the
+solution of the equation $\text{view}:\text{viewing}::\text{eat}:y$. There is
+no solution for $\mathbf{x}=(absurd,G,y)$, just because $\rsfx= \varnothing$.
+Note that in this case, the analogical extension is infinite and cannot be
+explictely computed, because of the definition of the proportion that is used,
+so our alternative view of conservative classifiers does not hold and we have
+to stick to that of Algorithm \ref{ALGO:conservative_classifier}.
 
-$x_4=(view,G,viewing), x_5=(eat,3,eats)$
-
-and a new element $x=(eat,G,y)$, then $R_S^Y(x)= \{(x_1,x_2,x_5),
-(x_3,x_4,x_5)\}$. The prediction is $\hat{x}=eating$ which is the solution of
-the equation $view:viewing::eat:y$. And this is exactly what is expected.  But
-there is no solution for $x=(absurd,G,y)$ just because $R_S^Y(x)= \varnothing$.
-
-Such a conservative learner cannot generalize to any new input and is
-restricted to elements in $A_E^Y(S)$. This is not the case for instance-based
-learner like $k$-NN.  This is why other options have been implemented to
-overcome this problem and to extend in some sense the generalization ability of
-analogical learner, as we will see in the next section.
+The fact that conservative learners cannot output a prediction for any
+$\mathbf{x}$ can here be considered a good thing: it would not be natural to
+look for the gerund form of \textit{absurd}. However, in many use cases we do
+want our classifier to be able to predict the label of any element. This is why
+other options have been implemented to overcome this problem, and to extend in
+some sense the generalization ability of analogical learners. This is the
+purpose of \textbf{extended classifiers} described in the next section.
 
 \subsection{Extended classifier}
-\label{EXTENDED_LEARNER}
+\label{SEC:extended_classifier}
 
-To relax the previous option, we need to be able to predict a label for
-elements outside $A_E^Y(S)$ i.e. elements which do not constitute a perfect analogy
-with elements in $S$.  To this end, we can try to measure to what extent such
-elements are far from building a perfect analogy with those in $S$.
-The concept of {\it analogical dissimilarity}, first  defined in
-\cite{BayMicDelIJCAI07}, will be useful to  quantify in some sense how far a
-relation $a:b::c:d$ is from being a valid analogy.
-We keep the initial notation $AD(a,b,c,d)$ to
-denote the analogical dissimilarity between 4 elements.  Some  minimal
-properties have to be satisfied by such a dissimilarity $AD: X^4 \longrightarrow \mathbb{R}^+$ to fit with the intuition:
-\begin{itemize}
+We now want our analogical classifier to be able to predict the label of any
+input element $\mathbf{x} \in X^m$, and not just the ones in $\esf$.
+The main bottleneck of Algorithm \ref{ALGO:conservative_classifier} is that we
+require the 3-tuples in $S^3$ to be in perfect proportion with the element
+$\mathbf{x}$ we want to classify. Such 3-tuples are not always available in the
+training set, so this leads that some elements are excluded from $\esf$.
+
+The key concept that will help us overcome this issue is what we call an
+\textbf{analogical dissimilarity}, first introduced in
+\cite{BayMicDelIJCAI07}. The analogical dissimilarity is a measure that
+quantifies in some sense \textit{how far} a relation $\mathbf{a} : \mathbf{b}
+:: \mathbf{c} : \mathbf{d}$ is from being a perfectly valid proportion.
+
+We keep the initial notation $AD(a,b,c,d)$ to denote the analogical
+dissimilarity between 4 elements.  Some  minimal properties have to be
+satisfied by such a dissimilarity $AD: X^4 \longrightarrow \mathbb{R}^+$ to fit
+with the intuition: \begin{itemize}
 \item $\forall a, b, c, d, \quad  AD(a,b,c,d)=0 \mbox{ iff } a:b::c:d$
 \item $\forall a, b, c, d, \quad  AD(a,b,c,d)=AD(c,d,a,b)=AD(a,c,b,d)$
 \item $\forall a, b, c, d, e, f,  AD(a,b,e,f) \leq AD(a,b,c,d) + AD(c,d,e,f)$
@@ -367,7 +389,7 @@ their classifier.
        \label{algo_extended}
        \begin{algorithmic}
 
-      \STATE {\bf Input}: A sample set $S$, an element $x \in X$ for which
+      \STATE {\bf Input}: A training set $S$, an element $x \in X$ for which
       $\dot{x}$ is unknown, a constant $k$.
       \STATE {\bf Output}: $\hat{x}$, an estimation of $\dot{x}$
       \STATE {\bf Init}: $C = \varnothing$ \quad \quad // multiset of candidate labels
@@ -428,7 +450,7 @@ In the case where $k=1$, the
 works of \cite{BayMicDelIJCAI07} will predict $\hat{x}$ as the label $\dot{d'}$ of
 this summit $d'$. \todo{verifier. C'etait en comm}
 it is then natural to consider what we call the \textit{nearest analogical
-neighbour} (or \textbf{nan}) of $x$ from a sample $S$ as the element of
+neighbour} (or \textbf{nan}) of $x$ from a training $S$ as the element of
 $A_E^Y(S)$ defined as:
 $$\forall x \in X, \forall S \subseteq X, 1\mbox{-nan}(x,S)\eqdef \argmin_{d'
 \in A_E^Y(S)} \delta(x,d')$$
@@ -443,7 +465,7 @@ $$\hat{x} = \albl{1\mbox{-nan}(x,S)}.$$
 In words, the predicted label of an element $x$ is the analogical label of its
 nearest neighbour in $A_E^Y(S)$.
 In some sense, an analogical classifier behaves
-as a $\NN$ classifier but on an extended sample set.
+as a $\NN$ classifier but on an extended training set.
 
 Obviously if $x$ belongs to $A_E^Y(S)$ then $x$ is its own nearest analogical
 neighbour: $\nan(x, S) = x \text{ iff } x \in A_E^Y(S)$. Therefore, it is easy
@@ -454,12 +476,12 @@ done in \cite{MicBayDelJAIR08}.
 
 The above definition leads to understand the process of analogical classification as follows:
 \begin{enumerate}
-  \item First, extend the sample set $S$ to its analogical extension
-    $A_E^Y(S)$. $A_E^Y(S)$ can be viewed as an extended sample set that has
+  \item First, extend the training set $S$ to its analogical extension
+    $A_E^Y(S)$. $A_E^Y(S)$ can be viewed as an extended training set that has
     \textbf{class noise}: the label associated with elements in $A_E^Y(S)
     \setminus S$ is their analogical label (as defined in \ref{conservative}),
     which may not be correct.
-  \item Then just apply a classical $k$-NN strategy over this extended sample
+  \item Then just apply a classical $k$-NN strategy over this extended training
     set.
 \end{enumerate}
 
@@ -562,7 +584,7 @@ Let us note the following points:
   the nan and the nn are too close, paying the price of the noise related to
   the nan may not be worth it. This supports the common acknowledgement that
   analogical reasoning is mostly useful when very few data are available.
-    In this later case extending a small sample set with its analogical
+    In this later case extending a small training set with its analogical
     extension may be particularly beneficial.
 
 
@@ -571,7 +593,7 @@ Let us note the following points:
 To conclude this discussion, even if the convergence result is interesting in
 itself, it does not say a lot in terms of machine learning.
 
-To summarize, an analogical classifier extends the sample set $S$ into its
+To summarize, an analogical classifier extends the training set $S$ into its
 analogical extension $A_E^Y(S)$, then applies the $1\mbox{-nn}$ rule. A
 fundamental difference is that the set $A_E^Y(S)$ is also made of elements
 whose label is predicted and is not 100\% sure.
@@ -579,7 +601,7 @@ whose label is predicted and is not 100\% sure.
 \subsection{VC-dimension}\label{vcdim}
 The notion of VC-dimension was originally defined by Vapnik and Chervonenkis
 \cite{Vap98}, and introduced into learnability theory by Blumer et al.
-\cite{BluEhrHauWarACM89}. Roughly speaking, the VC-dimension of a class of learners is a numerical measure of their discrimination power. It appears that this number is strongly linked to the confidence interval between the empirical risk (i.e. the error a learner makes on the sample set) and the true risk (the error a learner makes on the whole universe $X$). As such, the VC-dimension of a class of learners is an essential element of their theoretical study.
+\cite{BluEhrHauWarACM89}. Roughly speaking, the VC-dimension of a class of learners is a numerical measure of their discrimination power. It appears that this number is strongly linked to the confidence interval between the empirical risk (i.e. the error a learner makes on the training set) and the true risk (the error a learner makes on the whole universe $X$). As such, the VC-dimension of a class of learners is an essential element of their theoretical study.
 We consider a universe $X$ (usually a Cartesian product to represent the data) and a
 family $\mathcal{H}=\{h_i \subseteq X|i \in I\}$ of subsets of $X$.
 The elements of $\mathcal{H}$ will be referred as hypothesis or models.
@@ -629,7 +651,7 @@ particularly that of the $1$-nan classifier ($\NaN$). To do so, we restrict
 our view to a Boolean setting: elements to be classified belong to
 $X=\mathbb{B}^m$ and the label space is $Y = \mathbb{B}$.
 
-As explained in Section \ref{FUNCTIONAL_DEF}, for a given $x \in X$ and a sample set
+As explained in Section \ref{FUNCTIONAL_DEF}, for a given $x \in X$ and a training set
 $S \subset X$, we have:
 \begin{equation}\label{eq1}
 \hat{x}=\albl{\nan(x, S)}=\albl{\nn(x, A_E^Y(S))},
@@ -714,7 +736,7 @@ a  concise form, using a few more definitions:
 Naturally, $A \cup B = X$ and $A \cap B = \varnothing$. Also, $\alpha = P(x \in
 A)$ and $1 - \alpha = P(x \in B)$. Therefore, the accuracy of $\NaN_S$ over $X$
 can be understood as the weighted sum of the accuracy of $\NN$ over $A$ and
-$B$, using a different sample set each time (respectively $S$ and $A_E^*$):
+$B$, using a different training set each time (respectively $S$ and $A_E^*$):
 \begin{align*}
   \acc(\NaN_S, X) = ~&\acc(\NN_S, A) \cdot \alpha ~ + \\
                     &\acc(\NN_{A_E^*}, B) \cdot (1 -
@@ -723,7 +745,7 @@ $B$, using a different sample set each time (respectively $S$ and $A_E^*$):
 The value $\acc(\NN_S, A)$ is the accuracy of $\NN_S$ over all the elements in
 $A$. A theoretical study of this accuracy has been done in
 \cite{LanIbaIJCAI93} when the size of $A$ is known.  Regarding
-$\acc(\NN_{A_E^*}, B)$, this is the accuracy of $1$-nn when the sample set is
+$\acc(\NN_{A_E^*}, B)$, this is the accuracy of $1$-nn when the training set is
 noisy, and has been studied in \cite{OkaYugIJCAI97}. This last formula leads
 to the consistent facts:
 \begin{enumerate}
@@ -894,7 +916,7 @@ quantity $\omega$ with the only help of the training set $S$.
 
 Regarding the Monk datasets (Table \ref{TABLE_MONK}), we note that the
 functional $\NaN$ approach (almost) achieves the same results as the somewhat
-more complex algorithm described in Section \ref{EXTENDED_LEARNER}, and that
+more complex algorithm described in Section \ref{SEC:extended_classifier}, and that
 here again the analogical extension set covers the whole universe: this means
 that a conservative approach would have been sufficient! Actually, this raises
 the following question: why would we want to look for more than one analogical
@@ -957,8 +979,8 @@ to practical implementation.
 In terms of accuracy in a Boolean setting, we have found a strong link between
 the accuracy of the $\NaN_S$ algorithm and that of the $\NN_S$ algorithm. At a
 first glance, we can consider the $\NaN$ algorithm as a $\NN$ strategy on an
-extended and noisy sample set: the analogical extension of $S$. In the end, we
-have seen that this extended sample set covers the entire universe provided
+extended and noisy training set: the analogical extension of $S$. In the end, we
+have seen that this extended training set covers the entire universe provided
 that $S$ is big enough, simplifying and bringing back the accuracy of the
 classifier to the value $\omega$ which corresponds to the  quality of the
 analogical extension. We have also provided a method to accurately estimate the
@@ -967,7 +989,7 @@ beforehand to have a precise idea of the accuracy of any analogical classifier
 in a Boolean setting. Some important points remain to be investigated, such as:
 \begin{itemize}
 \item What can we expect in terms of speed convergence from an analogical
-  learner? In other words, what is the minimum size needed from a sample set to
+  learner? In other words, what is the minimum size needed from a training set to
   get a fixed accuracy threshold?
 \item If a clever learning strategy can (at least partially) overcome the
   problem of infinite VC\mbox{-}dimension, can we overcome the issue of the

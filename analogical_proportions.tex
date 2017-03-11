@@ -307,7 +307,7 @@ $$
 
 This is obviously an unsound principle, in that the conclusion does not
 logically follows from the premice. But as we will see in this document, it can
-still be useful. \todo{Parler d'un autre principe d'inference : KNN}
+still be useful.
 
 As we want to guess the value of $f(\mathbf{h})$, this principle leads us to
 look for all 3-tuples $(\mathbf{x}, \mathbf{y}, \mathbf{z}) \in S^3$ such that
@@ -387,7 +387,7 @@ $$\forall \mathbf{x}, ~ f(\mathbf{x}) = f(x_1, x_2, x_3) = x_1 \oplus x_2 \oplus
 where $\oplus$ denotes the XOR operator, which is both commutative and
 associative: $a \oplus b = (a \wedge \neg b) \vee (\neg a \wedge b)$. So in our
 case, yes, the true value of $f(\mathbf{h})$ is indeed $1$ and our prediction
-is correct.
+is correct. We will
 
 Notice that we have so far light-heartedly ignored  all the flat proportions.
 This is because none of these proportions allow us to derive a solvable
@@ -404,8 +404,9 @@ their related class equation, we usually choose to ignore all other equivalent
 proportions, which allows to divide the number of equation solving by a factor
 of $2$.
 
-Here is a small outline of our classification process. Our goal is to guess the
-value of $f(\mathbf{h})$:
+Here is a small outline of our classification process, that was entirely
+governed by the analogical inference principle. Our goal is to guess the value
+of $f(\mathbf{h})$:
 
 \begin{itemize}
   \item We first looked at all the $(\mathbf{x}, \mathbf{y}, \mathbf{z}) \in
@@ -421,7 +422,6 @@ value of $f(\mathbf{h})$:
     $s_i = 1$ for all $i$.
   \item We thus estimated that $f(\mathbf{h})$ should indeed be equal to $1$.
 \end{itemize}
-
 
 This minimal example of analogical classification raises a few concerns, which
 we will be thoroughly addressed in this document:
