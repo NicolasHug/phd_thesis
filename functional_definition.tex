@@ -58,7 +58,7 @@ further ado, let us consider Algorithm \ref{ALGO:conservative_classifier} which
 describes conservative classifiers.
 
 \begin{algorithm}[!ht]
-\caption{A Conservative classifier}
+\caption{The Conservative classifier}
 \label{ALGO:conservative_classifier}
   \begin{algorithmic}
     \STATE {\bf Input}: A training set $S$ and an element $\mathbf{x} \in X^m
@@ -340,7 +340,7 @@ input element $\mathbf{x} \in X^m$, and not just the ones in $\esf$.
 The main bottleneck of Algorithm \ref{ALGO:conservative_classifier} is that we
 require the 3-tuples in $S^3$ to be in perfect proportion with the element
 $\mathbf{x}$ we want to classify. Such 3-tuples are not always available in the
-training set, so this leads that some elements are excluded from $\esf$.
+training set, so necessarily some elements of $X^m$ are excluded from $\esf$.
 
 The key concept that will help us overcome this issue is what we call an
 \textbf{analogical dissimilarity}, first introduced in
@@ -348,17 +348,31 @@ The key concept that will help us overcome this issue is what we call an
 quantifies in some sense \textit{how far} a relation $\mathbf{a} : \mathbf{b}
 :: \mathbf{c} : \mathbf{d}$ is from being a perfectly valid proportion.
 
-We keep the initial notation $AD(a,b,c,d)$ to denote the analogical
-dissimilarity between 4 elements.  Some  minimal properties have to be
-satisfied by such a dissimilarity $AD: X^4 \longrightarrow \mathbb{R}^+$ to fit
-with the intuition: \begin{itemize}
-\item $\forall a, b, c, d, \quad  AD(a,b,c,d)=0 \mbox{ iff } a:b::c:d$
-\item $\forall a, b, c, d, \quad  AD(a,b,c,d)=AD(c,d,a,b)=AD(a,c,b,d)$
-\item $\forall a, b, c, d, e, f,  AD(a,b,e,f) \leq AD(a,b,c,d) + AD(c,d,e,f)$
+We keep the initial notation $\AD(\mathbf{a}, \mathbf{b},
+\mathbf{c},\mathbf{d})$ to denote the analogical dissimilarity between 4
+elements.  Some  minimal properties have to be satisfied by such a
+dissimilarity $\AD \colon {(X^m)}^4 \longrightarrow \mathbb{R}^+$ to fit
+with the intuition:
+\begin{itemize}
+  \item $\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d})=0 \iff \mathbf{a} :
+    \mathbf{b}:: \mathbf{c} : \mathbf{d}$
+  \item $\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d})=
+    \AD(\mathbf{c}, \mathbf{d},\mathbf{a},\mathbf{b})=
+    \AD(\mathbf{c}, \mathbf{a},\mathbf{d},\mathbf{b})=
+    \AD(\mathbf{d}, \mathbf{b},\mathbf{c},\mathbf{a})=
+    \AD(\mathbf{d}, \mathbf{c},\mathbf{b},\mathbf{a})=
+    \AD(\mathbf{b}, \mathbf{a},\mathbf{d},\mathbf{c})=
+    \AD(\mathbf{b}, \mathbf{d},\mathbf{a},\mathbf{c})=
+    \AD(\mathbf{a}, \mathbf{c},\mathbf{b},\mathbf{d})
+    $
+  \item $\AD(\mathbf{a}, \mathbf{b},\mathbf{e},\mathbf{f}) \leq \AD(\mathbf{a},
+    \mathbf{b},\mathbf{c},\mathbf{d}) + \AD(\mathbf{c},
+    \mathbf{d},\mathbf{e},\mathbf{f})$
 \end{itemize}
-As the definition of an analogy strongly relies on the structure and operators
-available on $X$, we have the same situation for $AD$: there are a lot of
-possibilities. For instance:
+
+The definition of an analogical proportion strongly relies on the structure and
+operators available on $X^m$, and the same goes for the definition of the
+analogical dissimilarity: there are a lot of possibilities. For instance:
 \begin{itemize}
 \item When $X=\mathbb{R}^m$ and $a:b::c:d \mbox{ iff } a-b=c-d$, $AD(a,b,c,d) =
   ||(a-b)-(c-d)||_p$ is an analogical dissimilarity for any $p$,
@@ -373,7 +387,9 @@ The codomain of $AD$ is just $\{0, 1, 2\}$. When extended to
   we get an analogical dissimilarity whose co-domain is $[0, 2m]$. In fact,
   this definition is just the restriction to $\mathbb{B}^m$ of the one coming
   from $\mathbb{R}^m$, when considering that $\mathbb{B}^m \subseteq
-  \mathbb{R}^m$ and using the $L_1$ norm, i.e. $AD(a,b,c,d) = ||(a-b)-(c-d)||_1$.
+  \mathbb{R}^m$ and using the $L_1$ norm, i.e. $AD(a,b,c,d) =
+    ||(a-b)-(c-d)||_1$. Here again, we are witnessing the close bond that links
+    the Boolean proportion and and the arithmetic proportion.
 \end{itemize}
 
 As a measure of \textit{how poorly an analogical proportion holds}, the
@@ -382,27 +398,35 @@ main underlying idea is to consider {\it approximate} analogies which are not
 valid stricto sensu, but not too far to be valid.
 In \cite{BayMicDelIJCAI07}, after defining analogical dissimilarity,  the authors
 build an extended classifier allowing classification of elements that do not
-belong to $A_E^Y(S)$.  Algorithm \ref{algo_extended} gives a description of
-their classifier.
+belong to $\esf$. Algorithm \ref{ALGO:extended_classifier} gives a
+description of their classifier.
+
 \begin{algorithm}[!ht]
- \caption{\textit{Extended classifier}}
-       \label{algo_extended}
+ \caption{\textit{The extended classifier}}
+       \label{ALGO:extended_classifier}
        \begin{algorithmic}
 
-      \STATE {\bf Input}: A training set $S$, an element $x \in X$ for which
-      $\dot{x}$ is unknown, a constant $k$.
-      \STATE {\bf Output}: $\hat{x}$, an estimation of $\dot{x}$
-      \STATE {\bf Init}: $C = \varnothing$ \quad \quad // multiset of candidate labels
-      \FORALL{$(a, b, c) \in S^3$ such that $\exists y \in Y$ with $\dot{a} :\dot{b} ::\dot{c} : y$}
-        \STATE compute $AD(a, b, c, x)$ and store it
+      \STATE {\bf Input}: A training set $S$, an element $\mathbf{x} \in X^m$
+         for which $f(\mathbf{x})$ is unknown, and a constant $k > 0$.
+         \STATE {\bf Output}: $\hat{f}(\mathbf{x})$, an estimation of
+         $f(\mathbf{x})$.
+    \STATE {\bf Init}: $\mathbf{C}(\mathbf{x}) = \varnothing$ \quad \quad // A
+    multiset of candidate labels.
+    \FORALL{$(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in S^3$ such that
+         $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : y$ is solvable}
+         \STATE compute $\AD(\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{x})$ and store it
 	    \ENDFOR
-      \FORALL{$k$ least values of $AD(a, b, c, x)$}
-      \STATE compute the solution $y$ of $\dot{a} : \dot{b} : \dot{c} : y$
-      \STATE $C = C \cup y$
+         \FORALL{$k$ least values of $\AD(\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{x})$}
+        \STATE $y = \sol\left(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})\right)$
+    \STATE $ \mathbf{C}(\mathbf{x}) = \mathbf{C}(\mathbf{x}) \cup y$
     \ENDFOR
-    \STATE $\hat{x} = \text{Mode}(C)$
+    \STATE $\hat{f}(\mathbf{x}) = \text{Mode} (\mathbf{C}(\mathbf{x}))$ // The
+         most common value in $\mathbf{C}(\mathbf{x})$
 \end{algorithmic}
 \end{algorithm}
+
+Mentionner l'histoire du $k$ qui est allongé à $k'$.
+
 
 This algorithm is similar to the conservative one but, instead of looking for
 pure analogies, we allow for some analogies not to be perfect when we need to.
@@ -422,9 +446,9 @@ behaviour and it is difficult to extract theoretical properties. The aim of the
 next subsection is to give a functional translation of this algorithmic
 description.
 
-{\color{red} illustration de minimisation de AD: faire un shema comme Figure
-\ref{FIG:classification_problem} mais cette fois avec aucun candidate pour
-$h$. On prend donc les faces, par défaut}.
+illustration de minimisation de AD: faire un shema comme Figure
+\ref{FIG:classification_problem} mais cette fois avec aucun candidate pour $h$.
+On prend donc les faces, par défaut.
 
 \subsection{Analogical classifier: a functional definition}\label{FUNCTIONAL_DEF}
 
@@ -438,7 +462,7 @@ addition, $d'$ might not belong to $\mathbb{B}^m$ but to $\mathbb{R}^m$: this
 happens when one of the terms $AD(a_i, b_i, c_i, d_i)$ is equal to $2$, as
 further discussed later.
 
-As we have seen, for a given $x \in X$, algorithm \ref{algo_extended} tries to
+As we have seen, for a given $x \in X$, algorithm \ref{ALGO:extended_classifier} tries to
 minimise $AD(a,b,c,x)$ over all the 3-tuples $(a,b,c) \in S^3$. In the
 light of what has just been explained, we see that this is equivalent to
 finding the closest vertex $d'=c-a+b$  from $x$ for any $(a, b, c) \in S^3$.
@@ -474,7 +498,8 @@ Instead of using only one nearest analogical neighbour, we can consider the set
 of the $k$ nearest analogical neighbours, and implement a majority vote as it is
 done in \cite{MicBayDelJAIR08}.
 
-The above definition leads to understand the process of analogical classification as follows:
+The above definition leads to understand the process of analogical
+classification as follows:
 \begin{enumerate}
   \item First, extend the training set $S$ to its analogical extension
     $A_E^Y(S)$. $A_E^Y(S)$ can be viewed as an extended training set that has
@@ -509,7 +534,7 @@ analogy-based classifiers is given. This definition clearly fits with the known
 algorithms but obviously, some implementation details cannot be exactly caught
 up by such a high level description. It is indeed possible to find a few edge
 cases where this functional definition may not output the same result as
-algorithm \ref{algo_extended}: this is the case for example when the nan of $x$
+algorithm \ref{ALGO:extended_classifier}: this is the case for example when the nan of $x$
 is not unique. It is
 also the case when the closest vertex $d'$ does not belong to $B^m$.  However,
 as we will see in Section \ref{validation} these cases are not likely to occur
@@ -801,7 +826,7 @@ has generated all our plots and detailed results on
 Github\footnote{https://github.com/Niourf/nan\_study}. For lack of space,
 we only provide a few examples which are representative of the global behavior.
 Please note that our implementation of the $\NaN$ algorithm is not that of
-algorithm \ref{algo_extended}, but is instead that of the functional definition
+algorithm \ref{ALGO:extended_classifier}, but is instead that of the functional definition
 of the analogical classifier developed in Section \ref{FUNCTIONAL_DEF}: we
 first construct the analogical extension set of $S$, and then proceed to a
 nearest neighbour strategy over this noisy extended training set. We have
@@ -846,7 +871,7 @@ the training set.}
 Table \ref{TABLE_MONK} shows the same metrics for the Monk datasets and
 also report the results of the Analogical Proportion Classifier (\textit{APC})
 from \cite{MicBayDelJAIR08}, which corresponds to algorithm
-\ref{algo_extended} with $k=100$.
+\ref{ALGO:extended_classifier} with $k=100$.
 
 \begin{table}
 \centering
