@@ -304,7 +304,7 @@ conjugation of English verbs. This setting is slightly different than that of
 classification that we have settled-in, but all definitions and concepts remain
 valid. Here, solving the analogical equation
 $\text{view}:\text{reviewer}::\text{search}:y$ leads to $\text{researcher}$,
-using the definition of the analogy and the concatenation operator. 
+using the definition of the analogy and the concatenation operator.
 We have a training set $S=\Set{\mathbf{x}^{(1)},\mathbf{x}^{(2)},
 \mathbf{x}^{(3)}, \mathbf{x}^{(4)}, \mathbf{x}^{(5)}}$ where
 $\mathbf{x}^{(1)}=(read,3,reads), \mathbf{x}^{(2)}=(read,G,reading),
@@ -352,45 +352,105 @@ We keep the initial notation $\AD(\mathbf{a}, \mathbf{b},
 \mathbf{c},\mathbf{d})$ to denote the analogical dissimilarity between 4
 elements.  Some  minimal properties have to be satisfied by such a
 dissimilarity $\AD \colon {(X^m)}^4 \longrightarrow \mathbb{R}^+$ to fit
-with the intuition:
+with the intuition. For any $\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d},
+\mathbf{e}, \mathbf{f} \in X^m$, the following properties should hold:
 \begin{itemize}
   \item $\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d})=0 \iff \mathbf{a} :
-    \mathbf{b}:: \mathbf{c} : \mathbf{d}$
+    \mathbf{b}:: \mathbf{c} : \mathbf{d}$ (Consistency with the Analogy)
   \item $\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d})=
-    \AD(\mathbf{c}, \mathbf{d},\mathbf{a},\mathbf{b})=
-    \AD(\mathbf{c}, \mathbf{a},\mathbf{d},\mathbf{b})=
-    \AD(\mathbf{d}, \mathbf{b},\mathbf{c},\mathbf{a})=
-    \AD(\mathbf{d}, \mathbf{c},\mathbf{b},\mathbf{a})=
-    \AD(\mathbf{b}, \mathbf{a},\mathbf{d},\mathbf{c})=
-    \AD(\mathbf{b}, \mathbf{d},\mathbf{a},\mathbf{c})=
-    \AD(\mathbf{a}, \mathbf{c},\mathbf{b},\mathbf{d})
-    $
+    \AD(\mathbf{c}, \mathbf{d},\mathbf{a},\mathbf{b})$ (Symmetry)
+  \item $\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d})=
+    \AD(\mathbf{a}, \mathbf{c},\mathbf{b},\mathbf{d})$ (Central permutation)
   \item $\AD(\mathbf{a}, \mathbf{b},\mathbf{e},\mathbf{f}) \leq \AD(\mathbf{a},
     \mathbf{b},\mathbf{c},\mathbf{d}) + \AD(\mathbf{c},
-    \mathbf{d},\mathbf{e},\mathbf{f})$
+    \mathbf{d},\mathbf{e},\mathbf{f})$ (Triangle inequality)
+  \item In general, $\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) \neq
+    \AD(\mathbf{b}, \mathbf{a},\mathbf{c},\mathbf{d})$
 \end{itemize}
+Naturally, the symmetry and central permutation properties lead to the same
+three classes of equivalence that we have for the analogical proportion. In
+particular, the equivalence class that is \textit{generated} by
+$\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d})$ is:
+\begin{align*}
+  &\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) =
+\AD(\mathbf{c}, \mathbf{d},\mathbf{a},\mathbf{b})=
+\AD(\mathbf{c}, \mathbf{a},\mathbf{d},\mathbf{b})=
+\AD(\mathbf{d}, \mathbf{b},\mathbf{c},\mathbf{a})=
+\AD(\mathbf{d}, \mathbf{c},\mathbf{b},\mathbf{a})=\\
+  &\AD(\mathbf{b}, \mathbf{a},\mathbf{d},\mathbf{c})=
+\AD(\mathbf{b}, \mathbf{d},\mathbf{a},\mathbf{c})=
+\AD(\mathbf{a}, \mathbf{c},\mathbf{b},\mathbf{d}).
+\end{align*}
 
 The definition of an analogical proportion strongly relies on the structure and
 operators available on $X^m$, and the same goes for the definition of the
-analogical dissimilarity: there are a lot of possibilities. For instance:
-\begin{itemize}
-\item When $X=\mathbb{R}^m$ and $a:b::c:d \mbox{ iff } a-b=c-d$, $AD(a,b,c,d) =
-  ||(a-b)-(c-d)||_p$ is an analogical dissimilarity for any $p$,
-  where $||.||_p$ denotes the standard $p$ norm  in $\mathbb{R}^m$.
-\item
-When $X=\mathbb{B}$ and $a:b::c:d \mbox{ iff } (a \wedge b \equiv c
-  \wedge d) \wedge (a \vee  b) \equiv (c \vee d)$, one can define an analogical
-  dissimilarity $AD(a,b,c,d)$ as the number of values that have to be switched
-  to get a proper analogy. For instance, $AD(0,1,0,0)=1$ and $AD(0,1,1,0)=2$.
-The codomain of $AD$ is just $\{0, 1, 2\}$. When extended to
-  $X=\mathbb{B}^m$ with $$AD(a,b,c,d) = \sum\limits_{i=1}^m AD(a_i,b_i,c_i,d_i),$$
-  we get an analogical dissimilarity whose co-domain is $[0, 2m]$. In fact,
-  this definition is just the restriction to $\mathbb{B}^m$ of the one coming
-  from $\mathbb{R}^m$, when considering that $\mathbb{B}^m \subseteq
-  \mathbb{R}^m$ and using the $L_1$ norm, i.e. $AD(a,b,c,d) =
-    ||(a-b)-(c-d)||_1$. Here again, we are witnessing the close bond that links
-    the Boolean proportion and and the arithmetic proportion.
-\end{itemize}
+analogical dissimilarity: there are a lot of possibilities. For the arithmetic
+proportion in $\mathbb{R}^m$, the analogical dissmilarity  $\AD(\mathbf{a},
+\mathbf{b},\mathbf{c},\mathbf{d})$ should capture \textit{how far}
+are $\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}$ from making up a perfect
+parallelogram. This can be achieved using the following definition:
+
+% Note: leave \emph{AD} here else it will be in italics.
+\begin{definition}
+  \label{DEF:AD_arithmetic_proportion}
+  Given four vectors $\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}$ of
+  $\mathbb{R}^m$ equiped with the standard $p$-norm $\norm{p}{\cdot}$, the
+  analogical dissimilarity related to the arithmetic proportion is defined as:
+  $$\emph{AD}(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) =
+  \norm{p}{(\mathbf{a} - \mathbf{b}) - (\mathbf{c} - \mathbf{d})}.$$
+\end{definition}
+
+Of course, we will need an analogical dissimilarity in $\mathbb{B}^m$, but we
+will start small and consider $\mathbb{B}$ first:
+\begin{definition}
+  \label{DEF:AD_boolean_proportion}
+  Given four elements $a, b, c, d$ of $\mathbb{B}$, the analogical
+  dissimilarity $\emph{AD}(a, b, c, d)$ is defined as the number of values that
+  have to be switched to get a proper analogy.
+\end{definition}
+\noindent
+Table \ref{TAB:analogical_dissimilarity} shows the values of $\AD(a, b, c, d)$
+for 8 patterns. The $8$ remaining patterns have the same values of $AD$ as
+their negated versions and have thus been ignored.
+\begin{table}[t]
+  \centering
+  $$
+  \begin{array}{|cccc|c|}
+    \toprule
+    a & b & c & d &  \AD(a, b, c, d)\\
+    \midrule
+    0 & 0 & 0 & 0 &   \textbf{0}\\
+    0 & 1 & 0 & 1 &   \textbf{0}\\
+    0 & 0 & 1 & 1 &   \textbf{0}\\
+    0 & 0 & 0 & 1 &   \textbf{1}\\
+    0 & 0 & 1 & 0 &   \textbf{1}\\
+    0 & 1 & 0 & 0 &   \textbf{1}\\
+    1 & 0 & 0 & 0 &   \textbf{1}\\
+    0 & 1 & 1 & 0 &   \textbf{2}\\
+    \bottomrule
+  \end{array}
+  $$
+  \caption{The values of $\emph{AD}(a, b, c,d)$ for eight patterns of $a, b, c,
+  d$ in $\mathbb{B}$.}
+  \label{TAB:analogical_dissimilarity}
+\end{table}
+The natural extension to $\mathbb{B}^m$ is again to consider component-wise
+proportions. The analogical dissimilarity in $\mathbb{B}^m$ is thus defined as
+the sum of the $m$ individual ADs:
+$$\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) = \sum\limits_{i=1}^m
+\AD(a_i,b_i,c_i,d_i).$$
+We get an analogical dissimilarity whose co-domain is $[0, 2m]$. In fact, if we
+use the $1$-norm $\norm{1}{\cdot}$ defined as $\norm{1}{\mathbf{x}} = \sum_{i =
+1}^m
+|x_i|$, Definition \ref{DEF:AD_arithmetic_proportion} is equivalent to
+Definition \ref{DEF:AD_boolean_proportion}. This means that for $\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}$
+in $\mathbb{B}$, $\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) =
+\norm{1}{(\mathbf{a}-\mathbf{b})-(\mathbf{c}-\mathbf{d})}$. Note that the
+expression $\norm{1}{(\mathbf{a}-\mathbf{b})-(\mathbf{c}-\mathbf{d})}$ is
+nothing but the Hamming distance between the two vectors
+$(\mathbf{a}-\mathbf{b})$ and $(\mathbf{c}-\mathbf{d})$.  Here again, we are
+witnessing the close bond that links the Boolean proportion and and the
+arithmetic proportion.
 
 As a measure of \textit{how poorly an analogical proportion holds}, the
 analogical dissimilarity will help to define more flexible classifiers.  The
@@ -425,21 +485,32 @@ description of their classifier.
 \end{algorithmic}
 \end{algorithm}
 
-Mentionner l'histoire du $k$ qui est allongé à $k'$.
 
+This algorithm is similar to the conservative one, but instead of looking for
+pure proportions, we allow for some analogies not to be perfect when we need to.
+For the sake of simplicity, we have here ignored a small but relevent detail:
+in their implementation \cite{BayMicDelIJCAI07}, the authors actually look for
+all the 3-tuples that have the same analogical dissimilarity as the
+$k^\text{th}$ one. For example if the $k^\text{th}$ 3-tuple has an $\AD$ of 5,
+they will acually consider all the $3$-tuples that have an $\AD$ lesser than or
+equal to $5$, bringing the number of candidates to $k'$ with $k' \geq k$. This
+is fortunate because it allows their extended classifier to
+fit with the previous conservative approach in the case of a perfect
+proportion (or equivalently, in the case where $\mathbf{x} \in \esf$).  Indeed,
+when the $k^\text{th}$ $3$-tuple $(\mathbf{a}, \mathbf{b}, \mathbf{c})$ has an
+$\AD$ of $0$, i.e. $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{x}$ stands,
+they will consider all other $3$-tuples $(\mathbf{a}',
+\mathbf{b}',\mathbf{c}')$ such that $\mathbf{a}' : \mathbf{b}' :: \mathbf{c}' :
+\mathbf{x}$, which is consistent with the conservative approach. Clearly, the
+extended classifier is a generalization of the conservative one and can predict
+the output of any $\mathbf{x} \in X^m$.
 
-This algorithm is similar to the conservative one but, instead of looking for
-pure analogies, we allow for some analogies not to be perfect when we need to.
-In their implementation \cite{BayMicDelIJCAI07}, the authors actually look for
-all the 3-tuples that have the same analogical dissimilarity as the $k$th one:
-this allows them to fit with the previous conservative approach. For the sake of
-simplicity, we have chosen to
-ignore this small detail in our explanation.
+In \cite{BayMicDelIJCAI07}, the authors evaluated this classifier on a Boolean
+setting $\mathbb{B}^m$ over 8 benchmarks from the UCI repository.  This
+approach led to remarkable results in terms of accuracy, when compared to
+off-the-shelf standard classifiers.
 
-In \cite{BayMicDelIJCAI07}, the authors evaluated this classifier on a Boolean setting
-$\mathbb{B}^m$ over 8 benchmarks from the UCI repository.  This approach led to
-remarkable results in terms of accuracy, when compared to off-the-shelf
-standard classifiers.
+Illustrer l'algo avec a0 b0 d1 et e1.
 
 Nonetheless, this algorithm does not allow us to grasp its inherent working
 behaviour and it is difficult to extract theoretical properties. The aim of the
@@ -450,7 +521,8 @@ illustration de minimisation de AD: faire un shema comme Figure
 \ref{FIG:classification_problem} mais cette fois avec aucun candidate pour $h$.
 On prend donc les faces, par défaut.
 
-\subsection{Analogical classifier: a functional definition}\label{FUNCTIONAL_DEF}
+\subsection{Analogical classifier: a functional
+definition}\label{FUNCTIONAL_DEF}
 
 As we have seen in the previous section, in the case of a Boolean setting,
 $AD(a,b,c,d)= ||(a-b)-(c-d)||_1$.  A simple rewriting leads to:
