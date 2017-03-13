@@ -161,22 +161,44 @@ To polish our understanding of the analogical extension, let us consider Figure
 \begin{figure}[!h]
 \centering
   \includegraphics[width=3in]{figures/ae_example.pdf}
-  \caption{With $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{e},
-  \mathbf{g}}$, we have $\esfs\Set{\mathbf{f}, \mathbf{h}}$.}
+  \caption{With $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{d},
+  \mathbf{e}}$, we have $\esfs\Set{\mathbf{c}, \mathbf{f}}$.}
 \label{FIG:ae_example}
 \end{figure}
-The training set $S$ is $\Set{\mathbf{a}, \mathbf{b}, \mathbf{e},\mathbf{g}}$.
-Taking $(\mathbf{a}, \mathbf{g}, \mathbf{b}) \in S^3$, we notice that
-$\mathbf{a} : \mathbf{g} :: \mathbf{b} : \mathbf{h}$, and the associated class
-equation $0:0::0:y$ is solvable. So $\mathbf{h} \in \esf$. The same goes for
-$\mathbf{f}$ with the 3-tuple $(\mathbf{a}, \mathbf{e}, \mathbf{b}) \in S^3$.
-However, even if we can find $(\mathbf{e}, \mathbf{g}, \mathbf{a}) \in S^3$
-such that $\mathbf{e} : \mathbf{g} :: \mathbf{a} : \mathbf{c}$, the associated
-class equation $1:0::0:y$ is not solvable, so $\mathbf{c} \notin \esf$. At
-last, vertice $\mathbf{d}$ will suffer the same fate because the class equation
-$f(\mathbf{e}) : f(\mathbf{b}) :: f(\mathbf{g}) : y$ is not solvable either. In
-the end, $\esf = \set{\mathbf{a}, \mathbf{b}, \mathbf{e}, \mathbf{f},
-\mathbf{g}, \mathbf{h}}$.
+The training set $S$ is $\Set{\mathbf{a}, \mathbf{b}, \mathbf{d},\mathbf{e}}$.
+Taking $(\mathbf{b}, \mathbf{d}, \mathbf{a}) \in S^3$, we notice that
+$\mathbf{b} : \mathbf{d} :: \mathbf{a} : \mathbf{c}$, and the associated class
+equation $0:1::0:y$ is solvable. So $\mathbf{c}$ is in $\esf$. The same goes for
+$\mathbf{f}$ with the 3-tuple $(\mathbf{a}, \mathbf{b}, \mathbf{e}) \in S^3$.
+However, even if we can find $(\mathbf{b}, \mathbf{d}, \mathbf{e}) \in S^3$
+such that $\mathbf{b} : \mathbf{d} :: \mathbf{e} : \mathbf{g}$, the associated
+class equation $0:1::1:y$ is not solvable, so $\mathbf{g} \notin \esf$. At
+last, vertice $\mathbf{h}$ will suffer the same fate because the class equation
+$f(\mathbf{a}) : f(\mathbf{e}) :: f(\mathbf{d}) : y$ is not solvable either. In
+the end, $\esf = \set{\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d},
+\mathbf{e}, \mathbf{f}}$.
+
+%To polish our understanding of the analogical extension, let us consider Figure
+%\ref{FIG:ae_example}.
+%\begin{figure}[!h]
+%\centering
+%  \includegraphics[width=3in]{figures/ae_example.pdf}
+%  \caption{With $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{e},
+%  \mathbf{g}}$, we have $\esfs\Set{\mathbf{f}, \mathbf{h}}$.}
+%\label{FIG:ae_example}
+%\end{figure}
+%The training set $S$ is $\Set{\mathbf{a}, \mathbf{b}, \mathbf{e},\mathbf{g}}$.
+%Taking $(\mathbf{a}, \mathbf{g}, \mathbf{b}) \in S^3$, we notice that
+%$\mathbf{a} : \mathbf{g} :: \mathbf{b} : \mathbf{h}$, and the associated class
+%equation $0:0::0:y$ is solvable. So $\mathbf{h} \in \esf$. The same goes for
+%$\mathbf{f}$ with the 3-tuple $(\mathbf{a}, \mathbf{e}, \mathbf{b}) \in S^3$.
+%However, even if we can find $(\mathbf{e}, \mathbf{g}, \mathbf{a}) \in S^3$
+%such that $\mathbf{e} : \mathbf{g} :: \mathbf{a} : \mathbf{c}$, the associated
+%class equation $1:0::0:y$ is not solvable, so $\mathbf{c} \notin \esf$. At
+%last, vertice $\mathbf{d}$ will suffer the same fate because the class equation
+%$f(\mathbf{e}) : f(\mathbf{b}) :: f(\mathbf{g}) : y$ is not solvable either. In
+%the end, $\esf = \set{\mathbf{a}, \mathbf{b}, \mathbf{e}, \mathbf{f},
+%\mathbf{g}, \mathbf{h}}$.
 
 The dual concept of the analogical extension is what we call the
 \textbf{analogical root} of a given element $\mathbf{x} \in X^m$:
@@ -194,18 +216,32 @@ The dual concept of the analogical extension is what we call the
 
 $\rsfx$ is simply the set of 3-tuples in $S$ which are analogically linked to
 $\mathbf{x}$. Considering again the example of Figure \ref{FIG:ae_example}, we have that
-$\aroot{S}{f}{\mathbf{h}} = \Set{(\mathbf{a}, \mathbf{g},\mathbf{b}),
-(\mathbf{a}, \mathbf{b},\mathbf{g})}$. However, the two related proportions
-$\mathbf{a}: \mathbf{g}::\mathbf{b}:\mathbf{h}$ and $\mathbf{a}:
-\mathbf{b}::\mathbf{g}:\mathbf{h}$ are equivalent, and we will follow the
+$\aroot{S}{f}{\mathbf{c}} = \Set{(\mathbf{b}, \mathbf{d},\mathbf{a}),
+(\mathbf{b}, \mathbf{a},\mathbf{d})}$. However, the two corresponding proportions
+$\mathbf{b}: \mathbf{d}::\mathbf{a}:\mathbf{c}$ and $\mathbf{b}:
+\mathbf{a}::\mathbf{d}:\mathbf{c}$ are equivalent, and we will follow the
 convention that the analogical root should only contain non-equivalent
-3-tuples, so technically $\aroot{S}{f}{\mathbf{h}}$ is entirely described by $\Set{(\mathbf{a},
-\mathbf{g},\mathbf{b})}$.
-We also have that $\aroot{S}{f}{\mathbf{f}} = \Set{(\mathbf{a}, \mathbf{e},
-\mathbf{b})}$, $\aroot{S}{f}{\mathbf{a}} = \Set{(\mathbf{a}, \mathbf{a},
-\mathbf{a})}$, and $\aroot{S}{f}{\mathbf{c}} = \varnothing$. It is clear that
+3-tuples, so technically $\aroot{S}{f}{\mathbf{c}}$ is entirely described by $\Set{(\mathbf{b},
+\mathbf{d},\mathbf{a})}$.
+We also have that $\aroot{S}{f}{\mathbf{f}} = \Set{(\mathbf{a}, \mathbf{b},
+\mathbf{e})}$, $\aroot{S}{f}{\mathbf{a}} = \Set{(\mathbf{a}, \mathbf{a},
+\mathbf{a})}$, and $\aroot{S}{f}{\mathbf{h}} = \varnothing$. It is clear that
 in general,
 $$\rsfx = \varnothing\iff \mathbf{x} \notin \esf.$$
+%$\rsfx$ is simply the set of 3-tuples in $S$ which are analogically linked to
+%$\mathbf{x}$. Considering again the example of Figure \ref{FIG:ae_example}, we have that
+%$\aroot{S}{f}{\mathbf{h}} = \Set{(\mathbf{a}, \mathbf{g},\mathbf{b}),
+%(\mathbf{a}, \mathbf{b},\mathbf{g})}$. However, the two related proportions
+%$\mathbf{a}: \mathbf{g}::\mathbf{b}:\mathbf{h}$ and $\mathbf{a}:
+%\mathbf{b}::\mathbf{g}:\mathbf{h}$ are equivalent, and we will follow the
+%convention that the analogical root should only contain non-equivalent
+%3-tuples, so technically $\aroot{S}{f}{\mathbf{h}}$ is entirely described by $\Set{(\mathbf{a},
+%\mathbf{g},\mathbf{b})}$.
+%We also have that $\aroot{S}{f}{\mathbf{f}} = \Set{(\mathbf{a}, \mathbf{e},
+%\mathbf{b})}$, $\aroot{S}{f}{\mathbf{a}} = \Set{(\mathbf{a}, \mathbf{a},
+%\mathbf{a})}$, and $\aroot{S}{f}{\mathbf{c}} = \varnothing$. It is clear that
+%in general,
+%$$\rsfx = \varnothing\iff \mathbf{x} \notin \esf.$$
 \noindent
 It should also be clear that even if we only consider unique 3-tuples (up to
 equivalence) in the
@@ -231,10 +267,10 @@ functional view of conservative classifiers:
   \label{DEF:analogical_label}
   For any element $\mathbf{x}$ of $\esf$, we denote $\mathbf{C}(\mathbf{x})$
   the set of the class equations solutions associated with $\mathbf{x}$:
-  $$\mathbf{C}(\mathbf{x}) = \Set{y | f(\mathbf{a}) : f(\mathbf{b}) ::
-  f(\mathbf{c}) :y~ \forall (\mathbf{a}, \mathbf{b}, \mathbf{c}) \in \rsfx}$$
+  $$\mathbf{C}(\mathbf{x}) \eqdef \Set{y | f(\mathbf{a}) : f(\mathbf{b}) ::
+  f(\mathbf{c}) :y, \quad \emph{with }(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in \rsfx}$$
   We then define the \textbf{analogical
-  label} of $\mathbf{x}$ as:
+  label} of $\mathbf{x}$, denoted $\albl{\mathbf{x}}$, as:
   $$\albl{\mathbf{x}} \eqdef
   \begin{cases}
     f(\mathbf{x}) \emph{ if } \mathbf{x} \in S\\
@@ -256,7 +292,7 @@ classifier:
   a conservative classifier sets the prediction of an element $\mathbf{x}$ as
   follows:
 
-  $$\emph{if } \mathbf{x} \in \esf, ~ \hat{f}(\mathbf{x}) = \albl{\mathbf{x}}.
+  $$\emph{if } \mathbf{x} \in \esf, ~ \hat{f}(\mathbf{x}) \eqdef \albl{\mathbf{x}}.
   \emph{ Else, } \hat{f}(\mathbf{x}) \emph{ is undefined.}$$
 \end{definition}
 
@@ -264,10 +300,17 @@ As previously mentioned, a conservative classifier is not able to output a
 prediction if $\mathbf{x}$ does not belong to the analogical extension. We have
 already made this observation when describing Algorithm
 \ref{ALGO:conservative_classifier}: for a given $\mathbf{x}$, the set of
-candidate solutions $\mathbf{C}(\mathbf{x})$ is empty if and only if $\mathbf{x} \notin \esf$.
-Also, we now understand why $\albl{\mathbf{x}}$ is simply set to
-$f(\mathbf{x})$ when the $\mathbf{x} \in S$: for such an $\mathbf{x}$ it is
-natural to want $\hat{f}(\mathbf{x}) = f(\mathbf{x})$!
+candidate solutions $\mathbf{C}(\mathbf{x})$ is empty if and only if
+$\mathbf{x} \notin \esf$.  Also, we now understand why $\albl{\mathbf{x}}$ is
+simply set to $f(\mathbf{x})$ when the $\mathbf{x} \in S$: for such an
+$\mathbf{x}$ it is natural to want $\hat{f}(\mathbf{x}) = f(\mathbf{x})$! Going
+back to our example with Figure \ref{FIG:ae_example}, we will have
+$\hat{f}(\mathbf{c}) \eqdef \albl{\mathbf{c}} = 1$, because
+$\aroot{S}{f}{\mathbf{c}} = \Set{(\mathbf{b}, \mathbf{d},\mathbf{a})}$ and
+$\mathbf{C}(\mathbf{c}) = \Set{1}$. Also, $\hat{f}(\mathbf{f}) \eqdef
+\albl{\mathbf{f}} = 1$, because $\aroot{S}{f}{\mathbf{f}} =
+\Set{(\mathbf{a},\mathbf{b},\mathbf{e})}$ and $\mathbf{C}(\mathbf{f}) =
+\Set{1}$. Both $\albl{\mathbf{g}}$ and $\albl{\mathbf{h}}$ stay undefined.
 
 Let us note that in Algorithm \ref{ALGO:conservative_classifier}, the
 analogical extension $\esf$ is never explicitly computed. Instead, we look for
@@ -440,20 +483,28 @@ the sum of the $m$ individual ADs:
 $$\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) = \sum\limits_{i=1}^m
 \AD(a_i,b_i,c_i,d_i).$$
 We get an analogical dissimilarity whose co-domain is $[0, 2m]$. In fact, if we
-use the $1$-norm $\norm{1}{\cdot}$ defined as $\norm{1}{\mathbf{x}} = \sum_{i =
-1}^m
-|x_i|$, Definition \ref{DEF:AD_arithmetic_proportion} is equivalent to
-Definition \ref{DEF:AD_boolean_proportion}. This means that for $\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}$
-in $\mathbb{B}$, $\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) =
+use the $1$-norm defined as $\norm{1}{\mathbf{x}} = \sum_{i = 1}^m |x_i|$,
+Definition \ref{DEF:AD_arithmetic_proportion} is equivalent to Definition
+\ref{DEF:AD_boolean_proportion}. This means that for $\mathbf{a},
+\mathbf{b},\mathbf{c},\mathbf{d}$ in $\mathbb{B}$, $\AD(\mathbf{a},
+\mathbf{b},\mathbf{c},\mathbf{d}) =
 \norm{1}{(\mathbf{a}-\mathbf{b})-(\mathbf{c}-\mathbf{d})}$. Note that the
 expression $\norm{1}{(\mathbf{a}-\mathbf{b})-(\mathbf{c}-\mathbf{d})}$ is
 nothing but the Hamming distance between the two vectors
-$(\mathbf{a}-\mathbf{b})$ and $(\mathbf{c}-\mathbf{d})$.  Here again, we are
+$(\mathbf{a}-\mathbf{b})$ and $(\mathbf{c}-\mathbf{d})$\footnote{$\mathbb{B}^m$
+is not closed under addition (or substraction), so technically it may happend that
+$(\mathbf{a} - \mathbf{b}), (\mathbf{c} - \mathbf{d})$, or their difference are
+not in $\mathbb{B}^m$ but in $\mathbb{R}^m$.}.
+Actually, we could use any $p$-norm in $\mathbb{B}^m$, so
+Definition \ref{DEF:AD_arithmetic_proportion} could also be use to give a more
+general definition of the analogical dissimilarity in $\mathbb{B}^m$.\todo{Est
+ce que c'est vrai?? Il me semble que oui}
+Here again, we are
 witnessing the close bond that links the Boolean proportion and and the
 arithmetic proportion.
 
 As a measure of \textit{how poorly an analogical proportion holds}, the
-analogical dissimilarity will help to define more flexible classifiers.  The
+analogical dissimilarity will help us to define more flexible classifiers.  The
 main underlying idea is to consider {\it approximate} analogies which are not
 valid stricto sensu, but not too far to be valid.
 In \cite{BayMicDelIJCAI07}, after defining analogical dissimilarity,  the authors
@@ -487,12 +538,20 @@ description of their classifier.
 
 
 This algorithm is similar to the conservative one, but instead of looking for
-pure proportions, we allow for some analogies not to be perfect when we need to.
+pure, flawless proportions, we allow for some analogies not to be perfect when
+we need to. This translates into the fact that we now only
+look for $3$-tuples in $S^3$ such that the class equation is solvable. We do
+not care if they are in perfect proportion with $\mathbf{x}$. Such
+$3$-tuples \textbf{always} exist in $S^3$, simply because we can choose any
+$3$-tuple $(\mathbf{a}, \mathbf{a}, \mathbf{a})$ with $\mathbf{a} \in S$.
+Hence, Algorithm \ref{ALGO:extended_classifier} is able to predict the label of
+any element $\mathbf{x} \in X^m$.
+
 For the sake of simplicity, we have here ignored a small but relevent detail:
 in their implementation \cite{BayMicDelIJCAI07}, the authors actually look for
 all the 3-tuples that have the same analogical dissimilarity as the
 $k^\text{th}$ one. For example if the $k^\text{th}$ 3-tuple has an $\AD$ of 5,
-they will acually consider all the $3$-tuples that have an $\AD$ lesser than or
+they will acually consider all the $3$-tuples that have an $\AD$ less than or
 equal to $5$, bringing the number of candidates to $k'$ with $k' \geq k$. This
 is fortunate because it allows their extended classifier to
 fit with the previous conservative approach in the case of a perfect
@@ -502,198 +561,294 @@ $\AD$ of $0$, i.e. $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{x}$ stands,
 they will consider all other $3$-tuples $(\mathbf{a}',
 \mathbf{b}',\mathbf{c}')$ such that $\mathbf{a}' : \mathbf{b}' :: \mathbf{c}' :
 \mathbf{x}$, which is consistent with the conservative approach. Clearly, the
-extended classifier is a generalization of the conservative one and can predict
-the output of any $\mathbf{x} \in X^m$.
+extended classifier is a generalization of the conservative one.
+
+To better grasp the behaviour of the extended classifier, we will consider
+again Figure \ref{FIG:ae_example} on page \pageref{FIG:ae_example}, and go
+through the classification process of $\mathbf{c}, \mathbf{f}, \mathbf{g}$ and
+$\mathbf{h}$. We will set consider $k$ to be equal to $1$. For $\mathbf{c}$,
+the $3$-tuple in $S^3$ with the least value of $\AD$ is $(\mathbf{b},
+\mathbf{d}, \mathbf{a})$ with $\AD(\mathbf{b},\mathbf{d}, \mathbf{a},
+\mathbf{c}) = 0$. The set $\mathbf{C}(\mathbf{c})$ is thus $\Set{1}$, and leads
+to the prediction $\hat{f}(\mathbf{c}) = 1$. For $\mathbf{f}$, the best
+$3$-tuple is $(\mathbf{a}, \mathbf{b}, \mathbf{e})$ and leads to the prefiction
+$\hat{f}(\mathbf{f}) = 1$. For these two elements in $\esf$, the extended
+classifier outputs the same predictions as the conservative one, and most
+importantly, the underlying process is the same\footnote{To some extent, this
+is due to the fact that we (inocently?) chose $k = 1$.}.
+
+Consider now $\mathbf{g} \notin \esf$. We know that we won't find any $3$-tuple
+in perfect proportion with $\mathbf{g}$ (else the conservative classifier would
+have been able to output $\hat{f}(\mathbf{g})$), but the $3$-tuple
+$(\mathbf{e}, \mathbf{e}, \mathbf{e}) \in S^3$ has $\AD(\mathbf{e}, \mathbf{e},
+\mathbf{e}, \mathbf{c}) = 1$. We have $k = 1$, so strictly following Algorithm
+\ref{ALGO:extended_classifier} would lead us to stick to this only $3$-tuple.
+However, considering the above remark we are allowed to look for all other
+$3$-tuples that also have an $\AD$ of $1$. Actually, the $3$-tuple
+$(\mathbf{b}, \mathbf{d}, \mathbf{a})$ also has $\AD(\mathbf{b},\mathbf{d},
+\mathbf{a}, \mathbf{g}) = 1$, as can be verified on table \ref{TAB:AD_bdag}. We thus have $\mathbf{C}(\mathbf{g}) = \Set{1,
+1}$: one solution comes from $f(\mathbf{e)} :f(\mathbf{e}):: f(\mathbf{e}) : y$
+and another solution that comes from $f(\mathbf{b)} :f(\mathbf{d})::
+f(\mathbf{a}) : y$.  Finally, we have $\hat{f}(\mathbf{g}) = 1$. As for
+$\mathbf{h}$, we have $\mathbf{C}(\mathbf{h}) = \Set{1, 1}$: one solution comes
+from $f(\mathbf{a)} :f(\mathbf{b}):: f(\mathbf{e}) : y$ and the other comes
+from $f(\mathbf{d)} :f(\mathbf{d}):: f(\mathbf{d}) : y$, and we end up with
+$\hat{f}(\mathbf{h}) = 1$. This completes our process overview for Algorithm
+\ref{ALGO:extended_classifier}!
+
+\begin{table}[t]
+  \centering
+  $$
+  \begin{array}{|cccc|c|}
+    \toprule
+    \mathbf{b} & \mathbf{d} & \mathbf{a} & \mathbf{g} &  \AD(b_i, d_i, c_i, g_i)\\
+    \midrule
+    0 & 0 & 0 & 1 &   \textbf{1}\\
+    0 & 1 & 0 & 1 &   \textbf{0}\\
+    1 & 1 & 0 & 0 &   \textbf{0}\\
+    \bottomrule
+  \end{array}
+  $$
+  \caption{$\AD(\mathbf{b}, \mathbf{d}, \mathbf{a}, \mathbf{g}) = 1$.}
+  \label{TAB:AD_bdag}
+\end{table}
 
 In \cite{BayMicDelIJCAI07}, the authors evaluated this classifier on a Boolean
 setting $\mathbb{B}^m$ over 8 benchmarks from the UCI repository.  This
 approach led to remarkable results in terms of accuracy, when compared to
-off-the-shelf standard classifiers.
-
-Illustrer l'algo avec a0 b0 d1 et e1.
-
-Nonetheless, this algorithm does not allow us to grasp its inherent working
-behaviour and it is difficult to extract theoretical properties. The aim of the
-next subsection is to give a functional translation of this algorithmic
+off-the-shelf standard classifiers. Nonetheless, this algorithmic description
+of the extended classifier does not allow us to grasp its inherent working
+behaviour, and it is difficult to extract theoretical properties. The aim of
+the next subection is to give a functional translation of this algorithmic
 description.
-
-illustration de minimisation de AD: faire un shema comme Figure
-\ref{FIG:classification_problem} mais cette fois avec aucun candidate pour $h$.
-On prend donc les faces, par défaut.
 
 \subsection{Analogical classifier: a functional
 definition}\label{FUNCTIONAL_DEF}
 
-As we have seen in the previous section, in the case of a Boolean setting,
-$AD(a,b,c,d)= ||(a-b)-(c-d)||_1$.  A simple rewriting leads to:
-$$AD(a,b,c,d)=||d - (c-a+b)||_1=||d - d'||_1,$$
-where $d'=c-a+b$. Actually, $d'$ is nothing but the 4th vertex of the
-parallelogram $abcd'$ so this means that $AD(a,b,c,d)$ simply is the $L_1$ distance
- from $d$ to this 4th vertex. Note that as $\mathbb{B}^m$ is not closed for
-addition, $d'$ might not belong to $\mathbb{B}^m$ but to $\mathbb{R}^m$: this
-happens when one of the terms $AD(a_i, b_i, c_i, d_i)$ is equal to $2$, as
-further discussed later.
+As we have previously seen, we can generally assume that
+$\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{d}) \eqdef
+\norm{p}{(\mathbf{a}-\mathbf{b})-(\mathbf{c}-\mathbf{d})}$, whether we are
+dealing with the arithmetic proportion or the Boolean proportion.
+A key observation is that we can formulate this expression with a distance
+function on $X^m$. Indeed, a simple rewriting leads to the following expression:
+$$\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{d})=\norm{p}{\mathbf{d} -
+(\mathbf{c}-\mathbf{a}+\mathbf{b})}=\norm{p}{\mathbf{d} - \mathbf{d}'},$$
+where $\mathbf{d}'\eqdef\mathbf{c}-\mathbf{a}+\mathbf{b}$. Actually,
+$\mathbf{d}'$ is nothing but the $4^\text{th}$ vertex of the parallelogram
+$\mathbf{a}\mathbf{b}\mathbf{c}\mathbf{d}'$, or equivalently, $\mathbf{d}'$ is
+solution of the equation $\mathbf{a}: \mathbf{b} :: \mathbf{c} : \mathbf{x}$.
+All this means that $\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{d})$ simply
+is the distance between $\mathbf{d}$ and this $4^\text{th}$ vertex
+$\mathbf{d}'$: $\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{d}) =
+\delta_p(\mathbf{d}, \mathbf{d}')$, where $\delta_p$ is the distance defined by
+the $p$-norm. Figure \ref{FIG:analogical_dissimilarity} schematically sums up all the aforementioned
+properties.  Note that when $(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in S^3$ and
+when the associated class equation is solvable, we naturally have $\mathbf{d}'
+\in \esf$.
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=2.5in]{figures/analogical_dissimilarity.pdf}
+  \caption{The analogical dissimilarity
+  $\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{d})$ is equal to the distance
+  $\delta(\mathbf{d}, \mathbf{d}')$.}
+\label{FIG:analogical_dissimilarity}
+\end{figure}
 
-As we have seen, for a given $x \in X$, algorithm \ref{ALGO:extended_classifier} tries to
-minimise $AD(a,b,c,x)$ over all the 3-tuples $(a,b,c) \in S^3$. In the
-light of what has just been explained, we see that this is equivalent to
-finding the closest vertex $d'=c-a+b$  from $x$ for any $(a, b, c) \in S^3$.
+Let us consider (again!) Figure \ref{FIG:ae_example} on page
+\pageref{FIG:ae_example}. We have already seen that $\AD(\mathbf{b},
+\mathbf{d}, \mathbf{a}, \mathbf{g}) = 1$, as proved by Table \ref{TAB:AD_bdag}.
+We now can reintepret this statement: $\AD(\mathbf{b}, \mathbf{d}, \mathbf{a},
+\mathbf{g})$ should be equal to the distance between $\mathbf{g}$ and another
+vector that make up a perfect parallelogram with the $3$-tuple
+$(\mathbf{b},\mathbf{d}, \mathbf{a})$. This vector is naturally
+$\sol(\mathbf{b},\mathbf{d}, \mathbf{a}) = \mathbf{c}$ and have indeed
+$H(\mathbf{c}, \mathbf{g}) =  \AD(\mathbf{b}, \mathbf{d}, \mathbf{a},
+\mathbf{g}) = 1$, where $H$ is the hamming distance! The same can be observed
+for $\mathbf{h}$: $\AD(\mathbf{a}, \mathbf{b}, \mathbf{e}, \mathbf{h}) =
+H(\mathbf{h}, \mathbf{f})$, where $\mathbf{f} = \sol(\mathbf{a}, \mathbf{b},
+\mathbf{e})$.
 
+We are now finally ready for our unifying functional definition of analogical
+classifiers. As we have seen, for a given $\mathbf{x} \in X^m$, Algorithm
+\ref{ALGO:extended_classifier} tries to minimise
+$\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{x})$ over all the $3$-tuples
+$(\mathbf{a},\mathbf{b},\mathbf{c}) \in S^3$. In the light of what has just
+been explained, we see that this is equivalent to finding the closest vertex
+$\mathbf{d}' \in \esf$ from $\mathbf{x}$ for any $(\mathbf{a}, \mathbf{b},
+\mathbf{c}) \in S^3$. In other words, \textbf{looking for the $k$ $3$-tuples in
+$S^3$ that have the smallest value of $\AD$ with $\mathbf{x}$ amounts to
+finding the $k$ closest elements to $\mathbf{x}$ in $\esf$}. We will call these
+elements the $k$ \textbf{nearest analogical neighbors} of $\mathbf{x}$:
 
-Denoting $\delta$ the $L_1$ distance, $AD(a,b,c,d) =\delta(a-b,c-d) =
-\delta(d,d')$,
-In the case where $k=1$, the
-works of \cite{BayMicDelIJCAI07} will predict $\hat{x}$ as the label $\dot{d'}$ of
-this summit $d'$. \todo{verifier. C'etait en comm}
-it is then natural to consider what we call the \textit{nearest analogical
-neighbour} (or \textbf{nan}) of $x$ from a training $S$ as the element of
-$A_E^Y(S)$ defined as:
-$$\forall x \in X, \forall S \subseteq X, 1\mbox{-nan}(x,S)\eqdef \argmin_{d'
-\in A_E^Y(S)} \delta(x,d')$$
-When there is more than one nan, one can either proceed to a majority vote
-procedure among all their analogical labels, or randomly select one of these.
-This last option is the one we chose in our implementation.
-\begin{property} \label{propnn}We have the following equality:
-$$1\mbox{-nan}(x,S)= 1\mbox{-nn}(x,A_E^Y(S)).$$
-\end{property}
-The analogical classification rule simply is:
-$$\hat{x} = \albl{1\mbox{-nan}(x,S)}.$$
-In words, the predicted label of an element $x$ is the analogical label of its
-nearest neighbour in $A_E^Y(S)$.
-In some sense, an analogical classifier behaves
-as a $\NN$ classifier but on an extended training set.
+\begin{definition}
+  \label{DEF:knan}
+  For any $\mathbf{x} \in X^m$, and any training set $S \subset X$, we define
+  the $k$ nearest analogical neighbors of $\mathbf{x}$ as the set:
+  $$k\emph{-nan}\left(\mathbf{x}, S\right) \eqdef \Set{\argmin_{\mathbf{d}' \in
+  A_E^Y(S)}^k
+  \delta(\mathbf{x},\mathbf{d}')},
+  $$
+  where $\argmin_{\Sigma}^k \delta(\mathbf{x}, \cdot)$ returns the $k$ elements in $\Sigma$
+  with the least value of $\delta$.
+  Another equivalent way of defining $k\emph{-nan}$ is:
+  $$k\emph{-nan}\left(\mathbf{x}, S\right) \eqdef k\emph{-nn}\left(\mathbf{x},
+  \esf\right),$$
+  where $k\emph{-nn}\left(\mathbf{x},\Sigma\right)$ is the set of $k$ nearest
+  neighbors of $\mathbf{x}$ in the set $\Sigma$. Ties are broken at random.
+\end{definition}
 
-Obviously if $x$ belongs to $A_E^Y(S)$ then $x$ is its own nearest analogical
-neighbour: $\nan(x, S) = x \text{ iff } x \in A_E^Y(S)$. Therefore, it is easy
-to see that this rule is a generalisation of the conservative approach.
-Instead of using only one nearest analogical neighbour, we can consider the set
-of the $k$ nearest analogical neighbours, and implement a majority vote as it is
-done in \cite{MicBayDelJAIR08}.
+For any $\mathbf{x} \in X^m$, the elements in $\knan(\mathbf{x}, S)$ all belong
+to $\esf$, so they all have an analogical label. The prediction
+$\hat{f}(\mathbf{x})$ of an extended classifier is thus nothing but the most
+frequent analogical label:
 
-The above definition leads to understand the process of analogical
-classification as follows:
+\begin{definition}
+  \label{DEF:extended_classifier}
+  Given a training set $S$ with an underlying ground truth function $f$,
+  an extended classifier with parameter $k$ sets the prediction of an element
+  $\mathbf{x} \in X^m$ as follows:
+
+  $$\hat{f}(\mathbf{x}) \eqdef \emph{Mode}\Set{\albl{\mathbf{d}'} | \mathbf{d}'
+  \in k\emph{-nan}\left(\mathbf{x}, S\right)}.
+  $$
+\end{definition}
+
+In some sense, an analogical classifier behaves as a $\NN$
+classifier\footnote{In the following, $\NN$ and $\NAN$ will denote classifiers.
+$\knn$ and $\knan$ denote sets, as in Definition \ref{DEF:knan}.} but
+on an extended training set. The above definitions lead us to understand the
+process of analogical classification as follows:
 \begin{enumerate}
   \item First, extend the training set $S$ to its analogical extension
-    $A_E^Y(S)$. $A_E^Y(S)$ can be viewed as an extended training set that has
-    \textbf{class noise}: the label associated with elements in $A_E^Y(S)
-    \setminus S$ is their analogical label (as defined in \ref{conservative}),
-    which may not be correct.
-  \item Then just apply a classical $k$-NN strategy over this extended training
-    set.
+    $\esf$. $\esf$ can be viewed as an extended training set that has
+    \textbf{class noise}: the labels associated with elements in $\esfs$ are
+    their analogical labels as defined in Definition
+    \ref{DEF:analogical_label}, and they may not be equal to the ground truth
+    value $f(\mathbf{x})$.
+  \item Then, simply apply a classical $k$-NN strategy over this extended
+    training set.
 \end{enumerate}
 
-Figure \ref{extension} gives an illustration of the classification process: the
-label of $x \in X$ is unknown, and we set it to that of $d' \in A_E^Y(S)$ (a
-circle), which is its nearest analogical neighbour. To show that the analogical
-label of $d'$ has itself been inferred, it is depicted as transparent instead of
-plain black.
+Figure \ref{FIG:extended_classifier} gives an illustration of the classification process for
+$k = 1$: the
+label of $\mathbf{x} \in X$ is unknown, and we set it to that of $\mathbf{d}'
+\in \esf$ (a circle), which is its nearest analogical neighbour. To show that
+the analogical label of $\mathbf{d}'$ has itself been inferred, it is depicted
+as transparent instead of plain black.
 \begin{figure}
-\caption{A graphical view of $A_E^Y(S)$ and the classification process.}
-\label{extension}
 \begin{center}
-\includegraphics[scale=0.20]{figures/analogical_extension.pdf}
+\includegraphics[scale=0.20]{figures/extended_classifier.pdf}
 \end{center}
+  \caption{Classification process of an extended analogical learner.
+  $\hat{f}(\mathbf{x}) = \albl{\mathbf{d}'}$.}
+\label{FIG:extended_classifier}
 \end{figure}
-Let us note that topologically speaking, Figure \ref{extension} is not
-representative of a real case: even if we always have $S \subseteq A_E^Y(S) \subseteq X$,
-
-this does not mean that these sets are embedded into one another as shown in
-the drawing. Actually, elements of $S$ (and thus of $A_E^Y(S)$) are usually
-scattered over the whole universe.
+Let us note that topologically speaking, Figure \ref{FIG:extended_classifier}
+is not representative of a real case: even if we always have $S \subseteq \esf
+\subseteq X^m$, this does not mean that these sets are embedded into one
+another as shown in the drawing. Actually, elements of $S$ (and thus of $\esf$)
+are usually scattered over the whole universe.
 
 As far as we know, this is the first time a functional definition of
 analogy-based classifiers is given. This definition clearly fits with the known
 algorithms but obviously, some implementation details cannot be exactly caught
 up by such a high level description. It is indeed possible to find a few edge
 cases where this functional definition may not output the same result as
-algorithm \ref{ALGO:extended_classifier}: this is the case for example when the nan of $x$
-is not unique. It is
-also the case when the closest vertex $d'$ does not belong to $B^m$.  However,
-as we will see in Section \ref{validation} these cases are not likely to occur
-and both approaches produce very similar results, thus empirically validating
-this functional definition.
+algorithm \ref{ALGO:extended_classifier}: this is the case for example when the
+nearest analogical neighbor (nan) of $\mathbf{x}$ is not unique. It is also the
+case with the Boolean proportion when the closest vertex $\mathbf{d}'$ does not
+belong to $\mathbb{B}^m$.  However, as we will see later, these cases are not
+likely to occur and the two approaches (that of Algorithm
+\ref{ALGO:extended_classifier} and that of Definition
+\ref{DEF:extended_classifier}) produce very similar results, thus empirically
+validating this functional definition.
 
 Since we now have a clear functional definition of analogical classifiers, we
-are in position to examine some general properties such as convergence and
-VC-dimension of analogical learners. This is the purpose of the next section.
+are in position to examine some general theoretical properties of analogical
+learners. This is the purpose of the next section. Just like for the $k$-NN
+litterature, theoretical results are easier to derive when $k = 1$. We will
+therefore mostly focus on the properties of the 1-NAN classifier.
 
-\section{Some properties in the real case}\label{convergence}
-Let us consider the case where $X=\mathbb{R}^m$, $\delta$ any distance issued
-from a norm, $AD(a,b,c,d)=\delta(a-b,c-d)$ and $x \in X$.  In any case, just
-because $S \subseteq A_E(S)$, we have the following inequality:
-$$\delta(x, \nan(x,S)) \leq \delta(x, \nn(x,S))$$
+\section{Some properties in the real case}
+\label{SEC:properties_in_the_real_case}
+
+Let us consider the case where $X^m=\mathbb{R}^m$, and let $\delta$ be any
+distance function defined from a norm. Simply because $S \subseteq \esf$ for
+any $S$, the
+following inequality holds for any $\mathbf{x} \in X^m$ :
+$$\delta(\mathbf{x}, \nan(\mathbf{x},S)) \leq \delta(\mathbf{x},
+\nn(\mathbf{x},S)).$$
 
 \subsection{Study of convergence}
 
-Now, let us consider  $x^{(i)}$ an i.i.d. sequence of random variables in
-$\mathbb{R}^m$, where $\mathbb{R}^m$ is equipped with a probability measure
-denoted $P$. As the set $S_n=\{x^{(i)}, ~ i \in [1, n]\}$ is random, then
-$\nan(x,S_n)$ can also be considered as a random element of $X$.  We then are
-in the exactly same context as the work of Cover \& Hart (\cite{CovHarTIT67}), and
-we obtain the same result:
-\begin{property}\label{propconvergence}
-$plim_{n \to \infty}(\nan(x,S_n))=x$ almost surely,
+Now, let us consider  $\mathbf{x}^{(i)}$ an i.i.d. sequence of random variables
+in $\mathbb{R}^m$, where $\mathbb{R}^m$ is equipped with a probability measure
+denoted $P$. The training set will be denoted $S_n=\Set{\mathbf{x}^{(i)}, ~ i
+\in [1, n]}$. As $S_n$ is random, then $\nan(\mathbf{x},S_n)$ can also be
+considered as a random element of $X^m$.  We then are in the exactly same
+context as the work of Cover \& Hart (\cite{CovHarTIT67}), and we obtain the
+same result:
+\begin{property}
+  \label{PROPER:convergence_nan}
+  For any $\mathbf{x}$, its nan $\nanemph(\mathbf{x}, S_n)$ converges almost
+  surely towards $\mathbf{x}$ as $n$ tends to infinity:
+  $$P\left(\lim_{n \to \infty} \nanemph(\mathbf{x}, S_n) = \mathbf{x}\right) =
+  1.$$
 \end{property}
-where $plim$ is the probability limit operator.
-
-{\it Proof}:
-Exactly the same proof  as in \cite{CovHarTIT67} could be applied.  But it is
-simpler to remember that $\delta(x, \nan(x,S_n)) \leq \delta(x, \nn(x,S_n))$. Then,
-for a given $x$, the convergence in probability of $\delta(x,
-\nn(x,S_n))$ to $0$ implies the convergence in probability of $\delta(x,
-\nan(x,S_n))$ to $0$ which exactly means what needs to be proven.
-The subset of $X$ where $plim_{n \to \infty}(\nan(x,S_n))\neq
-x$ is included into the subset of $X$ where $plim_{n \to \infty}(\nn(x,S))\neq x$:
-Cover \& Hart lemma tells us that this set has probability $0$. Thus the final
-result.\hfill $\blacksquare$\\
+\begin{proof}
+  In \cite{CovHarTIT67}, Cover \& Hart showed that the nearest neighbor of
+  $\mathbf{x}$ converges almost surely towards $\mathbf{x}$ as $n$ tends to
+  infinity, starting from the fact that $\delta(\mathbf{x}, \nn(\mathbf{x},
+  S_n))$ converges in probability towards $0$: $\forall epsilon > 0,
+  P\left(\delta(\mathbf{x}, \nn(\mathbf{x}, S_n)) > \epsilon\right)$. Using the
+  previous fact that $\delta(\mathbf{x}, \nan(\mathbf{x},S_n)) \leq
+  \delta(\mathbf{x}, \nn(\mathbf{x},S_n))$, the convergence in probability of
+  $\delta(\mathbf{x}, \nan(\mathbf{x},S_n))$ towards $0$ is immediate. Hence,
+  it naturally follows that $\nan(\mathbf{x}, S_n)$ converges almost surely
+  towards $\mathbf{x}$, Q.E.D.\todo{Lire le paper}
+\end{proof}
 
 Let us note the following points:
 \begin{enumerate}
-\item The lemma of Cover and Hart is more general than the one above. They have
-  proven the result for any separable metric space, without any additional
-  information. In fact, we cannot follow these lines here just because there is
-  no known way to define an analogical dissimilarity on a metric space, without
-  the help of other structure or operator (see \cite{MicBayDelJAIR08} for a
-  detailed discussion on this issue).
-\item This result does not say anything regarding the prediction accuracy of
-  $1\mbox{-nan}$ prediction rule as it is rather different than the
-  $1\mbox{-nn}$ rule. Such consideration will be investigated in Section
-  \ref{accuracy}.
-\item We have to be careful about the interpretation of this property in terms
-  of machine learning. Indeed, a stronger property is proved in
-  \cite{CovHarTIT67}: for an {\it integrable} function $f$  over $\mathbb{R}^m$
-  w.r.t. the probability measure $P$, the expectation of
-  $f(\nn(x,S_n))- f(x)$ converges to 0 when $n$ goes to infinity.
-  This means that asymptotically, the nearest neighbour of $x$ has the same
-  properties as $x$, and then the same label. Such a property has not yet been
-  proven for $\nan(x, S_n)$.
-  For instance $\mathbb{B}^m$, when considered as a finite
-  subset of $\mathbb{R}^m$ and equipped with the metric topology resulting from
-  $\mathbb{R}^m$, is a separable metric space (because it is finite).
-  Therefore, property \ref{propconvergence} still holds and actually even the
-  Cover \& Hart lemma holds). However, this does not mean that for a given
-  element $x$ the characteristics (i.e. the labels) of its nearest analogical
-  neighbour converge to $\dot{x}$
+\item The result of Cover and Hart was actually proved in a less restrictive
+  setting than ours. They have proven their result for any separable metric
+    space, without any additional structure. Unfortunately, we are not able to
+    follow these lines here, because there is no known way to define an
+    analogical dissimilarity on a metric space, without the help of any other
+    structure or operator (see \cite{MicBayDelJAIR08} for a detailed discussion
+    on this issue).
+  \item Cover \& Hart proved that when $n$ tends to infinity, the probability
+    of error of the $1$-\NN classifier is less than twice that of the Bayes
+    probability of error, and therefore less than twice the probability of error of
+    any other classifier. We have not been able to prove such a strong result
+    for the $1$-\NAN~classifier, but its probability of error will be thoroughly
+    investigated in Section \ref{TODO}.
+  \item We have to be careful about the interpretation of Property
+    \ref{PROPER:convergence_nan} in terms of machine learning. Indeed, another
+    key property is proved in \cite{CovHarTIT67}: for an integrable
+    function $f$  over $\mathbb{R}^m$ w.r.t. the probability measure $P$, the
+    expectation of $f(\nn(\mathbf{x},S_n))- f(\mathbf{x})$ converges to 0 when
+    $n$ tends to infinity.  This means that asymptotically, the nearest
+    neighbour of $\mathbf{x}$ has the same properties as $\mathbf{x}$, and
+    particularly: \textbf{they have the same label}, which is a very powerful
+    property when we are dealing with a classifiaction task. Sadly, such a
+    property has not been proven for $\nan(\mathbf{x}, S_n)$.
 \item Finally, it is clear that when $n$ goes to infinity, the behavior of an
   analogical classifier tends to that of a nearest neighbours classifier.
-  Indeed, when $S_n$ is very big, the nearest analogical neighbour of an
-  element $x$ simply is its nearest neighbour, in most cases. Moreover, when
-  the nan and the nn are too close, paying the price of the noise related to
-  the nan may not be worth it. This supports the common acknowledgement that
-  analogical reasoning is mostly useful when very few data are available.
-    In this later case extending a small training set with its analogical
-    extension may be particularly beneficial.
-
-
+    Indeed, when $S_n$ is very big, the nearest analogical neighbour of an
+    element $\mathbf{x}$ simply is its nearest neighbour, in most cases.
+    Moreover, when the nan and the nn are too close, paying the price of the
+    noise related to the nan may not be worth it. This supports the common
+    acknowledgement that analogical reasoning is mostly useful when very few
+    data are available.  In this later case extending a small training set with
+    its analogical extension may be particularly beneficial, as we will see in
+    Chapter \ref{TODO}.
 
 \end{enumerate}
 To conclude this discussion, even if the convergence result is interesting in
-itself, it does not say a lot in terms of machine learning.
-
-To summarize, an analogical classifier extends the training set $S$ into its
-analogical extension $A_E^Y(S)$, then applies the $1\mbox{-nn}$ rule. A
-fundamental difference is that the set $A_E^Y(S)$ is also made of elements
-whose label is predicted and is not 100\% sure.
+itself, it does not say a lot in terms of machine learning. A much more
+interesting and poweful theoretical result of analogical classifiers will be
+proved in Chapter \ref{TODO}.
 
 \subsection{VC-dimension}\label{vcdim}
 The notion of VC-dimension was originally defined by Vapnik and Chervonenkis
@@ -744,7 +899,7 @@ This is directly coming from a core property of analogical proportions.
 \section{Accuracy analysis in the Boolean case}\label{accuracy}
 
 In this section, we study the accuracy of an analogical classifier, and more
-particularly that of the $1$-nan classifier ($\NaN$). To do so, we restrict
+particularly that of the $1$-nan classifier ($\NAN$). To do so, we restrict
 our view to a Boolean setting: elements to be classified belong to
 $X=\mathbb{B}^m$ and the label space is $Y = \mathbb{B}$.
 
@@ -759,11 +914,11 @@ by $A_E$ in what follows for notational brevity.  We also denote $A_E^*
 $S$.
 
 We now equip the set $X$ with a probability distribution denoted $P$.  The
-accuracy of the $\NaN_S$ classifier\footnote{The $S$ subscript is here to
-  specify that the training set of the $\NaN$ algorithm is $S$. The same
+accuracy of the $\NAN_S$ classifier\footnote{The $S$ subscript is here to
+  specify that the training set of the $\NAN$ algorithm is $S$. The same
   notation is used for the \textit{nearest neighbour} algorithm: $\NN_\Sigma$ is the
   $\NN$ algorithm trained on the set $\Sigma$.} over all the elements of $X$ is
-  defined as: $$\acc(\NaN_S, X)\eqdef P(\hat{x}=\dot{x} \given[\big] x \in X)$$ By
+  defined as: $$\acc(\NAN_S, X)\eqdef P(\hat{x}=\dot{x} \given[\big] x \in X)$$ By
   observing that for any $x$, its $\nan$ either belongs to $S$ or to $A_E^*$,
   the above equation can be split into two distinct parts as follows:
 
@@ -786,7 +941,7 @@ Let us denote  $\alpha \eqdef P(\nn(x, A_E) \in S)$\footnote{Obviously, we
 also have $\alpha = P(\nan(x, S) \in S)$.}.
 The formula becomes:
 \begin{align*}
-  &\acc(\NaN_S, X) = \\&P\left([\albl{\nn(x, A_E)} = \dot{x}] \given[\big] [\nn(x, A_E)
+  &\acc(\NAN_S, X) = \\&P\left([\albl{\nn(x, A_E)} = \dot{x}] \given[\big] [\nn(x, A_E)
 \in S] \right) * \alpha ~+ \\
 &P\left([\albl{\nn(x, A_E)} = \dot{x}] \given[\big] [\nn(x, A_E) \in
 A_E^*]\right) * (1 -
@@ -831,11 +986,11 @@ a  concise form, using a few more definitions:
 \end{itemize}
 
 Naturally, $A \cup B = X$ and $A \cap B = \varnothing$. Also, $\alpha = P(x \in
-A)$ and $1 - \alpha = P(x \in B)$. Therefore, the accuracy of $\NaN_S$ over $X$
+A)$ and $1 - \alpha = P(x \in B)$. Therefore, the accuracy of $\NAN_S$ over $X$
 can be understood as the weighted sum of the accuracy of $\NN$ over $A$ and
 $B$, using a different training set each time (respectively $S$ and $A_E^*$):
 \begin{align*}
-  \acc(\NaN_S, X) = ~&\acc(\NN_S, A) \cdot \alpha ~ + \\
+  \acc(\NAN_S, X) = ~&\acc(\NN_S, A) \cdot \alpha ~ + \\
                     &\acc(\NN_{A_E^*}, B) \cdot (1 -
   \alpha).\numberthis\label{ACCURACY_FORMULA}
 \end{align*}
@@ -848,10 +1003,10 @@ to the consistent facts:
 \begin{enumerate}
 \item The smaller $A_E^*$ (i.e. analogical reasoning does not
   bring much more labels), the closer $\alpha$ is to $1$, the closer $A$ is to
-  $X$ and the more the accuracy of $\NaN_S$ tends towards the accuracy of
+  $X$ and the more the accuracy of $\NAN_S$ tends towards the accuracy of
   $\NN_S$ over $X$.
 \item In return, if $A_E$ is much bigger than $S$, $\alpha$ is then small, $B$
-  is close to $X$ and the accuracy of $\NaN_S$ greatly depends on the quality
+  is close to $X$ and the accuracy of $\NAN_S$ greatly depends on the quality
   of $A_E$, which can be measured by the value $\omega$ defined as: $$\omega
   \triangleq P(\albl{x} = \dot{x} \given[\big] x \in A_E^*).$$ Note that the
   value $1 - \omega$ corresponds to the class noise of $A_E$. As we will see in
@@ -863,7 +1018,7 @@ to the consistent facts:
 In order to get an empirical validation of our formulas, we have developed a set of
 experiments that we describe in the next subsection.
 \subsection{Validation protocol}
-Working with Boolean vectors, we have computed the accuracies of the $\NaN$ and
+Working with Boolean vectors, we have computed the accuracies of the $\NAN$ and
 $\NN$ algorithms over $X=\mathbb{B}^m$ for different values of $m$ (namely $8$
 and $10$). The ground truth label of elements of $X$ is
 defined by different Boolean functions $f$ in such a way that the $\forall x =
@@ -897,7 +1052,7 @@ $100$ experiments.  The interested reader may find the Python source code that
 has generated all our plots and detailed results on
 Github\footnote{https://github.com/Niourf/nan\_study}. For lack of space,
 we only provide a few examples which are representative of the global behavior.
-Please note that our implementation of the $\NaN$ algorithm is not that of
+Please note that our implementation of the $\NAN$ algorithm is not that of
 algorithm \ref{ALGO:extended_classifier}, but is instead that of the functional definition
 of the analogical classifier developed in Section \ref{FUNCTIONAL_DEF}: we
 first construct the analogical extension set of $S$, and then proceed to a
@@ -905,7 +1060,7 @@ nearest neighbour strategy over this noisy extended training set. We have
 estimated probabilities by frequencies, thus implicitly assuming a uniform
 distribution on $X$.
 
-In addition to these Boolean functions, we have also run the $\NaN$ algorithm
+In addition to these Boolean functions, we have also run the $\NAN$ algorithm
 over the Monk datasets over the UCI
 repository\footnote{https://archive.ics.uci.edu/ml/datasets/MONK's+Problems}.
 They are datasets of 432 binarized elements, among which exactly 169 of them
@@ -913,11 +1068,11 @@ have been used for training.
 
 \subsection{Experiments}
 
-Figure \ref{plots} shows the accuracies (left column) of the $\NaN$ and $\NN$
+Figure \ref{plots} shows the accuracies (left column) of the $\NAN$ and $\NN$
 over six different Boolean settings with values of $|S|$ varying from $3$ to
 $100$. In the right column, we have plotted three different values that will
 help us analyse and validate the behaviour of the
-$\NaN$ algorithm:
+$\NAN$ algorithm:
 \begin{itemize}
   \item the theoretical accuracy as defined by equation
     (\ref{ACCURACY_FORMULA})
@@ -932,7 +1087,7 @@ $\NaN$ algorithm:
 \end{itemize}
 
 \begin{figure}[h!]
-\caption{Accuracies of the $\NaN$ and $\NN$ algorithms  over different Boolean
+\caption{Accuracies of the $\NAN$ and $\NN$ algorithms  over different Boolean
   settings and training set sizes, with corresponding values of $\omega$,
   $\gamma$, and theoretical accuracy. The $x$ axis corresponds to the size of
 the training set.}
@@ -947,11 +1102,11 @@ from \cite{MicBayDelJAIR08}, which corresponds to algorithm
 
 \begin{table}
 \centering
-\caption{Accuracies of the $\NaN$, APC and $\NN$ algorithms over the Monk datasets}
+\caption{Accuracies of the $\NAN$, APC and $\NN$ algorithms over the Monk datasets}
 \label{TABLE_MONK}
 \begin{tabular}{| c | c | c | c | c | c |}
 \toprule
-& $\NaN$  & APC & $\NN$  &  $\omega$ & $\gamma$ \\
+& $\NAN$  & APC & $\NN$  &  $\omega$ & $\gamma$ \\
 \midrule
 Monk 1 & .961 & .98 & .787 &   .961    &   1 \\
 Monk 2 & .998 & 1 & .738 &    .996    &   1 \\
@@ -963,7 +1118,7 @@ Monk 3 & .963 & .96 & .829 &   .963    &   1 \\
 \subsection{Comments and discussion}
 
 The experiments shown in figure \ref{plots} allow us to draw interesting
-conclusions about the behaviour of the $\NaN$ algorithm.  We can observe one of
+conclusions about the behaviour of the $\NAN$ algorithm.  We can observe one of
 the two cases:
 \begin{itemize}
   \item either the analogical labels are always correctly
@@ -974,20 +1129,20 @@ the two cases:
     experiments).}($\omega = 1$, i.e. there is no class noise) as it is the case for  $f_1$, $f(x) = x_m$ and
     (almost) for the Monk datasets~;
     \item or there is some class noise in $A_E^Y(S)$ ($\omega \neq 1$). In this
-      case, we always observe that the $\NaN$ algorithm is outperformed by
+      case, we always observe that the $\NAN$ algorithm is outperformed by
       $\NN$ for small values of $|S|$, but eventually takes advantage once
       analogical prediction becomes more important than the nearest neighbour
       one, as we are going to see.
 \end{itemize}
 
 The theoretical accuracy seems to fit perfectly with the empirical accuracy of
-the $\NaN$ algorithm, thus validating our theoretical study that led to
+the $\NAN$ algorithm, thus validating our theoretical study that led to
 equation (\ref{ACCURACY_FORMULA})\footnote{The maximal difference we observed between the
 theoretical accuracy and its actual value is of about $10^{-10}$.}.
 
 An interesting observation is that the value of $\omega$ always converges to
 that of the theoretical accuracy (and therefore to the actual accuracy) of
-$\NaN$. This can be easily explained by paying attention to the value of
+$\NAN$. This can be easily explained by paying attention to the value of
 $\gamma$, the proportion of elements of $X$ that belong to $A_E^Y(S)$. We see
 that in any setting, $\gamma$ converges to 1 as $|S|$ grows. This means that
 when $|S|$ is big enough (but not necessarily \textit{that} big with respect to $X$), the
@@ -998,7 +1153,7 @@ element $x$ is then its own nearest analogical neighbour and $\hat{x} =
 \begin{align*}
   \omega = P(\albl{x} = \dot{x} \given[\big] x \in A_E^*) &= P(\hat{x}
   = \dot{x} \given[\big] x \in A_E^*)\\
-&= \acc(\NaN_S, A_E^*)
+&= \acc(\NAN_S, A_E^*)
 \end{align*}
 When $\gamma = 1$, the only elements $x$ we want to classify belong to $A_E^*$
 (otherwise they would be in $S$), so this last term exactly corresponds to the
@@ -1012,7 +1167,7 @@ We will provide in the next subsection a method to accurately estimate this
 quantity $\omega$ with the only help of the training set $S$.
 
 Regarding the Monk datasets (Table \ref{TABLE_MONK}), we note that the
-functional $\NaN$ approach (almost) achieves the same results as the somewhat
+functional $\NAN$ approach (almost) achieves the same results as the somewhat
 more complex algorithm described in Section \ref{SEC:extended_classifier}, and that
 here again the analogical extension set covers the whole universe: this means
 that a conservative approach would have been sufficient! Actually, this raises
@@ -1074,8 +1229,8 @@ especially when it comes
 to practical implementation.
 
 In terms of accuracy in a Boolean setting, we have found a strong link between
-the accuracy of the $\NaN_S$ algorithm and that of the $\NN_S$ algorithm. At a
-first glance, we can consider the $\NaN$ algorithm as a $\NN$ strategy on an
+the accuracy of the $\NAN_S$ algorithm and that of the $\NN_S$ algorithm. At a
+first glance, we can consider the $\NAN$ algorithm as a $\NN$ strategy on an
 extended and noisy training set: the analogical extension of $S$. In the end, we
 have seen that this extended training set covers the entire universe provided
 that $S$ is big enough, simplifying and bringing back the accuracy of the

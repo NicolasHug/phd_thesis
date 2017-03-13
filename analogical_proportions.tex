@@ -1,15 +1,15 @@
 \chapter{Formal analogical proportions}
 
-\initial{A}fter the long (and somewhat tedious) introduction of past works on analogical
-reasoning in Chapter \ref{CHAP:chapter_1}, we here choose a different and
-hopefully more engaging approach. Rather than bore (and lose) the reader with a
-never-ending list of definitions and properties, we will try to guide her
-through an insightful tutorial on the use of Boolean proportions and their
-application to a small classification task. This will allow use to introduce
-many of the key concepts used here, and to illustrate their use with concrete
-example. Only then will we provide the complete, formal definitions of
-analogical proportion in algebraic settings. We first start by diving into the
-realm of Boolean proportions.
+\initial{A}fter the long (and somewhat tedious) introduction of past works on
+analogical reasoning in Chapter \ref{CHAP:chapter_1}, we here choose a
+different and hopefully more engaging approach. Rather than bore (and lose) the
+reader with a never-ending list of definitions and properties, we will try to
+guide her through an insightful tutorial on the use of Boolean proportions and
+their application to a small classification task. This will allow use to
+introduce many of the key concepts used in the rest of our work, and to
+illustrate their use with concrete examples. Only then will we provide the
+complete, formal definitions of analogical proportion in algebraic settings. We
+first start by diving into the realm of Boolean proportions.
 
 \section{A shortcut from Aristotle to Boolean proportions}
 \label{SEC:shortcut_from_aristotle_to_boolean_proportions}
@@ -22,7 +22,7 @@ as  ``a calf is to a cow as a foal is to a mare'', or ``Paris is to France as
 Berlin is to Germany''.
 
 It has been agreed since Aristotle time that an analogical proportion $A$ is a
-quaternary relation satisfying the three following axioms:
+quaternary relation satisfying the three following axioms, for any $a, b, c, d$:
 
 \begin{enumerate}
 \item $A(a,b,a,b)$ always holds (Reflexivity)
@@ -126,11 +126,11 @@ it appears that the Boolean proportion can be defined in the following way:
 \end{definition}
 
 From a numerical point of vue, it also appears that $a:b::c:d$ is true if and
-only if $a - b = c - d$. A relations $a - b = c - d$ between four elements $a,
+only if $a - b = c - d$. A relation $a - b = c - d$ between four elements $a,
 b, c, d$ in $\mathbb{R}$ is called an \textbf{arithmetic proportion}.
 The arithmetic proportion is a particular instance of analogical proportion, and
 it turns out that when restricted to $\mathbb{B}$, it is equivalent to the
-boolean proportion.
+Boolean proportion.
 
 The arithmetic proportion, which states an equality of differences, is not the
 only proportion than deals with numbers. The \textbf{geometric proportion} is
@@ -146,7 +146,8 @@ not a valid analogy.
 It should now be clear for the reader why analogical proportions are
 effectively called \textbf{proportions}: it's precisely because they generalize
 the well-known numerical geometric proportion to other more complex structures.
-Aristotle's three axioms were stated on the basis of the geometric proportion.
+Actually, Aristotle stated the three aforementioned axioms on the basis of the
+geometric proportion.
 
 We also note from Table \ref{TAB:six_valid_patterns} that some sort of {\it
 code independence axiom} is satisfied, which guarantees that $0$ and $1$ play
@@ -290,11 +291,12 @@ Suppose we're in $\mathbb{B}^3$ and consider Figure
 \begin{figure}[!h]
 \centering
   \includegraphics[width=3in]{figures/classification_problem.pdf}
-  \caption{What should the value of $f(\mathbf{h})$ be?}
+  \caption{A classification problem in $\mathbb{B}^3$. Labels $f(\mathbf{x})$
+  are on the right.}
 \label{FIG:classification_problem}
 \end{figure}
 We know the values of $f(\mathbf{x})$ for
-every single $\mathbf{x}$ but $\mathbf{h}$, so $S = \{ \mathbf{a}, \mathbf{b},
+every single element $\mathbf{x}$ but $\mathbf{h}$, so $S = \{ \mathbf{a}, \mathbf{b},
 \mathbf{c}, \mathbf{d}, \mathbf{e}, \mathbf{f}, \mathbf{g}\}$. To guess the
 value of $f(\mathbf{h})$, we will use the so-called \textbf{analogical
 inference principle}, which states that if four elements $\mathbf{a},
@@ -339,24 +341,25 @@ candidate for $f(\mathbf{h})$: $1$ is a \textbf{candidate solution}.
 What we have just done is the \textbf{solving of an analogical equation}.
 Generally speaking, an analogical equation is a proportion $a:b::c:x$ in a
 context where $x$ is unkown. Determining the value of $x$ is thus the
-\textit{solving} of this equation. Depending on the nature and values of $a, b,
-c, x$, there may or may not exist a solution, and it might not be unique. In a
-Boolean setting, the solution is solvable for 6 patterns of $a, b, c$ (the 6
+\textit{solving} of this equation. Depending on the nature and values of $a, b$,
+and $c$, there may or may not exist a solution, and it might not be unique. In a
+Boolean setting, an equation is solvable for 6 patterns of $a, b, c$ (the 6
 patterns of Table \ref{TAB:six_valid_patterns} naturally). As we can see, the
 solution is always unique:
 
 \begin{proposition}
   Let $a, b, c$ in $\mathbb{B}$. The analogical equation
   $a :b::c:x$
-  is solvable if and only if $a = b$ or $a = c$. The solution $x$ is given by
+  is solvable if and only if $a = b$ or $a = c$. The solution denoted
+  $\emph{sol}(a, b, c)$ is then given by:
   $$
   \begin{cases}
-    x = c \emph{ if } a = b,\\
-    x = b \emph{ if } a = c,
+    \emph{sol}(a, b, c) \eqdef c \emph{ if } a = b,\\
+    \emph{sol}(a, b, c) \eqdef b \emph{ if } a = c,
   \end{cases}
   $$
-  or more generally by $x = c - a + b$, because the Boolean proportion is a
-  particular case of arithmetic proportion.
+  or more generally, $\emph{sol}(a, b, c) \eqdef c - a + b$, because the
+  Boolean proportion is a particular case of the arithmetic proportion.
 \end{proposition}
 
 Let's get back to the estimation of $f(\mathbf{h})$. Applying the analogical
