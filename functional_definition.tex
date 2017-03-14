@@ -622,8 +622,8 @@ behaviour, and it is difficult to extract theoretical properties. The aim of
 the next subection is to give a functional translation of this algorithmic
 description.
 
-\subsection{Analogical classifier: a functional
-definition}\label{FUNCTIONAL_DEF}
+\subsection{Analogical classifier: a functional definition}
+\label{SEC:functional_definition}
 
 As we have previously seen, we can generally assume that
 $\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{d}) \eqdef
@@ -749,6 +749,21 @@ is not representative of a real case: even if we always have $S \subseteq \esf
 another as shown in the drawing. Actually, elements of $S$ (and thus of $\esf$)
 are usually scattered over the whole universe.
 
+Going back (for the last time, I promise) to Figure \ref{FIG:ae_example}, our
+new functional view allows us to consider the following steps:
+\begin{enumerate}
+  \item First extend $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{d}, \mathbf{e}}$
+    to $\esf = \Set{\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d},
+    \mathbf{e}}$ with $\hat{f}(\mathbf{c}) = \albl{\mathbf{c}} = 1$ and
+    $\hat{f}(\mathbf{f}) = \albl{\mathbf{f}} = 1$.
+  \item Then, to classify $\mathbf{g}$, we simply look to its nearest neighbors
+    in $\esf$, which are $\mathbf{c}$ and $\mathbf{e}$. The aggregation of
+    their analogical labels leads to
+    $\hat{f}(\mathbf{g}) = 1$. The nearest neighbors of $\mathbf{h}$ are
+    $\mathbf{d}$ and $\mathbf{f}$, which also leads to $\hat{f}(\mathbf{h}) =
+    1$.
+\end{enumerate}
+
 As far as we know, this is the first time a functional definition of
 analogy-based classifiers is given. This definition clearly fits with the known
 algorithms but obviously, some implementation details cannot be exactly caught
@@ -850,7 +865,9 @@ itself, it does not say a lot in terms of machine learning. A much more
 interesting and poweful theoretical result of analogical classifiers will be
 proved in Chapter \ref{TODO}.
 
-\subsection{VC-dimension}\label{vcdim}
+\subsection{VC-dimension}
+\label{SEC:VCdim}
+\todo{Refaire}
 The notion of VC-dimension was originally defined by Vapnik and Chervonenkis
 \cite{Vap98}, and introduced into learnability theory by Blumer et al.
 \cite{BluEhrHauWarACM89}. Roughly speaking, the VC-dimension of a class of learners is a numerical measure of their discrimination power. It appears that this number is strongly linked to the confidence interval between the empirical risk (i.e. the error a learner makes on the training set) and the true risk (the error a learner makes on the whole universe $X$). As such, the VC-dimension of a class of learners is an essential element of their theoretical study.
@@ -896,123 +913,131 @@ behaves exactly as the $k\mbox{-NN}$ class.
 Let us note that this is a very general result, which does not rely on any definition of distance.
 This is directly coming from a core property of analogical proportions.
 
-\section{Accuracy analysis in the Boolean case}\label{accuracy}
+\section{Accuracy analysis}
+\label{SEC:accuracy_analysis}
 
 In this section, we study the accuracy of an analogical classifier, and more
-particularly that of the $1$-nan classifier ($\NAN$). To do so, we restrict
-our view to a Boolean setting: elements to be classified belong to
-$X=\mathbb{B}^m$ and the label space is $Y = \mathbb{B}$.
+particularly that of the $\NAN$. As explained in Section
+\ref{SEC:functional_definition}, for a given $\mathbf{x} \in X^m$ and a
+training set $S \subset X^m$, the prediction $\hat{f}(\mathbf{x})$ is set as:
+$$
+\hat{f}(\mathbf{x}) ~ \eqdef ~ \albl{\nan(\mathbf{x}, S)} ~ \eqdef ~ \albl{\nn(\mathbf{x}, \esf)}.
+$$
 
-As explained in Section \ref{FUNCTIONAL_DEF}, for a given $x \in X$ and a training set
-$S \subset X$, we have:
-\begin{equation}\label{eq1}
-\hat{x}=\albl{\nan(x, S)}=\albl{\nn(x, A_E^Y(S))},
-\end{equation}
-where $A_E^Y(S)$ is the analogical extension of $S$, that we will simply denote
-by $A_E$ in what follows for notational brevity.  We also denote $A_E^*
-\eqdef A_E \setminus S$ as the set of elements that belong $A_E$ but not to
-$S$.
-
-We now equip the set $X$ with a probability distribution denoted $P$.  The
+We now equip the set $X^m$ with a probability distribution denoted $P$.  The
 accuracy of the $\NAN_S$ classifier\footnote{The $S$ subscript is here to
-  specify that the training set of the $\NAN$ algorithm is $S$. The same
-  notation is used for the \textit{nearest neighbour} algorithm: $\NN_\Sigma$ is the
-  $\NN$ algorithm trained on the set $\Sigma$.} over all the elements of $X$ is
-  defined as: $$\acc(\NAN_S, X)\eqdef P(\hat{x}=\dot{x} \given[\big] x \in X)$$ By
-  observing that for any $x$, its $\nan$ either belongs to $S$ or to $A_E^*$,
-  the above equation can be split into two distinct parts as follows:
+specify that the training set of the $\NAN$ algorithm is $S$. The same notation
+is used for the \textit{nearest neighbour} algorithm: $\NN_\Sigma$ is the $\NN$
+algorithm trained on the set $\Sigma$.} over all the elements of $X^m$ is
+defined as:
+$$\acc(\NAN_S, X)\eqdef P\left(\hat{f}(\mathbf{x})=f(\mathbf{x}) \given[\big]
+\mathbf{x} \in X^m\right).$$
+By observing that for any $\mathbf{x}$, its $\nan$ either belongs to $S$ or to
+$\esfs$, the above equation can be split into two distinct parts as follows:
 
-  \begin{align*}
-  &P\left(\hat{x}=\dot{x} \given[\big] x \in X\right) = P\left(\albl{\nan(x,
-  S)} = \dot{x}\right)\\
-=~&P\left([\albl{\nan(x, S)} = \dot{x} ]\wedge [\nan(x, S) \in S
-] \right)~ + \\
-&P\left([\albl{\nan(x, S)} = \dot{x}] \wedge [\nan(x, S) \in A_E^*]\right)\\ \mbox{(law of total probability)}\\
-=~&P\left([\albl{\nn(x, A_E)} = \dot{x}] \wedge [\nn(x, A_E) \in S ]\right)~ + \\
-  &P\left([\albl{\nn(x, A_E)} = \dot{x}] \wedge [\nn(x, A_E) \in A_E^*]\right)
-\\
-=~&P\left([\albl{\nn(x, A_E)} = \dot{x}] \given[\big] [\nn(x, A_E) \in S
-]\right) \times \\ &P\left([\nn(x, A_E) \in S]\right) ~+ \\
-&P\left([\albl{\nn(x, A_E)} = \dot{x}] \given[\big] [\nn(x, A_E) \in
-A_E^*]\right) \times \\ &P\left([ \nn(x, A_E) \in A_E^*]\right)
+\begin{align*}
+  &P\left(\hat{f}(\mathbf{x})=f(\mathbf{x}) \given[\big] \mathbf{x} \in
+  X^m\right) = P\left(\albl{\nan(\mathbf{x}, S)} = f(\mathbf{x})\right)\\
+  =~&P\left([\albl{\nan(\mathbf{x}, S)} = f(\mathbf{x}) ]\wedge
+  [\nan(\mathbf{x}, S) \in S ] \right)~ +
+  P\left([\albl{\nan(\mathbf{x}, S)} = f(\mathbf{x})] \wedge [\nan(\mathbf{x},
+  S) \in \esfs]\right)\\
+  =~&P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \wedge
+  [\nn(\mathbf{x}, \esf) \in S ]\right)~ +
+  P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \wedge
+  [\nn(\mathbf{x}, \esf) \in \esfs]\right) \\
+  =~&P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \given[\big]
+  [\nn(\mathbf{x}, \esf) \in S ]\right) \times
+  P\left([\nn(\mathbf{x}, \esf) \in S]\right) ~+ \\
+  &P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \given[\big]
+  [\nn(\mathbf{x}, \esf) \in \esfs]\right) \times
+  P\left([ \nn(\mathbf{x}, \esf) \in \esfs]\right)
 \end{align*}
 
-Let us denote  $\alpha \eqdef P(\nn(x, A_E) \in S)$\footnote{Obviously, we
-also have $\alpha = P(\nan(x, S) \in S)$.}.
-The formula becomes:
+Let us denote  $\alpha \eqdef P\left(\nn(\mathbf{x}, \esf) \in S\right)$.
+Obviously, we also have $\alpha \eqdef P\left(\nan(\mathbf{x}, S) \in
+S\right)$.  The above formula becomes:
 \begin{align*}
-  &\acc(\NAN_S, X) = \\&P\left([\albl{\nn(x, A_E)} = \dot{x}] \given[\big] [\nn(x, A_E)
-\in S] \right) * \alpha ~+ \\
-&P\left([\albl{\nn(x, A_E)} = \dot{x}] \given[\big] [\nn(x, A_E) \in
-A_E^*]\right) * (1 -
-\alpha).
+  &\acc(\NAN_S, X^m) = \\&P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})]
+  \given[\big] [\nn(\mathbf{x}, \esf) \in S] \right) * \alpha ~+ \\
+  &P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \given[\big]
+  [\nn(\mathbf{x}, \esf) \in \esfs]\right) * (1 - \alpha).
 \end{align*}
 
-Let us focus on the first term  (discarding the factor $\alpha$):
-$$P\left([\albl{\nn(x, A_E)} = \dot{x}] \given[\big] [\nn(x, A_E) \in S] \right)$$
+Let us focus on the first term, temporarily discarding the factor $\alpha$:
+$$P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \given[\big]
+[\nn(\mathbf{x}, \esf) \in S] \right).$$
 
-It is easy to see that the event $[\nn(x, A_E) \in S]$ is equivalent to
-the event $[\nn(x, A_E) = \nn(x, S)]$. As a result, we can transform the first
-term to get a better grasp of its meaning:
+It is easy to see that the event $[\nn(\mathbf{x}, \esf) \in S]$ is equivalent
+to the event $[\nn(\mathbf{x}, \esf) = \nn(\mathbf{x}, S)]$. As a result, we
+can transform the first term to get a better grasp of its meaning:
 \begin{align*}
-  &P\left([\albl{\nn(x, A_E)} = \dot{x}] \given[\big] [\nn(x, A_E) \in S] \right)\\
-  =~ &P\left([\albl{\nn(x, A_E)} = \dot{x}] \given[\big] [\nn(x, A_E) = \nn(x,
-  S)]\right)\\
-  =~ &P\left([\albl{\nn(x, S)} = \dot{x}] \given[\big] [\nn(x, A_E) \in S]\right).
+  &P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \given[\big]
+  [\nn(\mathbf{x}, \esf) \in S] \right)\\
+  =~ &P\left([\albl{\nn(\mathbf{x},\esf)} = f(\mathbf{x})] \given[\big]
+  [\nn(\mathbf{x}, \esf) = \nn(\mathbf{x}, S)]\right)\\
+  =~ &P\left([\albl{\nn(\mathbf{x}, S)} = f(\mathbf{x})] \given[\big]
+  [\nn(\mathbf{x}, \esf) \in S]\right).
 \end{align*}
 
 In this form, the first term is just the accuracy of the $\NN_S$ algorithm over
 the elements that have their nearest analogical neighbour in $S$.
 As for the second term, the same process can be applied by observing that the
-event $[\nn(x, A_E) \in A_E^*]$ is equivalent to the event $[\nn(x, A_E) = \nn(x,
-A_E^*)]$. This leads to
+event $[\nn(\mathbf{x}, \esf) \in\esfs]$ is equivalent to the event
+$[\nn(\mathbf{x}, \esf) = \nn(\mathbf{x}, \esfs)]$. This leads to
 \begin{align*}
-  &P\left([\albl{\nn(x, A_E)} = \dot{x}] \given[\big] [\nn(x, A_E) \in
-A_E^*]\right)\\
-  =~ &P\left([\albl{\nn(x, A_E^*)} = \dot{x}] \given[\big] [\nn(x, A_E) \in
-A_E^*]\right).
+  &P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \given[\big]
+  [\nn(\mathbf{x}, \esf) \in \esfs]\right)\\
+  =~ &P\left([\albl{\nn(\mathbf{x}, \esfs)} = f(\mathbf{x})] \given[\big]
+  [\nn(\mathbf{x}, \esf) \in \esfs]\right).
 \end{align*}
 
-This second term is then the accuracy of the $\NN_{A_E^*}$ algorithm over the elements
-that have their nearest analogical neighbour in $A_E^*$.
+This second term is then the accuracy of the $\NN_{\esfs}$ algorithm over the
+elements that have their nearest analogical neighbour in $\esfs$.
 
 In the light of these interpretations, one can rewrite the accuracy formula in
 a  concise form, using a few more definitions:
 \begin{itemize}
-\item $A \eqdef \{x \in X, \nan(x, S) \in S\}$: the elements that have
-  their nan in $S$.
-\item $B \eqdef \{x \in X, \nan(x, S) \in A_E^*\}$: the elements that have
-  their nan in $A_E^*$.
+\item $A \eqdef \{\mathbf{x} \in X^m, \nan(\mathbf{x}, S) \in S\}$: the
+  elements that have their nan in $S$.
+\item $B \eqdef \{\mathbf{x} \in X^m, \nan(\mathbf{x}, S) \in \esfs\}$: the
+  elements that have their nan in $\esfs$.
 \end{itemize}
 
-Naturally, $A \cup B = X$ and $A \cap B = \varnothing$. Also, $\alpha = P(x \in
-A)$ and $1 - \alpha = P(x \in B)$. Therefore, the accuracy of $\NAN_S$ over $X$
-can be understood as the weighted sum of the accuracy of $\NN$ over $A$ and
-$B$, using a different training set each time (respectively $S$ and $A_E^*$):
+Naturally, $A \cup B = X^m$ and $A \cap B = \varnothing$. Also, $\alpha =
+P(\mathbf{x} \in A)$ and $1 - \alpha = P(\mathbf{x} \in B)$. Therefore, the
+accuracy of $\NAN_S$ over $X^m$ can be understood as the weighted sum of the
+accuracy of $\NN$ over $A$ and $B$, using a different training set each time
+(respectively $S$ and $\esfs$):
 \begin{align*}
-  \acc(\NAN_S, X) = ~&\acc(\NN_S, A) \cdot \alpha ~ + \\
-                    &\acc(\NN_{A_E^*}, B) \cdot (1 -
-  \alpha).\numberthis\label{ACCURACY_FORMULA}
+  \acc(\NAN_S, X^m) = ~&\acc(\NN_S, A) \cdot \alpha ~ + \\
+                      &\acc(\NN_{\esfs}, B) \cdot (1 - \alpha).
+  \numberthis\label{ACCURACY_FORMULA}
 \end{align*}
 The value $\acc(\NN_S, A)$ is the accuracy of $\NN_S$ over all the elements in
-$A$. A theoretical study of this accuracy has been done in
-\cite{LanIbaIJCAI93} when the size of $A$ is known.  Regarding
-$\acc(\NN_{A_E^*}, B)$, this is the accuracy of $1$-nn when the training set is
+$A$. A theoretical study of this accuracy has been done in \cite{LanIbaIJCAI93}
+when the size of $A$ is known.  Regarding $\acc(\NN_{\esfs}, B)$, this is the
+accuracy of $1$-$\NN$ when the training set is
 noisy, and has been studied in \cite{OkaYugIJCAI97}. This last formula leads
 to the consistent facts:
 \begin{enumerate}
-\item The smaller $A_E^*$ (i.e. analogical reasoning does not
+\item The smaller $\esfs$ (i.e. analogical reasoning does not
   bring much more labels), the closer $\alpha$ is to $1$, the closer $A$ is to
-  $X$ and the more the accuracy of $\NAN_S$ tends towards the accuracy of
-  $\NN_S$ over $X$.
-\item In return, if $A_E$ is much bigger than $S$, $\alpha$ is then small, $B$
-  is close to $X$ and the accuracy of $\NAN_S$ greatly depends on the quality
-  of $A_E$, which can be measured by the value $\omega$ defined as: $$\omega
-  \triangleq P(\albl{x} = \dot{x} \given[\big] x \in A_E^*).$$ Note that the
-  value $1 - \omega$ corresponds to the class noise of $A_E$. As we will see in
-  the next section, this situation where $A_E$ is big with respect to $S$ is
-  actually extremely likely to occur.
-  \end{enumerate}
+  $X^m$ and the more the accuracy of $\NAN_S$ tends towards the accuracy of
+  $\NN_S$ over $X^m$.
+\item In return, if $\esf$ is much bigger than $S$, $\alpha$ is then small, $B$
+  is close to $X^m$ and the accuracy of $\NAN_S$ greatly depends on the quality
+  of $\esf$:  \end{enumerate}
+
+\begin{definition}
+  Given a training set $S\subset X^m$ and a ground truth function $f$, the
+  \textbf{quality} of the analogical extension $\esf$ is defined as:
+  $$
+  \omegasf \eqdef P\left(\albl{\mathbf{x}} = f(\mathbf{x}) \given[\big]
+  \mathbf{x} \in \esfs\right).$$
+  Note that the value $1 - \omegasf$ corresponds to the class noise of $\esfs$.
+\end{definition}
+
 \section{Experiments and empirical validation}
 \label{validation}
 In order to get an empirical validation of our formulas, we have developed a set of
@@ -1054,7 +1079,7 @@ Github\footnote{https://github.com/Niourf/nan\_study}. For lack of space,
 we only provide a few examples which are representative of the global behavior.
 Please note that our implementation of the $\NAN$ algorithm is not that of
 algorithm \ref{ALGO:extended_classifier}, but is instead that of the functional definition
-of the analogical classifier developed in Section \ref{FUNCTIONAL_DEF}: we
+of the analogical classifier developed in Section \ref{SEC:functional_definition}: we
 first construct the analogical extension set of $S$, and then proceed to a
 nearest neighbour strategy over this noisy extended training set. We have
 estimated probabilities by frequencies, thus implicitly assuming a uniform
