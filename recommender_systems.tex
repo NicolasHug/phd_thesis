@@ -68,11 +68,11 @@ common strategy is to suggest to user $u$ the items $i \notin I_u$ with the
 highest $\predrui$.
 \end{enumerate}
 
-Traditionnaly, prediction algorithms are considered to belong to one of the two
-main families of prediction techniques, refered to as \textbf{content-based}
+Traditionally, prediction algorithms are considered to belong to one of the two
+main families of prediction techniques, referred to as \textbf{content-based}
 methods and \textbf{collaborative filtering} methods, that we both review
-below. Note that in practice, real world recomender systems usually use a mix
-of both methods, and are refered to as \textbf{hybrid} methods.
+below. Note that in practice, real world recommender systems usually use a mix
+of both methods, and are referred to as \textbf{hybrid} methods.
 
 \subsection{Content-based techniques}
 \label{sec:content-based}
@@ -133,7 +133,7 @@ $i$, which leads to formulas dual of the above ones.
 
 \todo{Detail all this}
 The matrix factorization approach is heavily inspired by singular value
-decomposition (SVD): it postulates the existence of $f$ factors/criterias
+decomposition (SVD): it postulates the existence of $f$ factors/criteria
 (whose nature is not necessarily known) that determine the value of any rating
 $\rui$.  A user $u$ is modeled as a vector $p_u \in \mathbb{R}^f$, where each
 component of $p_u$ models the importance of the corresponding factor for $u$.
@@ -183,7 +183,7 @@ $$\text{MAE}(A) = \frac{1}{|\Rtest|} \cdot \sum_{\rui \in \Rtest}|\predrui -
 
 In order to have reliable estimates of the accuracy measures, $k$-folds
 cross-validation procedures are often used: the set of all ratings $R$ is
-devided into $k$ disjoint sets ; at each of the $k$ iterations, $\Rtrain$ is set
+divided into $k$ disjoint sets ; at each of the $k$ iterations, $\Rtrain$ is set
 to the $k^{\text{th}}$ subset and $\Rtest$ is set as the $k - 1$ remaining
 ones. The reported RMSE (or MAE) is then the average of the $k$ measures.
 

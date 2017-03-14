@@ -29,7 +29,7 @@ Knowing that the triangle and the tetrahedron are alike in many respects, we
 As the center of gravity of a triangle is the meeting point of the three
 medians, the analogical argument suggest that the center of gravity of the
 tetrahedron is the meeting point of the six median planes. The work of P\'olya
-is probably the first occurence of analogical reasoning mentioned as a tool for
+is probably the first occurrence of analogical reasoning mentioned as a tool for
 problem solving in the modern era.
 
 \subsection{Analogy as a structural mapping}
@@ -49,14 +49,14 @@ between the source and the target domains, rather than on some superficial
 characteristics. In this regard, SMT departs from Hesse's theory in a
 significant way. \todo{mettre ça dans Hesse si Hesse après}
 
-The point of Gentner is that superificial similarities are often irrelevent,
+The point of Gentner is that superficial similarities are often irrelevant,
 while what matters in an analogy are the underlying \textbf{structural}, high
-order relations between the objects at play. To examplify, Gentner argues that
+order relations between the objects at play. To exemplify, Gentner argues that
 when one says that \textit{a battery is like a reservoir}, the analogy stands
 because at some abstract level, a battery and a reservoir serve the same
 purpose: to release some potential energy that has been stored for some time.
 The fact that batteries come in different shapes, colors and sizes than
-reservoirs does not play any role in the relevence of the analogy. This
+reservoirs does not play any role in the relevance of the analogy. This
 principle is called the \textbf{systematicity principle}, for which we now give
 some technical details.
 
@@ -81,10 +81,10 @@ into account, while higher-order relations are given priority over lower-order
 ones. Also, out of two relations of the same order, the one that is the most
 involved into other (higher-order) relations is the most likely to be mapped in
 the target domain. This last requirement gives an implicit rule to somehow
-assess the relevence of a relation in an analogy.
+assess the relevance of a relation in an analogy.
 
 Note that this definition of analogy involves purely structural and syntactical
-features. The semantic underlying the relations (or the objects) are competely
+features. The semantic underlying the relations (or the objects) are completely
 out of concern. In our example, the fact that \textit{Alice} and \textit{Bob}
 are actually friends is of no importance: for SMT this relation is nothing but
 a first-order relation, with no particular meaning. As far as SMT is concerned,
@@ -107,7 +107,7 @@ can be conceptually summarized as follows:
       target domain.
 \end{enumerate}
 In its most simple form, the SME algorithm can be viewed as the finding of a
-maximum common subgraph between two graphs, namely those reprensenting the
+maximum common subgraph between two graphs, namely those representing the
 source and the target domains. In such, SME is part of the connectionist
 approaches.
 
@@ -125,7 +125,7 @@ from these descriptions:
   are not difficult to find.
 \end{quote}
 
-Also, while the systematicity principle is undoubtly at the core of many
+Also, while the systematicity principle is undoubtedly at the core of many
 analogies, it should seem natural to challenge it in some other situations. It
 is indeed quite easy to find analogies were superficial features are the most
 decisive ones \cite{Bar10}.
@@ -140,7 +140,7 @@ from $T$ to $S$.}. Taking over Gentner's systematicity principle (in a relaxed
 form), Holyoak and Thagard exhibit two additional dimensions of importance in
 an analogical process. First, the semantics behind the objects at hand, i.e.
 the meaning that human agents associate with these objects, are taken into
-account. In this theory, the two realtions \textit{ARE\_FRIENDS} and
+account. In this theory, the two relations \textit{ARE\_FRIENDS} and
 \textit{ARE\_ENEMIES} are not the same. This clearly stands in contrast with
 SMT, where all object attributes are simply discarded (along with their
 meanings)\todo{Et va dans le sens de Hesse}. Second, this theory also involves
@@ -183,16 +183,16 @@ is called a \textbf{theory projection}.
 \paragraph{A determination rule for analogical inference\\}
 
 We have seen so far many models of analogical reasoning that mostly rely on
-some heuristic, intangible principles. In constrast with this tendency, Davies
+some heuristic, intangible principles. In contrast with this tendency, Davies
 and Russel proposed a set of conditions required in first order logic for the
-analogical inference process to be sound. Concretly, they provide some
+analogical inference process to be sound. Concretely, they provide some
 sufficient conditions that must hold on two properties $P$ and $Q$ for the
 following inference to be sound
 $$\infer{Q(T)}{P(S) \wedge Q(S) & P(T)},$$
 where $S$ and $T$ are the source and target objects. Naturally, this framework
 can perfectly be generalized with many properties $P_1, P_2, \cdots P_n$.
 
-A first obvious option would be to add as a premice the following implication:
+A first obvious option would be to add as a premise the following implication:
 $$\forall x, P(x) \implies Q(x).$$
 But this is unsatisfactory, because in this case the inference simply reduces
 to
@@ -227,7 +227,7 @@ cognitive scientists David Rumelhart and Adele Abrahamsen proposed a simple
 theoretical model of analogical reasoning \cite{RumAbr73}. Their model is of
 great interest for us because as it will become clear, their view of analogy is
 in total accordance with our use of analogy in machine learning (or should we
-say more humbly that our use of analogy is fully complient with their earlier
+say more humbly that our use of analogy is fully compliant with their earlier
 model).
 
 \textcolor{red}{On va parler de proportions et de resolution, est ce que ca a
@@ -242,11 +242,11 @@ With regards to the memory structure, their assumption is that it can be
 considered as an $m$-dimensional Euclidean space. This assumption is originally
 that of Henley \cite{Hen69} who showed, with the help of social experiments,
 that a set of 30 mammals could be fairly well represented in a 3-dimensional
-space with axes ferocity, humaness, and size. It is supposed that the semantic
-similarity that people associate with two concepts is inveresly proportional to
+space with axes ferocity, humanness, and size. It is supposed that the semantic
+similarity that people associate with two concepts is inversely proportional to
 their distance in the Euclidean space.
 
-Rumelhart and Abrahamsen are interested in the problem of solving an anlogical
+Rumelhart and Abrahamsen are interested in the problem of solving an analogical
 equation (although they never state it in these terms): given three concepts
 $A, B, C$ and a set of solutions $D_1, D_2, \cdots, D_n$, which $D_i$ is the
 best candidate for $A:B::C:D_i$? Their assumption is the following: \textbf{
@@ -275,7 +275,7 @@ Hofstadter. The problems considered by Copycat are the solving of analogical
 equations in a \textit{microworld} of strings of letters. A typical Copycat
 problem looks as follows: $$\mathbf{abc} : \mathbf{abd} :: \mathbf{ijk} : x$$
 
-What should the value of $x$ be? Various answers may be relevent here, such as
+What should the value of $x$ be? Various answers may be relevant here, such as
 $\mathbf{ijd}$ (replace the right-most letter by $\mathbf{d}$), but the most
 natural answer probably is $\mathbf{ijl}$: replace the right-most letter by its
 successor. How about $\mathbf{zrq}$? Well, not really convincing. The point of
@@ -303,16 +303,16 @@ components: the workspace, the codelets, and the temperature.
       structures are activated: this will be the role of the codelets.
     \item The codelets, are competing agents trying to explore and build
       perceptual structures and relations between the objects in the workspace.
-      Their behaviour depends on the temparature.
+      Their behaviour depends on the temperature.
     \item The temperature could be also defined as the entropy of the
       system. When relations in the workspace are strong and well established,
       the temperature is low. At the beginning of the program, the temperature
       is the highest, leading to a multitude of codelets being run in every
       single \textit{direction}. This concept of temperature can be viewed as
-      the tradeoff between exploration (trying every possible hypothesis) and
+      the trade-off between exploration (trying every possible hypothesis) and
       exploitation (the actual use of a well established hypothesis). When the
       temperature goes below a given threshold, the program stops and the
-      current hypothesis is outputed.
+      current hypothesis is outputted.
 \end{itemize}
 
 \begin{figure}[!h]
@@ -345,7 +345,7 @@ between these extremes}.
 
 Ockham's razor (also Occam), due to the Franciscan philosopher William
 of Ockham (1285~-~1347), is a well known principle in machine learning theory.
-The main and most useful interpretation of the original latin version states
+The main and most useful interpretation of the original Latin version states
 that when trying to explain a situation, if two hypothesis give the same answer
 then the best one is probably the \textbf{simplest} one. In practice, what
 makes an hypothesis simple remains quite vague, at least from a computational
@@ -365,12 +365,12 @@ Kolmogorov complexity.
 Let us first first recall some basic knowledge about Kolmogorov complexity,
 before diving into more technical details. The Kolmogorov complexity of a
 string of characters $x$, denoted $K(x)$, is the length of the shortest
-computer program capable of outputing $x$. $K(x)$ is supposed to capture the
+computer program capable of outputting $x$. $K(x)$ is supposed to capture the
 intrinsic complexity of $x$. Intuitively, $K('aaaaabbbbb')$ is supposed to be
-lower than $K('abaabbabab')$, because a clear pattern emmerges in the first
+lower than $K('abaabbabab')$, because a clear pattern emerges in the first
 string, leading to a simple program: first print $a$ five times, then do the
 same for $b$. The second string seems more or less random, which makes it
-difficult to factorize into a concize program. In somse sense, the Kolmogorov
+difficult to factorize into a concise program. In some sense, the Kolmogorov
 complexity captures how well can a string $x$ be \textit{compressed}. The
 conditional complexity $K(x \given y)$ is the size of the shortest program that
 outputs $x$ when given $y$ as an input.
@@ -444,7 +444,7 @@ figures. For example, simple geometric shape such as circles, rectangles or
 triangles are all described with one single primitive:
 \textit{SIMPLE\_CLOSED\_CURVE(\dots)}, where the arguments are the start and
 end of of the (multiple) lines, and their curvatures. The program is then
-devided into two distinct parts.
+divided into two distinct parts.
 
 The role of the first part is to build high level representations of the
 figures from these raw descriptions. After identifying coherent shapes (such as
@@ -452,7 +452,7 @@ triangle, square, etc) as independent objects, the program tries to find
 relations of the kind \textit{INSIDE(Obj1, Obj2)} or \textit{ABOVE(Obj1, Obj3)}
 between figures. Finally, similarities between every pair of objects are
 computed. The similarity measure is based on the transformability of the first
-object into the second one, using tradictional geometrical transformations
+object into the second one, using traditional geometrical transformations
 (rotation, scale, reflections, etc.). All the information computed by the first
 part are given as input (on punched cards!) to the second part.
 
@@ -460,15 +460,15 @@ The second part relates to the analogical solving process per se. Using the
 output of the first part, ANALOGY will try to find a set of rules that
 transform figure $A$ into figure $B$. A rule would for example state
 \textit{REMOVE(Obj1), ROTATE(Obj2, 45\degree), etc.}. Then, by generalizing
-each rule, it tries to establish a correspondance between these rules and those
+each rule, it tries to establish a correspondence between these rules and those
 transforming $C$ into one of the candidate solutions. The chosen solution is
 that maximizes the resemblance between the two sets of rules.
 
 An interesting fact is that ANALOGY analyses the way to go from $A$ to $B$ and
 applies to go from $C$ to $D$, but it does not make use of \textit{central
-permutation}: it may just as well analyse the way to go from $A$ to $C$ and
+permutation}: it may just as well analyze the way to go from $A$ to $C$ and
 transpose it to go from $B$ to $D$. Note also that in ANALOGY the semantics
 behind the relations and the geometrical objects are not taken into account. In
 this respect, ANALOGY is close to Gentner's Structure Mapping Theory (and
-preexistent by far).
+preexisting by far).
 

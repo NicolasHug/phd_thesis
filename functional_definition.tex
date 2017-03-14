@@ -2,7 +2,7 @@
 \label{CHAP:functional_definition}
 
 \initial{I}n Section \ref{SEC:machine_learning_with_boolean_proportions}, we
-briefly described a basic process of analogical classification in an unformal
+briefly described a basic process of analogical classification in an informal
 way, making sure that everything went smoothly. In practice, bad things happen,
 always. In this chapter, we will clearly and formally define analogical
 classification, which will help us clarify some of the grey areas of Section
@@ -12,9 +12,9 @@ A first form of analogical classifiers has been defined in the works of Stroppa
 and Yvon \cite{StrYvoCNLL05}, which we will refer to as \textbf{conservative
 classifiers}. Another form of analogical classifiers has later been proposed in
 the works of Bayoudh, Delhay and Miclet \cite{MicBayDelJAIR08,
-BayMicDelIJCAI07}, refered-to here as \textbf{extended classifiers}.
+BayMicDelIJCAI07}, referred-to here as \textbf{extended classifiers}.
 
-Though the theoretical groundations of the conservative and extended
+Though the theoretical groundings of the conservative and extended
 classifiers have a lot in common (they are both analogical classifiers after
 all), we will see that their practical implementation are actually quite
 different. We will show however that the extended classifier is a
@@ -96,7 +96,7 @@ the most common candidate solution among all the predictors. This definition of
 analogical classification comes from the work of Stroppa and Yvon
 \cite{StrYvoCNLL05, StrYvoREPORT05}, and to our knowledge it is the first
 instance of analogical learner that has every been proposed. We note however
-that the authors did not explicitely state that the class equations must be
+that the authors did not explicitly state that the class equations must be
 solvable to be useful.
 
 Note that if the multiset $\mathbf{C}(\mathbf{x})$ is empty, i.e. if we cannot find
@@ -114,7 +114,7 @@ the data. The most popular instance of lazy learner certainly is the famous
 $k$-NN algorithm.
 
 In the following, we will give a functional definition of $\hat{f}(\mathbf{x})$
-as outputed by a conservative classifier. To this end, we will define two
+as outputted by a conservative classifier. To this end, we will define two
 crucial concepts: the \textbf{analogical extension} of a training set $S$, and
 the \textbf{analogical root} of an element $\mathbf{x}$. Both the analogical
 extension and the analogical root were first defined in \cite{StrYvoREPORT05},
@@ -154,7 +154,7 @@ $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{x}$ is always solvable (as is
 the case for the arithmetic proportion) and such that the associated class
 equation is also solvable, we can show that the size of $\esfs$ is exactly
 $\frac{1}{2} n^2(n - 1)$. This value is thus a tight upper bound for $\mid
-\esfs\mid$, because in practice equations are not always sovable.
+\esfs\mid$, because in practice equations are not always solvable.
 
 To polish our understanding of the analogical extension, let us consider Figure
 \ref{FIG:ae_example}.
@@ -173,7 +173,7 @@ $\mathbf{f}$ with the 3-tuple $(\mathbf{a}, \mathbf{b}, \mathbf{e}) \in S^3$.
 However, even if we can find $(\mathbf{b}, \mathbf{d}, \mathbf{e}) \in S^3$
 such that $\mathbf{b} : \mathbf{d} :: \mathbf{e} : \mathbf{g}$, the associated
 class equation $0:1::1:y$ is not solvable, so $\mathbf{g} \notin \esf$. At
-last, vertice $\mathbf{h}$ will suffer the same fate because the class equation
+last, vertex $\mathbf{h}$ will suffer the same fate because the class equation
 $f(\mathbf{a}) : f(\mathbf{e}) :: f(\mathbf{d}) : y$ is not solvable either. In
 the end, $\esf = \set{\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d},
 \mathbf{e}, \mathbf{f}}$.
@@ -330,10 +330,10 @@ classifier as follow:
 \end{itemize}
 \noindent
 Whenever we are asked to classify a given $\mathbf{x}$, all we need now is to
-check whether $\mathbf{x}$ belongs to $\esf$ or not. The ouput
+check whether $\mathbf{x}$ belongs to $\esf$ or not. The output
 $\hat{f}(\mathbf{x})$ is then immediate. This way to proceed has the undeniable
 advantage to perform the search in $S^3$ only once. Obviously, this saving in
-computation time is done at the expense of memmory consumption, because the
+computation time is done at the expense of memory consumption, because the
 size of $\esf$ can be drastically greater than that of $S$. This alternative
 view also leads us to reconsider our previous statement about conservative
 classifiers belonging to the class of lazy learners. Here, the computation of
@@ -353,7 +353,7 @@ We have a training set $S=\Set{\mathbf{x}^{(1)},\mathbf{x}^{(2)},
 $\mathbf{x}^{(1)}=(read,3,reads), \mathbf{x}^{(2)}=(read,G,reading),
 \mathbf{x}^{(3)}=(view,3,views)$, $\mathbf{x}^{(4)}=(view,G,viewing),
 \mathbf{x}^{(5)}=(eat,3,eats)$. $(read,3,reads)$ means that $read$ is
-transformed into $reads$ when conjuguated at the third person singular, and $G$
+transformed into $reads$ when conjugated at the third person singular, and $G$
 stands for the gerund form.
 
 Given a new element $\mathbf{x}=(eat,G,y)$, $\rsfx=
@@ -363,7 +363,7 @@ prediction is as expected $\hat{f}(\mathbf{x})=\text{eating}$, which is the
 solution of the equation $\text{view}:\text{viewing}::\text{eat}:y$. There is
 no solution for $\mathbf{x}=(absurd,G,y)$, just because $\rsfx= \varnothing$.
 Note that in this case, the analogical extension is infinite and cannot be
-explictely computed, because of the definition of the proportion that is used,
+explicitly computed, because of the definition of the proportion that is used,
 so our alternative view of conservative classifiers does not hold and we have
 to stick to that of Algorithm \ref{ALGO:conservative_classifier}.
 
@@ -428,7 +428,7 @@ $\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d})$ is:
 The definition of an analogical proportion strongly relies on the structure and
 operators available on $X^m$, and the same goes for the definition of the
 analogical dissimilarity: there are a lot of possibilities. For the arithmetic
-proportion in $\mathbb{R}^m$, the analogical dissmilarity  $\AD(\mathbf{a},
+proportion in $\mathbb{R}^m$, the analogical dissimilarity  $\AD(\mathbf{a},
 \mathbf{b},\mathbf{c},\mathbf{d})$ should capture \textit{how far}
 are $\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}$ from making up a perfect
 parallelogram. This can be achieved using the following definition:
@@ -437,7 +437,7 @@ parallelogram. This can be achieved using the following definition:
 \begin{definition}
   \label{DEF:AD_arithmetic_proportion}
   Given four vectors $\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}$ of
-  $\mathbb{R}^m$ equiped with the standard $p$-norm $\norm{p}{\cdot}$, the
+  $\mathbb{R}^m$ equipped with the standard $p$-norm $\norm{p}{\cdot}$, the
   analogical dissimilarity related to the arithmetic proportion is defined as:
   $$\emph{AD}(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) =
   \norm{p}{(\mathbf{a} - \mathbf{b}) - (\mathbf{c} - \mathbf{d})}.$$
@@ -492,7 +492,7 @@ Definition \ref{DEF:AD_arithmetic_proportion} is equivalent to Definition
 expression $\norm{1}{(\mathbf{a}-\mathbf{b})-(\mathbf{c}-\mathbf{d})}$ is
 nothing but the Hamming distance between the two vectors
 $(\mathbf{a}-\mathbf{b})$ and $(\mathbf{c}-\mathbf{d})$\footnote{$\mathbb{B}^m$
-is not closed under addition (or substraction), so technically it may happend that
+is not closed under addition (or subtraction), so technically it may happen that
 $(\mathbf{a} - \mathbf{b}), (\mathbf{c} - \mathbf{d})$, or their difference are
 not in $\mathbb{B}^m$ but in $\mathbb{R}^m$.}.
 Actually, we could use any $p$-norm in $\mathbb{B}^m$, so
@@ -547,11 +547,11 @@ $3$-tuple $(\mathbf{a}, \mathbf{a}, \mathbf{a})$ with $\mathbf{a} \in S$.
 Hence, Algorithm \ref{ALGO:extended_classifier} is able to predict the label of
 any element $\mathbf{x} \in X^m$.
 
-For the sake of simplicity, we have here ignored a small but relevent detail:
+For the sake of simplicity, we have here ignored a small but relevant detail:
 in their implementation \cite{BayMicDelIJCAI07}, the authors actually look for
 all the 3-tuples that have the same analogical dissimilarity as the
 $k^\text{th}$ one. For example if the $k^\text{th}$ 3-tuple has an $\AD$ of 5,
-they will acually consider all the $3$-tuples that have an $\AD$ less than or
+they will actually consider all the $3$-tuples that have an $\AD$ less than or
 equal to $5$, bringing the number of candidates to $k'$ with $k' \geq k$. This
 is fortunate because it allows their extended classifier to
 fit with the previous conservative approach in the case of a perfect
@@ -571,11 +571,11 @@ the $3$-tuple in $S^3$ with the least value of $\AD$ is $(\mathbf{b},
 \mathbf{d}, \mathbf{a})$ with $\AD(\mathbf{b},\mathbf{d}, \mathbf{a},
 \mathbf{c}) = 0$. The set $\mathbf{C}(\mathbf{c})$ is thus $\Set{1}$, and leads
 to the prediction $\hat{f}(\mathbf{c}) = 1$. For $\mathbf{f}$, the best
-$3$-tuple is $(\mathbf{a}, \mathbf{b}, \mathbf{e})$ and leads to the prefiction
+$3$-tuple is $(\mathbf{a}, \mathbf{b}, \mathbf{e})$ and leads to the prediction
 $\hat{f}(\mathbf{f}) = 1$. For these two elements in $\esf$, the extended
 classifier outputs the same predictions as the conservative one, and most
 importantly, the underlying process is the same\footnote{To some extent, this
-is due to the fact that we (inocently?) chose $k = 1$.}.
+is due to the fact that we (innocently?) chose $k = 1$.}.
 
 Consider now $\mathbf{g} \notin \esf$. We know that we won't find any $3$-tuple
 in perfect proportion with $\mathbf{g}$ (else the conservative classifier would
@@ -586,14 +586,15 @@ $(\mathbf{e}, \mathbf{e}, \mathbf{e}) \in S^3$ has $\AD(\mathbf{e}, \mathbf{e},
 However, considering the above remark we are allowed to look for all other
 $3$-tuples that also have an $\AD$ of $1$. Actually, the $3$-tuple
 $(\mathbf{b}, \mathbf{d}, \mathbf{a})$ also has $\AD(\mathbf{b},\mathbf{d},
-\mathbf{a}, \mathbf{g}) = 1$, as can be verified on table \ref{TAB:AD_bdag}. We thus have $\mathbf{C}(\mathbf{g}) = \Set{1,
-1}$: one solution comes from $f(\mathbf{e)} :f(\mathbf{e}):: f(\mathbf{e}) : y$
-and another solution that comes from $f(\mathbf{b)} :f(\mathbf{d})::
-f(\mathbf{a}) : y$.  Finally, we have $\hat{f}(\mathbf{g}) = 1$. As for
-$\mathbf{h}$, we have $\mathbf{C}(\mathbf{h}) = \Set{1, 1}$: one solution comes
-from $f(\mathbf{a)} :f(\mathbf{b}):: f(\mathbf{e}) : y$ and the other comes
-from $f(\mathbf{d)} :f(\mathbf{d}):: f(\mathbf{d}) : y$, and we end up with
-$\hat{f}(\mathbf{h}) = 1$. This completes our process overview for Algorithm
+\mathbf{a}, \mathbf{g}) = 1$, as can be verified on table \ref{TAB:AD_bdag}. We
+thus have $\mathbf{C}(\mathbf{g}) = \Set{1, 1}$: one solution comes from
+$f(\mathbf{e)} :f(\mathbf{e}):: f(\mathbf{e}) : y$ and another solution that
+comes from $f(\mathbf{b)} :f(\mathbf{d}):: f(\mathbf{a}) : y$.  Finally, we
+have $\hat{f}(\mathbf{g}) = 1$. As for $\mathbf{h}$, we have
+$\mathbf{C}(\mathbf{h}) = \Set{1, 1}$: one solution comes from $f(\mathbf{a)}
+:f(\mathbf{b}):: f(\mathbf{e}) : y$ and the other comes from $f(\mathbf{d)}
+:f(\mathbf{d}):: f(\mathbf{d}) : y$, and we end up with $\hat{f}(\mathbf{h}) =
+1$. This completes our process overview for Algorithm
 \ref{ALGO:extended_classifier}!
 
 \begin{table}[t]
@@ -601,7 +602,7 @@ $\hat{f}(\mathbf{h}) = 1$. This completes our process overview for Algorithm
   $$
   \begin{array}{|cccc|c|}
     \toprule
-    \mathbf{b} & \mathbf{d} & \mathbf{a} & \mathbf{g} &  \AD(b_i, d_i, c_i, g_i)\\
+    \mathbf{b} & \mathbf{d} & \mathbf{a} & \mathbf{g} &  \AD(b_i, d_i, a_i, g_i)\\
     \midrule
     0 & 0 & 0 & 1 &   \textbf{1}\\
     0 & 1 & 0 & 1 &   \textbf{0}\\
@@ -619,7 +620,7 @@ approach led to remarkable results in terms of accuracy, when compared to
 off-the-shelf standard classifiers. Nonetheless, this algorithmic description
 of the extended classifier does not allow us to grasp its inherent working
 behaviour, and it is difficult to extract theoretical properties. The aim of
-the next subection is to give a functional translation of this algorithmic
+the next subsection is to give a functional translation of this algorithmic
 description.
 
 \subsection{Analogical classifier: a functional definition}
@@ -657,7 +658,7 @@ when the associated class equation is solvable, we naturally have $\mathbf{d}'
 Let us consider (again!) Figure \ref{FIG:ae_example} on page
 \pageref{FIG:ae_example}. We have already seen that $\AD(\mathbf{b},
 \mathbf{d}, \mathbf{a}, \mathbf{g}) = 1$, as proved by Table \ref{TAB:AD_bdag}.
-We now can reintepret this statement: $\AD(\mathbf{b}, \mathbf{d}, \mathbf{a},
+We now can reinterpret this statement: $\AD(\mathbf{b}, \mathbf{d}, \mathbf{a},
 \mathbf{g})$ should be equal to the distance between $\mathbf{g}$ and another
 vector that make up a perfect parallelogram with the $3$-tuple
 $(\mathbf{b},\mathbf{d}, \mathbf{a})$. This vector is naturally
@@ -670,7 +671,7 @@ H(\mathbf{h}, \mathbf{f})$, where $\mathbf{f} = \sol(\mathbf{a}, \mathbf{b},
 
 We are now finally ready for our unifying functional definition of analogical
 classifiers. As we have seen, for a given $\mathbf{x} \in X^m$, Algorithm
-\ref{ALGO:extended_classifier} tries to minimise
+\ref{ALGO:extended_classifier} tries to minimize
 $\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{x})$ over all the $3$-tuples
 $(\mathbf{a},\mathbf{b},\mathbf{c}) \in S^3$. In the light of what has just
 been explained, we see that this is equivalent to finding the closest vertex
@@ -780,12 +781,16 @@ validating this functional definition.
 
 Since we now have a clear functional definition of analogical classifiers, we
 are in position to examine some general theoretical properties of analogical
-learners. This is the purpose of the next section. Just like for the $k$-NN
-litterature, theoretical results are easier to derive when $k = 1$. We will
-therefore mostly focus on the properties of the 1-NAN classifier.
+learners. This is the purpose of the next section.
+\section{Theoretical properties of analogical classifiers}
+\label{sec:theoretical_properties_of_analogical_classifiers}
 
-\section{Some properties in the real case}
-\label{SEC:properties_in_the_real_case}
+The functional definition of analogical learners opens the door the study of
+various theoretical properties of analogical classifiers, which had only been
+described algorithmically so far. Just like for the $k$-NN literature,
+theoretical results are easier to derive when $k = 1$. We will therefore mostly
+focus on the properties of the 1-NAN classifier.
+\subsection{Study of convergence}
 
 Let us consider the case where $X^m=\mathbb{R}^m$, and let $\delta$ be any
 distance function defined from a norm. Simply because $S \subseteq \esf$ for
@@ -794,7 +799,6 @@ following inequality holds for any $\mathbf{x} \in X^m$ :
 $$\delta(\mathbf{x}, \nan(\mathbf{x},S)) \leq \delta(\mathbf{x},
 \nn(\mathbf{x},S)).$$
 
-\subsection{Study of convergence}
 
 Now, let us consider  $\mathbf{x}^{(i)}$ an i.i.d. sequence of random variables
 in $\mathbb{R}^m$, where $\mathbb{R}^m$ is equipped with a probability measure
@@ -846,7 +850,7 @@ Let us note the following points:
     $n$ tends to infinity.  This means that asymptotically, the nearest
     neighbour of $\mathbf{x}$ has the same properties as $\mathbf{x}$, and
     particularly: \textbf{they have the same label}, which is a very powerful
-    property when we are dealing with a classifiaction task. Sadly, such a
+    property when we are dealing with a classification task. Sadly, such a
     property has not been proven for $\nan(\mathbf{x}, S_n)$.
 \item Finally, it is clear that when $n$ goes to infinity, the behavior of an
   analogical classifier tends to that of a nearest neighbours classifier.
@@ -862,58 +866,105 @@ Let us note the following points:
 \end{enumerate}
 To conclude this discussion, even if the convergence result is interesting in
 itself, it does not say a lot in terms of machine learning. A much more
-interesting and poweful theoretical result of analogical classifiers will be
+interesting and powerful theoretical result of analogical classifiers will be
 proved in Chapter \ref{TODO}.
 
-\subsection{VC-dimension}
+\subsection{Vapnik Chervonenkis (VC) dimension}
 \label{SEC:VCdim}
-\todo{Refaire}
+\todo{Partie entierement reecrite}
 The notion of VC-dimension was originally defined by Vapnik and Chervonenkis
 \cite{Vap98}, and introduced into learnability theory by Blumer et al.
-\cite{BluEhrHauWarACM89}. Roughly speaking, the VC-dimension of a class of learners is a numerical measure of their discrimination power. It appears that this number is strongly linked to the confidence interval between the empirical risk (i.e. the error a learner makes on the training set) and the true risk (the error a learner makes on the whole universe $X$). As such, the VC-dimension of a class of learners is an essential element of their theoretical study.
-We consider a universe $X$ (usually a Cartesian product to represent the data) and a
-family $\mathcal{H}=\{h_i \subseteq X|i \in I\}$ of subsets of $X$.
-The elements of $\mathcal{H}$ will be referred as hypothesis or models.
-Given a subset $A$
-of $X$, we can consider the new family of subsets $tr(\mathcal{H},A) = \{h_i \cap A \subseteq X|i \in I\}$: this family is called the {\it trace of $\mathcal{H}$ over $A$}. This is obviously a subset
-of the power set of $A$, $2^A$ i.e. $tr(\mathcal{H},A) \subseteq 2^A$.
-We say that $\mathcal{H}$ shatters $A$ iff $tr(\mathcal{H},A)=2^A$.
-$VC\mbox{-}dim(\mathcal{H})$ is then the size of the largest finite subset which can be shattered by $\mathcal{H}$:
-\begin{definition}
-  $VC\mbox{-}dim(\mathcal{H}) = \bigsqcup \{|A| \given[\big] \mathcal{H} \mbox{ shatters } A
-\}$,
-\end{definition}
-where $\bigsqcup$ is the least upper bound operator.
-In the case where $\forall n \in\mathbb{N}, \exists  A \subset X, |A|=n \mbox{ such
-that } \mathcal{H} \mbox{ shatters } A$, we simply say that:
-$$VC\mbox{-}dim(\mathcal{H})=\infty.$$
-\noindent
-As a binary classifier $c$ over $X$ defines a subset of $X$ with $c^{-1}(1)=\{x \in X | c(x)=1\}$, we can associate to a class $\mathcal{C}$ of classifiers a family of subsets
-$\{c^{-1}(1) | c \in \mathcal{C}\}$ and then the $VC\mbox{-}$dimension of a set of classifiers is as below:
-\begin{definition}
-$VC\mbox{-}dim(\mathcal{C})=VC\mbox{-}dim(\{c^{-1}(1) | c \in \mathcal{C}\})$
-\end{definition}
-For instance with $X=\mathbb{R}^n$ and with $\mathcal{C}$ the family of the $k$-NN
-classifiers: $\mathcal{C}_{\text{NN}}=\{ k\text{-NN classifiers}, k \in \mathbb{N}^*\}$,
-then $VC\mbox{-}dim(\mathcal{C}_{\text{NN}})=\infty$.
-Let us now consider the family of analogical binary classifiers $\mathcal{AC}_k$ whose classification rule is as below (where a majority vote is implemented):
-$$\mathcal{AC}_k(x,S) = \albl{k\mbox{-}nan(x,S)}$$
-In view of the previous section, $VC\mbox{-}dim(\mathcal{AC}_k)$ is clearly defined and has to be computed
-or at least estimated.
-In fact, an immediate result comes, derived from the core definition of an analogical proportion:
-\begin{property}\label{vcdimprop}
-$VC\mbox{-}dim(\mathcal{AC}_k) = \infty$
-\end{property}
-{\it Proof}: Given any $x$, the analogical proportion $x:x::x:x$ always
-holds so that $\nan(x,S)=x$ then the label $\hat{x}$ allocated to $x$ by $AC_1$
-is just $\albl{x}$, which by definition equals $\dot{x}$. It means any set of items can be
-exactly labelled, thus the infinite $VC\mbox{-}dim$.  \hfill $\blacksquare$\\
-Regarding Property \ref{vcdimprop}, the $\mathcal{AC}_k$ class
-behaves exactly as the $k\mbox{-NN}$ class.
-Let us note that this is a very general result, which does not rely on any definition of distance.
-This is directly coming from a core property of analogical proportions.
+\cite{BluEhrHauWarACM89}. Roughly speaking, the VC-dimension (denoted VC) of a class of
+learners is a numerical measure of their discrimination power. One of the main
+results about the VC-dimension is that it allows to bound the true risk $R$ of
+a learner. With probability $1 - \eta$, and under some theoretical conditions
+that we omit here, we have:
 
-\section{Accuracy analysis}
+$$R \leq R_{\text{emp}} + \sqrt{\frac{1}{n} \cdot \left[\text{VC}(\log(2n /
+\text{VC}) + 1) - \log(\eta/4)\right]},$$
+where $R_\text{emp}$ is the probability of error on a training set $S$ of size
+$n$, and VC is the VC-dimension of the learner. In our setting,
+\begin{itemize}
+  \item $R \eqdef P\left(\hat{f}(\mathbf{x}) \neq f(\mathbf{x}) \given[\big]
+    \mathbf{x} \in X^m\right)$, and
+  \item $R_\text{emp} \eqdef P\left(\hat{f}(\mathbf{x}) \neq f(\mathbf{x})
+    \given[\big] \mathbf{x} \in S_n\right)$.
+\end{itemize}
+
+This theoretical upper bound on the true risk $R$ is what makes the
+VC-dimension of a class of learners an essential element of their theoretical
+study. The VC-dimension is defined as follows:
+
+\begin{definition}
+  \label{DEF:VCdim}
+  We consider a class of learners $\mathcal{C}$ and a set $S_n$ of $n$ labeled
+  elements in $X^m$. There are exactly $2^n$ ways to label each of the $n$
+  elements. If for any labeling, there exist a learner in $\mathcal{C}$ that
+  correctly labels all the elements in $S_n$, we say that $\mathcal{C}$
+  \textbf{shatters} $S_n$.\\
+
+  The VC-dimension of $\mathcal{C}$ is the biggest $n$ such that there exist a
+  set of $n$ points $S_n$ that can be shattered by $\mathcal{C}$.
+\end{definition}
+
+%We consider a universe $X$ (usually a Cartesian product to represent the data)
+%and a family $\mathcal{H}=\{h_i \subseteq X|i \in I\}$ of subsets of $X$.  The
+%elements of $\mathcal{H}$ will be referred as hypothesis or models.  Given a
+%subset $A$ of $X$, we can consider the new family of subsets $tr(\mathcal{H},A)
+%= \{h_i \cap A \subseteq X|i \in I\}$: this family is called the {\it trace of
+%$\mathcal{H}$ over $A$}. This is obviously a subset of the power set of $A$,
+%$2^A$ i.e. $tr(\mathcal{H},A) \subseteq 2^A$.  We say that $\mathcal{H}$
+%shatters $A$ iff $tr(\mathcal{H},A)=2^A$.  $VC\mbox{-}dim(\mathcal{H})$ is then
+%the size of the largest finite subset which can be shattered by $\mathcal{H}$:
+%\begin{definition} $VC\mbox{-}dim(\mathcal{H}) = \bigsqcup \{|A| \given[\big]
+%  \mathcal{H} \mbox{ shatters } A \}$,
+%\end{definition}
+%where $\bigsqcup$ is the least upper bound operator.  In the case where
+%$\forall n \in\mathbb{N}, \exists  A \subset X, |A|=n \mbox{ such that }
+%\mathcal{H} \mbox{ shatters } A$, we simply say that:
+%$$VC\mbox{-}dim(\mathcal{H})=\infty.$$ \noindent
+%As a binary classifier $c$ over $X$ defines a subset of $X$ with $c^{-1}(1)=\{x
+%\in X | c(x)=1\}$, we can associate to a class $\mathcal{C}$ of classifiers a
+%family of subsets $\{c^{-1}(1) | c \in \mathcal{C}\}$ and then the
+%$VC\mbox{-}$dimension of a set of classifiers is as below:
+%\begin{definition}
+%$VC\mbox{-}dim(\mathcal{C})=VC\mbox{-}dim(\{c^{-1}(1) | c \in \mathcal{C}\})$
+%\end{definition}
+
+Let's first consider the class of nearest neighbors classifiers:
+$\mathcal{C}_{\text{NN}}=\{ k\text{-NN classifiers}, k \in \mathbb{N}^*\}$. It
+is clear that the VC-dimension of $\mathcal{C}_{\text{NN}}$ is infinite: taking
+$k = 1$, any training set of any size can be perfectly labeled by 1-NN,
+because every element is its own nearest neighbor. Actually, we can easily show
+the same result for the analogical learners.
+
+\begin{proposition}
+  \label{PROPOS:VCdim}
+  The class $\mathcal{AC}_k$ of analogical learners has infinite VC-dimension.
+\end{proposition}
+\begin{proof}
+  Considering Definition \ref{DEF:extended_classifier} on page
+  \pageref{DEF:extended_classifier} with $k = 1$, we see
+  that the predicted label of any element $\mathbf{x}$ is that of its nan. For
+  any element $\mathbf{x}$ in $S_n$, $\mathbf{x}$ is its own nan (just like
+  $\mathbf{x}$ is its own nearest neighbor). Hence, any training set $S_n$ of
+  size $n$ is correctly labeled by 1-NAN, and thus can be shattered by
+  $\mathcal{AC}_k$. Therefore, the VC-dimension of $\mathcal{AC}_k$ is infinite.
+\end{proof}
+
+Clearly, the upper bound is a decreasing function in $n$, and an increasing
+function in the VC dimension of the learner. As such, we usually want the
+VC-dimension of our classifiers to be small. However, we have previously seen
+that the nearest neighbors classifiers, despite their infinite
+VC-dimension, enjoy many interesting theoretical properties, and their
+practical efficiency is well-acknowledged. In fact, the upper bound on the true
+risk does not even hold for classes of learner whose dimension is infinite
+\cite{Bur98}. We then need to keep in mind that even though the analogical
+learners have an infinite VC-dimension, which is an interesting result in its
+own right, this does not necessarily prevent them from being useful
+classifiers.
+
+\subsection{Accuracy analysis}
 \label{SEC:accuracy_analysis}
 
 In this section, we study the accuracy of an analogical classifier, and more
@@ -998,9 +1049,9 @@ elements that have their nearest analogical neighbour in $\esfs$.
 In the light of these interpretations, one can rewrite the accuracy formula in
 a  concise form, using a few more definitions:
 \begin{itemize}
-\item $A \eqdef \{\mathbf{x} \in X^m, \nan(\mathbf{x}, S) \in S\}$: the
+\item $A \eqdef \set{\mathbf{x} \in X^m | \nan(\mathbf{x}, S) \in S}$: the
   elements that have their nan in $S$.
-\item $B \eqdef \{\mathbf{x} \in X^m, \nan(\mathbf{x}, S) \in \esfs\}$: the
+\item $B \eqdef \set{\mathbf{x} \in X^m | \nan(\mathbf{x}, S) \in \esfs}$: the
   elements that have their nan in $\esfs$.
 \end{itemize}
 
@@ -1096,7 +1147,7 @@ have been used for training.
 Figure \ref{plots} shows the accuracies (left column) of the $\NAN$ and $\NN$
 over six different Boolean settings with values of $|S|$ varying from $3$ to
 $100$. In the right column, we have plotted three different values that will
-help us analyse and validate the behaviour of the
+help us analyze and validate the behaviour of the
 $\NAN$ algorithm:
 \begin{itemize}
   \item the theoretical accuracy as defined by equation
