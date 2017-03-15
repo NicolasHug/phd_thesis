@@ -1107,28 +1107,28 @@ computed the accuracies of the 1-\NAN~and 1-$\NN$~ algorithms over
 $X=\mathbb{B}^m$ for different values of $m$ (namely $8$ and $10$). The ground
 truth label of elements of $X$ is defined by different Boolean functions $f$:
 \begin{itemize}
-\item $f(\mathbf{x})=x_i$ for some $i$. These functions are called projections,
-  or dictators. They split the space $X^m$ into two disjoints sets of size
-    $2^{m - 1}$: those which label equal to $1$, and those with labels equal to
-    $0$. These functions lead to perfectly linearly separable problems, i.e.
-    there exist an hyperplane that can perfectly discriminate both classes. As
-    such, they are expected to be fairly easy to learn.
-  \item $f(\mathbf{x})= \bigoplus_{i = 1}^k  x_i$ for some $k \in[1, m]$, where $\oplus$
+\item $f_1(\mathbf{x})=x_i$ for some $i$. These functions are called
+  projections, or dictators.  These functions lead to perfectly linearly
+    separable problems, i.e.  there exist an hyperplane that can perfectly
+    discriminate both classes. As such, they are expected to be fairly easy to
+    learn.
+  \item $f_2(\mathbf{x})= \bigoplus_{i = 1}^k  x_i$ for some $k \in[1, m]$, where $\oplus$
     is the XOR operator (which is associative). These functions
     lead to highly non-linearly-separable problems: remember the example of
     Figure \ref{FIG:classification_problem} on page
     \pageref{FIG:classification_problem}, who was an instance of a XOR problem.
     XOR problems are traditionnaly difficult to learn.
-  \item $f(\mathbf{x})= \bigwedge_{i = 1}^k  x_i$ for some $k \in [1, m]$.
-  \item $f(\mathbf{x})= \bigvee_{i = 1}^k  x_i$ for some $k\in [1, m]$.
-  \item $f(\mathbf{x}) = \left[\sum_{i = 1}^m x_i \geq k\right]$ for some $k
+  \item $f_3(\mathbf{x})= \bigwedge_{i = 1}^k  x_i$ for some $k \in [1, m]$.
+  \item $f_4(\mathbf{x})= \bigvee_{i = 1}^k  x_i$ for some $k\in [1, m]$.
+  \item $f_5(\mathbf{x}) = \left[\sum_{i = 1}^m x_i \geq k\right]$ for some $k
     \in [1, m]$, where the function $[\text{cond}]$ is equal to $1$ if cond is
     verified and $0$ else. Simply put, $f(\mathbf{x}) = 1$ iff at least $k$
     components are equal to $1$.
-  \item $f(\mathbf{x}) = \left[\sum_{i = 1}^m x_i = k\right]$ for some $k
+  \item $f_6(\mathbf{x}) = \left[\sum_{i = 1}^m x_i = k\right]$ for some $k
     \in [1, m]$. Simply put, $f(\mathbf{x}) = 1$ iff exactly $k$ components
     are equal to $1$.
 \end{itemize}
+
 
 Regarding the size of the training set, to be sure to fit with the size of the
 universe, we have investigated various sizes between $3$ and $100$. When
@@ -1174,30 +1174,100 @@ theoretical resulsts:
     analogical extension with respect to that of the whole universe.
 \end{itemize}
 
+It is fairly easy to see that $f_1$ and $f_2$ split the universe $x^m$ into
+two disjoint sets of size $2^{m - 1}$: those for which $f_(\mathbf{x})$ is
+equal to $1$, and those with labels equal to $0$. We say that the datasets are
+balanced. However, the other functions may lead to very unbalanced datasets. An
+extreme case is for example $f_3$ with $k = m$, which leads to $f_3(\mathbf{x})
+= x_1 \wedge x_2 \wedge \cdots \wedge x_m$. The only element whose label is $1$
+is the vector $\mathbf{x} = (1, 1, \cdots, 1)$. For these very unbalanced
+datasets, the accuracy of a classifier is not a relevant measure: predicting
+$0$ all the time would lead to an accuracy of almost $1$, but would
+systematically assign the wrong label to   $(1, 1, \cdots 1)$. Therefore, we
+will here focus on functions for which datasets are as balanced as possible.
+
 In addition to these Boolean functions, we have also run the $\NAN$ algorithm
 over the Monk datasets over the UCI
 repository\footnote{https://archive.ics.uci.edu/ml/datasets/MONK's+Problems}.
 They are datasets of 432 binarized elements, among which exactly 169 of them
 have been used for training.
 
-\begin{figure}[h!]
-\caption{Accuracies of the $\NAN$ and $\NN$ algorithms  over different Boolean
-  settings and training set sizes, with corresponding values of $\omega$,
-  $\gamma$, and theoretical accuracy. The $x$ axis corresponds to the size of
-the training set.}
-\label{plots}
-\includegraphics[width=\linewidth ]{figures/ecai_plots.pdf}
+\subsection{Comments and discussion}
+
+Our experiments are summed-up by Figure \ref{FIG:nan_vs_nn} on page
+\pageref{FIG:nan_vs_nn}. As they are the result of multiple averaged
+experiments, the measures $\omegasf$ and $\gamma_S^f$ are here denoted $\omega$
+and $\gamma$. Paying careful attention to these plots will allow us to draw
+interesting conclusions about the behaviour of the 1-NAN algorithm.
+
+\begin{figure}[!h]
+\centering
+  \includegraphics[scale=.55]{figures/nan_vs_nn_SUMMARY_dim8_nexp15.pdf}
+\caption{Accuracies of the 1-NAN and 1-NN algorithms  over different Boolean
+  functions ($m = 8$) and training set sizes, with corresponding values of
+  $\omega$, $\gamma$, and theoretical accuracy. The $x$ axis corresponds to the
+  size of the training set.}
+\label{FIG:nan_vs_nn}
 \end{figure}
 
-Table \ref{TABLE_MONK} shows the same metrics for the Monk datasets and
-also report the results of the Analogical Proportion Classifier (\textit{APC})
-from \cite{MicBayDelJAIR08}, which corresponds to algorithm
-\ref{ALGO:extended_classifier} with $k=100$.
+First, the theoretical accuracy seems to fit perfectly with the empirical
+accuracy of the $\NAN$ algorithm, thus validating our theoretical study that
+led to proposition \ref{PROPOS:accuracy_nan}. Actually, the maximal difference
+we observed between the theoretical accuracy and its actual value is of about
+$10^{-10}$.
 
+An interesting observation is that the value of $\omega$ seems to always
+converge to that of the theoretical accuracy (and therefore to the actual
+accuracy) of $\NAN$. This can be easily explained by paying attention to the
+value of $\gamma$, the proportion of elements of $X^m$ that belong to $\esf$.
+We see that in any setting, $\gamma$ converges to 1 as $\mid S \mid$ grows.
+This means that when $\mid S \mid$ is big enough (but not necessarily
+\textit{that} big with respect to $X^m$), the analogical extension of $S$
+covers the whole universe $X^m$ (obviously, the bigger the dimension $m$, the
+slower the convergence occurs): every element $\mathbf{x}$ is then its own
+nearest analogical neighbour and $\hat{f}(\mathbf{x}) = \albl{\mathbf{x}}$. It
+is therefore straightforward to see that in this case,
+$$
+  \omega \eqdef P\left(\albl{\mathbf{x}} = f(\mathbf{x}) \given[\big]
+  \mathbf{x} \in \esfs\right) = P\left(\hat{f}(\mathbf{x}) = f(\mathbf{x})
+  \given[\big] \mathbf{x} \in \esfs\right)\\ = \acc(\NAN_S, \esfs).
+$$
+When $\gamma = 1$, the only elements $\mathbf{x}$ we want to classify belong to
+$\esfs$ (otherwise they would be in $S$), so this last term exactly corresponds
+to the accuracy of the classifier. Another way to see it is to observe that the
+first term of the expression of Proposition (\ref{PROPOS:accuracy_nan})
+$\acc(\NN_{S}, A) \cdot \alpha$ is zero
+because $\alpha = 0$. Only the second term $\acc(\NN_{\esfs}, B) \cdot (1 -
+\alpha)$ is of importance, and its value corresponds to $\omega$. As expected,
+this observation allows us to state that estimating the value of $\omega$ is
+paramount to have a precise idea of the accuracy of an analogical classifier.
+%We will provide in the next subsection a method to accurately estimate this
+%quantity $\omega$ with the only help of the training set $S$.
+
+A striking result of the experiments is that for the two functions
+$f_1(\mathbf{x}) = x_4$ and $f_2(\mathbf{x}) = x_1 \oplus \cdots \oplus x_4$,
+the analogical labels are always correctly predicted: $\omega = 1$, i.e. there
+is no class noise. However, the accuracy of 1-NAN is not necessarily equal to
+$1$ especially for $f_2$ with small training set sizes. The reason is simple:
+even if all the elements in $\esf$ are correctly classified, $\esf$ does not
+cover the whole space ($\gamma < 1$) so the accuracy of 1-NAN still depends on
+that of 1-NN. While the accuracy of 1-NN over $f_1$ is not too bad, the one
+over $f_2$ is absolutely terrible and actually below $0.3$ (a random prediction
+would have done better!). This is one of the distinguishing features of the XOR
+functions: the nearest neighbor of an element is almost always in a different
+class, as can be seen on Figure \ref{FIG:classification_problem} (page
+\ref{FIG:classification_problem}). So sadly, the 1-NN algorithm can do nothing
+but wrong one these kind of functions. In chapter \ref{TODO}, we will prove a
+strong result showing that both the projections (like $f_1$) and the XOR
+functions (like $f_2$) \textbf{always} lead to perfectly sound extensions, for
+any training set of any size.
+
+Table \ref{TAB:monks} shows the same metrics for the Monk datasets and also
+report the results of the Analogical Proportion Classifier (\textit{APC}) from
+\cite{MicBayDelJAIR08}, which corresponds to algorithm
+\ref{ALGO:extended_classifier} with $k=100$.
 \begin{table}
 \centering
-\caption{Accuracies of the $\NAN$, APC and $\NN$ algorithms over the Monk datasets}
-\label{TABLE_MONK}
 \begin{tabular}{| c | c | c | c | c | c |}
 \toprule
 & 1-NAN  & APC & 1-NN  &  $\omegasf$ & $\gamma_S^f$ \\
@@ -1207,149 +1277,85 @@ Monk 2 & .998 & 1 & .738 &    .998    &   1 \\
 Monk 3 & .963 & .96 & .829 &   .963    &   1 \\
 \bottomrule
 \end{tabular}
+\caption{Accuracies of the 1-NAN, APC and 1-NN algorithms over the Monk
+  datasets} \label{TAB:monks}
 \end{table}
+We note that the functional $\NAN$ approach (almost) achieves the same results
+as the somewhat more complex algorithm described in Section
+\ref{SEC:extended_classifier}, and that here again the analogical extension set
+covers the whole universe: this means that a conservative approach would have
+been sufficient! Actually, this raises the following question: why would we
+want to look for more than one analogical neighbour when every element of the
+universe is already in $\esf$, and therefore \textit{analogically linked} to
+those in $S$? Our experiments tend to show that this becomes superfluous,
+provided that the training set is big enough.
 
-\subsection{Comments and discussion}
+%\subsection{Estimation of the prediction accuracy}
+%
+%We have seen in the previous subsection that the value $\omega$ is that of the actual
+%accuracy of an analogical classifier when $S$ is big enough. This leads to the
+%following question: how can we get a precise estimation of this value $\omega$
+%? Answering this would allow us to have a very precise idea of the accuracy we
+%can expect from our classifier.
+%
+%The method we propose for estimating $\omega$ only relies on the training set $S$
+%and is very simple: it consists of applying the conservative algorithm to all
+%the elements of $S$, and compute the fraction of these elements that have been
+%correctly classified. A small yet important modification to the algorithm needs
+%to be added: we only want to construct analogical proportions of the form $a :
+%b :: c : x$ where $a$, $b$, $c$ and $x$ are all distinct elements. Indeed, the
+%proportions $x : x :: x : x$ and $x' : x :: x' : x$ are always true, and the
+%solution label related to these proportions would bias the final majority vote
+%procedure in a significant way towards the real label $\dot{x}$.
+%
+%We have applied this estimation protocol to all of the Boolean settings we have
+%considered, and it has shown to be very accurate. Figure \ref{omegaplots}
+%illustrates a few of these settings (already considered in Figure \ref{plots}).
+%\begin{figure}
+%  \caption{Values of $\omega$ and its estimation $\hat{\omega}$ for $f_1$, $f_2$ and $f_3$ in
+%  $\mathbb{B}^{10}$.}
+%\label{omegaplots}
+%\includegraphics[width=\linewidth]{figures/ecai_estimation_omega.pdf}
+%\end{figure}
+%We can see that the estimation $\hat{\omega}$ converges to $\omega$ when $S$ is
+%big enough. For small values of $S$, this estimation is indeed imprecise as it
+%is difficult to find a lot a 3-tuples such that an analogical proportion holds
+%for every element.
 
-The experiments shown in figure \ref{plots} allow us to draw interesting
-conclusions about the behaviour of the $\NAN$ algorithm.  We can observe one of
-the two cases:
-\begin{itemize}
-  \item either the analogical labels are always correctly
-    predicted\footnote{Note that for small values of $|S|$, it seems that
-      $\omega \neq 1$. This is due to the fact that for such small values, it
-      is sometimes impossible to construct $A_E^Y(S)$, thus leading to a value
-      of $\omega = 0$ (which will be averaged afterwards over the $100$
-    experiments).}($\omega = 1$, i.e. there is no class noise) as it is the case for  $f_1$, $f(x) = x_m$ and
-    (almost) for the Monk datasets~;
-    \item or there is some class noise in $A_E^Y(S)$ ($\omega \neq 1$). In this
-      case, we always observe that the $\NAN$ algorithm is outperformed by
-      $\NN$ for small values of $|S|$, but eventually takes advantage once
-      analogical prediction becomes more important than the nearest neighbour
-      one, as we are going to see.
-\end{itemize}
+\section{Conclusion}
 
-The theoretical accuracy seems to fit perfectly with the empirical accuracy of
-the $\NAN$ algorithm, thus validating our theoretical study that led to
-equation (\ref{ACCURACY_FORMULA})\footnote{The maximal difference we observed between the
-theoretical accuracy and its actual value is of about $10^{-10}$.}.
-
-An interesting observation is that the value of $\omega$ always converges to
-that of the theoretical accuracy (and therefore to the actual accuracy) of
-$\NAN$. This can be easily explained by paying attention to the value of
-$\gamma$, the proportion of elements of $X$ that belong to $A_E^Y(S)$. We see
-that in any setting, $\gamma$ converges to 1 as $|S|$ grows. This means that
-when $|S|$ is big enough (but not necessarily \textit{that} big with respect to $X$), the
-analogical extension of $S$ covers the whole universe $X$\footnote{Obviously,
-the bigger the dimension $m$, the slower the convergence occurs.}: every
-element $x$ is then its own nearest analogical neighbour and $\hat{x} =
-\albl{x}$. It is therefore straightforward to see that in this case,
-\begin{align*}
-  \omega = P(\albl{x} = \dot{x} \given[\big] x \in A_E^*) &= P(\hat{x}
-  = \dot{x} \given[\big] x \in A_E^*)\\
-&= \acc(\NAN_S, A_E^*)
-\end{align*}
-When $\gamma = 1$, the only elements $x$ we want to classify belong to $A_E^*$
-(otherwise they would be in $S$), so this last term exactly corresponds to the
-accuracy of the classifier. Another way to see it is to observe that the first
-term of equation (\ref{ACCURACY_FORMULA}) $\acc(\NN_{S}, A) \cdot \alpha$ is null
-because $\alpha = 0$. Only the second term $\acc(\NN_{A_E^*}, B) \cdot (1 -
-\alpha)$ is of importance, and its value corresponds to $\omega$. This
-observation allows us to state that estimating the value of $\omega$ is
-paramount to have a precise idea of the accuracy of an analogical classifier.
-We will provide in the next subsection a method to accurately estimate this
-quantity $\omega$ with the only help of the training set $S$.
-
-Regarding the Monk datasets (Table \ref{TABLE_MONK}), we note that the
-functional $\NAN$ approach (almost) achieves the same results as the somewhat
-more complex algorithm described in Section \ref{SEC:extended_classifier}, and that
-here again the analogical extension set covers the whole universe: this means
-that a conservative approach would have been sufficient! Actually, this raises
-the following question: why would we want to look for more than one analogical
-neighbour when every element of the universe is already in $A_E^Y(S)$, and
-therefore \textit{analogically linked} to those in $S$? Our experiments tend to
-show that this becomes superfluous, provided that the training set is big
-enough.
-
-\subsection{Estimation of the prediction accuracy}
-
-We have seen in the previous subsection that the value $\omega$ is that of the actual
-accuracy of an analogical classifier when $S$ is big enough. This leads to the
-following question: how can we get a precise estimation of this value $\omega$
-? Answering this would allow us to have a very precise idea of the accuracy we
-can expect from our classifier.
-
-The method we propose for estimating $\omega$ only relies on the training set $S$
-and is very simple: it consists of applying the conservative algorithm to all
-the elements of $S$, and compute the fraction of these elements that have been
-correctly classified. A small yet important modification to the algorithm needs
-to be added: we only want to construct analogical proportions of the form $a :
-b :: c : x$ where $a$, $b$, $c$ and $x$ are all distinct elements. Indeed, the
-proportions $x : x :: x : x$ and $x' : x :: x' : x$ are always true, and the
-solution label related to these proportions would bias the final majority vote
-procedure in a significant way towards the real label $\dot{x}$.
-
-We have applied this estimation protocol to all of the Boolean settings we have
-considered, and it has shown to be very accurate. Figure \ref{omegaplots}
-illustrates a few of these settings (already considered in Figure \ref{plots}).
-\begin{figure}
-  \caption{Values of $\omega$ and its estimation $\hat{\omega}$ for $f_1$, $f_2$ and $f_3$ in
-  $\mathbb{B}^{10}$.}
-\label{omegaplots}
-\includegraphics[width=\linewidth]{figures/ecai_estimation_omega.pdf}
-\end{figure}
-We can see that the estimation $\hat{\omega}$ converges to $\omega$ when $S$ is
-big enough. For small values of $S$, this estimation is indeed imprecise as it
-is difficult to find a lot a 3-tuples such that an analogical proportion holds
-for every element.
-
-\section{Conclusion}\label{conc}
-
-In this paper, we have provided a  functional definition of analogical
-learners.  Starting from this definition, we are in a position to prove an
+In this Section, we have provided a functional definition of analogical
+learners. Starting from this definition, we were in a position to prove an
 analytic convergence result, similar to that of the nearest neighbour
 algorithm. Obviously, this is not enough to conclude regarding the predictive
 ability of analogy-based classifiers. We have also shown that their
-VC\mbox{-}dimension is infinite.  It should not come as a surprise, as a very
+VC-dimension is infinite. It should not come as a surprise, as a very
 particular case of analogical rule (when the analogical proportion is trivial)
 is the $k$-NN rule.
 
 This fact obviously has a consequence on the way we can
 work to improve analogy-based classifier.  Indeed, learning by analogy is prone
 to over-fitting and a relevant learning strategy should take this fact into
-account.  Nevertheless, we have to keep in mind that the VC\mbox{-}dimension
+account.  Nevertheless, we have to keep in mind that the VC-dimension
 alone is not a perfect marker of the quality of a machine learning algorithm,
-especially when it comes
-to practical implementation.
+especially when it comes to practical implementation.
 
 In terms of accuracy in a Boolean setting, we have found a strong link between
-the accuracy of the $\NAN_S$ algorithm and that of the $\NN_S$ algorithm. At a
-first glance, we can consider the $\NAN$ algorithm as a $\NN$ strategy on an
-extended and noisy training set: the analogical extension of $S$. In the end, we
+the accuracy of the NAN algorithm and that of the NN algorithm. At a
+first glance, we can consider the NAN algorithm as a NN strategy on an
+extended and noisy training set: the analogical extension $\esf$. In the end, we
 have seen that this extended training set covers the entire universe provided
 that $S$ is big enough, simplifying and bringing back the accuracy of the
 classifier to the value $\omega$ which corresponds to the  quality of the
-analogical extension. We have also provided a method to accurately estimate the
-value of $\omega$ that only relies on elements of the $S$, thus allowing
-beforehand to have a precise idea of the accuracy of any analogical classifier
-in a Boolean setting. Some important points remain to be investigated, such as:
-\begin{itemize}
-\item What can we expect in terms of speed convergence from an analogical
-  learner? In other words, what is the minimum size needed from a training set to
-  get a fixed accuracy threshold?
-\item If a clever learning strategy can (at least partially) overcome the
-  problem of infinite VC\mbox{-}dimension, can we overcome the issue of the
-  cubic complexity of analogical learners?
-\item Leaving the field of classification, can we provide a clear strategy for
-  transfer learning with analogy? Indeed, the central goal of transfer
-    learning is to identify and exploit analogies between source and target
-    domains \cite{PanYanTKDE10}.
-\end{itemize}
-\noindent
-These points definitely constitute interesting challenges for future works.
-Nevertheless, we have to remember that analogical reasoning brings its whole
-power in the case where few data are available. If a lot of data are available,
-it is very likely that we have elements similar to the one at hand and, in that
-case, a $k$-NN style reasoning is natural. In the opposite case, when we only
-have a few relevant cases at hand, applying analogical proportion-based
-predictions appears to be a meaningful option.
+analogical extension.
+%We have also provided a method to accurately estimate the
+%value of $\omega$ that only relies on elements of the $S$, thus allowing
+%beforehand to have a precise idea of the accuracy of any analogical classifier
+%in a Boolean setting.
+
+We have to remember that analogical reasoning brings its whole power in the
+case where few data are available. If a lot of data are available, it is very
+likely that we have elements similar to the one at hand and, in that case, a
+$k$-NN style reasoning is natural. In the opposite case, when we only have a
+few relevant cases at hand, applying analogical proportion-based predictions
+appears to be a meaningful option.
