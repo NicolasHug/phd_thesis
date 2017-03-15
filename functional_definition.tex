@@ -981,7 +981,7 @@ specify that the training set of the $\NAN$ algorithm is $S$. The same notation
 is used for the \textit{nearest neighbour} algorithm: $\NN_\Sigma$ is the $\NN$
 algorithm trained on the set $\Sigma$.} over all the elements of $X^m$ is
 defined as:
-$$\acc(\NAN_S, X)\eqdef P\left(\hat{f}(\mathbf{x})=f(\mathbf{x}) \given[\big]
+$$\acc(\NAN_S, X^m)\eqdef P\left(\hat{f}(\mathbf{x})=f(\mathbf{x}) \given[\big]
 \mathbf{x} \in X^m\right).$$
 By observing that for any $\mathbf{x}$, its $\nan$ either belongs to $S$ or to
 $\esfs$, the above equation can be split into two distinct parts as follows:
@@ -1056,15 +1056,20 @@ a  concise form, using a few more definitions:
 \end{itemize}
 
 Naturally, $A \cup B = X^m$ and $A \cap B = \varnothing$. Also, $\alpha =
-P(\mathbf{x} \in A)$ and $1 - \alpha = P(\mathbf{x} \in B)$. Therefore, the
-accuracy of $\NAN_S$ over $X^m$ can be understood as the weighted sum of the
-accuracy of $\NN$ over $A$ and $B$, using a different training set each time
-(respectively $S$ and $\esfs$):
-\begin{align*}
-  \acc(\NAN_S, X^m) = ~&\acc(\NN_S, A) \cdot \alpha ~ + \\
-                      &\acc(\NN_{\esfs}, B) \cdot (1 - \alpha).
-  \numberthis\label{ACCURACY_FORMULA}
-\end{align*}
+P(\mathbf{x} \in A)$ and $1 - \alpha = P(\mathbf{x} \in B)$. We can now clearly
+define the accuracy of $\NAN$ algorithm:
+
+\begin{proposition}
+  \label{PROPOS:accuracy_nan}
+  The accuracy of $\NAN_S$ over $X^m$ can be seen as the weighted sum of the
+  accuracy of $\NN$ over $A$ and $B$, using a different training set each time
+  (respectively $S$ and $\esfs$):
+  \begin{align*}
+    \acc(\NAN_S, X^m) = ~&\acc(\NN_S, A) \cdot \alpha ~ + \\
+                        &\acc(\NN_{\esfs}, B) \cdot (1 - \alpha).
+  \end{align*}
+\end{proposition}
+
 The value $\acc(\NN_S, A)$ is the accuracy of $\NN_S$ over all the elements in
 $A$. A theoretical study of this accuracy has been done in \cite{LanIbaIJCAI93}
 when the size of $A$ is known.  Regarding $\acc(\NN_{\esfs}, B)$, this is the
@@ -1081,6 +1086,7 @@ to the consistent facts:
   of $\esf$:  \end{enumerate}
 
 \begin{definition}
+  \label{DEF:omega}
   Given a training set $S\subset X^m$ and a ground truth function $f$, the
   \textbf{quality} of the analogical extension $\esf$ is defined as:
   $$
@@ -1090,30 +1096,38 @@ to the consistent facts:
 \end{definition}
 
 \section{Experiments and empirical validation}
-\label{validation}
-In order to get an empirical validation of our formulas, we have developed a set of
-experiments that we describe in the next subsection.
-\subsection{Validation protocol}
-Working with Boolean vectors, we have computed the accuracies of the $\NAN$ and
-$\NN$ algorithms over $X=\mathbb{B}^m$ for different values of $m$ (namely $8$
-and $10$). The ground truth label of elements of $X$ is
-defined by different Boolean functions $f$ in such a way that the $\forall x =
-(x_1, \cdots, x_m), ~ \dot{x} = f(x)$. The different functions we have worked
-with are:
+\label{SEC:experiments_and_empirical_validation}
+In order to get an empirical validation of our formulas, we have developed a
+set of experiments that we now describe.
+
+\subsection{Evaluation protocol}
+
+Working with Boolean vectors, we have
+computed the accuracies of the 1-\NAN~and 1-$\NN$~ algorithms over
+$X=\mathbb{B}^m$ for different values of $m$ (namely $8$ and $10$). The ground
+truth label of elements of $X$ is defined by different Boolean functions $f$:
 \begin{itemize}
-\item $f(x)=x_m$: in that case, we can consider the $m-1$ first
-  parameters are a kind of noise since they have no influence on the final
-  label ;
-\item $f(x) = 1 \mbox{ iff at least } l  \mbox{ components are equal
-  to } 1$ (this kind of function is usually called $l\text{-of-}m$). We chose
-  to set $l$ to $\frac{m}{2}$ ;
-\item $f(x)= x_1 \oplus  x_2$ (xor): we here have $m-2$ useless attributes ;
-\item $f(x)=1 \mbox { iff } \sum x_i =2$: all the attributes are relevant in
-  that case~;
-\item $f(x)=1 \mbox { iff } \sum x_i = m-1$: an extreme case of
-  the previous one~;
-\item $f(x)=1 \mbox { iff } x_1 \cdot x_m = 1$: only the first and
-  the last elements are relevant.
+\item $f(\mathbf{x})=x_i$ for some $i$. These functions are called projections,
+  or dictators. They split the space $X^m$ into two disjoints sets of size
+    $2^{m - 1}$: those which label equal to $1$, and those with labels equal to
+    $0$. These functions lead to perfectly linearly separable problems, i.e.
+    there exist an hyperplane that can perfectly discriminate both classes. As
+    such, they are expected to be fairly easy to learn.
+  \item $f(\mathbf{x})= \bigoplus_{i = 1}^k  x_i$ for some $k \in[1, m]$, where $\oplus$
+    is the XOR operator (which is associative). These functions
+    lead to highly non-linearly-separable problems: remember the example of
+    Figure \ref{FIG:classification_problem} on page
+    \pageref{FIG:classification_problem}, who was an instance of a XOR problem.
+    XOR problems are traditionnaly difficult to learn.
+  \item $f(\mathbf{x})= \bigwedge_{i = 1}^k  x_i$ for some $k \in [1, m]$.
+  \item $f(\mathbf{x})= \bigvee_{i = 1}^k  x_i$ for some $k\in [1, m]$.
+  \item $f(\mathbf{x}) = \left[\sum_{i = 1}^m x_i \geq k\right]$ for some $k
+    \in [1, m]$, where the function $[\text{cond}]$ is equal to $1$ if cond is
+    verified and $0$ else. Simply put, $f(\mathbf{x}) = 1$ iff at least $k$
+    components are equal to $1$.
+  \item $f(\mathbf{x}) = \left[\sum_{i = 1}^m x_i = k\right]$ for some $k
+    \in [1, m]$. Simply put, $f(\mathbf{x}) = 1$ iff exactly $k$ components
+    are equal to $1$.
 \end{itemize}
 
 Regarding the size of the training set, to be sure to fit with the size of the
@@ -1124,43 +1138,47 @@ as a consequence, we limit our investigation to a maximum of 100 elements in
 the training set in order to get realistic execution time.
 
 All the accuracy (and other metrics) computations are averaged over a set of
-$100$ experiments.  The interested reader may find the Python source code that
-has generated all our plots and detailed results on
-Github\footnote{https://github.com/Niourf/nan\_study}. For lack of space,
-we only provide a few examples which are representative of the global behavior.
-Please note that our implementation of the $\NAN$ algorithm is not that of
-algorithm \ref{ALGO:extended_classifier}, but is instead that of the functional definition
-of the analogical classifier developed in Section \ref{SEC:functional_definition}: we
-first construct the analogical extension set of $S$, and then proceed to a
-nearest neighbour strategy over this noisy extended training set. We have
-estimated probabilities by frequencies, thus implicitly assuming a uniform
-distribution on $X$.
+100 experiments. We have made sure that the class distributions of the training
+sets are as close as possible to that of the whole universe $X^m$.  Note that
+our implementation of the $\NAN$ algorithm is not that of algorithm
+\ref{ALGO:extended_classifier}, but is instead that of the functional
+definition of the analogical classifier as described in Definition
+\ref{DEF:extended_classifier}: we first construct the analogical extension set
+of $S$, and then proceed to a nearest neighbour strategy over this noisy
+extended training set. We have estimated probabilities by frequencies, thus
+implicitly assuming a uniform distribution on $X^m$.
+
+For each experiment, we have computed the following measures to empirically
+investigate the behaviour of the analogical classifier, and assess our
+theoretical resulsts:
+\begin{itemize}
+  \item The empirical accuracy of the 1NAN classifier, defined\footnote{We
+    notice here that $\mathbf{x}$ is only requiared to belong to $X^m \setminus
+    S$ and not to $X^m$, because classifying elements in $S$ is pointless.}
+    as\\
+    $\acc(\NAN_S) \eqdef P\left(\hat{f}(\mathbf{x}) = f(\mathbf{x})
+    \given[\big] \mathbf{x} \in X^m \setminus S \right)$.
+  \item The empirical accuracy of the 1NN classifier, which definition is of
+    course the same but this time $\hat{f}$ is the output of the 1NN
+    classifier.
+  \item The \textbf{theoretical} accuracy of 1NAN, as defined in Proposition
+    \ref{PROP:accuracy_nan}. The probability $\alpha \eqdef P(\mathbf{x} \in
+    A$) has been estimated by the frequency $\frac{\mid A \mid}{\mid X^m
+    \mid}$. Both sets $A$ and $B$ are easy to determine.
+  \item The quality of $\esf$, measured by $\omegasf$ as previously defined in
+    Definition  \ref{DEF:omega}. $\omegasf$ has been estimated by the
+    frequency $\frac{\big| \Set{\mathbf{x} \in \esfs | \albl{\mathbf{x}} =
+    f(\mathbf{x}}\big|}{\big| \esfs \big|}$.
+  \item Finally, the quantity $\gamma_S^f \eqdef P(\mathbf{x} \in \esf)$,
+    estimated by $\frac{\mid \esf\mid}{\mid X^m \mid}$: the size of the
+    analogical extension with respect to that of the whole universe.
+\end{itemize}
 
 In addition to these Boolean functions, we have also run the $\NAN$ algorithm
 over the Monk datasets over the UCI
 repository\footnote{https://archive.ics.uci.edu/ml/datasets/MONK's+Problems}.
 They are datasets of 432 binarized elements, among which exactly 169 of them
 have been used for training.
-
-\subsection{Experiments}
-
-Figure \ref{plots} shows the accuracies (left column) of the $\NAN$ and $\NN$
-over six different Boolean settings with values of $|S|$ varying from $3$ to
-$100$. In the right column, we have plotted three different values that will
-help us analyze and validate the behaviour of the
-$\NAN$ algorithm:
-\begin{itemize}
-  \item the theoretical accuracy as defined by equation
-    (\ref{ACCURACY_FORMULA})
-    in Section \ref{accuracy}. The probability $\alpha = P(x \in A$) has been
-    estimated by the frequency:~$\frac{|A|}{|X|}$~;
-  \item the quality of $A_E^Y(S)$, measured by $\omega$ as defined in Section
-    \ref{accuracy} which is estimated by the frequency:~$\frac{|\{x \in A_E^*
-    \given[\big] \albl{x} = \dot{x}\}|}{|A_E^*|}$~;
-\item finally, the
-    quantity $\gamma = \frac{|A_E^Y(S)|}{|X|}$: the size of
-    the analogical extension set with respect to that of the whole universe.
-\end{itemize}
 
 \begin{figure}[h!]
 \caption{Accuracies of the $\NAN$ and $\NN$ algorithms  over different Boolean
@@ -1182,10 +1200,10 @@ from \cite{MicBayDelJAIR08}, which corresponds to algorithm
 \label{TABLE_MONK}
 \begin{tabular}{| c | c | c | c | c | c |}
 \toprule
-& $\NAN$  & APC & $\NN$  &  $\omega$ & $\gamma$ \\
+& 1-NAN  & APC & 1-NN  &  $\omegasf$ & $\gamma_S^f$ \\
 \midrule
 Monk 1 & .961 & .98 & .787 &   .961    &   1 \\
-Monk 2 & .998 & 1 & .738 &    .996    &   1 \\
+Monk 2 & .998 & 1 & .738 &    .998    &   1 \\
 Monk 3 & .963 & .96 & .829 &   .963    &   1 \\
 \bottomrule
 \end{tabular}
