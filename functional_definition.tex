@@ -31,9 +31,9 @@ grounded research.
 Let us first define the problem of classification, one of the main subfields of
 machine learning. The aim is simple: a classifier has to estimate the class of
 any element given as input on the basis of some other elements for which the
-class is known. Formally, we denote $X$ our universe which is usually a
-Cartesian product of dimension $m$: $X = X_1 \times X_2 \times \ldots \times
-X_m$. We have at our disposal a subset $S \subsetneq X$ of $n$ pairs
+class is known. Formally, we denote $X^m$ our universe which is usually a
+Cartesian product: $X^m = X_1 \times X_2 \times \ldots \times
+X_m$. We have at our disposal a subset $S \subsetneq X^m \times Y$ of $n$ pairs
 $\left(\mathbf{x}, f(\mathbf{x})\right)$, called the \textbf{training set}.
 $$S= \Set{\left(\mathbf{x}^{(i)}, f(\mathbf{x}^{(i)})\right) \in X^m \times Y |
 i \in [1,n]}.$$
@@ -46,19 +46,18 @@ general view point of machine learning. In the case of classification, $Y$ is a
 finite set of size $C$ where $C$ is the number of different classes. The goal
 of a classifier is to \textbf{learn} the function $f$ on the basis of the
 elements in $S$, called the \textbf{examples}. The output of a classifier is a
-function $\hat{f} \colon X^m \to Y$ that estimates the ground truth function
-$f$. The estimated labels $\hat{f}(\mathbf{x})$ will also be denoted
-$\hat{\mathbf{x}}$.
+function $\hat{f} \colon X^m \to Y$ that is \textit{as close as possible} the
+ground truth function $f$.
 
 \subsection{Conservative classifier}
 \label{SEC:conservative_classifier}
 
 We will here describe what we call a \textbf{conservative} classifier. Without
 further ado, let us consider Algorithm \ref{ALGO:conservative_classifier} which
-describes conservative classifiers.
+describes such classifiers.
 
 \begin{algorithm}[!ht]
-\caption{The Conservative classifier}
+\caption{The Conservative classifier.}
 \label{ALGO:conservative_classifier}
   \begin{algorithmic}
     \STATE {\bf Input}: A training set $S$ and an element $\mathbf{x} \in X^m
@@ -153,7 +152,7 @@ In a setting where for any $\mathbf{a},\mathbf{b}, \mathbf{c}$ the equation
 $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{x}$ is always solvable (as is
 the case for the arithmetic proportion) and such that the associated class
 equation is also solvable, we can show that the size of $\esfs$ is exactly
-$\frac{1}{2} n^2(n - 1)$. This value is thus a tight upper bound for $\mid
+$\frac{1}{2} n^2(n - 1)$. This value is thus a loose upper bound for $\mid
 \esfs\mid$, because in practice equations are not always solvable.
 
 To polish our understanding of the analogical extension, let us consider Figure
@@ -225,8 +224,9 @@ convention that the analogical root should only contain non-equivalent
 \mathbf{d},\mathbf{a})}$.
 We also have that $\aroot{S}{f}{\mathbf{f}} = \Set{(\mathbf{a}, \mathbf{b},
 \mathbf{e})}$, $\aroot{S}{f}{\mathbf{a}} = \Set{(\mathbf{a}, \mathbf{a},
-\mathbf{a})}$, and $\aroot{S}{f}{\mathbf{h}} = \varnothing$. It is clear that
-in general,
+\mathbf{a}), (\mathbf{b}, \mathbf{b}, \mathbf{a}), (\mathbf{d}, \mathbf{d},
+\mathbf{a}), (\mathbf{e}, \mathbf{e}, \mathbf{a})}$, and
+$\aroot{S}{f}{\mathbf{h}} = \varnothing$. It is clear that in general,
 $$\rsfx = \varnothing\iff \mathbf{x} \notin \esf.$$
 %$\rsfx$ is simply the set of 3-tuples in $S$ which are analogically linked to
 %$\mathbf{x}$. Considering again the example of Figure \ref{FIG:ae_example}, we have that
@@ -292,7 +292,7 @@ classifier:
   a conservative classifier sets the prediction of an element $\mathbf{x}$ as
   follows:
 
-  $$\emph{if } \mathbf{x} \in \esf, ~ \hat{f}(\mathbf{x}) \eqdef \albl{\mathbf{x}}.
+  $$\emph{If } \mathbf{x} \in \esf, ~ \hat{f}(\mathbf{x}) \eqdef \albl{\mathbf{x}}.
   \emph{ Else, } \hat{f}(\mathbf{x}) \emph{ is undefined.}$$
 \end{definition}
 
@@ -310,10 +310,14 @@ $\aroot{S}{f}{\mathbf{c}} = \Set{(\mathbf{b}, \mathbf{d},\mathbf{a})}$ and
 $\mathbf{C}(\mathbf{c}) = \Set{1}$. Also, $\hat{f}(\mathbf{f}) \eqdef
 \albl{\mathbf{f}} = 1$, because $\aroot{S}{f}{\mathbf{f}} =
 \Set{(\mathbf{a},\mathbf{b},\mathbf{e})}$ and $\mathbf{C}(\mathbf{f}) =
-\Set{1}$. Both $\albl{\mathbf{g}}$ and $\albl{\mathbf{h}}$ stay undefined.
+\Set{1}$. Here, we did not need to use the majority vote procedure as there was
+only one candidate solution for each prediction. As $\mathbf{g}$ and
+$\mathbf{h}$ do not belong to $\esf$, both $\albl{\mathbf{g}}$ and
+$\albl{\mathbf{h}}$ stay undefined.
 
 Let us note that in Algorithm \ref{ALGO:conservative_classifier}, the
-analogical extension $\esf$ is never explicitly computed. Instead, we look for
+analogical extension $\esf$ is never explicitly computed. Instead, for a given
+$\mathbf{x}$, we look for
 every 3-tuple in $S^3$ and check if they belong to $\rsfx$. One drawback is
 that the search in $S^3$ has to be done for every new element $\mathbf{x}$ that
 we want to classify, and can prove to be quite expensive in computation time,
@@ -357,10 +361,11 @@ transformed into $reads$ when conjugated at the third person singular, and $G$
 stands for the gerund form.
 
 Given a new element $\mathbf{x}=(eat,G,y)$, $\rsfx=
-\Set{\left(\mathbf{x}^{(1)}, \mathbf{x}^{(2)}, \mathbf{x}^{(3)}\right),
+\Set{\left(\mathbf{x}^{(1)}, \mathbf{x}^{(2)}, \mathbf{x}^{(5)}\right),
 \left(\mathbf{x}^{(3)},\mathbf{x}^{(4)},\mathbf{x}^{(5)}\right)}$. The
 prediction is as expected $\hat{f}(\mathbf{x})=\text{eating}$, which is the
-solution of the equation $\text{view}:\text{viewing}::\text{eat}:y$. There is
+solution of the equations $\text{read}:\text{reading}::\text{eat}:y$ and
+$\text{view}:\text{viewing}::\text{eat}:y$. There is
 no solution for $\mathbf{x}=(absurd,G,y)$, just because $\rsfx= \varnothing$.
 Note that in this case, the analogical extension is infinite and cannot be
 explicitly computed, because of the definition of the proportion that is used,
@@ -486,7 +491,7 @@ We get an analogical dissimilarity whose co-domain is $[0, 2m]$. In fact, if we
 use the $1$-norm defined as $\norm{1}{\mathbf{x}} = \sum_{i = 1}^m |x_i|$,
 Definition \ref{DEF:AD_arithmetic_proportion} is equivalent to Definition
 \ref{DEF:AD_boolean_proportion}. This means that for $\mathbf{a},
-\mathbf{b},\mathbf{c},\mathbf{d}$ in $\mathbb{B}$, $\AD(\mathbf{a},
+\mathbf{b},\mathbf{c},\mathbf{d}$ in $\mathbb{B}^m$, $\AD(\mathbf{a},
 \mathbf{b},\mathbf{c},\mathbf{d}) =
 \norm{1}{(\mathbf{a}-\mathbf{b})-(\mathbf{c}-\mathbf{d})}$. Note that the
 expression $\norm{1}{(\mathbf{a}-\mathbf{b})-(\mathbf{c}-\mathbf{d})}$ is
@@ -513,7 +518,7 @@ belong to $\esf$. Algorithm \ref{ALGO:extended_classifier} gives a
 description of their classifier.
 
 \begin{algorithm}[!ht]
- \caption{\textit{The extended classifier}}
+ \caption{The extended classifier.}
        \label{ALGO:extended_classifier}
        \begin{algorithmic}
 
@@ -824,7 +829,7 @@ same result:
   \delta(\mathbf{x}, \nn(\mathbf{x},S_n))$, the convergence in probability of
   $\delta(\mathbf{x}, \nan(\mathbf{x},S_n))$ towards $0$ is immediate. Hence,
   it naturally follows that $\nan(\mathbf{x}, S_n)$ converges almost surely
-  towards $\mathbf{x}$, Q.E.D.\todo{Lire le paper}
+  towards $\mathbf{x}$, Q.E.D.
 \end{proof}
 
 Let us note the following points:
@@ -871,7 +876,6 @@ proved in Chapter \ref{TODO}.
 
 \subsection{Vapnik Chervonenkis (VC) dimension}
 \label{SEC:VCdim}
-\todo{Partie entierement reecrite}
 The notion of VC-dimension was originally defined by Vapnik and Chervonenkis
 \cite{Vap98}, and introduced into learnability theory by Blumer et al.
 \cite{BluEhrHauWarACM89}. Roughly speaking, the VC-dimension (denoted VC) of a class of
@@ -1278,7 +1282,8 @@ Monk 3 & .963 & .96 & .829 &   .963    &   1 \\
 \bottomrule
 \end{tabular}
 \caption{Accuracies of the 1-NAN, APC and 1-NN algorithms over the Monk
-  datasets} \label{TAB:monks}
+  datasets.}
+  \label{TAB:monks}
 \end{table}
 We note that the functional $\NAN$ approach (almost) achieves the same results
 as the somewhat more complex algorithm described in Section
@@ -1359,3 +1364,12 @@ likely that we have elements similar to the one at hand and, in that case, a
 $k$-NN style reasoning is natural. In the opposite case, when we only have a
 few relevant cases at hand, applying analogical proportion-based predictions
 appears to be a meaningful option.
+
+
+This concludes for now our investigatins with analogical classifiers. We have
+seen that they have so far mostly been used for natural language processing
+tasks, or classification in Boolean settings. One of the main goal of this
+thesis was to apply anaogical proportion-based reasoning to concrete,
+real-world applications. We have chosen to investigate the suitability of
+analogical proportion in the design of recommender systems. This is the object
+of the next chapter.

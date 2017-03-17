@@ -6,7 +6,7 @@
 formalize and theorize analogical reasoning, with a strong emphasis on
 computational models. We will be led at the end of this chapter to the so
 called Boolean analogical proportions and their use in machine learning, which
-were the starting point of our research.
+were the starting points of our research.
 
 \section{Models without proportions}
 \label{sec:models_without_proportions}
@@ -43,7 +43,7 @@ and computational models that we briefly (and non-exhaustively) recall here.
 
 Probably the most influential model of analogical reasoning is the Structure
 Mapping Theory (SMT), introduced by the American cognitive scientist Dedre
-Gentne in \cite{Gen83}. The main feature of SMT is to consider that good
+Gentner in \cite{Gen83}. The main feature of SMT is to consider that good
 analogies are those that result from strong, deep, relations and dependencies
 between the source and the target domains, rather than on some superficial
 characteristics. In this regard, SMT departs from Hesse's theory in a
@@ -64,7 +64,7 @@ The world is assumed to be represented by objects (belonging either to the
 source domain $S$ or the target domain $T$), along with some
 \textbf{predicates} that deal with one or more objects of the same domain. The
 distinction is made between predicates that only take one argument
-(\textbf{attributes} of objects), and those  that take at least two objects
+(\textbf{attributes} of objects), and those  that take at least two arguments 
 (\textbf{relations}). Higher-order relations are relations for which arguments
 are themselves relations, instead of simple objects. To illustrate these
 syntactic distinctions, \textit{TALL(Bob)} and \textit{BLONDE(Alice)} are
@@ -112,7 +112,7 @@ source and the target domains. In such, SME is part of the connectionist
 approaches.
 
 In  \cite{ChaFreHof92}, authors point out various concerns about SMT and SME.
-Among them is the fact SME is too reliant on the (human-made) description
+Among them is the fact that SME is too reliant on the (human-made) description
 inputs of the source and target domains, and that the intelligence mostly comes
 from these descriptions:
 
@@ -184,9 +184,10 @@ is called a \textbf{theory projection}.
 
 We have seen so far many models of analogical reasoning that mostly rely on
 some heuristic, intangible principles. In contrast with this tendency, Davies
-and Russel proposed a set of conditions required in first order logic for the
-analogical inference process to be sound. Concretely, they provide some
-sufficient conditions that must hold on two properties $P$ and $Q$ for the
+and Russel proposed first order description of the analogical inference
+process, and most importantly a set of conditions required for this inference
+process to be sound.  Concretely, they provide some sufficient conditions that
+must hold on two properties $P$ and $Q$ for the
 following inference to be sound
 $$\infer{Q(T)}{P(S) \wedge Q(S) & P(T)},$$
 where $S$ and $T$ are the source and target objects. Naturally, this framework
@@ -241,19 +242,20 @@ they define these two components for the analogical reasoning.
 With regards to the memory structure, their assumption is that it can be
 considered as an $m$-dimensional Euclidean space. This assumption is originally
 that of Henley \cite{Hen69} who showed, with the help of social experiments,
-that a set of 30 mammals could be fairly well represented in a 3-dimensional
-space with axes ferocity, humanness, and size. It is supposed that the semantic
-similarity that people associate with two concepts is inversely proportional to
-their distance in the Euclidean space.
+that a set of 30 mammals could be fairly well represented in the 3-dimensional
+space $\mathbb{R}^3$ with axes ferocity, humanness, and size. It is supposed
+that the semantic similarity that people associate with two concepts is
+inversely proportional to their distance in the Euclidean space $\mathbb{R}^3$.
 
 Rumelhart and Abrahamsen are interested in the problem of solving an analogical
 equation (although they never state it in these terms): given three concepts
-$A, B, C$ and a set of solutions $D_1, D_2, \cdots, D_n$, which $D_i$ is the
-best candidate for $A:B::C:D_i$? Their assumption is the following: \textbf{
-for a human agent, the best solution is the closest $D_i$ to the (potentially
-hypothetical) \textit{perfect} solution $I$, defined as $I = C - A + B$}. This
-principle is illustrated in figure \ref{FIG:rumelhart_model}. Diverse social
-experiments are led by the authors to assess the soundness of this hypothesis.
+$A, B, C$ and a set of candidate solutions $D_1, D_2, \cdots, D_n$, which $D_i$
+is the best candidate for $A:B::C:D_i$? Their assumption is the following:
+\textbf{ for a human agent, the best solution is the closest $D_i$ to the
+(potentially hypothetical) \textit{perfect} solution $I$, defined as $I = C - A
++ B$}. This principle is illustrated in figure \ref{FIG:rumelhart_model}.
+Diverse social experiments are led by the authors to assess the soundness of
+this hypothesis.
 
 \begin{figure}[!h]
 \centering
@@ -292,7 +294,7 @@ less plausible solutions make up the remaining 10\%.
 At the beginning of the program, each option is equally available.  Then, on
 the basis of their validity, some hypotheses are given a stronger chance to
 \textit{survive} till the end of the program, while others are discarded.
-Conceptually, this process is emerges from the interoperability of three main
+Conceptually, this process emerges from the interoperability of three main
 components: the workspace, the codelets, and the temperature.
 
 \begin{itemize}
@@ -353,8 +355,8 @@ point of view. Yet this principle has been formalized into Rissanen's Minimum
 Description Length Principle (MDLP) \cite{Ris78}, which is based on Kolmogorov
 complexity. Despite the difficulty to build inferential models from this
 principle (Kolmogorov complexity is often intractable and impossible to
-compute or even to estimate), it has shown to be quite influential in the field
-of machine learning, at least from a theoretical point of view.
+compute, and can only be estimated), it has shown to be quite influential in
+the field of machine learning, at least from a theoretical point of view.
 
 With this in mind, Antoine Cornuéjols proposed a framework for assessing the
 quality of an analogy \cite{CorMLS96} (see also \cite{CorJFA96}). In these
@@ -365,13 +367,13 @@ Kolmogorov complexity.
 Let us first first recall some basic knowledge about Kolmogorov complexity,
 before diving into more technical details. The Kolmogorov complexity of a
 string of characters $x$, denoted $K(x)$, is the length of the shortest
-computer program capable of outputting $x$. $K(x)$ is supposed to capture the
+computer program capable of outputting $x$ ona universal Turing machine. $K(x)$ is supposed to capture the
 intrinsic complexity of $x$. Intuitively, $K('aaaaabbbbb')$ is supposed to be
 lower than $K('abaabbabab')$, because a clear pattern emerges in the first
 string, leading to a simple program: first print $a$ five times, then do the
 same for $b$. The second string seems more or less random, which makes it
 difficult to factorize into a concise program. In some sense, the Kolmogorov
-complexity captures how well can a string $x$ be \textit{compressed}. The
+complexity captures how well a string $x$ can be \textit{compressed}. The
 conditional complexity $K(x \given y)$ is the size of the shortest program that
 outputs $x$ when given $y$ as an input.
 
@@ -462,7 +464,7 @@ transform figure $A$ into figure $B$. A rule would for example state
 \textit{REMOVE(Obj1), ROTATE(Obj2, 45\degree), etc.}. Then, by generalizing
 each rule, it tries to establish a correspondence between these rules and those
 transforming $C$ into one of the candidate solutions. The chosen solution is
-that maximizes the resemblance between the two sets of rules.
+the one that maximizes the resemblance between the two sets of rules.
 
 An interesting fact is that ANALOGY analyses the way to go from $A$ to $B$ and
 applies to go from $C$ to $D$, but it does not make use of \textit{central

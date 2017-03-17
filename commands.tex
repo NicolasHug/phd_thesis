@@ -33,6 +33,9 @@
 		\color{gray}
      		{\textsc{#1}}}{}}
 
+\def\vdotfill#1{\vtop to0pt{\null \dimen0=#1\baselineskip\advance\dimen0 by-.4ex 
+   \kern-1.6ex \cleaders\hbox{\lower.4ex\vbox to1ex{}.}\vskip\dimen0 \vss}}
+
 \newcommand{\aggr}[1]{\underset{#1}{\operatorname{aggr}}\;}
 \newcommand{\rui}{r_{ui}}
 \newcommand{\ruj}{r_{uj}}
@@ -45,6 +48,8 @@
 \newcommand{\Iuv}{I_{uv}}
 \newcommand{\Rtrain}{R_{\text{train}}}
 \newcommand{\Rtest}{R_{\text{test}}}
+\newcommand{\ssim}{\text{sim}} % similarity... \sim already exists
+
 \newcommand*\albl[1]{\overline{#1}}
 \newcommand*\nan[0]{1\text{-nan}} %pour 1nan
 \newcommand*\nanemph[0]{1\emph{-nan}} %pour 1nan dans une def ou une prop

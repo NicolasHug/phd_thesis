@@ -47,111 +47,309 @@ personalized items.  Let us now formalize the problem.
 \subsection{Problem formalization and notation}
 Let $U$ be a set of users and $I$ a set of items. For some pairs $(u,i) \in U
 \times I$, a rating  $\rui$ is supposed to have been given by $u$ to express
-whether she likes the item $i$ or not.
-It is quite common that  $\rui \in [1, 5]$, 5 meaning a strong preference for
-item $i$, 1 meaning a strong rejection, and 3 meaning indifference, or just an
-average note.  Let us denote by $R$ the set of ratings recorded in the system. It
-is well known that, in real systems, the size of $R$ is very small with regard
-to the potential number of ratings which is $|U| \times |I|$, as a lot of
-ratings are missing. In the following, $U_i$ denotes the set of users that have
-rated item $i$, and $I_u$ is the set of items that
-user $u$ has rated.
+whether she likes the item $i$ or not.  It is quite common that  $\rui$ belongs
+to the rating scale $[1, 5]$, 5 meaning a strong preference for item $i$, 1
+meaning a strong rejection, and 3 meaning indifference, or just an average
+note. When the rating scale is gradually valuated, we say that ratings are
+\textbf{explicit}, in the sense that users have explicitely expressed their
+preference towards items. \textbf{Implicit} ratings belong to a binary scale $[0,
+1]$, and usually correspond to the result of collected data about users
+behaviour, without any active involvement. For example, if a user has listened to a given track more than 10
+times, we might consider this as an implicit rating of $1$. We may also
+consider that an implicit rating captures the fact that a user has bought a
+given item without giving it an explicit rating. These two kinfs of rating
+schemes (explicit and implicit) lead to quite different prediction algorithms
+in practice. In our work, we will only focus on the explicit rating
+scheme.\todo{Vrai?}
 
-To recommend items to users, a recommender system will proceed as follows:
+Let us denote by $R$ the set of known ratings recorded in the system. It is
+well known that, in real systems, the size of $R$ is very small with regard to
+the potential number of ratings which is $|U| \times |I|$, as a lot of ratings
+are missing. The set $\Ui$ will denote the set of users that have rated item
+$i$, and $\Uij$ is the set of users that have rated both item $i$ and item $j$.
+Similarly, $\Iu$ is the set of items that user $u$ has rated, and $\Iuv$ is the
+set of items that both users $u$ and $v$ have rated.
+
+To recommend items to users, a recommender system usually proceed as follows:
 \begin{enumerate}
 \item Using a prediction algorithm $A$, estimate the unknown ratings $\rui$
-(i.e. $\rui \notin R$). This estimation $A(u, i)$ is usually denoted
-$\predrui$.
+  (i.e. $\rui \notin R$). This estimation $A(u, i)$ will here be denoted
+    $\predrui$.
 \item Using a recommendation strategy $S$ and in the light of the previously
-estimated ratings, recommend items to users. For instance, a basic yet
-common strategy is to suggest to user $u$ the items $i \notin I_u$ with the
-highest $\predrui$.
+  estimated ratings, recommend items to users. For instance, a basic yet common
+    strategy is to suggest to user $u$ the items $i \notin I_u$ with the
+    highest $\predrui$.
 \end{enumerate}
 
-Traditionally, prediction algorithms are considered to belong to one of the two
-main families of prediction techniques, referred to as \textbf{content-based}
-methods and \textbf{collaborative filtering} methods, that we both review
-below. Note that in practice, real world recommender systems usually use a mix
-of both methods, and are referred to as \textbf{hybrid} methods.
+When using the implicit rating scheme, these two stages are usually
+indistinguishable: it is natural to recommend an item to a user if the
+estimated predicted rating is $1$. In practice, the recommendation strategy
+depends a lot on the pragmatic constraints of the system: a store manager way
+want to push forward a given item to boost its sellings, regardless of the
+rating predictions outputted by the algorithm. As a result, most of the
+research has focused on the prediction algorithms, and so will we.
+
+Prediction algorithms implementations are strongly influenced by the fields of
+data mining and of course machine learning. However, we want to emphasize that
+the general setting of recommender systems is actually quite different than
+that of classification or regression. A naïve reasoning could lead us to
+consider that the rating prediction problem with the rating scale $[1, 5]$ is
+nothing but a classification task with five classes $1, 2, 3, 4, 5$. But this is
+forgetting that the values $1, 2, 3, 4, 5$ are actually ordinal, and that the
+difference between \textit{class} $1$ and \textit{class} $2$ is not the same as the
+difference between \textit{class} $1$ and \textit{class} $4$. But most
+importantly, in classification or regression all the instances belong to the
+same space (that space was $X^m$ in our previous chapters), and have the same
+features. This is not the case here! In a recommendation problem, if we chose
+our instances to be the users and their feature space to be the items, we would
+end up with instances that are only (very) partially described, because of
+course no user has rated the whole set of items. All the more, as the number of
+items is usually very high, we would end up with a very high dimensional
+problem, where learning algorithm tend to fail due to the so-called curse of
+dimentionality. Our point here is that recommender systems problems do not
+really fit within the traditional machine learning setting, and represent a new
+setting in their own right.
+
+Traditionally, prediction algorithms are
+considered to belong to one of the two main families of prediction techniques,
+referred to as \textbf{content-based} methods and \textbf{collaborative
+filtering} methods, that we both review below. In practice, real-world
+recommender systems usually use a mix of both methods, and are referred to as
+\textbf{hybrid} methods.
 
 \subsection{Content-based techniques}
-\label{sec:content-based}
+\label{SEC:collaborative_filtering}
 
-Content-based algorithms use the metadata of users and items to estimate a
-rating. Metadata are external information that can be collected. Typically:
+Content-based algorithms try to recommender to a user some items that are
+\textbf{similar} to those that the user has liked in the past. For example, if
+the renting history of a user mainly contains science fiction movies, the aim
+of the system is to learn these preferences and recommend some other science
+fiction movies to the user. We recommend \cite[Ch.~3]{RecoSystemHandbook} for a
+recent overview of content-based methods.
 
-\begin{itemize}
-\item for users: gender, age, occupation, location (zip code), etc.
-\item for items: it depends on the type of items, but in the case of movies, it
-  could be their genre, main actors, film director, etc.
-\end{itemize}
+To find out similar items to those that a user has liked, these systems usually
+rely on a similarity metric whose nature strongly depends on the representation
+of the items. In large-scale online shopping systems were items are extremely
+diverse and abundant, a similarity measure between two items would be for
+example the number of web sessions on which the two item pages have jointly
+been visisted (yes, this is the reason why some online systems will try to sell
+you a fridge even though you just bought a brand new one). In systems were
+items are more homogeneous, i.e. in a movie store system, more  sophisticated
+approaches can be built relying on some metadata about the items (hence the
+name \textit{contenat}-based), for example movies genre, main actors, film
+director, etc\dots.
 
-Based on these metadata, a content-based system will try to find items that are
-similar to the ones for which the target user has already expressed a
-preference (for instance by giving a high rating). This implies the need for a
-similarity measure between items. A lot of options are available for such
-metrics.
-\todo{Détailler (TF-IDF etc)}
+As content-based techniques do not rely on the set of ratings to compute item
+similarities, a nice resulting feature is that new items that have not yet been
+rated by anybody can still be recommended. Content-based techniques also stand
+out by their explanatory potential: the motto \textit{Here are some items that
+are akin to those you liked} is perfectly understandable and seems sound.
+Recommender systems usually strive for explanatory power, because it is
+recognized that when confronted with a given recommendation users are more
+likely to accept the recommendation is they understand and acknowledge the
+underlying process.
 
-A well-known drawback of content-based techniques is their tendency to
-recommend only items that users may already know, and therefore the
-recommendations lack in novelty, surprise and diversity. Also, they tend to
-output much less accurate prediction the collaborative filtering methods. This
-is why recent works have mostly focused on this kind of techniques.
+However, content-based systems are prone to various behaviour that tend to make
+them less competitive with other collaborative filtering methods. The first
+obvious drawback is that most of the time, metadata are required to describe
+the items (remember our movie example with genre, actors etc.). Such
+description can be extremely costly and can only capture a very limited subset
+of item features, which are not necessarily the most important ones when it
+comes to the users personal tastes. Going back to our science fiction fan, it
+is very plausible that the user has a strong preference for the steampunk
+genre, and yet is perfectly indifferent to the superhero fiction movies, and
+both can still be considered as subgenres of science fiction. A system that
+could not distinguish these two kinds of movies would fail to provide our
+steampunk fan with relevant recommendations.
+
+Another well-known drawback of content-based recommenders is their tendency to
+recommend only items that users may already know or do not need anymore (such
+as a fridge!), and therefore the recommendations lack in novelty, surprise and
+diversity. Also, they tend to output much less accurate prediction the
+collaborative filtering methods (the way accuracy is computed will be described
+in Section \ref{TODO}). For all these reasons, our own analogy-based algorithms
+we rather be of a collaborative filtering nature.
 
 \subsection{Collaborative filtering techniques}
-\label{sec:collaborative_filtering}
-By collaborative filtering, we mean here algorithms that only rely on the set
-of known ratings $R$ to make a prediction: to predict $\rui \notin R$, the
-algorithm $A$ will output $\predrui$ based on $R$ or on a carefully chosen
-subset.  The main difference between collaborative and content-based method is
-that in the former, metadata of items and users are not used, and in the latter
-the only ratings we may take into account are that of the target user.
+\label{SEC:collaborative_filtering}
+
+The main idea behind collaborative filtering algorithms is to recommend items
+to a users that other users with similar tastes have liked in the past. So for
+example if Bob and Alice usually agree on their movie ratings, i.e. they like
+the same movies and dislike the same movies, if Alice has not seen a movie that
+Bob has liked, then it will be recommended to Alice. We will here present two
+families of collaborative filtering algorithms: the neighborhood approach based
+on the well known $k$-NN algorithm, and the matrix factorization techniques
+whose groundings come from linear algebra and that lead to elegant and accurate
+models.
 
 \subsubsection{The neighborhood approach}
-\todo{Detail all this}
-To estimate the rating of a user $u$ for an item $i$, we select $N_i^k(u)$, the
-set of $k$ users that are most similar to $u$ and that have rated $i$. Here
-again, there is a need for a similarity measure (between users, and based on
-their respective ratings). The estimation of $\rui$ is computed as follows:
-$$\predrui = \aggr{v \in N_i^k(u)}r_{vi},$$
-where the aggregate function $\aggr{}$ is usually a mean weighted by the
-similarity between $u$ and $v$. A more sophisticated prediction, popularized by
-\cite{BelKorSIGKDD2007} is as follows:
-$$\predrui = b_{ui} + \aggr{v \in N_i^k(u)}(r_{vi} - b_{vi}),$$
-where $b_{ui}$ is a baseline (or bias) related to user $u$ and item $i$. It
-is supposed to model how $u$ tends to give higher (or lower) ratings than the
-average of ratings $\mu$, as well as how $i$ tends to be rated higher or lower
-than $\mu$. As it uses the neighbourhood of users to output a prediction, this
-technique tends to model local relationships in the data.
 
-Note that it is perfectly possible to proceed in an item-based way. Indeed,
-rather than looking for users similar to $u$, one may look for items similar to
-$i$, which leads to formulas dual of the above ones.
+Neighborhood approaches are instances of the general $k$-NN scheme. To estimate
+the rating $\rui$ of a user $u$ for an item $i$, the most basic method consists
+in computing  the set of $k$ users that are most similar to $u$ and
+that have rated $i$. We will denote this set $N_i^k(u)$. The computation of
+$N_i^k(u)$ depends of course on a similarity measure between users, which is
+based on their respective ratings.  The estimation $\predrui$ of $\rui$ is then
+computed as an aggregate of the ratings $\rvi$, where $v$ is one of the
+neighbors of $u$. Usually, the aggregation is simply a mean weighted by the
+similarity between $u$ and $v$: $$\predrui = \frac{\sum\limits_{v \in N_i^k(u)}
+r_{vi} \cdot \ssim(u, v)} {\sum\limits_{v \in N_i^k(u)}\ssim(u, v)}.$$
 
-\subsubsection{Matrix factorization}
+There are many, many ways to define the similarity metric between two users.
+Probably the most common one is the cosine similarity:
+$$
+\text{cosine sim}(u, v) = \frac{ \sum\limits_{i \in \Iuv} \rui \cdot \rvi}
+{\sqrt{\sum\limits_{i \in \Iuv} \rui^2} \cdot \sqrt{\sum\limits_{i \in \Iuv}
+\rvi^2}}.
+$$
 
-\todo{Detail all this}
-The matrix factorization approach is heavily inspired by singular value
-decomposition (SVD): it postulates the existence of $f$ factors/criteria
+Here, users $u$ and $v$ are considered as vectors in a vector space defined by
+the items they have both rated. Their cosine similarity simply is the cosine of
+the angle between the two vectors. An unnatural feature of this metric is that
+two vectors with (potentially different) constant values will always have a
+similarity of $1$, because they are collinear. For example if $u = (2, 2)$ and
+$v = (5, 5)$, $\text{cosine sim}(u, v) = \frac{20}{\sqrt{8}\sqrt{50}} = 1$,
+while one would expect $u$ and $v$ to be quite different w.r.t. their tastes.
+
+Such a flaw can be overcame using the Pearson similarity, which can be viwed as
+a mean-centered version of the cosine similarity:
+
+$$
+\text{pearson sim}(u, v) = \frac{ \sum\limits_{i \in \Iuv}
+(\rui -  \mu_u) \cdot (\rvi - \mu_{v})} {\sqrt{\sum\limits_{i
+\in \Iuv} (\rui -  \mu_u)^2} \cdot \sqrt{\sum\limits_{i \in
+\Iuv} (\rvi -  \mu_{v})^2}},
+$$
+where $\mu_u$ and $\mu_v$ are the average rating of users $u$ and $v$
+respectively.
+
+One last similarity metric that we will use is the Mean Squared Difference
+(MSD)\footnote{Strictly speaking MSD is actually a distance rather than a
+similarity metric, so taking its inverse would do the job.}:
+$$\text{MSD}(u, v) = \frac{1}{|\Iuv|} \cdot \sum\limits_{i \in \Iuv} (\rui -
+\rvi)^2$$
+
+In the next section, we describe another very popular collaborative filtering
+technique, which models the data in a significantly different (but meaningful!)
+way.
+
+\subsubsection{Matrix factorization techniques}
+
+About ten years ago, the Netflix company organized a competition where the goal
+was to outperform the RMSE (defined in Section \ref{TODO}) of their standard
+prediction algorithm of $10\%$. The challenge quickly became very popular, not
+only because the winning prize was of \$1 million, but also because the dataset
+was orders of magnitude bigger than any other available dataset so far: about
+100M of ratings of 480.000 user sand 17.700 movies. Unfortunately, their
+dataset is no longer publicly available, but the challenge led to the emergence
+of many successful recommendation technique, among which matrix factorization
+methods clearly stand out.
+
+The matrix factorization approach we will describe here is heavily inspired by
+the Singular Value Decomposition (SVD) of a matrix, one of the highlights of
+linear algebra. Because having a basic understanding of SVD will be very
+insightful for us, we will try to briefly describe it here. Let's first dive
+into the arid theory (not for long):
+
+\begin{proposition}
+  Any real-valued matrix $R \in \mathcal{M}^{m \times n}$ of rank $r$ can be
+  decomposed as the product of three matrices:
+
+  $$R = P\Sigma Q^t,$$
+  where $P\in \mathcal{M}^{m \times r}$, $\Sigma\in \mathcal{M}^{r \times r}$
+  is a diagonal matrix, and $Q\in \mathcal{M}^{n \times r}$.
+\end{proposition}
+
+As $\Sigma$ is a diagonal matrix, it only act as a scaler for either $P$ or
+$Q$. For the sake of simplicity, we will consider that the decomposition can be
+written $R = PQ$, where $\Sigma$ has been merged into either $P$ or $Q$. In
+practice, we know how to compute the columns of $P$ and $Q$: they are the
+eigenvectors\footnote{For this reason, SVD and Principal Component Analysis are
+strongly related.} of the two matrices $A^tA$ and $AA^t$, and their associated
+eigenvalues are the squared entries of $\Sigma$, called the singular values
+(hence the name of the factorization).
+
+The key point is that the columns of $P$ are actually an orthonormal basis for
+the column space of $R$, and columns of $Q$ are an orthonormal basis for the
+row space of $R$. Maybe this statement is worth some explaination. The column
+space of $R$ is the vector space that is spanned by the $n$ columns or $R$,
+i.e. the set of vectors that are a linear combination of the columns of $R$. As
+some of the columns of $R$ may be linearly dependent, this vector space is of
+dimension $r\leq n$: the rank of a matrix is defined as the number of
+independent columns, and equivalently as the number of independent rows. Our
+statement says that the columns of $P$ span the same space, and that they form
+an orthonormal basis of $r$ vectors. The same goes the columns of $Q$, which
+span the row space of $R$.
+
+A particular case of this general statement is that \textbf{any column of $R$
+can be expressed as a unique linear combination of the columns of $P$}. As the
+columns of $P$ are orthonormal, each column has a unique contribution that
+cannot be compensated by the others. Symmetrically, \textbf{any row of $R$ is a
+linear combination of the columns of $Q$.} What does it have to do with our
+recommendation problem? Imagine for a moment that $R$ is a dense rating matrix,
+where the rows reprensent items and the columns reprensent users:
+$$
+R = \begin{blockarray}{cccc}
+  \text{Alice} & \text{Bob} & \text{Charlie} \\
+\begin{block}{(ccc) c}
+  4 & 5 & 5 & \text{Titanic} \\
+  2 & 1 & 1 & \text{Toy Story} \\
+  1 & 2 & 2 & \text{LORT} \\
+  3 & 3 & 3 & \text{Mad Max} \\
+  4 & 2 & 2 & \text{E.T.} \\
+\end{block}
+\end{blockarray}
+=
+\begin{pmatrix}
+  \\
+  p_1& p_2 & \cdots & p_r\\
+  \\
+\end{pmatrix}
+\begin{pmatrix}
+  & q_1 & \\
+  & q_2 & \\
+  & \vdots & \\
+  & q_r & \\
+\end{pmatrix}
+$$
+
+
+
+
+If we perform the SVD of $R$, we will find in the columns of $P$ some
+\textit{prototype} users that have no real existence, but that can be combined
+(linearly) to build up either Alice, Bob or Charlie. Similarly, the columns of
+$Q$ are \textit{prototype} movies that do not properly exist but that can be
+combined to build up Titanic, Toy Story, etc\dots
+
+it postulates the existence of $f$
+factors/criteria
 (whose nature is not necessarily known) that determine the value of any rating
 $\rui$.  A user $u$ is modeled as a vector $p_u \in \mathbb{R}^f$, where each
 component of $p_u$ models the importance of the corresponding factor for $u$.
 Similarly, an item $i$ is modeled as a vector $q_i \in \mathbb{R}^f$, where
 each component of $q_i$ models how well $i$ fits the corresponding criteria.
 From then, a rating prediction $\predrui$ is calculated as the dot product
-of the two vectors $p_u$ and $q_i$: $$\predrui = p_u^t \cdot q_i$$ For the
-interested reader, see the work of
-\cite{Funk2006,KorACM2010} The number of factors being set,
-the problem is here to estimate the vectors $p_u$ and $q_i$ for every possible
-users and items. Two methods are commonly used for this task: alternating least
-squares and stochastic gradient descent, first popularized by \cite{Funk2006}.
+of the two vectors $p_u$ and $q_i$: $$\predrui = p_u^t \cdot q_i$$. 
+
+Once the number of factors is set, the problem is here to estimate the vectors
+$p_u$ and $q_i$ for every possible users and items. This can be done by solving
+the following regularized least square optimization problem:
+$$
+\sum_{\rui \in \Rtrain} \left(\rui - q_i^t \cdot p_u \right)^2 +
+\lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right),
+$$
+where $\lambda$ is a regularization term. Not surprisingly, stochastic gradient
+descent tend to perform really well on this task, but Alternating Least Squares
+can also be used.
+
+\todo{Mettre des refs}
 
 Contrary to the neighbourhood-based approach, the matrix factorization
 technique tends to model global aspects of the data.  Matrix factorization and
 neighbourhood based techniques have been successfully mixed in the works of
 \cite{KorACM2010}.
-
 
 \subsection{Recommender system
 evaluation}\label{eval} Providing an accurate measure of the overall quality of
@@ -307,7 +505,7 @@ arithmetic definition in $\mathbb{R}^n$: $\vec{a}:\vec{b}::\vec{c}:\vec{d}
 \iff \vec{a}-\vec{b}=\vec{c}-\vec{d}$.
 Given 4 users, they are represented as real vectors of dimension $m$, where $m$
 is the number of item they have rated in common. This dimension can
-change with the 4-tuples of users that we consider. 
+change with the 4-tuples of users that we consider.
 Then, the threshold $\lambda$ has to be a function of this dimension $m$,
 as the range of values that $||.||$ may take depends on it. Using
 cross-validation, we have found that $\lambda = \frac{3}{2} \cdot\sqrt{m}$ showed the
@@ -324,14 +522,14 @@ Algorithm \ref{algo:analogical_reco}.
       \STATE {\bf Init}:
       \STATE $C = \varnothing$ \quad \quad // list of candidate ratings
       \FORALL{
-        users $a, b, c$ such that\\ 
-        \begin{enumerate} 
+        users $a, b, c$ such that\\
+        \begin{enumerate}
         \item $r_{ai} \in R, r_{bi} \in R, r_{ci} \in R$
         \item $r_{ai} - r_{bi} = r_{ci} - x$ is solvable  // i.e. the solution $x \in [1,5]$
         \item $||(a-b)-(c-d)||\leq \lambda$ // Analogy almost stands between $a,b,c,d$ considered as real vectors
         \end{enumerate}
       }
-      
+
       \STATE  $x \leftarrow r_{ci} - r_{ai} + r_{bi}$
       \STATE $C \gets C \cup \{x\}$ \quad // add x as a candidate rating
 	  \ENDFOR
@@ -343,7 +541,7 @@ Algorithm \ref{algo:analogical_reco}.
        \label{algo:analogical_reco}
 \end{algorithm}
 
-Some options are available at this stage. 
+Some options are available at this stage.
 
 Here again, there is no need to choose the Euclidean norm (i.e. $L_2$ norm) as
 other norms also make sense: $L_1$ norm using the absolute value of the
@@ -414,7 +612,7 @@ notion to grasp, one may also wonder if the used measure is fully appropriate.
 
 As usual, analogy-based algorithms suffer from their inherent cubic complexity.
 In the case of recommender systems where millions of users/items are involved,
-this is also a serious issue. 
+this is also a serious issue.
 
 \section{Clones}
 
@@ -579,7 +777,21 @@ This algorithm will be referred to as $CloneA$. For the sake of completeness,
 we also tried the same formula but with a more basic similarity metric that
 does not care about clones: MSD. This algorithm is referred to as $CloneB$.
 
-\subsubsection{Current practices in neighborhood-based methods}
+\subsubsection{ZOB}
+
+A more sophisticated prediction, popularized by \cite{BelKorSIGKDD2007} is as
+follows:
+$$\predrui = b_{ui} + \aggr{v \in N_i^k(u)}(r_{vi} - b_{vi}),$$
+where $b_{ui}$ is a baseline (or bias) related to user $u$ and item $i$. It
+is supposed to model how $u$ tends to give higher (or lower) ratings than the
+average of ratings $\mu$, as well as how $i$ tends to be rated higher or lower
+than $\mu$. As it uses the neighbourhood of users to output a prediction, this
+technique tends to model local relationships in the data.
+
+Note that it is perfectly possible to proceed in an item-based way. Indeed,
+rather than looking for users similar to $u$, one may look for items similar to
+$i$, which leads to formulas dual of the above ones.
+
 
 A simple and efficient formula using neighborhood technique, popularized by
 \cite{KorACM2010} is the following:
@@ -620,6 +832,7 @@ whole is to see that it conceptually follows these steps:
 \end{enumerate}
 
 In what follows, this algorithm is referred to as $k$-NNbsl.
+
 
 It is very clear that the use of the baseline predictors is motivated by the
 same reasons one would want to consider clones in a rating prediction
@@ -840,7 +1053,7 @@ d'\'evaluer la {\it qualité} d'une règle d'association, comme  la
 \emph{confiance} qui s'exprime sous la forme $\frac{supp( X \cup Y)}{supp(X)}$.
 
 Les méthodes d'extraction de telles règles ont fait l'objet de nombreuses
-études. L'algorithme {\it Apriori} 
+études. L'algorithme {\it Apriori}
 \cite{AgrSriVLDB94} est probablement le plus connu mais il en existe d'autres.
 L'idée   est de fixer un seuil minimum $\alpha$ pour le support et de chercher dans
 $2^I$ les itemsets dont le support dépasse $\alpha$, pour obtenir un ensemble
@@ -862,10 +1075,10 @@ données.
 %cas, on peut penser recommander à quelqu'un ayant acheté dentifrice,
 %brosse à dent et beurre, d'acheter des biscottes. Sur quelle base?  Sur la
 %base que la relation liant dentifrice et brosse à dent est la même que
-%celle liant beurre et biscottes. 
+%celle liant beurre et biscottes.
 Au même titre que les règles d'association, la détection de proportions
 analogiques dans une base de données est une information supplémentaire
-fournie aux détenteurs de la base.  Dans la section suivante, nous 
+fournie aux détenteurs de la base.  Dans la section suivante, nous
 utilisons l'algorithme {\it Apriori} pour extraire d'une base des proportions
 analogiques.
 
@@ -881,10 +1094,10 @@ l'utilisateur $u$ porte à l'item $i$ : on trouvera souvent $r_{ui} \in
 connues du système par $R$.
 % Pour recommander des articles aux utilisateurs, un
 %système de recommandation procède ainsi: i) avec un algorithme $A$, on estime
-%les notes $r_{ui}$ inconnues (c.à.d.  $r_{ui} \notin R$);  
+%les notes $r_{ui}$ inconnues (c.à.d.  $r_{ui} \notin R$);
 %Cette estimation  $A(u, i)$ est communément notée $\hat{r}_{ui}$.
 %ii) Avec une stratégie de recommandation $S$ et au vu des notes précédemment
-%estimées, recommander des items aux utilisateurs. 
+%estimées, recommander des items aux utilisateurs.
 %Par exemple, une stratégie très basique mais assez courante est de suggérer à
 %$u$ les articles $i$ pour lesquels $\hat{r}_{ui}$ est le plus grand.
 
@@ -902,13 +1115,13 @@ des utilisateurs qui ont conjointement noté $A, B, C,$ et $D$.
 
 %Dans le cas d'une base de données de films comme MovieLens, le support de 4
 %films $\{a, b, c, d \}$ est simplement la proportion d'utilisateurs ayant vu
-%ces 4 films. 
+%ces 4 films.
 Naturellement, comme pour les règles d'association, on peut ne
 s'intéresser qu'aux analogies dont le support est supérieur à un certain
 seuil $\alpha$.  Ensuite, pour un itemset $\{A, B, C, D \}$ de support
 supérieur au seuil $\alpha$ que l'on s'est fixé, et ayant à notre
 disposition une relation analogique permettant d'affirmer si, par exemple,
-$A:B::C:D$ est valide ou non, on cherche quelles sont les analogies possibles. 
+$A:B::C:D$ est valide ou non, on cherche quelles sont les analogies possibles.
 
 On sait qu'il y a 4! = 24 permutations possibles de $\{A, B, C, D \}$,
 correspondant à 24 analogies possibles. Cependant, compte tenu des
@@ -954,7 +1167,7 @@ Section \ref{expe}).
 \subsubsection{Algorithme}
 L'algorithme d'extraction de règles analogiques est alors calqué sur le modèle
 d'extraction de règles d'association : on se donne une fonction de qualité $f$,
-et deux seuils $\alpha$ et $\beta$. 
+et deux seuils $\alpha$ et $\beta$.
 
 D'abord, on calcule tous les 4-itemsets de support supérieur au seuil $\alpha$
 à   l'aide de l'algorithme \textit{Apriori}.  Pour chaque itemset retenu,
@@ -990,7 +1203,7 @@ l'espace de recherche, et donc accélerer significativement la recherche de
 trop triviales, on ne retient pas les proportions de la forme $x:x::x:x$.
 
 En choisissant un support minimal de 40 et un support maximal de 150, nous
-obtenons les mesures de qualités (calculées comme la proportion d'analogies 
+obtenons les mesures de qualités (calculées comme la proportion d'analogies
 parfaites) illustrées par la figure \ref{qualite}. Comme on peut le voir, la
 meilleure proportion a une qualité d'environ $40$\%, ce qui peut paraître peu
 convainquant. Néanmoins, en remarquant que pour une composante il y a 4 chances
@@ -1013,9 +1226,9 @@ Les mêmes expériences ont été menées en gardant l'échelle de notes numéri
 ($[1, 2, 3, 4, 5]$) et en utilisant une expression multivaluée de l'analogie.
 Les meilleures proportions obtenues s'avèrent être globalement les mêmes que
 celles qui ressortent de l'échelle binaire, montrant ainsi la cohérence des
-deux approches. La m\'ediocre qualit\'e des proportions analogiques trouv\'ees, 
-m\^eme si elles sont statistiquement significatives, 
-ne permet pas d'utiliser raisonnablement l'inf\'erence analogique dans cet exemple. 
+deux approches. La m\'ediocre qualit\'e des proportions analogiques trouv\'ees,
+m\^eme si elles sont statistiquement significatives,
+ne permet pas d'utiliser raisonnablement l'inf\'erence analogique dans cet exemple.
 Ceci  tend \`a expliquer a posteriori pourquoi une approche pour la
 pr\'ediction de notes manquantes, bas\'ee sur la recherche de triplets
 analogiques, avait obtenu des r\'esultats modestes \cite{HugPraRicISMIS15}.
