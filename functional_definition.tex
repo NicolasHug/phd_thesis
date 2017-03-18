@@ -962,7 +962,7 @@ VC-dimension of our classifiers to be small. However, we have previously seen
 that the nearest neighbors classifiers, despite their infinite
 VC-dimension, enjoy many interesting theoretical properties, and their
 practical efficiency is well-acknowledged. In fact, the upper bound on the true
-risk does not even hold for classes of learner whose dimension is infinite
+risk does not even hold for classes of learner whose VC-dimension is infinite
 \cite{Bur98}. We then need to keep in mind that even though the analogical
 learners have an infinite VC-dimension, which is an interesting result in its
 own right, this does not necessarily prevent them from being useful
@@ -1179,7 +1179,7 @@ theoretical results:
 \end{itemize}
 
 It is fairly easy to see that $f_1$ and $f_2$ split the universe $x^m$ into
-two disjoint sets of size $2^{m - 1}$: those for which $f_(\mathbf{x})$ is
+two disjoint sets of size $2^{m - 1}$: those for which $f(\mathbf{x})$ is
 equal to $1$, and those with labels equal to $0$. We say that the datasets are
 balanced. However, the other functions may lead to very unbalanced datasets. An
 extreme case is for example $f_3$ with $k = m$, which leads to $f_3(\mathbf{x})
@@ -1207,10 +1207,10 @@ interesting conclusions about the behaviour of the 1-NAN algorithm.
 \begin{figure}[!h]
 \centering
   \includegraphics[scale=.55]{figures/nan_vs_nn_SUMMARY_dim8_nexp15.pdf}
-\caption{Accuracies of the 1-NAN and 1-NN algorithms  over different Boolean
-  functions ($m = 8$) and training set sizes, with corresponding values of
-  $\omega$, $\gamma$, and theoretical accuracy. The $x$ axis corresponds to the
-  size of the training set.}
+  \caption{Accuracies (left) of the 1-NAN and 1-NN algorithms over different
+  Boolean functions ($m = 8$) and training set sizes, with corresponding values
+  of $\omega$, $\gamma$, and theoretical accuracy (right). The $x$ axis
+  corresponds to the size of the training set.}
 \label{FIG:nan_vs_nn}
 \end{figure}
 
@@ -1261,13 +1261,13 @@ would have done better!). This is one of the distinguishing features of the XOR
 functions: the nearest neighbor of an element is almost always in a different
 class, as can be seen on Figure \ref{FIG:classification_problem} (page
 \ref{FIG:classification_problem}). So sadly, the 1-NN algorithm can do nothing
-but wrong one these kind of functions. In chapter \ref{TODO}, we will prove a
+but wrong on these kind of functions. In chapter \ref{TODO}, we will prove a
 strong result showing that both the projections (like $f_1$) and the XOR
 functions (like $f_2$) \textbf{always} lead to perfectly sound extensions, for
 any training set of any size.
 
 Table \ref{TAB:monks} shows the same metrics for the Monk datasets and also
-report the results of the Analogical Proportion Classifier (\textit{APC}) from
+reports the results of the Analogical Proportion Classifier (\textit{APC}) from
 \cite{MicBayDelJAIR08}, which corresponds to algorithm
 \ref{ALGO:extended_classifier} with $k=100$.
 \begin{table}
