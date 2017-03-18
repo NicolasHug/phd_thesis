@@ -57,7 +57,7 @@ preference towards items. \textbf{Implicit} ratings belong to a binary scale $[0
 behaviour, without any active involvement. For example, if a user has listened to a given track more than 10
 times, we might consider this as an implicit rating of $1$. We may also
 consider that an implicit rating captures the fact that a user has bought a
-given item without giving it an explicit rating. These two kinfs of rating
+given item without giving it an explicit rating. These two kinds of rating
 schemes (explicit and implicit) lead to quite different prediction algorithms
 in practice. In our work, we will only focus on the explicit rating
 scheme.\todo{Vrai?}
@@ -192,8 +192,9 @@ that have rated $i$. We will denote this set $N_i^k(u)$. The computation of
 $N_i^k(u)$ depends of course on a similarity measure between users, which is
 based on their respective ratings.  The estimation $\predrui$ of $\rui$ is then
 computed as an aggregate of the ratings $\rvi$, where $v$ is one of the
-neighbors of $u$. Usually, the aggregation is simply a mean weighted by the
-similarity between $u$ and $v$: $$\predrui = \frac{\sum\limits_{v \in N_i^k(u)}
+neighbors of $u$ in $N_i^k(u)$. Usually, the aggregation is simply a mean
+weighted by the similarity between $u$ and $v$: $$\predrui =
+\frac{\sum\limits_{v \in N_i^k(u)}
 r_{vi} \cdot \ssim(u, v)} {\sum\limits_{v \in N_i^k(u)}\ssim(u, v)}.$$
 
 There are many, many ways to define the similarity metric between two users.
@@ -205,14 +206,14 @@ $$
 $$
 
 Here, users $u$ and $v$ are considered as vectors in a vector space defined by
-the items they have both rated. Their cosine similarity simply is the cosine of
+the items they have both rated (the set of common items is $\Iuv$). Their cosine similarity simply is the cosine of
 the angle between the two vectors. An unnatural feature of this metric is that
 two vectors with (potentially different) constant values will always have a
 similarity of $1$, because they are collinear. For example if $u = (2, 2)$ and
 $v = (5, 5)$, $\text{cosine sim}(u, v) = \frac{20}{\sqrt{8}\sqrt{50}} = 1$,
 while one would expect $u$ and $v$ to be quite different w.r.t. their tastes.
 
-Such a flaw can be overcame using the Pearson similarity, which can be viwed as
+Such a flaw can be overcame using the Pearson similarity, which can be viewed as
 a mean-centered version of the cosine similarity:
 
 $$
@@ -223,7 +224,6 @@ $$
 $$
 where $\mu_u$ and $\mu_v$ are the average rating of users $u$ and $v$
 respectively.
-
 One last similarity metric that we will use is the Mean Squared Difference
 (MSD)\footnote{Strictly speaking MSD is actually a distance rather than a
 similarity metric, so taking its inverse would do the job.}:
@@ -237,10 +237,10 @@ way.
 \subsubsection{Matrix factorization techniques}
 
 About ten years ago, the Netflix company organized a competition where the goal
-was to outperform the RMSE (defined in Section \ref{TODO}) of their standard
-prediction algorithm of $10\%$. The challenge quickly became very popular, not
+was to improve the RMSE (defined in Section \ref{TODO}) of their standard
+prediction algorithm by $10\%$. The challenge quickly became very popular, not
 only because the winning prize was of \$1 million, but also because the dataset
-was orders of magnitude bigger than any other available dataset so far: about
+was orders of magnitude larger than any other available dataset at the time: about
 100M of ratings of 480.000 user sand 17.700 movies. Unfortunately, their
 dataset is no longer publicly available, but the challenge led to the emergence
 of many successful recommendation technique, among which matrix factorization
@@ -250,43 +250,45 @@ The matrix factorization approach we will describe here is heavily inspired by
 the Singular Value Decomposition (SVD) of a matrix, one of the highlights of
 linear algebra. Because having a basic understanding of SVD will be very
 insightful for us, we will try to briefly describe it here. Let's first dive
-into the arid theory (not for long):
+into the theory (but not for long):
 
 \begin{proposition}
   Any real-valued matrix $R \in \mathcal{M}^{m \times n}$ of rank $r$ can be
-  decomposed as the product of three matrices:
+  decomposed as the product of three matrices\footnote{The matrix $I$ is
+  \textbf{not} the identity matrix!}:
 
-  $$R = P\Sigma Q^t,$$
-  where $P\in \mathcal{M}^{m \times r}$, $\Sigma\in \mathcal{M}^{r \times r}$
-  is a diagonal matrix, and $Q\in \mathcal{M}^{n \times r}$.
+  $$R = U\Sigma I^t,$$
+  where $U\in \mathcal{M}^{m \times r}$, $\Sigma\in \mathcal{M}^{r \times r}$
+  is a diagonal matrix, and $I\in \mathcal{M}^{n \times r}$.
 \end{proposition}
 
-As $\Sigma$ is a diagonal matrix, it only act as a scaler for either $P$ or
-$Q$. For the sake of simplicity, we will consider that the decomposition can be
-written $R = PQ$, where $\Sigma$ has been merged into either $P$ or $Q$. In
-practice, we know how to compute the columns of $P$ and $Q$: they are the
+As $\Sigma$ is a diagonal matrix, it only act as a scaler for either $U$ or
+$I$. For the sake of simplicity, we will consider that the decomposition can be
+written $R = UI^t$, where $\Sigma$ has been merged into either $U$ or $I$. In
+practice, we know how to compute the the two matrices $U$ and $I$: their
+columns are are the
 eigenvectors\footnote{For this reason, SVD and Principal Component Analysis are
 strongly related.} of the two matrices $A^tA$ and $AA^t$, and their associated
 eigenvalues are the squared entries of $\Sigma$, called the singular values
 (hence the name of the factorization).
 
-The key point is that the columns of $P$ are actually an orthonormal basis for
-the column space of $R$, and columns of $Q$ are an orthonormal basis for the
+The key point is that the columns of $U$ are actually an orthonormal basis for
+the column space of $R$, and the columns of $I$ are an orthonormal basis for the
 row space of $R$. Maybe this statement is worth some explaination. The column
 space of $R$ is the vector space that is spanned by the $n$ columns or $R$,
 i.e. the set of vectors that are a linear combination of the columns of $R$. As
 some of the columns of $R$ may be linearly dependent, this vector space is of
 dimension $r\leq n$: the rank of a matrix is defined as the number of
 independent columns, and equivalently as the number of independent rows. Our
-statement says that the columns of $P$ span the same space, and that they form
-an orthonormal basis of $r$ vectors. The same goes the columns of $Q$, which
-span the row space of $R$.
+statement says that the columns of $U$ span the same space, and that they form
+an orthonormal basis of $r$ vectors. The same goes for the orthogonal columns
+of $I$, which span the row space of $R$.
 
 A particular case of this general statement is that \textbf{any column of $R$
-can be expressed as a unique linear combination of the columns of $P$}. As the
-columns of $P$ are orthonormal, each column has a unique contribution that
+can be expressed as a unique linear combination of the columns of $U$}. As the
+columns of $U$ are orthonormal, each column has a unique contribution that
 cannot be compensated by the others. Symmetrically, \textbf{any row of $R$ is a
-linear combination of the columns of $Q$.} What does it have to do with our
+linear combination of the columns of $I$.} What does it have to do with our
 recommendation problem? Imagine for a moment that $R$ is a dense rating matrix,
 where the rows reprensent items and the columns reprensent users:
 $$
@@ -303,62 +305,86 @@ R = \begin{blockarray}{cccc}
 =
 \begin{pmatrix}
   \\
-  p_1& p_2 & \cdots & p_r\\
+  U_1& U_2 & \cdots & U_r\\
   \\
 \end{pmatrix}
+\cdot
 \begin{pmatrix}
-  & q_1 & \\
-  & q_2 & \\
+  & I_1 & \\
+  & I_2 & \\
   & \vdots & \\
-  & q_r & \\
+  & I_r & \\
 \end{pmatrix}
+,
 $$
+where $U_1, \cdots U_r$ are the columns of $U$ and $I_1, \cdots I_r$ are the
+columns of $I$ (i.e. the lines of $I^t$).
 
-
-
-
-If we perform the SVD of $R$, we will find in the columns of $P$ some
+When we compute the SVD of $R$, we find in the columns of $U$ some
 \textit{prototype} users that have no real existence, but that can be combined
-(linearly) to build up either Alice, Bob or Charlie. Similarly, the columns of
-$Q$ are \textit{prototype} movies that do not properly exist but that can be
-combined to build up Titanic, Toy Story, etc\dots
+(linearly) to build up any of the users: Alice, Bob and Charlie are linear
+combinations of $U_1, U_2, \dots U_r$.  Similarly, the columns of $I$ are
+\textit{prototype} movies that do not properly exist but that can be combined
+to build up Titanic, Toy Story, etc\dots We can consider each vector $I_i$
+to be some sort of idealized movie type, for example $I_1$ is a typical action
+movie, while $I_2$ would be a typical romantic movie, etc. Similarly, the
+$U_i$'s can be viewed as some idealized critics, with specific tastes toward
+some kind of movies. Obviously in practice, there is no way to assoociate a
+clear semantic meaning to the different $U_i$ or $I_i$, and the way they are
+defined highly depends on the matrix $R$.
 
-it postulates the existence of $f$
-factors/criteria
-(whose nature is not necessarily known) that determine the value of any rating
-$\rui$.  A user $u$ is modeled as a vector $p_u \in \mathbb{R}^f$, where each
-component of $p_u$ models the importance of the corresponding factor for $u$.
-Similarly, an item $i$ is modeled as a vector $q_i \in \mathbb{R}^f$, where
-each component of $q_i$ models how well $i$ fits the corresponding criteria.
-From then, a rating prediction $\predrui$ is calculated as the dot product
-of the two vectors $p_u$ and $q_i$: $$\predrui = p_u^t \cdot q_i$$. 
+Moving on, each rating $\rui \in R$ is defined as a dot product $\rui = q_i^t
+\cdot p_u$, where $q_i \in \mathbb{R}^r$ is a row in $U$ and represents the
+item $i$, and $p_u \in \mathbb{R}^r$ is a column in $I$ and represents the user
+$u$. We can now understand that, \textbf{$p_u$ represents how well $u$ agrees
+with each of the $r$ prototype movies, and $q_i$ represents how well $i$ suits
+the tastes of the $r$ prototype users}. 
 
-Once the number of factors is set, the problem is here to estimate the vectors
-$p_u$ and $q_i$ for every possible users and items. This can be done by solving
-the following regularized least square optimization problem:
+This statement is the principal motivation for the use of SVD in recommendation
+settings. It postulates the existence of $f$ factors/criteria (whose nature is
+not necessarily known) that determine the value of any rating $\rui$.  A user
+$u$ is modeled as a vector $p_u \in \mathbb{R}^f$, where each component of
+$p_u$ models the importance of the corresponding factor for $u$.  Similarly, an
+item $i$ is modeled as a vector $q_i \in \mathbb{R}^f$, where each component of
+$q_i$ models how well $i$ fits the corresponding criteria.  From then, a rating
+prediction $\predrui$ is calculated as the dot product of the two vectors $p_u$
+and $q_i$:
+$$\predrui = p_u^t \cdot q_i.$$ 
+
+Once the number of factors $f$ is set, the problem is here to estimate the
+vectors $p_u$ and $q_i$ for every possible user and item. We saw that when the
+matrix $R$ is dense (i.e. there is no unknown entry), there is an analytic
+solution for computing the two matrices $U$ and $I$. However in a
+recommendation setting, the matrix $R$ is extremely sparse! So the SVD of $R$
+is not properly defined. One of the main contribution during the Netflix
+competition was made by Simon Funk, who showed that an approximate solution can
+be found by solving the following regularized least square optimization
+problem:
 $$
-\sum_{\rui \in \Rtrain} \left(\rui - q_i^t \cdot p_u \right)^2 +
+\sum_{\rui \in R} \left(\rui - q_i^t \cdot p_u \right)^2 +
 \lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right),
 $$
 where $\lambda$ is a regularization term. Not surprisingly, stochastic gradient
 descent tend to perform really well on this task, but Alternating Least Squares
-can also be used.
+can also be used. When $R$ is a dense matrix with no unknown entry, the
+solution of this optimization problem exactly corresponds that of the SVD.
 
 \todo{Mettre des refs}
-
-Contrary to the neighbourhood-based approach, the matrix factorization
-technique tends to model global aspects of the data.  Matrix factorization and
-neighbourhood based techniques have been successfully mixed in the works of
-\cite{KorACM2010}.
 
 \subsection{Recommender system
 evaluation}\label{eval} Providing an accurate measure of the overall quality of
 a recommender system is not a simple task and diverse viewpoints have to be
-considered (see \cite{RecoSystemHandbook} for an extensive survey).
+considered (see \cite[Ch. ??]{RecoSystemHandbook} for an extensive survey).
 % Obviously
 %accuracy is an important matter as  any system includes a prediction algorithm,
 %but other properties are also desirable in order  to deploy an effective
 %recommendation engine.
+
+In general, we will use $k$-folds cross-validation procedures to reliably
+evaluate each of the performence measure. The set of all ratings $R$ is divided
+into $k$ disjoint sets ; at each of the $k$ iterations, $\Rtrain$ is set to the
+$k^{\text{th}}$ subset and $\Rtest$ is set as the $k - 1$ remaining ones. The
+reported performances are then the average of the $k$ measures.
 
 \paragraph{Accuracy\\}
 The performance of the algorithm $A$ is usually evaluated in terms of accuracy,
@@ -379,11 +405,6 @@ important errors are not penalized more than small ones:
 $$\text{MAE}(A) = \frac{1}{|\Rtest|} \cdot \sum_{\rui \in \Rtest}|\predrui -
 \rui|.$$
 
-In order to have reliable estimates of the accuracy measures, $k$-folds
-cross-validation procedures are often used: the set of all ratings $R$ is
-divided into $k$ disjoint sets ; at each of the $k$ iterations, $\Rtrain$ is set
-to the $k^{\text{th}}$ subset and $\Rtest$ is set as the $k - 1$ remaining
-ones. The reported RMSE (or MAE) is then the average of the $k$ measures.
 
 To better reflect the user-system interaction, other precision-oriented metrics
 are sometimes used in order to provide a more informed view.

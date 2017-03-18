@@ -1178,7 +1178,7 @@ theoretical results:
     analogical extension with respect to that of the whole universe.
 \end{itemize}
 
-It is fairly easy to see that $f_1$ and $f_2$ split the universe $x^m$ into
+It is fairly easy to see that both functions $f_1$ and $f_2$ split the universe $X^m$ into
 two disjoint sets of size $2^{m - 1}$: those for which $f(\mathbf{x})$ is
 equal to $1$, and those with labels equal to $0$. We say that the datasets are
 balanced. However, the other functions may lead to very unbalanced datasets. An
@@ -1187,8 +1187,9 @@ extreme case is for example $f_3$ with $k = m$, which leads to $f_3(\mathbf{x})
 is the vector $\mathbf{x} = (1, 1, \cdots, 1)$. For these very unbalanced
 datasets, the accuracy of a classifier is not a relevant measure: predicting
 $0$ all the time would lead to an accuracy of almost $1$, but would
-systematically assign the wrong label to   $(1, 1, \cdots 1)$. Therefore, we
-will here focus on functions for which datasets are as balanced as possible.
+systematically assign the wrong label to   $(1, 1, \cdots 1)$. Therefore, as
+accuracy is our main concern here, we will focus on functions for which
+datasets are as balanced as possible.
 
 In addition to these Boolean functions, we have also run the $\NAN$ algorithm
 over the Monk datasets over the UCI
