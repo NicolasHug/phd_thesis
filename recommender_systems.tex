@@ -402,7 +402,6 @@ important errors are not penalized more than small ones:
 $$\text{MAE}(A) = \frac{1}{|\Rtest|} \cdot \sum_{\rui \in \Rtest}|\predrui -
 \rui|.$$
 
-
 To better reflect the user-system interaction, other precision-oriented metrics
 are sometimes used in order to provide a more informed view.
 \todo{Mieux parler des critiques faites à RMSE et MAE}
@@ -421,11 +420,16 @@ will suggest to the users using the predictions coming from $A$. For
 ratings in the interval $[1, 5]$, a simple strategy could be for example to
 recommend an item $i$ to user $u$ if the estimation rating $\predrui$ is
 greater than $4$:
-$$I^S \eqdef \Set{i \in I | \exists u \in U, \predrui \geq 4}.$$
+$$I^S \eqdef \Set{i \in I | \exists u \in U, ~\predrui \geq 4,~ \rui \in \Rtest}.$$
 
-Let $I^*$ be the set of items that are \textbf{actually} relevant to the users
-(i.e.  the set of items that would have been recommended to users if all the
-predictions made by $A$ were exact).  The \textbf{precision} of the system is
+We also define $I^*$ as the set of items that are \textbf{actually} relevant to
+the users, i.e.  the set of items that would have been recommended to users if
+all the predictions made by $A$ were exact:
+$$I^* \eqdef \Set{i \in I | \exists u \in U, ~\rui \geq 4,~ \rui \in \Rtest}.$$
+
+\noindent
+The \textbf{precision} of the
+system is
 defined as the fraction of recommended items that are relevant to the users,
 and the \textbf{recall} is defined as the fraction of relevant recommended
 items over all relevant items:
@@ -467,7 +471,7 @@ $$\text{PMI}(i, j) \eqdef -\log_2 \frac{P(i, j)}{P(i)P(j)} / \log_2 P(i, j),$$
 where $P(i)$ and $P(j)$  represent the probabilities for the items to be rated
 by any user, and $P(i, j)$ is the probability for $i$ and $j$ to be rated
 together. They are estimated by $P(i) \approx \frac{\mid U_i \mid}{\mid U
-\mid}$ and $P(i, j) \approx \frac{\mid U_i \cup U_j \mid}{\mid U\mid}$. PMI
+\mid}$ and $P(i, j) \approx \frac{\mid U_i \cap U_j \mid}{\mid U\mid}$. PMI
 values fluctuate between the interval $[-1, 1]$, $-1$ meaning that $i$ and $j$
 are never rated together and $1$ meaning that they are always rated together.
 To estimate the surprise of recommending an item $i$ to a user $u$, the authors
@@ -482,7 +486,9 @@ propose two definitions:
 \end{itemize}
 
 The overall capacity of a recommender to surprise its users can be defined as
-the mean of all the surprise values for each perdiction.
+the mean of all the surprise values for each perdiction. Because they are
+defined using the pointwise mutual information, the \textbf{lower} the values
+of $\surpmax$ and $\surpavg$, the most \textit{surprising}the recomendations.
 
 \section{Analogical recommendation}
 \label{sec:analogical_recommendation}
