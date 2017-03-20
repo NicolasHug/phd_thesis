@@ -371,32 +371,29 @@ solution of this optimization problem exactly corresponds that of the SVD.
 
 \todo{Mettre des refs}
 
-\subsection{Recommender system
-evaluation}\label{eval} Providing an accurate measure of the overall quality of
-a recommender system is not a simple task and diverse viewpoints have to be
-considered (see \cite[Ch. ??]{RecoSystemHandbook} for an extensive survey).
-% Obviously
-%accuracy is an important matter as  any system includes a prediction algorithm,
-%but other properties are also desirable in order  to deploy an effective
-%recommendation engine.
+\subsection{Recommender system evaluation}
+\label{SEC:Recommender_system_evaluation}
+Providing an accurate measure of the overall quality of a recommender system is
+not a simple task and diverse viewpoints have to be considered (see \cite[Ch.
+??]{RecoSystemHandbook} for an extensive survey).
+% Obviously accuracy is an important matter as  any system includes a
+% prediction algorithm, but other properties are also desirable in order  to
+% deploy an effective recommendation engine.
 
 In general, we will use $k$-folds cross-validation procedures to reliably
 evaluate each of the performence measure. The set of all ratings $R$ is divided
-into $k$ disjoint sets ; at each of the $k$ iterations, $\Rtrain$ is set to the
-$k^{\text{th}}$ subset and $\Rtest$ is set as the $k - 1$ remaining ones. The
-reported performances are then the average of the $k$ measures.
+into $k$ (typically $5$) disjoint sets of equal size ; at each of the $k$ iterations, the test
+set $\Rtest$ is set to the $k^{\text{th}}$ subset and and the training set
+$\Rtrain$ is set as the union of the $k - 1$ remaining subsets: the system will
+be trained on $\Rtrain$ and tested on $\Rtest$. The reported performances are
+then the average of the $k$ measures.
 
 \paragraph{Accuracy\\}
 The performance of the algorithm $A$ is usually evaluated in terms of accuracy,
-which measures how close the rating prediction $\predrui$ is to the true
-rating value $\rui$, for every possible prediction. To evaluate the accuracy
-of a prediction algorithm, one usually follows the classical machine learning
-framework: the set of ratings $R$ is divided into two disjoint sets $\Rtrain$
-and $\Rtest$, and the algorithm $A$ has to predict ratings in $\Rtest$
-based on the ones belonging to $\Rtrain$.
-
-The Root Mean Squared Error (RMSE) is probably the most common indicator of
-how accurate an algorithm is, and is calculated as follows:
+which measures how close the rating predictions $\predrui$ are to the true
+ratings $\rui$, for every possible prediction. The Root Mean Squared Error
+(RMSE) is probably the most common indicator of how accurate an algorithm is,
+and is calculated as follows:
 $$\text{RMSE}(A) = \sqrt{\frac{1}{|\Rtest|} \cdot \sum_{\rui \in
 \Rtest}(\predrui - \rui)^2}.$$
 
@@ -412,7 +409,10 @@ are sometimes used in order to provide a more informed view.
 
 \paragraph{Precision and recall\\}
 Precision and recall help measuring the ability of a system to provide
-relevant recommendations.
+relevant recommendations. They are mostly used in an implicit rating scheme,
+and are strongly linked to the number of true postives, true negatives, false
+positives and false negatives. They can also be used when the rating scale is
+gradual, but the recommendation strategy has to be clearly defined.
 In the following, we denote by $I_{S}$ the set of items that the strategy
 $S$ will suggest to the users using the predictions coming from $A$. For
 ratings in the interval $[1, 5]$, a simple strategy could be for example to
@@ -456,10 +456,10 @@ $$\text{Coverage} = \frac{|I_{S}|}{|I|}.$$
 \paragraph{Surprise\\}
 Users expect a recommender system to be surprising: recommending an extremely
 popular item is not really helpful. Following the works of
-\cite{KamBriRecSys2014}, surprise of a recommendation can be evaluated with the
-help of the pointwise mutual
-information (PMI). The PMI between two items $i$ and $j$ is defined as follows:
-$$PMI(i, j) = -\log_2 \frac{p(i, j)}{p(i)p(j)} / \log_2 p(i, j),$$
+\cite{KamBriRecSys2014}, the surprise associated with a recommendation can be evaluated with
+the help of the pointwise mutual information (PMI). The PMI between two items
+$i$ and $j$ is defined as follows:
+$$\text{PMI}(i, j) = -\log_2 \frac{p(i, j)}{p(i)p(j)} / \log_2 p(i, j),$$
 where $p(i)$ and $p(j)$  represent the probabilities for the items to be rated
 by any user, and $p(i, j)$ is the probability for $i$ and $j$ to be rated
 together: $p(i) = \tfrac{|U_i|}{|U|}$ and $p(i, j) = \tfrac{|U_i \cup
