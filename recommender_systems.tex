@@ -304,16 +304,16 @@ R = \begin{blockarray}{cccc}
 \end{blockarray}
 =
 \begin{pmatrix}
-  \\
+  \vertbar & \vertbar & & \vertbar\\
   U_1& U_2 & \cdots & U_r\\
-  \\
+  \vertbar & \vertbar & & \vertbar\\
 \end{pmatrix}
 \cdot
 \begin{pmatrix}
-  & I_1 & \\
-  & I_2 & \\
-  & \vdots & \\
-  & I_r & \\
+  \horzbar& I_1 & \horzbar\\
+  \horzbar& I_2 & \horzbar\\
+   & \vdots & \\
+  \horzbar& I_r &\horzbar \\
 \end{pmatrix}
 ,
 $$
@@ -338,7 +338,7 @@ Moving on, each rating $\rui \in R$ is defined as a dot product $\rui = q_i^t
 item $i$, and $p_u \in \mathbb{R}^r$ is a column in $I$ and represents the user
 $u$. We can now understand that, \textbf{$p_u$ represents how well $u$ agrees
 with each of the $r$ prototype movies, and $q_i$ represents how well $i$ suits
-the tastes of the $r$ prototype users}. 
+the tastes of the $r$ prototype users}.
 
 This statement is the principal motivation for the use of SVD in recommendation
 settings. It postulates the existence of $f$ factors/criteria (whose nature is
@@ -349,7 +349,7 @@ item $i$ is modeled as a vector $q_i \in \mathbb{R}^f$, where each component of
 $q_i$ models how well $i$ fits the corresponding criteria.  From then, a rating
 prediction $\predrui$ is calculated as the dot product of the two vectors $p_u$
 and $q_i$:
-$$\predrui = p_u^t \cdot q_i.$$ 
+$$\predrui = p_u^t \cdot q_i.$$
 
 Once the number of factors $f$ is set, the problem is here to estimate the
 vectors $p_u$ and $q_i$ for every possible user and item. We saw that when the
@@ -421,7 +421,7 @@ will suggest to the users using the predictions coming from $A$. For
 ratings in the interval $[1, 5]$, a simple strategy could be for example to
 recommend an item $i$ to user $u$ if the estimation rating $\predrui$ is
 greater than $4$:
-$$I^S \eqdef \{i \in I | \exists u \in U, \predrui \geq 4\}.$$
+$$I^S \eqdef \Set{i \in I | \exists u \in U, \predrui \geq 4}.$$
 
 Let $I^*$ be the set of items that are \textbf{actually} relevant to the users
 (i.e.  the set of items that would have been recommended to users if all the
@@ -487,129 +487,174 @@ the mean of all the surprise values for each perdiction.
 \section{Analogical recommendation}
 \label{sec:analogical_recommendation}
 
-The main idea is that if an analogical proportion stands between four
-users $a, b, c, d$, meaning that for each item $j$ that they have commonly
-rated, the analogical proportion $r_{aj} : r_{bj} :: r_{cj} : r_{dj}$ holds,
-then it should also hold for an item $i$ that $a, b, c$ have rated but $d$ has
-not (i.e. $r_{di}$ is the missing component). This leads us to estimate
-$r_{di}$ as the solution $x = \hat{r}_{di}$ of the following analogical equation:
-$$r_{ai} : r_{bi} :: r_{ci} : x.$$
-\noindent
-Given a pair $(u,i)$ such that $r_{ui} \notin R$, the main procedure is as
-follows:
-\begin{enumerate}
-\item find the set of 3-tuples of users $a, b, c$ such that an analogical proportion
-stands between $a, b, c,$ and $u$ and such that the equation $r_{ai} : r_{bi} :: r_{ci} : x$
-is solvable.
-\item solve the equation $r_{ai} : r_{bi} :: r_{ci} : x$ and consider the solution
-$x$ as a candidate rating for $r_{ui}$.
-\item set $\hat{r}_{ui}$ as an aggregate of all candidate ratings.
-\end{enumerate}
+We will here describe our first attempt to use an analogical proportion-based
+algorithm for recommender systems. The main idea is quite simple and is
+directly inpspired by the analogical classifiers that we have extensively
+studied in Chapter \ref{CHAP:functional_definition}.
 
 \subsection{An algorithm using arithmetic proportion}
-In the following, let $I_{abcu}$ be the set of items $i$ that users $a, b, c,$
-and $u$ have commonly rated: $r_{ai} \in R, r_{bi} \in R, r_{ci} \in R$ and
-$r_{ui}\in R$.
-The first step simply states that users $a, b, c$ and $u$, considered as
-vectors of ratings, constitute a parallelogram.  This condition is a bit strong
-and we may want to relax it by allowing some deformation of this parallelogram.
-This can be done by choosing another condition, such as $||(a-b) - (c-d)|| \leq
-\lambda$ where $\lambda$ is a suitable threshold and $||.||$ denotes the
-Euclidean norm.
+
+Here again, we will make use of the analogical inference principle, but we will
+state it in slightly different terms. In chapters
+\ref{CHAP:formal_analogical_proportions} and \ref{CHAP:functional_definition},
+the analogical inference principle stated that if four vectors $\mathbf{a},
+\mathbf{b}, \mathbf{c}, \mathbf{d}$ are in proportion, then their labels should
+also be in proportion.  Here, we will say that if an analogical proportion
+stands between four users $a, b, c, d$, meaning that for each item $j$ that
+they have commonly rated, the analogical proportion $r_{aj} : r_{bj} :: r_{cj}
+: r_{dj}$ holds, then it should also hold for an item $i$ that $a, b, c$ have
+rated but $d$ has not (i.e. $r_{di}$ is the missing component). This leads us
+to estimate $r_{di}$ as the solution $y$ of the following analogical
+equation: $$r_{ai} : r_{bi} :: r_{ci} : y.$$
+\noindent
+
+Given a pair $(u,i)$ such that $\rui \notin R$, the main procedure to
+estimate $\rui$ is as follows:
+\begin{enumerate}
+\item Find the set of 3-tuples of users $a, b, c$ such that an analogical
+  proportion stands between $a, b, c,$ and $u$ and such that the equation
+    $r_{ai} : r_{bi} :: r_{ci} : x$ is solvable.
+\item Solve the equation $r_{ai} : r_{bi} :: r_{ci} : y$ and consider the
+  solution $x$ as a candidate rating for $r_{ui}$.
+\item Set $\hat{r}_{ui}$ as an aggregate of all candidate ratings.
+\end{enumerate}
+
+This pseudo-algorithm is exactly that of a conservative classifier described in
+Section \ref{SEC:conservative_classifier}, except that here, the instance space
+(i.e. the space of $a, b, c, u$) changes with every pair $(u, i)$.
+
+In our implementation, we have used the arithmetic proportion in
+$\mathbb{R}^m$: $a:b::c:u \iff a - b = c - u$.
+The four users $a, b, c, d$ are here considered as vectors of ratings in a
+space defined by their common items. For the sake of clarity though, we will
+not write them with boldface letters and $a$ will denote both the user $a$ as
+well as its vectorial representation. Let us consider
+Figure \ref{FIG:analogical_recommendation}: the four users $a, b, c$ and $u$
+are in proportion, i.e. they make up a parallelogram in the 2-dimensional space of their
+common items, here Titanic and Toy story. If the three users $a, b, c$ have
+rated a movie $i$ that $u$ has not rated, the estimation of $\rui$ will be such
+that $a, b, c$ and $u$ still make up a parallelogram, but this time in a
+3-dimensional space. This process is also explained in Table
+\ref{TAB:analogical_recommendation}
+
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=2.5in]{figures/analogical_recommendation.pdf}
+  \caption{Four users $a, b, c, u$ that are in proportion.}
+\label{FIG:analogical_recommendation}
+\end{figure}
+
+\begin{table}[h!]
+\centering
+  \begin{tabular}{| c |  c  c  c  c  c | }
+\toprule
+ & $j_1$ & $j_2$ & $j_3$ & $\cdots$ & $i$\\
+  \midrule
+$a$ & 1 & 4  & 3 & $\cdots$ & 2 \\
+$b$ & 5 & 2  & 3 & $\cdots$ & 4 \\
+$c$ & 1 & 5  & 3 & $\cdots$ & 3 \\
+$u$ & 5 & 3  & 3 & $\cdots$ & ? \\
+\bottomrule
+\end{tabular}
+\caption{The four users $a, b, c, u$ are in proportion for every item $j$ that
+  they have commonly rated. For an item $i$ that $u$ has not rated, the
+  prediction $\predrui$ is set as the solution of the analogical equation
+  $2:4::3:?$, i.e. $\predrui = 3 - 2 + b = 5$, using the arithmetic proportion.}
+\label{TAB:analogical_recommendation}
+\end{table}
+
+Just like with the conservative classifier, we are facing the problem that in
+practice, we may not find any $3$-tuple $a, b, c$ such that a perfect
+proportion stands between $a, b, c$ and $u$. We will thus allow some distortin
+of shape for the parallelogram $abcu$ by choosing another condition, for
+example that $\norm{}{(a-b) - (c-u)} \leq \lambda$, where $\lambda$ is a
+suitable threshold and $\norm{}{\cdot}$ is any $p$-norm. Note that this
+relaxing of the definition of an analogical proportio exactly corresponds to
+the usage of an analogical dissimilirity, so technically our algorithm is very
+close to that of an extended classifier.
+
+Our analogical proportion-based algorithm for recommendation is described by
+Algorithm \ref{ALGO:analogical_recommendation}.
+ \begin{algorithm}[!ht]
+       \begin{algorithmic}
+
+      \STATE {\bf Input}: A set of known ratings $R$, a user $u$, an item
+      $i$ such that $r_{ui} \notin R$.
+      \STATE {\bf Output}: $\hat{r}_{ui}$, an estimation of $r_{ui}$.
+
+      \STATE {\bf Init}:
+      \STATE $C = \varnothing$ \quad \quad // the set of candidate ratings
+      \FORALL{
+        users $a, b, c$ such that:\\
+        \begin{itemize}
+        \item $r_{ai} \in R, r_{bi} \in R, r_{ci} \in R$.
+        \item $\norm{}{(a-b)-(c-d)}\leq \lambda$
+        \item $r_{ai} : r_{bi} :: r_{ci} : y$ is solvable
+        \end{itemize}
+      }
+
+      \STATE  $y \leftarrow r_{ci} - r_{ai} + r_{bi}$
+      \STATE $C \gets C \cup \set{y}$ \quad // add $y$ as a candidate rating
+	  \ENDFOR
+
+    \STATE $\hat{r}_{ui} = \aggr{y \in C} y$
+
+\end{algorithmic}
+     \caption{Analogical proportion-based algorithm for recommendation.}
+       \label{ALGO:analogical_reco}
+\end{algorithm}
+
+We will note here an important point: while an extended classifier would look
+for the $k$ $3$-tuples with the least values of analogical dissimilarity, we
+here look for all three tuples whose AD is below some given threshold. This is
+a common variant of the $k$-NN algorithm: you can either look for the $k$
+nearest neighbors, or look for all instances that are within a given distance.
+
+We have considered a strict condition for the solvability of the equation
+$r_{ai} - r_{bi} = r_{ci} - y$: as the exact arithmetic result $y=r_{ci} +
+r_{bi} -r_{ai}$ does not necessarily belong to the rating scale used in our
+experiments (which is $[1,5]$), we have
+considered that the equation is solvable only when $r_{ai}=r_{bi}$ or
+$r_{ai}=r_{ci}$. In both cases, we ensure the solution $x \in
+[1,5]$.\todo{tester avec juste appartenance}
 
 Another modification to the algorithm would be to only search for the users
 $a, b,$ and $c$ in a subset of $U$. One may consider the set of the $k$-nearest
 neighbours of $d$, using the assumption that neighbours are the most relevant
 users to estimate a recommendation for $d$.
 
-Obviously, analogical proportion may be applied in an item-based way rather
-than in a user-based way, as in the case of standard techniques. Both views
-will be considered in the experimentation.
+Just like for the neighborhood approach described earlier, it is perfectly
+possible to apply this algorithm in an in an item-based way rather
+than in a user-based way. I.e. instead of looking for $3$-tuples of users, we
+may look for $3$-tuples of items, etc. Both views will be considered in our 
+experimentations.
 
-\subsubsection{Implementation}
-
-In our implementation, we consider the basic definition of analogy using the
-arithmetic definition in $\mathbb{R}^n$: $\vec{a}:\vec{b}::\vec{c}:\vec{d}
-\iff \vec{a}-\vec{b}=\vec{c}-\vec{d}$.
-Given 4 users, they are represented as real vectors of dimension $m$, where $m$
-is the number of item they have rated in common. This dimension can
-change with the 4-tuples of users that we consider.
-Then, the threshold $\lambda$ has to be a function of this dimension $m$,
-as the range of values that $||.||$ may take depends on it. Using
-cross-validation, we have found that $\lambda = \frac{3}{2} \cdot\sqrt{m}$ showed the
-best results and acts as a kind of normalization factor.
-Our pseudo-code is described in
-Algorithm \ref{algo:analogical_reco}.
- \begin{algorithm}[!ht]
-       \begin{algorithmic}
-
-      \STATE {\bf Input}: A set of known ratings $R$, a user $u$, an item
-      $i$ such that $r_{ui} \notin R$.
-      \STATE {\bf Output}: $\hat{r}_{ui}$, an estimation of $r_{ui}$
-
-      \STATE {\bf Init}:
-      \STATE $C = \varnothing$ \quad \quad // list of candidate ratings
-      \FORALL{
-        users $a, b, c$ such that\\
-        \begin{enumerate}
-        \item $r_{ai} \in R, r_{bi} \in R, r_{ci} \in R$
-        \item $r_{ai} - r_{bi} = r_{ci} - x$ is solvable  // i.e. the solution $x \in [1,5]$
-        \item $||(a-b)-(c-d)||\leq \lambda$ // Analogy almost stands between $a,b,c,d$ considered as real vectors
-        \end{enumerate}
-      }
-
-      \STATE  $x \leftarrow r_{ci} - r_{ai} + r_{bi}$
-      \STATE $C \gets C \cup \{x\}$ \quad // add x as a candidate rating
-	  \ENDFOR
-
-    \STATE $\hat{r}_{ui} = \aggr{x \in C} x$
-
-\end{algorithmic}
-     \caption{Analogy}
-       \label{algo:analogical_reco}
-\end{algorithm}
-
-Some options are available at this stage.
-
-Here again, there is no need to choose the Euclidean norm (i.e. $L_2$ norm) as
-other norms also make sense: $L_1$ norm using the absolute value of the
-components or even $L_\infty$ using the maximum of the absolute value of the
-components. These options have not been tested so far.
-
-We have considered a strict condition for the solvability of the equation
-$r_{ai} - r_{bi} = r_{ci} - x$: as the exact arithmetic result $x=r_{ci} +
-r_{bi} -r_{ai}$ does not necessarily belong to the scale interval $[1,5]$, we
-consider solvability only when $r_{ai}=r_{bi}$ or $r_{ai}=r_{ci}$. In both
-cases, we ensure the solution $x \in [1,5]$.
 
 \subsection{Experiments and results}
 \label{results}
 
-Our algorithm \textit{Analogy} ($k=20$) is compared to the neighbourhood-based algorithms
-described in section \ref{CollabFil}, referred to as \textit{kNN} for the basic
-model and \textit{Bsln-kNN} for the extended model using a baseline predictor
-(with $k=40$). For each of the algorithms, we have estimated the metrics described
-in section \ref{eval}. The recommendation strategy $S$ is to recommend $i$ to
-$u$ if $\hat{r}_{ui} \geq 4$.
+Our algorithm \textit{Analogy} ($k=20$) is compared to the neighbourhood-based
+algorithms model and \textit{Bsln-kNN} for the extended model using a baseline
+predictor. For each of the algorithms, we have estimated the metrics described
+in section \ref{TODO}.  The recommendation strategy $S$ that we have chosen is
+to recommend $i$ to $u$ if $\hat{r}_{ui} \geq 4$.
 
-\paragraph{Dataset\\}
 We have tested and compared our algorithm on the Movielens-100K
 dataset\footnote{http://grouplens.org/datasets/movielens/}, composed of 100,000
 ratings from 1000 users on 1700 movies. Each rating belongs to the interval
 $[1, 5]$.
 
-\paragraph{Evaluation protocol\\}
 In order to obtain meaningful measures, we have run a five-folds
-cross-validation procedure: for each of the five steps, the set of ratings $R$ is
-split into two disjoint sets $R_{train}$ and $R_{test}$, $R_{train}$ containing
-five times more ratings than $R_{test}$. The reported measures are averaged
-over the five steps.
-
-\paragraph{Results and comments\\}
+cross-validation procedure: for each of the five steps, the set of ratings $R$
+is split into two disjoint sets $R_{train}$ and $R_{test}$, $R_{train}$
+containing four times more ratings than $R_{test}$. The reported measures are
+averaged over the five steps. Naturally, the folds are the same for each of the
+algorithms, to allow for meaningful comparisons.
 
 Table \ref{table:res} shows the performances of the algorithms applied in a
-user-based way. Similar experiments have been led in a movie-based setting, exhibiting
-very similar results, slightly worse for RMSE (about 5\permil higher).
+user-based way. Similar experiments have been led in a movie-based setting,
+exhibiting very similar results, slightly worse for RMSE (about 5\permil
+higher).
 
 \begin{table}[ht]
 \begin{tabular}{| c || c | c | c | c | c | c | c | c |}
