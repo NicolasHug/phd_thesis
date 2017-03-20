@@ -408,50 +408,54 @@ are sometimes used in order to provide a more informed view.
 \todo{Mieux parler des critiques faites à RMSE et MAE}
 
 \paragraph{Precision and recall\\}
-Precision and recall help measuring the ability of a system to provide
-relevant recommendations. They are mostly used in an implicit rating scheme,
-and are strongly linked to the number of true postives, true negatives, false
-positives and false negatives. They can also be used when the rating scale is
-gradual, but the recommendation strategy has to be clearly defined.
-In the following, we denote by $I_{S}$ the set of items that the strategy
-$S$ will suggest to the users using the predictions coming from $A$. For
+Precision and recall help measuring the ability of a system to provide relevant
+recommendations, and are therefore indicators of the performance of the
+recommendation strategy $S$. They are defined by means of the number of true
+postives, true negatives, false positives and false negatives. As such, they
+are mostly used in an implicit rating scheme (or at least with binary rating
+scales), but they can also be used when the rating scale is gradual. In this
+latter case, the recommendation strategy has to be clearly defined.
+
+In the following, we denote by $I^S$ the set of items that the strategy $S$
+will suggest to the users using the predictions coming from $A$. For
 ratings in the interval $[1, 5]$, a simple strategy could be for example to
 recommend an item $i$ to user $u$ if the estimation rating $\predrui$ is
-greater than $4$.  $$I_S = \{i \in I | \exists u \in U, \predrui \geq
-4\}.$$
+greater than $4$:
+$$I^S \eqdef \{i \in I | \exists u \in U, \predrui \geq 4\}.$$
 
-Let $I_{relev}$ be the set of items that are actually relevant to users (i.e.
-the set of items that would have been recommended to users if all the
-predictions made by $A$ were exact).
-The precision of the system is defined as the fraction of recommended items that
-are relevant to the users:
-$$\text{Precision} = \frac{|I_{S} \cap I_{relev}|}{|I_{S}|},$$
-and the recall as the fraction of recommended items that are relevant to the
-users out of all possible relevant items:
-$$\text{Recall} = \frac{|I_{S} \cap I_{relev}|}{|I_{relev}|},$$
+Let $I^*$ be the set of items that are \textbf{actually} relevant to the users
+(i.e.  the set of items that would have been recommended to users if all the
+predictions made by $A$ were exact).  The \textbf{precision} of the system is
+defined as the fraction of recommended items that are relevant to the users,
+and the \textbf{recall} is defined as the fraction of relevant recommended
+items over all relevant items:
+\begin{align*}
+  \text{Precision} &\eqdef \frac{\mid I^S \cap I^*\mid}{\mid I^S \mid},\\
+  \text{Recall} &\eqdef \frac{\mid I^S \cap I^*\mid}{\mid I^* \mid}.
+\end{align*}
+
+Precision and recall are complementary metrics: it would not make sense to
+evaluate an algorithm performance by only looking at the precision, without
+considering the recall. It is indeed quite easy to obtain a high precision (by
+simply recommending all of the items), but that would lead to a terrible
+value of recall.
 
 If accurate predictions are crucial, it is widely agreed that it is
 insufficient for deploying an effective recommendation engine. Indeed, still
 other dimensions are worth estimating in order to get a complete picture of the
 performance of a system
-\cite{NeeRieKonACM2006,HerKonJohTerRieACM2004,KamBriRecSys2014}.
-For instance, one may naturally expect from a recommender system
-not only to be accurate, but also to be surprising, and to be able to recommend
-a large number of items. When evaluating the recommendation strategy, one must
-keep in mind that its performance is closely related to that of the algorithm
-$A$, as the recommendation strategy $S$ is based on the predictions provided by
-$A$.
-
+\cite{NeeRieKonACM2006,HerKonJohTerRieACM2004,KamBriRecSys2014}.  For instance,
+one may naturally expect from a recommender system not only to be accurate, but
+also to be surprising, and to be able to recommend a large number of items.
 
 \paragraph{Coverage\\}
 Coverage, in its simplest form, is used to measure the ability of a system to
 recommend a large amount of items: it is quite easy indeed to create a
 recommender system that would only recommend very popular items. Such a
-recommender system would drop to zero added value. Coverage can be defined as the
-proportion of recommended items out of all existing items:
-$$\text{Coverage} = \frac{|I_{S}|}{|I|}.$$
-
-
+recommender system would drop to zero added value. We here define the
+\textbf{coverage} as the proportion of recommended items out of all existing
+items:
+$$\text{Coverage} \eqdef \frac{\mid I^S\mid}{\mid I\mid}.$$
 
 \paragraph{Surprise\\}
 Users expect a recommender system to be surprising: recommending an extremely
@@ -459,23 +463,26 @@ popular item is not really helpful. Following the works of
 \cite{KamBriRecSys2014}, the surprise associated with a recommendation can be evaluated with
 the help of the pointwise mutual information (PMI). The PMI between two items
 $i$ and $j$ is defined as follows:
-$$\text{PMI}(i, j) = -\log_2 \frac{p(i, j)}{p(i)p(j)} / \log_2 p(i, j),$$
-where $p(i)$ and $p(j)$  represent the probabilities for the items to be rated
-by any user, and $p(i, j)$ is the probability for $i$ and $j$ to be rated
-together: $p(i) = \tfrac{|U_i|}{|U|}$ and $p(i, j) = \tfrac{|U_i \cup
-U_j|}{|U|}$. PMI values fluctuate between the interval $[-1, 1]$, $-1$ meaning
-that $i$ and $j$ are never rated together and $1$ meaning that they are always
-rated together. To estimate the surprise of recommending an item $i$ to a user
-$u$ we have two choices:
+$$\text{PMI}(i, j) \eqdef -\log_2 \frac{P(i, j)}{P(i)P(j)} / \log_2 P(i, j),$$
+where $P(i)$ and $P(j)$  represent the probabilities for the items to be rated
+by any user, and $P(i, j)$ is the probability for $i$ and $j$ to be rated
+together. They are estimated by $P(i) \approx \frac{\mid U_i \mid}{\mid U
+\mid}$ and $P(i, j) \approx \frac{\mid U_i \cup U_j \mid}{\mid U\mid}$. PMI
+values fluctuate between the interval $[-1, 1]$, $-1$ meaning that $i$ and $j$
+are never rated together and $1$ meaning that they are always rated together.
+To estimate the surprise of recommending an item $i$ to a user $u$, the authors
+propose two definitions:
 \begin{itemize}
-\item either to take the maximum of the PMI values for $i$ and all
-other items rated by $u$, with $Surp^{max}(u, i) = \max\limits_{j\in I_u} PMI(i, j)$
+\item either to take the maximum of the PMI values for $i$ and all other items
+  rated by $u$, with $\surpmax(u, i) \eqdef \max\limits_{j\in I_u}
+    \text{PMI}(i, j),$
 \item
- or to take the mean of these PMI values with $Surp^{avg}(u, i) =
-\frac{\sum_{j \in I_u} PMI(i, j)}{|I_u|}$
+ or to take the mean of these PMI values with $\surpavg(u, i) \eqdef
+    \frac{\sum_{j \in I_u} \text{PMI}(i, j)}{\mid I_u\mid }$.
 \end{itemize}
-Then the overall capacity of a recommender to surprise its users is the mean of the
-surprise values for all predictions.
+
+The overall capacity of a recommender to surprise its users can be defined as
+the mean of all the surprise values for each perdiction.
 
 \section{Analogical recommendation}
 \label{sec:analogical_recommendation}
