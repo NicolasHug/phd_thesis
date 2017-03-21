@@ -771,10 +771,10 @@ $$
 From then on, computing $\predrui$ amounts to finding all the users $v$ that
 satisfy this criteria, and computing an aggregation of their rating for $i$,
 which can simply be an average. We implemented this basic algorithm described
-by algorithm \ref{ALGO:bruteforce}, and referred to as \textit{Bruteforce}.
+by algorithm \ref{ALGO:bruteforce}, and referred to as \textit{Brute-force}.
 
  \begin{algorithm}[!ht]
-   \caption{\textit{A bruteforce algorithm for clone-based recommendation.}}
+   \caption{\textit{A brute-force algorithm for clone-based recommendation.}}
        \label{ALGO:bruteforce}
        \begin{algorithmic}
 
@@ -808,9 +808,10 @@ tested our algorithms use the $[1, 5]$ interval, so possible values for $t$
 that were have considered are integer values in $[-4, 4]$.
 
 This is obviously a very rough algorithm, to which one could point out numerous
-flaws, but its purpose is to show that even such a basic clone-based approach
-can lead to better results than a basic neighborhood method, as we will see
-later.
+flaws. The first obvious one is its time complexity which is very high, but the
+purpose of this brute-force algorithm is simply to show that even such a basic
+clone-based approach can lead to better results than a basic neighborhood
+method, as we will see later.
 
 \subsubsection{Modeling clones with the similarity measure}
 Another option to consider clones is to use the well known neighborhood-based
@@ -934,7 +935,7 @@ datasets\footnote{http://grouplens.org/datasets/movielens}, containing
 $100,000$ and $1M$ ratings respectively. Results are shown in tables
 \ref{table:res100k} and \ref{table:res1M} and where calculated using 5-folds
 cross-validation. For each of these algorithms, the number of neighbors or
-clones used to output a prediction is $k = 40$, except for the bruteforce
+clones used to output a prediction is $k = 40$, except for the brute-force
 algorithm where the number of clones can not be controlled.
 \begin{table}[!ht]
 \centering
@@ -942,7 +943,7 @@ algorithm where the number of clones can not be controlled.
 \label{table:res100k}
 \begin{tabular}{| c || c | c | c | c | c | c |}
 \toprule
-     &  k-NN & Bruteforce & Clone A & Clone B & $k$-NNbsl\\
+     &  k-NN & Brute-force & Clone A & Clone B & $k$-NNbsl\\
 \midrule
 RMSE & .9763 &   .9461    &   .9353 &  .9311  &  .9338   \\
 MAE  & .7705 &   .8576    &   .7327 &  .7321  &  .7337   \\
@@ -956,7 +957,7 @@ MAE  & .7705 &   .8576    &   .7327 &  .7321  &  .7337   \\
 \label{table:res1M}
 \begin{tabular}{| c || c | c | c | c | c | c |}
   \toprule
-     &  k-NN & Bruteforce & Clone A & Clone B & $k$-NNbsl\\
+     &  k-NN & Brute-force & Clone A & Clone B & $k$-NNbsl\\
   \midrule
 RMSE & .9216 &           .&   .8996 &  .8969  &  .8879\\
 MAE  & .7252 &           .&   .7057 &  .7050  &  .7005\\
