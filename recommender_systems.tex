@@ -193,9 +193,9 @@ $N_i^k(u)$ depends of course on a similarity measure between users, which is
 based on their respective ratings.  The estimation $\predrui$ of $\rui$ is then
 computed as an aggregate of the ratings $\rvi$, where $v$ is one of the
 neighbors of $u$ in $N_i^k(u)$. Usually, the aggregation is simply a mean
-weighted by the similarity between $u$ and $v$: $$\predrui =
-\frac{\sum\limits_{v \in N_i^k(u)}
-r_{vi} \cdot \ssim(u, v)} {\sum\limits_{v \in N_i^k(u)}\ssim(u, v)}.$$
+weighted by the similarity between $u$ and $v$:
+$$\predrui = \frac{\sum\limits_{v \in N_i^k(u)} r_{vi} \cdot \ssim(u, v)}
+{\sum\limits_{v \in N_i^k(u)}\ssim(u, v)}.$$
 
 There are many, many ways to define the similarity metric between two users.
 Probably the most common one is the cosine similarity:
@@ -333,12 +333,12 @@ some kind of movies. Obviously in practice, there is no way to assoociate a
 clear semantic meaning to the different $U_i$ or $I_i$, and the way they are
 defined highly depends on the matrix $R$.
 
-Moving on, each rating $\rui \in R$ is defined as a dot product $\rui = q_i^t
-\cdot p_u$, where $q_i \in \mathbb{R}^r$ is a row in $U$ and represents the
-item $i$, and $p_u \in \mathbb{R}^r$ is a column in $I$ and represents the user
-$u$. We can now understand that, \textbf{$p_u$ represents how well $u$ agrees
-with each of the $r$ prototype movies, and $q_i$ represents how well $i$ suits
-the tastes of the $r$ prototype users}.
+Moving further, each rating $\rui \in R$ is defined as a dot product $\rui =
+q_i^t \cdot p_u$, where $q_i \in \mathbb{R}^r$ is a row in $U$ and represents
+the item $i$, and $p_u \in \mathbb{R}^r$ is a column in $I$ and represents the
+user $u$. We can now understand that, \textbf{$p_u$ represents how well $u$
+agrees with each of the $r$ prototype movies, and $q_i$ represents how well $i$
+suits the tastes of the $r$ prototype users}.
 
 This statement is the principal motivation for the use of SVD in recommendation
 settings. It postulates the existence of $f$ factors/criteria (whose nature is
@@ -565,13 +565,13 @@ $u$ & 5 & 3  & 3 & $\cdots$ & ? \\
 \caption{The four users $a, b, c, u$ are in proportion for every item $j$ that
   they have commonly rated. For an item $i$ that $u$ has not rated, the
   prediction $\predrui$ is set as the solution of the analogical equation
-  $2:4::3:?$, i.e. $\predrui = 3 - 2 + b = 5$, using the arithmetic proportion.}
+  $2:4::3:?$, i.e. $\predrui = 3 - 2 + 4 = 5$, using the arithmetic proportion.}
 \label{TAB:analogical_recommendation}
 \end{table}
 
-Just like with the conservative classifier, we are facing the problem that in
+Just like with the conservative classifier, we will face the problem that in
 practice, we may not find any $3$-tuple $a, b, c$ such that a perfect
-proportion stands between $a, b, c$ and $u$. We will thus allow some distortin
+proportion stands between $a, b, c$ and $u$. We will thus allow some distortion
 of shape for the parallelogram $abcu$ by choosing another condition, for
 example that $\norm{}{(a-b) - (c-u)} \leq \lambda$, where $\lambda$ is a
 suitable threshold and $\norm{}{\cdot}$ is any $p$-norm. Note that this
@@ -652,10 +652,10 @@ $[1, 5]$.
 
 In order to obtain meaningful measures, we have run a five-folds
 cross-validation procedure: for each of the five steps, the set of ratings $R$
-is split into two disjoint sets $R_{train}$ and $R_{test}$, $R_{train}$
-containing four times more ratings than $R_{test}$. The reported measures are
-averaged over the five steps. Naturally, the folds are the same for each of the
-algorithms, to allow for meaningful comparisons.
+is split into two disjoint sets $\Rtrain$ and $\Rtest$, $\Rtrain$ containing
+four times more ratings than $\Rtest$. The reported measures are averaged over
+the five steps. Naturally, the folds are the same for each of the algorithms,
+to allow for meaningful comparisons.
 
 Table \ref{table:res} shows the performances of the algorithms applied in a
 user-based way. Similar experiments have been led in a movie-based setting,
@@ -668,14 +668,13 @@ higher).
 & RMSE & Prec & Rec & Cov & $Surp^{max}$ & $Surp^{avg}$ & Time \\
 \hline
 Analogy   & .898 & 89.1 & 43.3 & 31.2 & 0.433 & 0.199 & 2h \\
-%Pattern & .927 & 84.9 & 50.0 & 47.7 & 0.433 & 0.198 & 5h \\
 kNN     & .894 & 89.1 & 44.1 & 27.8 & 0.432 & 0.198 & 10s \\
 Bsln-kNN & .865 & 88.4 & 44.0 & 44.7 & 0.431 & 0.199 & 10s \\
 \hline
 \end{tabular}
 
 \caption{Performance of algorithms}
-  \label{Zob}
+\label{Zob}
 \end{table}
 
 As expected, the Bsln-kNN algorithm is more accurate than the basic
@@ -709,45 +708,52 @@ because from $v$' point of view $3$ is a \textit{bad} rating, while for $u$ a
 rating of $3$ would simply mean \textit{decent} or \textit{good enough}.  In
 the following, we refer such users that \textit{semantically} agree on their
 common items (but not necessarily \textit{numerically}) as \textit{clones}, as
-illustrated in Figure \ref{FIG_CLONES}. Please note that the word $clone$ is
-not used here to mean \textit{strictly identical}, but more in the sense that
-two clones are two users following parallel paths.
+illustrated in Figure \ref{FIG:alice_and_bob_clones}. Please note that the word
+$clone$ is not used here to mean \textit{strictly identical}, but more in the
+sense that two clones are two users following parallel paths.
 
 \todo{use nicer colors for plot?}
 \begin{figure}[!h]
 \centering
 \includegraphics[width=4in]{figures/clones.pdf}
 \caption{Bob is a perfect clone of Alice.}
-\label{FIG_CLONES}
+\label{FIG:alice_and_bob_clones}
 \end{figure}
 
-It is obvious that in collaborative filtering, clones are of great interest when
-it comes to predict a user's ratings, and yet the information they provide is
-often discarded.  The principle underlying the analogical clone-based view is
-the following: for predicting a missing rating for $u$ we not only look at its
-nearest neighbors, but also to those $v$ whose rating are such that $r_{ui} =
-r_{vi} + t_{vu}$ where $t_{vu}$ is a more or less constant \textit{correction
-term} that can be either positive or negative.
+It is obvious that in collaborative filtering, clones are of great interest
+when it comes to predict a user's ratings, and yet the information they provide
+is often discarded. Indeed, in Figure \ref{FIG:alice_and_bob_clones}, Alice and
+Bob would definitly not be considered as neighbors, so Bob would not be used to
+predict Alice's ratings, and Alice would not be used to predict Bob's ratings.
+The principle underlying the analogical clone-based view is the following: for
+predicting a missing rating for $u$, we not only look at its nearest neighbors
+but also to those $v$ whose rating are such that $r_{ui} = r_{vi} + t_{vu}$
+where $t_{vu}$ is a more or less constant \textbf{correction term} that can be
+either positive or negative. This correction term is the difference between
+Bob's ratings and those of Alice. When two users $u$ and $v$ are clones, we can
+come back to an analogical proportion-based viewpoint by noticing that we have:
+$$r_{ui} : r_{vi} :: r_{uj} : r_{vj},~~ r_{uj} : r_{vj} :: r_{uk} : r_{vk},
+\dots,$$
+where $i, j, k, \cdots$ are the common items of $u$ and $v$.
+
 
 In the next two sections, we investigate this idea of a clone-based prediction,
 first when ratings are viewed as numerical quantities in section
-\ref{NUMERICAL_POV}, and then when they have an ordinal meaning only in
-section \ref{ORDINAL_POV}.
+\ref{TODO}, and then when they have an ordinal meaning only in
+section \ref{TODO}.
 
 \subsection{Ratings as numerical quantities}
-\label{NUMERICAL_POV}
 
-In the following, we define $C_i(u)$ as the set of users that are clones of $u$
-and that have rated item $i$.  From the previous definitions, one can easily
-derive a very general collaborative filtering framework for predicting a user's
-rating by taking into account its clones:
-$$\predrui = \text{aggregation}(r_{vi} + t_{vu}), \quad \forall v \in
-C_i(u),$$
+In the following, $C_i(u)$ will denote as the set of users that are clones of
+$u$ and that have rated item $i$. From the previous unformal definitions, one
+can easily derive a very general collaborative filtering framework for
+predicting a user's rating by taking into account its clones: $$\predrui =
+\aggr{v \in C_i(u)}(r_{vi} + t_{vu}),$$
 where $t_{vu}$ is a \textit{correction term} that we need to add to $v$'s
 ratings so that they correspond to those of $u$. We clearly have a
-generalization of the $k$-NN approach, which we could write as:
-$$\predrui = \text{aggregation}(r_{vi} + t_{vu}), \quad \forall v \in \{v \in C_i(u)
-  | t_{vu} = 0\}.$$
+generalization of the neighborhood approach defined in Section \ref{TODO},
+which we could write as:
+$$\predrui = \aggr{\begin{subarray}{l}v \in C_i(u),\\ t_{vu} = 0\end{subarray}}(r_{vi} + t_{vu}).$$
 
 Following this general framework, one can construct a great variety of
 algorithms with various level of complexity. In the next subsections, we
@@ -756,19 +762,20 @@ propose a very straightforward algorithm, and a more efficient one.
 \subsubsection{A straightforward prediction algorithm}
 \label{STRAIGHTFORWARD}
 
-In its most simple form, a user $v$ can be considered to be a $t$-clone of $u$ if
-the ratings of $v$ differ from those of $u$ from a constant $t$:
-\begin{equation}
-v \in t\text{-}C(u) \iff \forall i \in I_{uv}, r_{ui} = r_{vi} + t.
-\end{equation}
+We will first introduce the notion of $t$-clone. In its most simple form, a
+user $v$ can be considered to be a $t$-clone of $u$ if the ratings of $v$
+exactly differ from those of $u$ from a constant $t$:
+$$
+t\text{-}C(u) \eqdef \Set{v \in U | \forall i \in I_{uv},~ r_{ui} = r_{vi} + t}.
+$$
 From then on, computing $\predrui$ amounts to finding all the users $v$ that
 satisfy this criteria, and computing an aggregation of their rating for $i$,
-which can simply be a mean. We implemented this basic algorithm described by
-algorithm \ref{algo_straight}, and referred to as \textit{Bruteforce}.
+which can simply be an average. We implemented this basic algorithm described
+by algorithm \ref{ALGO:bruteforce}, and referred to as \textit{Bruteforce}.
 
  \begin{algorithm}[!ht]
-   \caption{\textit{Bruteforce}}
-       \label{algo_straight}
+   \caption{\textit{A bruteforce algorithm for clone-based recommendation.}}
+       \label{ALGO:bruteforce}
        \begin{algorithmic}
 
       \STATE {\bf Input}: A set of known ratings $R$, a user $u$, an item
@@ -784,109 +791,104 @@ algorithm \ref{algo_straight}, and referred to as \textit{Bruteforce}.
           \ENDIF
         \ENDFOR
 	    \ENDFOR
-    \STATE $\hat{r}_{ui} = \aggr{x \in C} x$
+    \STATE $\hat{r}_{ui} = \aggr{c \in C} c$
 \end{algorithmic}
 \end{algorithm}
 
 Of course, one may want to relax the definition of a $t$-clone, as the current
 one is too strict and only very few users will satisfy this criteria. In our
 implementation, we chose the following condition:
-$$v \in t\text{-}C(u) \iff \sum_{i \in I_{uv}} |(r_{ui} - r_{vi}) - t| \leq |I_{uv}|.$$
-This amounts to accept $v$ as a $t$-clone of $u$ if on average, $r_{ui} -
-r_{vi}$ is equal to $t$ with a margin of $1$.
-
-The values of $t$ clearly depend on the rating scale. The dataset on which we
+$$
+t\text{-}C(u) \eqdef \Set{v \in U |  \sum_{i \in I_{uv}} |(r_{ui} - r_{vi}) -
+t| \leq \mid I_{uv}\mid},$$
+which amounts to accept $v$ as a $t$-clone of $u$ if on average, the
+difference $|r_{ui} - r_{vi}|$ is equal to $t$ with a margin of $1$.
+The values of $t$ clearly depend on the rating scale. The datasets on which we
 tested our algorithms use the $[1, 5]$ interval, so possible values for $t$
-that were considered are integer values between $[-4, 4]$.
+that were have considered are integer values in $[-4, 4]$.
 
 This is obviously a very rough algorithm, to which one could point out numerous
 flaws, but its purpose is to show that even such a basic clone-based approach
-can lead to better results than a basic neighborhood method.
+can lead to better results than a basic neighborhood method, as we will see
+later.
 
 \subsubsection{Modeling clones with the similarity measure}
-\label{MODELING_CLONES}
 Another option to consider clones is to use the well known neighborhood-based
-formula, and capture their effect inside an appropriate similarity measure. The
-general neighborhood formula is as follows \cite{RecoSystemHandbook}:
+formula, and capture their effect inside an appropriate similarity measure.
+Recall that the general neighborhood formula is as follows:
 
-$$\predrui = \frac{\sum_{v \in N_i^k(u)} r_{vi} \cdot sim(u, v)}{\sum_{v \in
-  N_i^k(u)} sim(u, v)},$$
-where $N_i^k(u)$ is the set of the $k$ nearest neighbors of $u$ that have rated
-$i$. So, we move from a crisp view of the set of clones to a fuzzy one. In
-fact, the above formula looks very similar to the interpolation principle
-underlying Takagi-Sugeno fuzzy controller where similarity degree is viewed as
-a fuzzy membership grade \cite{TakSug85}.
+$$\predrui = \frac{\sum\limits_{v \in N_i^k(u)} r_{vi} \cdot \ssim(u, v)}
+{\sum\limits_{v \in N_i^k(u)}\ssim(u, v)}.$$
 
-The above formula is commonly used with classical similarity metrics such as
-Pearson or cosine similarity, or inverse of MSD (Mean Squared Difference, which is
-a distance).
+We have seen that this formula is commonly used with classical similarity
+metrics such as Pearson similarity, cosine similarity, or inverse of MSD.
 However, these similarities are not plainly satisfactory when it comes to
 clones. Indeed with these metrics, two users are considered to be close if
 their common ratings are often the same, but two perfect clones $u$ and $v$
 with a significant correction term $t_{vu}$ would be considered as far from
 each other, thus involving a loss of information.
 
-A simple choice to measure how two users relate as clones can be the following:
-$$Clone\_dist(u, v) =  \frac{1}{|I_{uv}|} \cdot \sum\limits_{i \in I_{uv}}
-((r_{ui} - r_{vi}) - \mu_{uv})^2$$
+We propose the following simple choice of metric to measure how two users
+relate as clones:
+$$\clonedist(u, v) \eqdef  \frac{1}{\mid I_{uv} \mid} \cdot
+\sum\limits_{i \in I_{uv}} \left[(r_{ui} - r_{vi}) - \mu_{uv}\right]^2$$
 where $\mu_{vu}$ is the mean difference between ratings of $u$ and $v$:
-$$\mu_{uv}= \frac{1}{|I_{uv}|}\sum_{i \in I_{uv}} (r_{ui} - r_{vi}).$$
+$$\mu_{uv} \eqdef \frac{1}{\mid I_{uv}\mid}\sum_{i \in I_{uv}} (r_{ui} -
+r_{vi}).$$
 
-One can understand this distance in two ways:
+We can understand this distance in two ways:
 \begin{itemize}
 \item it can be regarded as the variance of the difference of ratings between
   $u$ and $v$,
-\item or it can be regarded as a simple MSD measure ($\text{MSD}(u, v) =
-  \frac{1}{|I_{uv}|} \cdot \sum\limits_{i \in I_{uv}}
-  (r_{ui} - r_{vi})^2$)
- to which the mean difference of ratings between $u$ and $v$ has been
- subtracted.
+\item or it can be regarded as a simple MSD measure (defined in Section
+  \ref{TODO} to which the mean difference of ratings between $u$ and $v$ has
+    been subtracted.
   \end{itemize}
 
-As our measure $Clone\_dist$ is a distance, it is necessary to transform it
-into a similarity measure. Common choice is to take its inverse (while accounting for zero division): $Clone\_sim(u,
-v) = \frac{1}{Clone\_dist(u, v) + 1}$.
+As our measure $\clonedist$ is a distance, it is necessary to transform it into
+a similarity measure. Common choice is to take its inverse (while accounting
+for zero division):
+$$\clonesim(u, v) = \frac{1}{\clonedist(u, v) + 1}.$$
 
+\noindent
 Once we know how to find the clones of a user, it is a simple matter to output
 a prediction using the classical neighborhood approach:
-$$\predrui = \frac{\sum_{v \in N_i^k(u)} (r_{vi} + \mu_{uv}) \cdot sim\_clone(u,
-v)}{\sum_{v \in N_i^k(u)} sim\_clone(u, v)}.$$
+$$\predrui = \frac{\sum_{v \in N_i^k(u)} (r_{vi} + \mu_{uv}) \cdot \clonesim(u,
+v)}{\sum_{v \in N_i^k(u)} \clonesim(u, v)}.$$
 
-This algorithm will be referred to as $CloneA$. For the sake of completeness,
+This algorithm will be referred to as CloneA. For the sake of completeness,
 we also tried the same formula but with a more basic similarity metric that
-does not care about clones: MSD. This algorithm is referred to as $CloneB$.
+does not care about clones: MSD. This algorithm is referred to a CloneB.
 
-\subsubsection{ZOB}
+\subsubsection{Current advances in neighborhood-based techniques}
 
-A more sophisticated prediction, popularized by \cite{BelKorSIGKDD2007} is as
-follows:
-$$\predrui = b_{ui} + \aggr{v \in N_i^k(u)}(r_{vi} - b_{vi}),$$
-where $b_{ui}$ is a baseline (or bias) related to user $u$ and item $i$. It
-is supposed to model how $u$ tends to give higher (or lower) ratings than the
-average of ratings $\mu$, as well as how $i$ tends to be rated higher or lower
-than $\mu$. As it uses the neighbourhood of users to output a prediction, this
-technique tends to model local relationships in the data.
+What we have seen so far in terms of neighborhood methods are the rough, basic
+techniques that have existed for a long time. Actually, more sophisticated
+approaches have been developed, in particular during the Netflix competition.
+The one we will describe here has been popularized in \cite{BelKorSIGKDD2007},
+and makes use of \textbf{baseline predictors}:
+$$\predrui = b_{ui} + \frac{\sum\limits_{v \in N_i^k(u)} (r_{vi} - b_{vi})
+\cdot \ssim(u, v)} {\sum\limits_{v \in N_i^k(u)}\ssim(u, v)}.$$
+where $b_{ui}$ is a baseline (or bias) related to user $u$ and item $i$. Its
+expression is $b_{ui} = \mu + b_u + b_i$, where $b_u$ is supposed to model how
+$u$ tends to give higher (or lower) ratings than the average of all ratings
+$\mu$, and $b_i$ is supposed to model how $i$ tends to be rated higher or lower
+than $\mu$. For example, if the mean of all rating is $\mu = 3$, and the
+ratings of a user are $(2, 2, 1)$, its bias $b_u$ would be close to $-1$.
 
-Note that it is perfectly possible to proceed in an item-based way. Indeed,
-rather than looking for users similar to $u$, one may look for items similar to
-$i$, which leads to formulas dual of the above ones.
-
-
-A simple and efficient formula using neighborhood technique, popularized by
-\cite{KorACM2010} is the following:
-$$\predrui = b_{ui} + \frac{\sum_{v \in N_i^k(u)} (r_{vi} - b_{vi}) \cdot
-sim(u, v)} {\sum_{v \in N_i^k(u)}sim(u, v)}.$$
-It is based on a simple $k$-NN approach, where are added the $b_{ui}$ terms,
-called \textit{baselines}: $b_{ui} = \mu + b_u + b_i$. $\mu$ is the global mean
-of all ratings in $R$. The $b_u$ term is intended to capture users propensity
-to give ratings higher or lower than the global mean $\mu$, and the same goes
-for items with $b_i$: some items tend to be rated higher than others. Baselines
-are computed by solving a least squares problem:
-$$ \min\limits_{b_u, b_i} \sum_{r_{ui} \in R} (r_{ui} - (\mu + b_u + b_i))^2,$$
+Baselines are computed by solving a regularized least squares problem:
+$$\min_{b_u, b_i} \sum_{r_{ui} \in R} \left[r_{ui} - (\mu + b_u + b_i)\right]^2
++ \lambda \left(b_u^2 + b_i^2 \right).$$
 which can be achieved efficiently by stochastic gradient descent, or
-alternating least squares.
+alternating least squares. The regularization terms are here to avoid
+overfitting: they allow to give more confidence to biases that are computed on
+a high number of ratings. In our previous example, the user had only rated $3$
+items so we cannot say reliably say that its real bias is really close $-1$.
+This regularization can actually be justified using a Bayesian view, but we
+will not describe it here.
 
-Among recommended similarity metrics, this one is of particular interest:
+In their work, the author have used this particular similarity metric, that is
+in perfect accordance with their prediction formula:
 $$\text{sim}(u, v) = \frac
 { \sum\limits_{i \in I_{uv}} (r_{ui} -  b_{ui}) \cdot (r_{vi} - b_{vi})}
 {\sqrt{\sum\limits_{i \in I_{uv}} (r_{ui} -  b_{ui})^2} \cdot
@@ -894,30 +896,34 @@ $$\text{sim}(u, v) = \frac
 
 It is simply a Pearson correlation coefficient, except that instead of
 centering ratings by their means, they are centered with the baseline
-predictors. An intuitive and illuminating way to look at this algorithm as a
-whole is to see that it conceptually follows these steps:
+predictors. This simingly simple tweaks actaually has various consequences that
+are very interesting. An intuitive and illuminating way to look at this
+algorithm as a whole is to see that it conceptually follows these steps:
 \begin{enumerate}
   \item Compute $R'$, the set of all ratings normalized by the corresponding
-    baseline: $r'_{ui} = r_{ui} - b_{ui}$.  $R'$ can be regarded as the set
+    baselines: $r'_{ui} = r_{ui} - b_{ui}$.  $R'$ can be regarded as the set
     where all ratings are given from the same frame of reference, thus
-    discarding any bias.  In $R'$, ratings can then be considered as absolute.
-  \item Using $R'$, compute similarities between users using the cosine similarity (the
-    cosine similarity is the same as the Pearson correlation coefficient,
-    except that quantities are not centered).
-  \item Output a prediction using the basic $k$-NN formula. As this prediction
-    belongs to the same space of $R'$ where ratings have no bias, it needs to
-    be transposed back to the space of $R$ (for performance evaluation
-    purposes).
+    discarding any bias coming from the users or from the items. In $R'$
+    ratings can then be considered as absolute, in the sens that they are not
+    spoiled by the users moods or the items inherent popularity.
+  \item Using $R'$, compute similarities between users using the cosine
+    similarity (the cosine similarity is the same as the Pearson correlation
+    coefficient, except that quantities are not centered).
+  \item Output a prediction using the basic neighborhood formula. As this
+    prediction belongs to the same space of $R'$ where ratings have no bias, it
+    needs to be transposed back to the space of $R$ for performance evaluation
+    purposes. This is why $b_{ui}$ and $b_{vi}$ are added (or subtracted) in
+    the prediction formula of $\predrui$.
 \end{enumerate}
 
-In what follows, this algorithm is referred to as $k$-NNbsl.
+In what follows, this algorithm will be referred to as $k$-NNbsl.
 
-
-It is very clear that the use of the baseline predictors is motivated by the
-same reasons one would want to consider clones in a rating prediction
-algorithms. This means that $k$-NNbsl implicitly takes the idea of clones into account, and thus a form of analogical reasoning.
-Differences and resemblances of these two approaches are discussed
-in the next section.
+It is very clear that the use of the baseline predictors and the use of
+clone-based recommendation are motivated by the same reasons: they both come
+from the fact that users (and items) tend to interpret differently the rating
+scale.  This means that $k$-NNbsl implicitly takes the idea of clones into
+account, and thus a form of analogical reasoning.  Differences and resemblances
+of these two approaches are discussed in the next section.
 
 \subsubsection{Experiments and discussion}
 \label{expeDiscuss}
