@@ -1119,32 +1119,45 @@ neighborhood, which may explain the differences in performance.
 
 \section{Mining analogical proportions}
 
-\subsection{Règles d'association}
-Les règles d'association sont des informations extraites d'une base de
-données qui révèlent des dépendances entre produits (aussi appelés
-items).  Par exemple, partant
-de la règle d'association $a \rightarrow b$  (si on achète $a$ alors il y a
-de grandes chances que l'on achète $b$), un système de recommandation peut
-suggérer $b$ dès lors qu'on a acheté $a$ mais pas encore $b$.  On définit
-une règle d'association comme suit:
+\subsection{Association rules}
 
-Soit $I= \{i_1,i_2,...,i_m \}$ un ensemble d'items. Soit $T= \{t_1, t_2,...,t_n
-\}$ un (multi)-ensemble de transactions, i.e.,  $t_i \subseteq  I$. Une règle
-d'association s'exprime sous la forme $X \rightarrow Y$ o\`u $X \subset I ,~ Y
-\subset I, $ et $X \cap Y = \emptyset$.  $X$ et $Y$ sont des ensembles d'items
-(appelés par la suite \textit{itemsets}), et le \emph{support} $supp(X)$ d'un
-itemset $X$ est défini comme la proportion de
-transactions qui le contiennent.  Un certain nombre de mesures permettent
-d'\'evaluer la {\it qualité} d'une règle d'association, comme  la
-\emph{confiance} qui s'exprime sous la forme $\frac{supp( X \cup Y)}{supp(X)}$.
+Association rules are pieces of information that one can extract from a
+database, and that reveal dependencies between items. Recommendation is one of
+the principal application of association rules. Strating from the association
+rule $i \implies j$, which means that users that buy $i$ tend to buy $j$ with
+high probability, a recommendation system can suggest $j$ as soon as we bought
+$i$ but not yet $j$. A concrete example of association rule We will here
+formally defined association rules.
+
+Let $I = \Set{i_1, i_2, ..., i_m}$ be a set of items, and let $T = \Set{t_1,
+t_2, ..., t_n}$ be a multiset of transactions, where each transaction is a
+subset of $I$: $t_i \subseteq I$. A transaction simply is a set of items that
+are bought together. An association rule is expressed in the form $ X \implies
+Y$, where $ X \subset I, ~ Y \subset I$, and $X \cap Y = \varnothing$. $X$ and
+$ Y $ are sets of items (also called \textbf {itemsets}), and the
+\textbf{support} $\supp (X) $ of an itemset $X$ is defined as the proportion of
+transactions that contain it:
+$$\supp(X) \eqdef \frac{\mid \Set{t \in T | X \subseteq t}\mid}{\mid T \mid}.$$
+A number of measures can be used to evaluate the quality of an
+association rule, such as the \textbf{trust} which can be expressed as:
+$$\text{Trust}(X \implies Y) \eqdef \frac{\supp (X \cup Y)}{\supp (X)}.$$
+As could be naturally expected, $\text{Trust}(X \implies Y)$ is equal to $1$
+when the items of $X$ and $Y$ are systematically bought together and decreases
+if the set $X$ is sometimes found in a transaction that does not contain $Y$.
+
+The mining of association rules is a popular research topic, and has been
+extensively studied. The most famous algorithm for association rule mining
+probably is the \textbf{Apriori} algorithm, introduced in \cite{AgrSriVLDB94}.
+This algorithm relies on the simple (but strong) fact that if an itemset $X$ is
+of size $s$, then any of the subsets
 
 Les méthodes d'extraction de telles règles ont fait l'objet de nombreuses
-études. L'algorithme {\it Apriori}
-\cite{AgrSriVLDB94} est probablement le plus connu mais il en existe d'autres.
-L'idée   est de fixer un seuil minimum $\alpha$ pour le support et de chercher dans
-$2^I$ les itemsets dont le support dépasse $\alpha$, pour obtenir un ensemble
-$S$ d'itemsets fréquents. Cette recherche est facilitée par le fait que
-tout sous-ensemble d'un itemset fréquent est aussi fréquent.
+études. L'algorithme {\it Apriori} \cite{AgrSriVLDB94} est probablement le plus
+connu mais il en existe d'autres.  L'idée   est de fixer un seuil minimum
+$\alpha$ pour le support et de chercher dans $2^I$ les itemsets dont le support
+dépasse $\alpha$, pour obtenir un ensemble $S$ d'itemsets fréquents. Cette
+recherche est facilitée par le fait que tout sous-ensemble d'un itemset
+fréquent est aussi fréquent.
 
 On se fixe alors un nouveau seuil $\beta$ pour la confiance.  Dès lors que
 l'on dispose d'un itemset $IS$ de $S$, on peut chercher toutes les partitions
