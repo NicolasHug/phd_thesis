@@ -190,34 +190,76 @@ the rating $\rui$ of a user $u$ for an item $i$, the most basic method consists
 in computing  the set of $k$ users that are most similar to $u$ and
 that have rated $i$. We will denote this set $N_i^k(u)$. The computation of
 $N_i^k(u)$ depends of course on a similarity measure between users, which is
-based on their respective ratings.  The estimation $\predrui$ of $\rui$ is then
+based on their respective ratings. The estimation $\predrui$ of $\rui$ is then
 computed as an aggregate of the ratings $\rvi$, where $v$ is one of the
 neighbors of $u$ in $N_i^k(u)$. Usually, the aggregation is simply a mean
 weighted by the similarity between $u$ and $v$:
-$$\predrui = \frac{\sum\limits_{v \in N_i^k(u)} r_{vi} \cdot \ssim(u, v)}
-{\sum\limits_{v \in N_i^k(u)}\ssim(u, v)}.$$
 
-There are many, many ways to define the similarity metric between two users.
-Probably the most common one is the cosine similarity:
+\begin{definition}
+  The estimation of a rating $\rui$ using the neighborhood approach (also
+  denoted $k$-NN here) is:
+  $$\predrui = \frac{\sum\limits_{v \in N_i^k(u)} r_{vi} \cdot \ssim(u, v)}
+  {\sum\limits_{v \in N_i^k(u)}\ssim(u, v)},$$
+  where $N_i^k(u)$ is the set of users having rated $i$ with the highest $k$
+  values of sim with $u$:
+  $$N_i^k(u) \eqdef \Set{v \in U | \rvi \in R,~v\in \argmax_{u' \in
+  U}^k\left[\ssim(u, u')\right]}$$
+\end{definition}
+
+The estimation process of the neighborhood approach is described in Algorithm
+\ref{ALGO:neighborhood_prediction}.
+
+\begin{algorithm}[!ht]
+ \caption{The neighborhood recommender.}
+       \label{ALGO:neighborhood_prediction}
+       \begin{algorithmic}
+
+         \STATE {\bf Input}: A set of ratings $R$, and a couple $(u, i)$ for
+         which $\rui$ is  unknown.
+         \STATE {\bf Output}: $\predrui$, an estimation of $\rui$.
+         \STATE \textit{Training stage:}
+         \FORALL{$(u, v) \in U^2$}
+         \STATE Compute $\ssim(u, v)$.
+	    \ENDFOR
+       \STATE \textit{Prediction stage:}
+         \STATE $\text{sims} = 0, ~ \text{ratings} = 0$
+         \STATE $U_i^s = \text{Sorted}(U_i)$  // \textit{Sort by value of
+         $\ssim$ with $u$}.
+
+         \FORALL {$v \in U_i^s[:k]$}
+         \STATE \textit{I.e. for the first $k$ users in $U_i^s$}
+         \STATE \text{sims} += \ssim(u, v)
+         \STATE \text{ratings} += $\rvi \cdot \ssim(u, v)$
+         \ENDFOR
+
+         \STATE $\predrui = \frac{\text{ratings}}{\text{sims}}$
+\end{algorithmic}
+\end{algorithm}
+
+Obviously, the training stage only needs to be done once. Then, the
+similarities can be reused for later predictions.  There are many, many ways to
+define the similarity metric between two users.  Probably the most common one
+is the cosine similarity:
 $$
-\text{cosine sim}(u, v) = \frac{ \sum\limits_{i \in \Iuv} \rui \cdot \rvi}
+\text{cosine sim}(u, v) \eqdef \frac{ \sum\limits_{i \in \Iuv} \rui \cdot \rvi}
 {\sqrt{\sum\limits_{i \in \Iuv} \rui^2} \cdot \sqrt{\sum\limits_{i \in \Iuv}
 \rvi^2}}.
 $$
 
 Here, users $u$ and $v$ are considered as vectors in a vector space defined by
-the items they have both rated (the set of common items is $\Iuv$). Their cosine similarity simply is the cosine of
-the angle between the two vectors. An unnatural feature of this metric is that
-two vectors with (potentially different) constant values will always have a
-similarity of $1$, because they are collinear. For example if $u = (2, 2)$ and
-$v = (5, 5)$, $\text{cosine sim}(u, v) = \frac{20}{\sqrt{8}\sqrt{50}} = 1$,
-while one would expect $u$ and $v$ to be quite different w.r.t. their tastes.
+the items they have both rated (the set of common items is $\Iuv$). Their
+cosine similarity simply is the cosine of the angle between the two vectors. An
+unnatural feature of this metric is that two vectors with (potentially
+different) constant values will always have a similarity of $1$, because they
+are collinear. For example if $u = (2, 2)$ and $v = (5, 5)$, $\text{cosine
+sim}(u, v) = \frac{20}{\sqrt{8}\sqrt{50}} = 1$, while one would expect $u$ and
+$v$ to be quite different w.r.t. their tastes.
 
 Such a flaw can be overcame using the Pearson similarity, which can be viewed as
 a mean-centered version of the cosine similarity:
 
 $$
-\text{pearson sim}(u, v) = \frac{ \sum\limits_{i \in \Iuv}
+\text{pearson sim}(u, v) \eqdef \frac{ \sum\limits_{i \in \Iuv}
 (\rui -  \mu_u) \cdot (\rvi - \mu_{v})} {\sqrt{\sum\limits_{i
 \in \Iuv} (\rui -  \mu_u)^2} \cdot \sqrt{\sum\limits_{i \in
 \Iuv} (\rvi -  \mu_{v})^2}},
@@ -227,8 +269,61 @@ respectively.
 One last similarity metric that we will use is the Mean Squared Difference
 (MSD)\footnote{Strictly speaking MSD is actually a distance rather than a
 similarity metric, so taking its inverse would do the job.}:
-$$\text{MSD}(u, v) = \frac{1}{|\Iuv|} \cdot \sum\limits_{i \in \Iuv} (\rui -
+$$\text{MSD}(u, v) \eqdef \frac{1}{|\Iuv|} \cdot \sum\limits_{i \in \Iuv} (\rui -
 \rvi)^2$$
+
+We will now describe how to practically compute these similarity metrics. We
+see that all 
+of the presented metrics rely on the set of common items $\Iuv$. In practice,
+the explicit computation of this set for every single pair of users is very
+expensive, and naive algorithms lead to poor performances. But the
+complexity can be taken down by a great deal if we proceed in sort of
+map-reduce fashion, as described in Algorithm \ref{ALGO:cosine} which
+illustrate how to compute all cosine similarities. The same idea can be applied
+to efficiently compute any other metric that relies on $\Iuv$.
+
+\begin{algorithm}[!ht]
+ \caption{Computation of the cosine similarity.}
+       \label{ALGO:cosine}
+       \begin{algorithmic}
+
+         \STATE {\bf Input}: A set of ratings $R$.
+         \STATE {\bf Output}: \text{cosine sim}(u, v) for all pairs of users.
+         \STATE {\it Initialization:}
+         \STATE $\text{sim} = \text{null\_array}\left[\mid U \mid\right]\left[\mid U \mid\right]$
+         \STATE $\text{sum\_prod} = \text{null\_array}\left[\mid U \mid\right]\left[\mid U \mid\right]$
+         \STATE $\text{sum\_squ} = \text{null\_array}[\mid U \mid][\mid U \mid]$
+         \STATE $\text{sum\_sqv} = \text{null\_array}[\mid U \mid][\mid U \mid]$
+         \FORALL{$i \in I$}
+           \FORALL{$u \in U_i$}
+             \FORALL{$v \in U_i$}
+              \STATE $\text{sum\_prod}(u, v) = \text{sum\_prod}(u, v) + \rui \cdot \rvi$
+              \STATE $\text{sum\_squ}(u, v) = \text{sum\_squ}(u, v) + {\rui}^2$
+              \STATE $\text{sum\_sqv}(u, v) = \text{sum\_sqv}(u, v) + {\rvi}^2$
+             \ENDFOR
+           \ENDFOR
+         \ENDFOR
+         \FORALL{$u \in U_i$}
+           \FORALL{$v \in U_i$}
+           \STATE $\text{sim}(u, v) = \frac{\text{sum\_prod}(u,
+           v)}{\sqrt{\text{sum\_squ}(u, v) \cdot \text{sum\_sqv}(u, v)}}$
+           \ENDFOR
+         \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+
+Notice that none of these metrics take into account the support between the two
+users $u$ and $v$, i.e. the number of items that they have commonly rated. It
+would be foolish to have the same faith in a similarity computed over hundreds
+of common items as in a similarity computed only over a few items. This is why
+in practice, some sort of shrinkage is usually performed, giving a high value
+to similarities with a high support:
+$$\text{actual\_sim}(u, v) \eqdef \frac{\mid \Iuv \mid - 1}{\mid \Iuv \mid - 1
++ \lambda} \cdot \ssim(u, v),$$
+where $\lambda$ is a sort of regularization constant. Such  a technique acn be
+motivated from a Bayesian perspective, and usually lead to significant
+improvements in the system performances.
 
 In the next section, we describe another very popular collaborative filtering
 technique, which models the data in a significantly different (but meaningful!)
@@ -364,10 +459,58 @@ $$
 \sum_{\rui \in R} \left(\rui - q_i^t \cdot p_u \right)^2 +
 \lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right),
 $$
-where $\lambda$ is a regularization term. Not surprisingly, stochastic gradient
-descent tend to perform really well on this task, but Alternating Least Squares
-can also be used. When $R$ is a dense matrix with no unknown entry, the
-solution of this optimization problem exactly corresponds that of the SVD.
+where $\lambda$ is a regularization term.  When $R$ is a dense matrix with no
+unknown entry (and when $\lambda$ is null), the solution of this optimization
+problem exactly corresponds that of the SVD.
+
+Not surprisingly, stochastic gradient descent (SGD) tend to perform really well on
+this task and is quite simple to implement. The problem is not convex in both
+$p_u$ and $q_i$ so it will only find a local solution, but it turns out to be
+very efficient in practice. Because we have already talked too much about
+matrix factorization, and because a few lines more won't hurt, we now propose
+to derive the associated SGD algorithm. Let $L_{ui}$ be the cost associated
+with a single prediction $\rui$:
+$$L_{ui} \eqdef \left(\rui - q_i^t \cdot p_u \right)^2 +
+\lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right).$$
+
+Denoting err the prediction error ($\text{err} = \rui - q_i^t \cdot p_u$), the
+derivative of $L_{ui}$ with respect to $q_i$ is (remember that $q_i$ is a
+vector:
+$$\frac{\partial L_{ui}}{\partial q_i} = -\text{err} \cdot p_u + 2\lambda
+q_i.$$
+Similarly, the derivative of $L_{ui}$ with respect to $p_u$ is:
+$$\frac{\partial L_{ui}}{\partial p_u} = -\text{err} \cdot q_i + 2\lambda
+p_u.$$
+With these derivatives in mind, the optimization problem can then be easily
+solved by following Algorithm \ref{ALGO:matrix_facto_sgd}.
+
+\begin{algorithm}[!ht]
+ \caption{Stochastic Gradient Descent for matrix factorization.}
+       \label{ALGO:matrix_facto_sgd}
+       \begin{algorithmic}
+
+         \STATE {\bf Input}: A set of ratings $R$, a learning rate $\alpha$ and
+         a regularization penalty $\lambda$, a number of iterations $n$.
+         \STATE {\bf Output}: $p_u$ and $q_i$, the user and item biases.
+         \STATE {\it Initialization:}
+         \STATE Randomly initialize $p_u$ and $q_i$
+         \FOR{$\text{iteration} \in [1, n]$}
+         \FORALL{$\rui \in R$}
+         \STATE $\text{err} = \rui - q_i^t p_u$
+         \STATE $q_i = q_i - \alpha (\text{err} \cdot p_u - \lambda q_i)$
+         \STATE $p_u = p_u - \alpha (\text{err} \cdot q_i - \lambda p_u)$
+         \ENDFOR
+         \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+Another optimization technique can be used, by noting that if either $p_u$ or
+$q_i$ is fixed, we obtain a convex problem that can be solved using
+classical least squares methods. The idea is then to first consider all $q_i$
+as constants and solve the associated linear problem. Then, the $p_u$ are
+considered constant and the associated problem is solved. Repeating these steps
+an arbitrary number of time will also converge to a local solution, and this
+methods is known as Alternating Least Squares.
 
 \todo{Mettre des refs}
 
@@ -646,9 +789,10 @@ The performances of our analogical recommender are summed up in Table
 we will describe in a moment. We also report the performances of other standard
 recommendation algorithms that we have already mentioned:
 \begin{itemize}
-  \item The basic neighborhood approaches (denoted $k$-NN) with different similarity metrics,
-    namely Mean Squared Difference, Cosine similarity and Pearson similarity.
-    For these three algorithms, the size of the neighborhood was set to $k=40$
+  \item The basic neighborhood approach (denoted $k$-NN) with different
+    similarity metrics, namely Mean Squared Difference, Cosine similarity and
+    Pearson similarity.  For these three algorithms, the size of the
+    neighborhood was set to $k=40$
   \item The matrix-factorization algorithm (denoted MF), as described in section \ref{TODO}.
     The number of factors was set to $f = 100$, and the optimization problem
     was solved by a stochastic gradient descent of $20$ iterations with
@@ -656,18 +800,19 @@ recommendation algorithms that we have already mentioned:
     These values are those recommended by the authors in \ref{TODO} for the
     Netflix dataset, and turned out to be quite efficient for our experiments.
   \item For the sake of completness we also report results for an algorithm
-    that always predict the average of all ratings ($\predrui = \mu ~ \forall
-    u, i$), and for a random algorithm that predicts random ratings based on
-    the distribution of the training set, which is assumed to be normal.
+    that always predict the average of all ratings ($\predrui = \mu$ for all
+    $u, i$), and for a random algorithm that predicts random ratings based on
+    the distribution of the dataset, which is assumed to be normal.
 \end{itemize}
 
 The reported metrics are RMSE, precision, recall, F-measure, coverage, and
-surprise.  Remember that for RMSE and surprise, low values mean high
-performance, while for precision, recall, F-measure and coverage the reverse
-holds.  RMSE is the only measure that only depends on the prediction algorithm
-$A$. All the other dimension depend on the items that we actually choose to
-recommend, and as such rely on the the recommendation strategy $S$. Here, we
-have chosen is to recommend $i$ to $u$ if $\hat{r}_{ui} \geq 4$.
+surprise. Precision, recall, F-measure and coverage  are reported as
+percentages. Remember that for these dimensions high values mean high
+performance, while for RMSE and surprise low values are better.  RMSE is the
+only measure that only depends on the prediction algorithm $A$. All the other
+dimension depend on the items that we actually choose to recommend, and as such
+rely on the the recommendation strategy $S$. Here, we have chosen is to
+recommend $i$ to $u$ if $\hat{r}_{ui} \geq 4$.
 
 All reported results are averaged over a 5-folds cross-validation
 procedure. Obviously, the five folds are the same for all of the algorithims,
@@ -675,41 +820,46 @@ to allow for meaningful comparisons.  The dataset that we used is the
 Movielens-100K dataset\footnote{http://grouplens.org/datasets/movielens/},
 composed of 100,000 ratings from 1000 users and 1700 movies. Each rating
 belongs to the interval $[1, 5]$, and the sparsity of this dataset is of about
-94\%: i.e. only 6\% of all possible ratings are actually known. We also
+94\%, i.e. only 6\% of all possible ratings are actually known. We also
 report the computation time of each algorithm (roughly estimated), which is not
 an average but the total over the five folds.
 
 \begin{table}[ht]
   \centering
-\begin{tabular}{ l  l  l  l  l  l   l  l  l  l }
+\begin{tabular}{ l  l l  l  l  l  l   l  l  l  l }
 \toprule
-  \multicolumn{2}{ l }{Algorithm}  & RMSE & Prec & Rec & F & Cov & $\surpmax$ & $\surpavg$ & Time \\
+  Algorithm & \multicolumn{2}{ l }{Details}  & RMSE & Cov &  Prec & Rec & F & $\surpmax$ & $\surpavg$ & Time \\
 \midrule
-  \multirow{4}{*}{Parall} & $k$-NN 20 & 0.998 & .968 & .379 & .54 & & & & 6h\\
-                          & $k$-NN 30 & \\
-                          & Rand 100 & 1.178 & .950 & .682 & .79 & .566  & .419& .166&
-                          10m \\
-                          & Rand 1000 & 1.043 & .954 & .274 & .42 & .226 & .418 & .168
-                          & 1h\\
-\cmidrule(lr){1-2}
-  \multirow{3}{*}{$k$-NN} & MSD & 0.979 & .964 & .282 & .43  & .230 & .423 & .175 & 30s\\
-                          & Cos & 1.017 & .962 & .262 & .41 &  .214 & .426 & .180 & 30s\\
-                          & Pears & 1.011 & .946 & .304 & .46 & .253 & .425 & .170 & 30s\\
-\cmidrule(){1-2}
-                   MF & $f = 100$ & 0.951 & .994 & .472 & .64 & .375 &  .422 & .178 & 45s\\
-\cmidrule(){1-2}
-                   Mean &  & 1.126 &  &  &  &  &   & & 1s\\
-\cmidrule(){1-2}
-                   Random &  &  1.523& .861 & .892 & .88 & .817 &  .432 & .155 & 1s\\
+  \multirow{4}{*}{Parall} & \multirow{2}{*}{Sample}& $n=100$ & 1.18 &  57& 95 & 68 & 79
+                          & .419& .166& 10m \\
+
+                          & & $n=1000$ & 1.04 & 23 & 95 & 27 & 42
+                          & .418 & .168 & 1h\\
+
+                          & \multirow{2}{*}{$k$-NN}& $k=20$ & 1.00 & 31 & 97 & 38 & 54
+                          & .421 & .176 & 6h\\
+
+                          & & $k=30$ & 0.99 & 25 & 96 & 31 & 47
+                          & .422 & .177  & 19h\\
+\cmidrule(lr){1-3}
+  \multirow{3}{*}{$k$-NN} & MSD& $k=40$ & 0.98 & 23 & 96 & 28 & 43 
+                          & .423 & .175 & 30s\\
+                          & Cos& $k= 40$& 1.02 & 21 & 96 & 26 & 41 &
+                          .426 & .180 & 30s\\
+                          & Pears& $k=40$ & 1.01 & 25 & 95 & 30 & 46 &
+                          .425 & .170 & 30s\\
+\cmidrule(){1-3}
+                   MF & & $f = 100$ & 0.95 & 38 & 99 & 47 & 64 &  .422 & .178 & 45s\\
+                   Mean &  & & 1.13 &  &  &  &  &   & & 1s\\
+                   Random &  & &  1.52& 81 & 86 & 89 & 88 &  .432 & .155 & 1s\\
 \bottomrule
 \end{tabular}
-
 \caption{Performances of recommendation algorithms on the Movielens-100k
   dataset.}
 \label{TAB:parall_performances_comparison}
 \end{table}
 
-Notice that we have considered various alternative for our analogical
+We have have considered various alternatives for our analogical
 recommender. In fact, when trying to predict a single rating $\rui$, looking
 for \textbf{all} the $3$-tuples of users in $U_i$ as described in Algorithm
 \ref{ALGO:analogical_recommendation} is simply impractical\footnote{Remember
@@ -717,62 +867,92 @@ that $U_i$ is the set of user that have rated item $i$.}: there are often too
 many users in $U_i$. As the complexity of this search is in $\mathcal{O}(\mid
 U_i\mid^3)$ and as $\mid U_i\mid$ can be quite large for some items, strictly
 sticking to Algorithm \ref{ALGO:analogical_recommendation} would lead to
-terrible computation times. We thus have chosen two different strategy:
+even worse computation times. We thus have chosen two different strategies:
 \begin{itemize}
   \item The first one is to randomly sample a $3$-tuple in $U_i^3$ $n$ times.
-    As in theory the prediction is an average from all the $3$-tuples in
-    $U_i^3$, choosing a large value of $n$ should lead to a fairly good
-    estimate. We have reported the results for $n = 100$ and $n = 1000$,
-    denoted Parall Rand 100 and Parall Rand 1000. Note though that $\mid U_i
+    As in the strict version of Algorithm \ref{ALGO:analogical_recommendation}
+    the prediction is an average from all the $3$-tuples in $U_i^3$, choosing a
+    large value of $n$ should lead to a fairly good estimate. We have reported
+    the results for $n = 100$ and $n = 1000$. Note though that $\mid U_i
     \mid^3$ is usually much, much larger than 1000, so we only have very rough
     estimates here.
   \item The second one is to consider the $3$-tuples $(a, b, c)$ in the
     neighborhood of $u$, using the assumption that the neighbors of $u$ are
     probably more reliable to yield a prediction where $u$ is involved. We have
     used the MSD metric to compute neighborhood, and we have considered various
-    sizes of neighborhood, namely $k = 20$  and $k = 30$. These are reported as
-    Parall $k$-NN 20 and Parall $k$-NN 30. Unfortunately, values of $k$ greater
-    than $30$, lead to basically never-ending algorithms.
+    sizes of neighborhood, namely $k = 20$  and $k = 30$. Unfortunately, values
+    of $k$ greater than $30$ lead to basically never-ending algorithms.
 \end{itemize}
 
 
 \paragraph{Analysis\\}
+
 Out of all the algorithm, the Matrix Factorization algorithm is by far the most
 accurate, with and RMSE of 0.95. MF models were extremely popular during the
-Netflix competition precisely because of their high accuracy. The RMSE of the
-Parall Rand algorithms is comparable to that of the neighborhood approaches
-using cosine or Pearson similarities, with RMSE close to 1. However,
-neighborhood approaches are highly dependent on the similarity metric, and
-using the MSD significantly improves the accuracy\footnote{When dealing with
-RMSE, a 3\% drop is signicant enough.}. Looking for the three-tuples in a the
-neighborhood of the users slightly improves the accuracy of our analogy-based
-algorithms, as can be noticed by looking at the Parall $k$-NN
-algorithms.\todo{continuer}
+Netflix competition precisely because of their high accuracy. Note however that
+even if the matrix factorization algorithms cannot be overlooked when it comes
+to performance comparison, their philosophy remains quite different than that
+of other classical neighborhood approaches. They tend to model data structures
+at a high-level of abstraction, while neighborhood methods tend to model local
+features of the data. As such, it makes more sense to compare the performances
+of analogical recommenders to those of neighborhood-based techniques, rather
+than use matrix factorization-based models as a baseline.
+
+As expected, the RMSE of the
+Parall Sample algorithm gets better while $n$ grows, but still
+remains quite far from that of the $k$-NN algorithms. By paying attention to
+the Parall $k$-NN algorithms, we see that looking for the
+three-tuples in a the neighborhood of the users significantly improves the
+accuracy of our analogy-based algorithms. Their RMSE is better than that of the
+neighborhood approaches when using cosine and Pearson similarity, and it may
+expected that using a neighborhood size of $k=40$ would lead the an RMSE close
+to that of the $k$-NN algorithm with MSD similarity.
 
 Let us now consider the coverage measure. At first sight, it may appear that
-the Random and Parall Rand 100 algorithm have the best recall values. But this
+the Random and Parall Sample 100 algorithm have the best recall values. But this
 would be missing a very important detail: any measure that evaluates the
-fitness of the recommendation strategy $S$ greatly depends \textbf{also} on the fitness of the
-prediction algorithm $A$, simply because $S$ highly depends on $A$. Therefore,
-the coverage of the Random algorithm can not be taken very seriously,
-because its accuracy (RMSE) is disastrous: it's only by chance that some items
-were estimated with a rating greater than $4$, and then were recommended. The
-same goes for the Parall Rand 100 algorithm, which has a quite bad accuracy.
-Actually, the most reasonable choice would probably the MF algorithm again,
-which has the best RMSE and very decent coverage. \todo{evaluer parall}
+fitness of the recommendation strategy $S$ (such as the coverage) greatly
+depends \textbf{also} on the fitness of the prediction algorithm $A$, simply
+because $S$ highly depends on $A$. Therefore, the coverage of the Random
+algorithm cannot be taken very seriously, because its accuracy (RMSE) is
+disastrous: it's only by chance that some items were estimated with a rating
+greater than $4$, and then were recommended. The same goes for the Parall
+Sample 100 algorithm, which has a quite bad accuracy.  Actually, the most
+reasonable choice would probably the MF algorithm again, which has the best
+RMSE and very decent coverage. With respect to coverage, our other
+analogy-based algorithms yield comparable performances to the
+neighborhood-based methods, with a slight advantage for analogy-based methods.
 
 As for precision, recall and F-measure, we somehow have the same situation: the
 Random algorithm seems to be the best one, but this need to be taken very
-carefully. Here again, the MF algorithm seems to yield the bes trade-off.
+carefully. Here again, the MF algorithm seems to yield the best trade-off.
+Comparatively, analogy-based algorithms have a slightly better F-measure than
+the neighborhood approaches. This may describe the fact that our algorithms
+tend to yield more diverse recommendations, as would also suggest the results
+on the coverage.
+
+The surprise measures are a bit more tricky to analyse. Looking at $\surpmax$,
+which assess the least surprising recommendation (average over all users), we
+see that the analogy-based algorithms tend to perform better, but the
+$\surpavg$ measure counterbalances this observation. Undoubtely, the surprise
+associated to a recommendation remains an extremely tricky concept to grasp and
+to model, and the measures presented here only allow to assess a very rough
+aspect.
+
+As a side note, we have only reported the RMSE for the Mean algorithm, because
+this algorithm always outputs a prediction of $\predrui = \mu = 3.53$ which is
+lower than $4$, the threshold we chose for our recommendation strategy $S$.
+Therefore, not a single item is recommended with this algorithm, and the
+precision, recall, etc. are not defined (or simply 0).
 
 We are now led to computation time... The nightmare of every analogical
 proportion-based algorithm. All of the other algorithms can manage through the
 five-folds cross-validation procedure in less than a minute, but our
 analogy-based algorithms need hours to yield decent performances. This issue is
-linked to the cubic complexity of the analogy-based learners, which cannot
-cope with big amounts of data. For now, this limitation clearly prevents analogy-based
-learners to be relevent in real-world applications such as recommender
-systems.
+linked to the cubic complexity of the analogy-based learners, which cannot cope
+with big amounts of data. For now, this limitation clearly prevents
+analogy-based learners to be relevent in real-world applications such as
+recommender systems.
 
 \section{Clones}
 
@@ -852,10 +1032,10 @@ $$
 From then on, computing $\predrui$ amounts to finding all the users $v$ that
 satisfy this criteria, and computing an aggregation of their rating for $i$,
 which can simply be an average. We implemented this basic algorithm described
-by algorithm \ref{ALGO:bruteforce}, and referred to as \textit{Brute-force}.
+by algorithm \ref{ALGO:bruteforce}, and referred to as \textit{brute-force}.
 
  \begin{algorithm}[!ht]
-   \caption{\textit{A brute-force algorithm for clone-based recommendation.}}
+   \caption{A brute-force algorithm for clone-based recommendation.}
        \label{ALGO:bruteforce}
        \begin{algorithmic}
 
@@ -938,9 +1118,9 @@ a prediction using the classical neighborhood approach:
 $$\predrui = \frac{\sum_{v \in N_i^k(u)} (r_{vi} + \mu_{uv}) \cdot \clonesim(u,
 v)}{\sum_{v \in N_i^k(u)} \clonesim(u, v)}.$$
 
-This algorithm will be referred to as CloneA. For the sake of completeness,
-we also tried the same formula but with a more basic similarity metric that
-does not care about clones: MSD. This algorithm is referred to a CloneB.
+This algorithm will be referred to as Clone. For the sake of completeness, we
+also tried the same formula but with a more basic similarity metric that does
+not care about clones: MSD.
 
 \subsubsection{Current advances in neighborhood-based techniques}
 
@@ -1005,72 +1185,77 @@ clone-based recommendation are motivated by the same reasons: they both come
 from the fact that users (and items) tend to interpret differently the rating
 scale.  This means that $\knns$ implicitly takes the idea of clones into
 account, and thus a form of analogical reasoning.  Differences and resemblances
-of these two approaches are discussed in the next section.
+of these two approaches will be discussed in the next section.
 
 \subsubsection{Experiments and discussion}
 \label{expeDiscuss}
 
-We evaluated the performance of the aforementioned algorithms in terms of MAE
-and RMSE on two datasets, the movielens-100K and movielens-1M
-datasets\footnote{http://grouplens.org/datasets/movielens}, containing
-$100,000$ and $1M$ ratings respectively. Results are shown in tables
-\ref{table:res100k} and \ref{table:res1M} and where calculated using 5-folds
-cross-validation. For each of these algorithms, the number of neighbors or
-clones used to output a prediction is $k = 40$, except for the brute-force
-algorithm where the number of clones can not be controlled.
-\begin{table}[!ht]
-\centering
-\begin{tabular}{ l  l  l  l  l  l  l }
-\toprule
-     &  k-NN & Brute-force & Clone A & Clone B & $\knns$\\
-\midrule
-RMSE & .979 &   .948    &   .936 &  .931  &  .921   \\
-MAE  & .773 &   .737    &   .733 &  .732  &  .721   \\
-\bottomrule
-\end{tabular}
-\caption{RMSE and MAE of our clone-based algorithms on the Movielens-100k
-  dataset.}
-\label{TAB:clone_based_ml100k}
-\end{table}
+To assess the suitability of our clone-based view of recommendation, we have
+evaluated the accuracy of the brute-force and Clone algorithms, and compared
+them to the previously mentioned approaches: the basic neighborhood method, and
+the neighborhood method taking into account user and item biases. The
+evaluation protocol is the same as that of Section \ref{TODO}, i.e. results are
+averaged over a 5-folds cross-validation procedure. In addition to
+the Movielens-100k dataset presenter earlier, we also used the Movielens-1M
+dataset containing 1 million ratings with 6000 users and 4000 movies.
+For each of these algorithms, the number of neighbors or clones used to output
+a prediction is $k = 40$, except for the brute-force algorithm where the number
+of clones can not be controlled. The RMSE and MAE of the algorithms are
+reported on Table
+\ref{TAB:clone_based_rmse_mae}.
 
-\begin{table}[!ht]
-\centering
-  \begin{tabular}{l  l  l  l  l  l  l}
-  \toprule
-     &  k-NN & Brute-force & Clone A & Clone B & $\knns$\\
-  \midrule
-RMSE & .921 &           &   .8996 &  .8969  &  .8879\\
-MAE  & .725 &           &   .7057 &  .7050  &  .7005\\
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{ l  l  l  l  l l l }
+\toprule
+    & & &  \multicolumn{2}{ c }{ML-100k}  & \multicolumn{2}{ c }{ML-1M} \\
+  \cmidrule(lr){4-5}
+  \cmidrule(lr){6-7}
+    Algorithm& Details  & & RMSE & MAE  & RMSE & MAE \\
+\midrule
+    $k$-NN & MSD & $k=40$&  .979 & .773 & .921 & .725\\
+    Brute-Force &  & & .948 & .737 & & \\
+  \cmidrule(lr){1-2}
+    \multirow{2}{*}{Clone} & \clonesim & $k=40$& .936 & .733 & .899& .705\\
+                           & MSD & $k=40$ &  .931 &  .732 & .897 &  .707\\
+  \cmidrule(lr){1-2}
+    $\knns$ & & $k=40$ & .921 & .721 & .869& .680\\
 \bottomrule
 \end{tabular}
-\caption{RMSE and MAE of our clone-based algorithms on the Movielens-1M dataset.}
-\label{TAB:clone_based_ml1m}
+  \caption{RMSE and MAE of our clone-based algorithms on the movielens 100k and
+  1M datasets.}
+  \label{TAB:clone_based_rmse_mae}
 \end{table}
 
 It is very clear that even a very straightforward approach of the clone-based
 recommendation principle significantly outperforms the most basic $k$-NN
-algorithm. It is however a lot heavier to compute, thus not very suitable for
-real world recommendation purposes (its performances on the Movielens-1M
-dataset simply could not be computed). The two other clone-based algorithms
-however, have the exact same complexity of any $k$-NN-based algorithm which is
-a significant improvement from the algorithm described in section
-\ref{ANALOGY_USERS}.
+algorithm, and thus validates the need to take into account biases between
+users. The brute-force is however a lot heavier to compute, and thus not very
+suitable for real world recommendation purposes (its performances on the
+Movielens-1M dataset simply could not be computed). The two other clone-based
+algorithms however, have the exact same complexity of any $k$-NN-based
+algorithm which is a significant improvement from the algorithm described in
+section \ref{TODO}.
 
-Surprisingly enough, out of the two Clone algorithms, it is the one that does
-not care about clones in its similarity measure that achieves the best results.
-This might be due to the fact that in the neighborhood based on MSD, $\mu_{uv}$
-is necessarily small and thus easier to estimate in a statistical significant
-way.
+Our two Clone algorithm output (almost) exactly the same
+accuracies. This may seem a bit surprising, because the Clone MSD algorithm
+does not take into account clones in the similarity measure, and we would
+expect it to yield a lower accuracy. But this result still gives a further
+reason to consider clones as useful predictors: the only difference between the
+Clone MSD algorithm and the $k$-NN MSD algorithm (whose accuracy is much worse)
+is that in the prediction of Clone MSD, the mean differences $\mu_{uv}$ between
+the ratings of $u$ and its neighbors are taken into account.
 
 Performances of the Clone algorithms are close to those of the state of the
-art $\knns$ algorithm. It is however important to understand that these
+art $\knns$ algorithm, yet the difference is more striking on the Movielens-1M
+dataset. It is however important to understand that these
 algorithms differ on the following points:
 \begin{itemize}
 \item The Clone algorithms do not address item bias, which is a significant
   drawback. It may not be unreasonable to believe that incorporating item bias
   in the prediction would lead to better results.
 \item There is a subtle yet meaningful difference of interpretation between the
-  biases induced by both algorithms. In the clone algorithm, biases are all
+  biases induced by both algorithms. In the Clone algorithm, biases are all
   pairwise, meaning that they involve two users, and they are computed on items
   that both users have rated. As for the $\knns$ algorithm, there is no such
   thing as a pairwise bias. Bias for a given user is computed using only its
@@ -1085,13 +1270,13 @@ algorithms differ on the following points:
   heuristic-based approach.
 \end{itemize}
 
-It should also be noted that in fact, it is recommended to perform a shrinkage
-on the similarity measure of algorithm $\knns$, in order to take into account
-the number of common items between two users: the more items they share, the
-more confident we are when computing their similarity \cite{KorACM2010}. Such
-an approach can improve significantly both RMSE and MAE of the algorithm.
-Similarly, in the clone-based approach, it might be of interest to discount
-clones that rely on a too small number of common items.
+It should also be noted that in practice, it is recommended to perform a
+shrinkage on the similarity measure of algorithm $\knns$, in order to take into
+account the number of common items between two users: the more items they
+share, the more confident we are when computing their similarity
+\cite{KorACM2010}. Such techniques can further improve both RMSE and MAE of the
+algorithm.  Similarly, in the clone-based approach, it might be of interest to
+discount clones that rely on a too small number of common items.
 
 \subsection{Towards an ordinal view of ratings}
 \label{ORDINAL_POV}
@@ -1154,11 +1339,12 @@ $u$, and $d_u$ its number of discordant pairs. The FCP is then computed over all
 users as the proportion of concordant pairs.
 
 \begin{align*}
-&c_u = \{(i, j) \in I^2 \quad s.t. \quad \predrui > \predruj \text{ and }
-r_{ui} > r_{uj}\}\\
-&d_u = \{(i, j) \in I^2 \quad s.t. \quad \predrui \geq \predruj \text{ and }
-r_{ui} < r_{uj}\}\\
-&FCP = \frac{\sum\limits_{u \in U} c_u}{\sum\limits_{u \in U} c_u + \sum\limits_{u \in U} d_u}
+  c_u &\eqdef \Set{(i, j) \in I^2 \quad | \quad \predrui > \predruj \text{ and
+  } r_{ui} > r_{uj}},\\
+  d_u &\eqdef \Set{(i, j) \in I^2 \quad | \quad \predrui \geq \predruj \text{
+    and } r_{ui} < r_{uj}},\\
+  \FCP &\eqdef \frac{\sum\limits_{u \in U} c_u}{\sum\limits_{u \in U} c_u +
+  \sum\limits_{u \in U} d_u}.
 \end{align*}
 Note that $\predrui$ here may represent either a rating prediction or a
 ranking prediction $\hat{\rho_{ui}}$.
@@ -1171,10 +1357,10 @@ Results are reported in table \ref{table:res100kRank}.
 \toprule
      & RankAnlg &  k-NN & $\knns$\\
 \midrule
-FCP  &  .7063   & .7096 &  .7163   \\
+\FCP  &  .7063   & .7096 &  .7163   \\
 \bottomrule
 \end{tabular}
-\caption{FCP of our rank prediction algorithm on the Movielens-100k
+\caption{\FCP of our rank prediction algorithm on the Movielens-100k
   dataset.}
 \label{table:res100kRank}
 \end{table}
