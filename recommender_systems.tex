@@ -7,118 +7,30 @@ web: they filter available items to provide relevant suggestions to customers.
 
 With the huge development of online businesses, recommender systems have become
 more and more popular \cite{RecoSystemHandbook,AdoTuzIEEE2005}. They help to
-answer questions as diverse as ``what movie to rent?", ``what item to buy?" or
-``which restaurant to try?", but also such as ``what piece of code to
-investigate ?" in the case of recommender system for software development.
-They do so by providing the user with a list of recommendations.  Obviously,
-the more personalized the recommendations, the better the system.  For
-instance, a system recommending only the most popular items is useless as it is
-likely that the standard customer knows these items. But the maximization of
-business profit may also lead to suggest items which are not very popular (and
-thus difficult to sell), provided they may be of interest for the user.
+answer questions as diverse as ``what movie to rent?", ``what car to buy?" or
+``which restaurant to try?".
+They do so by providing the user with a list of recommendations.
 
-A very common way of providing personalized recommendations to a target user is
-to estimate its taste for the items that the system provides. The taste of a user
-$u$ for a given item $i$ is usually represented as a rating that $u$ would give
-to $i$.  The scale of the ratings may vary, but the integer interval [1, 5] and
-the \textit{like}/\textit{dislike} scales are very common in real world
-systems.
+\section{Taxonomy of recommender systems}
+\label{SEC:taxonomy_rec_sys}
 
-Once these estimations are made, a simple option is to recommend the items with
-the highest ratings among all the estimated scores for the considered user
-(using the implicit assumption that a user should be interested in the items
-with high scores).
+Undoubtly, there are many different tasks that range among the general problem
+of recommendation. If they all share the ultimate goal of providing user with
+relevant recommendation, they greatly differ in nature by the items that are
+recommended, and by the technical means that are involved.
 
-Providing an accurate measure of the overall quality of a recommender system is
-not a simple task and diverse viewpoints have to be considered (see
-\cite{RecoSystemHandbook} for an extensive survey).  Obviously, accuracy of
-its core prediction algorithm is an important matter, but other properties are
-also desirable in order  to deploy an effective recommendation engine. For
-instance {\it coverage} measuring what is the range of items in the catalogue
-that could be recommended, or {\it serendipity} measuring in some sense the
-surprise that a user could get when a new item is suggested.
+To provide a clear view of the vast recommendation landscape, various taxonomies
+for recommender systems have been proposed: see for example \cite{Bur02,
+AdoTuzIEEE2005, Bur07}, and more recently \cite{BurRam11}. Using that of
+\cite{BurRam11}, we will successively describe \textbf{content-based},
+\textbf{collaborative} and \textbf{knowledge-based} approaches in the next
+three sections.
 
-\section{Background on recommender systems}
-\label{sec:background_RS}
-
-The aim of a recommendation system is to provide users with lists of relevant
-personalized items.  Let us now formalize the problem.
-
-\subsection{Problem formalization and notation}
-Let $U$ be a set of users and $I$ a set of items. For some pairs $(u,i) \in U
-\times I$, a rating  $\rui$ is supposed to have been given by $u$ to express
-whether she likes the item $i$ or not.  It is quite common that  $\rui$ belongs
-to the rating scale $[1, 5]$, 5 meaning a strong preference for item $i$, 1
-meaning a strong rejection, and 3 meaning indifference, or just an average
-note. When the rating scale is gradually valuated, we say that ratings are
-\textbf{explicit}, in the sense that users have explicitely expressed their
-preference towards items. \textbf{Implicit} ratings belong to a binary scale
-$[0, 1]$, and usually correspond to the result of collected data about users
-behaviour, without any active involvement. For example, if a user has listened
-to a given track more than 10 times, we might consider this as an implicit
-rating of $1$. We may also consider that an implicit rating captures the fact
-that a user has bought a given item without giving it an explicit rating. These
-two kinds of rating schemes (explicit and implicit) lead to quite different
-prediction algorithms in practice. In our work, we will only focus on the
-explicit rating scheme.\todo{Vrai?}
-
-Let us denote by $R$ the set of known ratings recorded in the system. It is
-well known that, in real systems, the size of $R$ is very small with regard to
-the potential number of ratings which is $|U| \times |I|$, as a lot of ratings
-are missing. The set $\Ui$ will denote the set of users that have rated item
-$i$, and $\Uij$ is the set of users that have rated both item $i$ and item $j$.
-Similarly, $\Iu$ is the set of items that user $u$ has rated, and $\Iuv$ is the
-set of items that both users $u$ and $v$ have rated.
-
-To recommend items to users, a recommender system usually proceed as follows:
-\begin{enumerate}
-\item Using a prediction algorithm $A$, estimate the unknown ratings $\rui$
-  (i.e. $\rui \notin R$). This estimation $A(u, i)$ will here be denoted
-    $\predrui$.
-\item Using a recommendation strategy $S$ and in the light of the previously
-  estimated ratings, recommend items to users. For instance, a basic yet common
-    strategy is to suggest to user $u$ the items $i \notin I_u$ with the
-    highest $\predrui$.
-\end{enumerate}
-
-When using the implicit rating scheme, these two stages are usually
-indistinguishable: it is natural to recommend an item to a user if the
-estimated predicted rating is $1$. In practice, the recommendation strategy
-depends a lot on the pragmatic constraints of the system: a store manager way
-want to push forward a given item to boost its sellings, regardless of the
-rating predictions outputted by the algorithm. As a result, most of the
-research has focused on the prediction algorithms, and so will we.
-
-Prediction algorithms implementations are strongly influenced by the fields of
-data mining and of course machine learning. However, we want to emphasize that
-the general setting of recommender systems is actually quite different than
-that of classification or regression. A naïve reasoning could lead us to
-consider that the rating prediction problem with the rating scale $[1, 5]$ is
-nothing but a classification task with five classes $1, 2, 3, 4, 5$. But this is
-forgetting that the values $1, 2, 3, 4, 5$ are actually ordinal, and that the
-difference between \textit{class} $1$ and \textit{class} $2$ is not the same as the
-difference between \textit{class} $1$ and \textit{class} $4$. But most
-importantly, in classification or regression all the instances belong to the
-same space (that space was $X^m$ in our previous chapters), and have the same
-features. This is not the case here! In a recommendation problem, if we chose
-our instances to be the users and their feature space to be the items, we would
-end up with instances that are only (very) partially described, because of
-course no user has rated the whole set of items. All the more, as the number of
-items is usually very high, we would end up with a very high dimensional
-problem, where learning algorithm tend to fail due to the so-called curse of
-dimentionality. Our point here is that recommender systems problems do not
-really fit within the traditional machine learning setting, and represent a new
-setting in their own right.
-
-Traditionally, prediction algorithms are
-considered to belong to one of the two main families of prediction techniques,
-referred to as \textbf{content-based} methods and \textbf{collaborative
-filtering} methods, that we both review below. In practice, real-world
-recommender systems usually use a mix of both methods, and are referred to as
-\textbf{hybrid} methods.
+Rest assured that in real systems the frontiers between these three families
+are not that sharp, and practical recommendation solutions usually fall in more
+than one category. We refer to such systems as \textbf{hybrid} recommenders.
 
 \subsection{Content-based techniques}
-\label{SEC:collaborative_filtering}
 
 Content-based algorithms try to recommender to a user some items that are
 \textbf{similar} to those that the user has liked in the past. For example, if
@@ -136,52 +48,359 @@ been visisted (yes, this is the reason why some online systems will try to sell
 you a fridge even though you just bought a brand new one). In systems were
 items are more homogeneous, i.e. in a movie store system, more  sophisticated
 approaches can be built relying on some metadata about the items (hence the
-name \textit{contenat}-based), for example movies genre, main actors, film
+name \textit{content}-based), for example movies genre, main actors, film
 director, etc\dots.
 
 As content-based techniques do not rely on the set of ratings to compute item
 similarities, a nice resulting feature is that new items that have not yet been
-rated by anybody can still be recommended. Content-based techniques also stand
-out by their explanatory potential: the motto \textit{Here are some items that
-are akin to those you liked} is perfectly understandable and seems sound.
-Recommender systems usually strive for explanatory power, because it is
-recognized that when confronted with a given recommendation users are more
-likely to accept the recommendation is they understand and acknowledge the
-underlying process.
+rated by anybody can still be recommended. This is not the case for a new user
+though: as we have no information about the items this user may like, a
+content-based recommender would not be able to output any prediction. These
+techniques also stand out by their explanatory potential: the motto
+\textit{Here are some items that are akin to those you liked} is perfectly
+understandable and seems sound.  Recommender systems usually strive for
+explanatory power, because it is recognized that when confronted with a given
+recommendation users are more likely to accept the recommendation is they
+understand and acknowledge the underlying process.
 
 However, content-based systems are prone to various behaviour that tend to make
-them less competitive with other collaborative filtering methods. The first
-obvious drawback is that most of the time, metadata are required to describe
-the items (remember our movie example with genre, actors etc.). Such
-description can be extremely costly and can only capture a very limited subset
-of item features, which are not necessarily the most important ones when it
-comes to the users personal tastes. Going back to our science fiction fan, it
-is very plausible that the user has a strong preference for the steampunk
-genre, and yet is perfectly indifferent to the superhero fiction movies, and
-both can still be considered as subgenres of science fiction. A system that
-could not distinguish these two kinds of movies would fail to provide our
-steampunk fan with relevant recommendations.
+them less competitive with other methods. The first obvious drawback, known as
+the problem of \textit{limited content analysis}, is that most of the time
+metadata are required to describe the items (remember our movie example with
+genre, actors etc.). Such description can be extremely costly and can only
+capture a very limited subset of item features, which are not necessarily the
+most important ones when it comes to the users personal tastes. Going back to
+our science fiction fan, it is very plausible that the user has a strong
+preference for the steampunk genre, and yet is perfectly indifferent to the
+superhero fiction movies, and both can still be considered as subgenres of
+science fiction. A system that could not distinguish these two kinds of movies
+would fail to provide our steampunk fan with relevant recommendations.
 
 Another well-known drawback of content-based recommenders is their tendency to
-recommend only items that users may already know or do not need anymore (such
-as a fridge!), and therefore the recommendations lack in novelty, surprise and
-diversity. Also, they tend to output much less accurate prediction the
-collaborative filtering methods (the way accuracy is computed will be described
-in Section \ref{TODO}). For all these reasons, our own analogy-based algorithms
-we rather be of a collaborative filtering nature.
+overfit and recommend only items that users may already know or do not need
+anymore (such as a fridge!). The recommendations tend to lack in novelty,
+surprise and diversity. Also, content-based systems tend to output much less
+accurate prediction than the collaborative filtering methods (the way accuracy
+is computed will be described in Section \ref{TODO}).
 
-\section{Collaborative filtering techniques}
-\label{SEC:collaborative_filtering}
+\subsection{Collaborative filtering}
 
 The main idea behind collaborative filtering algorithms is to recommend items
-to a users that other users with similar tastes have liked in the past. So for
-example if Bob and Alice usually agree on their movie ratings, i.e. they like
-the same movies and dislike the same movies, if Alice has not seen a movie that
-Bob has liked, then it will be recommended to Alice. We will here present two
-families of collaborative filtering algorithms: the neighborhood approach based
-on the well known $k$-NN algorithm, and the matrix factorization techniques
-whose groundings come from linear algebra and that lead to elegant and accurate
-models.
+to a users that other users with similar tastes have liked in the past. In its
+most general form, collaborative filtering methods (also called social
+filtering) try to model the social environment of users and to output
+recommendation based on the behaviour of their peers.
+
+Probably the most common way of modeling the social environment of a user is to
+use historical transaction stored in the system, for example using user-item
+ratings: two users are peers if their ratings are similar. For example if Bob
+and Alice usually agree on their movie ratings, i.e. they like the same movies
+and dislike the same movies, if Alice has not seen a movie that Bob has liked,
+then it will be recommended to Alice.
+
+A main advantage of collaborative filtering methods over content-based ones is
+that they do not require any item or user knowledge: only user-item feedback is needed
+to output a prediction. Thanks to this, they also allow to build systems that
+can deal with items of different natures. It is indeed plausible to imagine a
+collaborative filtering system recommending both books and movies, on the basis
+that users that love the same books usually like the same movies. As books and
+movies cannot be described using the same set of features (eventhough they are
+close), the use of content-based techniques would make the task much more
+difficult, or would again require largely hand-crafted work.
+
+The main advantage of collaborative filtering methods is also its main
+weakness. Before they can become effective, these systems require a serious
+amount of data (i.e. user-item interactions) to train a model or to use
+heuristics efficiently. A side-effect is known as the cold-start problem: there
+is no way to yield recommendations for new users that have no known ratings,
+and the same goes for new items that nobody has rated.
+
+All the recommendation algorithms that we will propose in this document are of
+a collaborative nature. Section \ref{TODO} will be devoted to an overview of
+two main collaborative techniques: the neighborhood approach and matrix
+factorization-based methods.
+
+\subsection{Knowledge-based systems}
+
+The two families we have described so far (content-based and collaborative
+filtering) are only suitable for certain kinds of items. While movies, books,
+or music can all fit quite well within these two framework, this is not the
+case for some other items. Take for example the problem of car recommendation.
+
+a content based would fail because too old info and collaborative filtering
+impossible BLABLABALABL
+
+
+\section{sais pas}
+\subsection{Problem formalization and notation}
+Let $U$ be a set of users and $I$ a set of items. For some pairs $(u,i) \in U
+\times I$, a rating  $\rui$ is supposed to have been given by $u$ to express
+its preferences towards the item $i$. The way the preferences are expressed
+depend on the rating scale that is used, which can be of different nature.
+According to \ref{SchFraHerSen07}, we can distinguish four different kinds of
+rating scales:
+
+\begin{itemize}
+  \item It is quite common that  $\rui$ belongs to a \textbf{numerical} rating
+    scale. A typicall numerical scale is $[1, 5]$, where  5 means a strong
+    preference for item $i$, 1 means a strong rejection, and 3 means
+    indifference, or just an average.
+  \item A subcase of the previous scale is the \textbf{binary} rating scale,
+    where ratings belong to $[0, 1]$. In this case, we associate the value $0$
+    with the meaning \textit{dislike} and the value $1$ with the meaning
+    \textit{like}.
+  \item An extreme case is the \textbf{unary} rating scale, where a value of
+    $1$ translates as a preference, but rejections (or dislikes) are not
+    addressed. The absence of rating does not mean here rejection but rather
+    the absence of rating.
+  \item Sometimes, the rating scale can be considered as \textbf{ordinal},
+    where the elements of the scale have no absolute meaning and are only
+    meaninful when compared to others, i.g. $[$\textit{reject, indifference,
+    agreement}$]$.
+\end{itemize}
+In practice, these semmantic disctinctions are purely contextual: a rating
+scale $[1, 5]$ rating scale could perfectly be interpreted as purely numerical,
+or conversely as purely ordinal. This observation has been addressed for
+example in \ref{KorSillRECSYS11}, and will also be discussed here in Section
+\ref{TODO}. However, the rating scale is a decisive component of a recommender
+system, and algorithms are usually designed to work with only one single rating
+scale.
+
+Ratings may be collected in different ways, and we distinguish explicit and
+implicit ratings. \textbf{Explicit} ratings are those for which users have
+explicitely expressed their preference towards the items. \textbf{Implicit}
+ratings belong to a binary or unary scale, and correspond to the result of
+collected data about users behaviour, without any active involvement. For
+example, if a user has listened to a given track more than 10 times, we might
+consider this as an implicit rating of $1$. The ability to deal with both
+explicit and implicit ratings can lead to significant improvements for a
+recommender system. In \ref{TODO}, a model using only explicit numerical
+ratings was extended to deal with implicit ratings, which improved the RMSE of
+the system (defined later) by a great deal. When no implicit ratings are
+available, the same authors showed that the simple modeling of implicit ratings
+as $r_{ui}' = 1 \iff r_{ui} \in R$ led to significant improvements. Here,
+$r_{ui}'$ is an implicite rating stating that $u$ has rated $i$, regardless of
+the rating value.
+
+In our work, we will mostly focus on the explicit and numerical rating scheme.
+Let us denote by $R$ the set of known ratings recorded in the system. In real
+systems the size of $R$ is very small with regard to the potential number of
+ratings which is $|U| \times |I|$, as a lot of ratings are missing. The set
+$\Ui$ will denote the set of users that have rated item $i$, and $\Uij \eqdef
+U_i \cap U_j$ is the set of users that have rated both item $i$ and item $j$.
+Similarly, $\Iu$ is the set of items that user $u$ has rated, and $\Iuv \eqdef
+I_u \cap I_v$ is the set of items that both users $u$ and $v$ have rated.
+
+A very common way of providing personalized recommendations to a target user is
+to estimate its taste for the items that the system provides. The taste of a
+user $u$ for a given item $i$ is usually represented as the rating that $u$
+would give to $i$.  Once these estimations are made, a simple option is to
+recommend the items with the highest ratings among all the estimated scores for
+the considered user (using the implicit assumption that a user should be
+interested in the items with high scores).
+
+More formally, a recommender system usually proceed as follows:
+\begin{enumerate}
+\item Using a prediction algorithm $A$, estimate the unknown ratings $\rui$
+  (i.e. $\rui \notin R$). This estimation $A(u, i)$ will here be denoted
+    $\predrui$.
+\item Using a recommendation strategy $S$ and in the light of the previously
+  estimated ratings, recommend items to users. For instance, a basic yet common
+    strategy is to suggest to user $u$ the items $i \notin I_u$ with the
+    highest $\predrui$.
+\end{enumerate}
+
+When using a unary or binary rating scale, these two stages are usually
+indistinguishable: it is natural to recommend an item to a user if the
+estimated predicted rating is $1$. In practice, the recommendation strategy
+depends a lot on the pragmatic constraints of the system: a store manager way
+want to push forward a given item to boost its sellings, regardless of the
+rating predictions outputted by the algorithm. As a result, most of the
+research has focused on the prediction algorithms, and so will we. Note also
+that this view is only meaningful for non-ordinal rating scale. When the output
+of prediction algorithm $A$ are ranks, the recommendation strategy $S$ is
+obvious and the distinction need not be made.
+
+Prediction algorithms implementations are strongly influenced by the fields of
+data mining and of course machine learning. However, we want to emphasize that
+the general setting of recommender systems is actually quite different than
+that of classification or regression, the two main prediction tasks of machine
+learning. A naïve reasoning could lead us to consider that the rating
+prediction problem with the rating scale $[1, 5]$ is nothing but a
+classification task with five classes $1, 2, 3, 4, 5$. But this is forgetting
+that the values $1, 2, 3, 4, 5$ are actually ordinal, and that the difference
+between \textit{class} $1$ and \textit{class} $2$ is not the same as the
+difference between \textit{class} $1$ and \textit{class} $4$. But most
+importantly, in classification or regression all the instances belong to the
+same space (that space was $X^m$ in our previous chapters), and have the same
+features. This is not the case here! In a recommendation problem, if we chose
+our instances to be the users and their feature space to be the items, we would
+end up with instances that are only (very) partially described, because of
+course no user has rated the whole set of items. All the more, as the number of
+items is usually very high, we would end up with a very high dimensional
+problem, where traditional learning algorithms tend to fail due to the
+so-called curse of dimentionality. Our point here is that recommender systems
+problems do not really fit within the traditional machine learning setting, and
+represent a new setting in their own right.
+
+This will all become clear in the next section, where we describe two classical
+approaches to collaborative filtering.
+
+\subsection{Recommender system evaluation}
+\label{SEC:Recommender_system_evaluation}
+Providing an accurate measure of the overall quality of a recommender system is
+not a simple task and diverse viewpoints have to be considered (see \cite[Ch.
+??]{RecoSystemHandbook} for an extensive survey).
+% Obviously accuracy is an important matter as  any system includes a
+% prediction algorithm, but other properties are also desirable in order  to
+% deploy an effective recommendation engine.
+
+In general, we will use $k$-folds cross-validation procedures to reliably
+evaluate each of the performence measure. The set of all ratings $R$ is divided
+into $k$ (typically $5$) disjoint sets of equal size ; at each of the $k$ iterations, the test
+set $\Rtest$ is set to the $k^{\text{th}}$ subset and and the training set
+$\Rtrain$ is set as the union of the $k - 1$ remaining subsets: the system will
+be trained on $\Rtrain$ and tested on $\Rtest$. The reported performances are
+then the average of the $k$ measures.
+
+\paragraph{Accuracy\\}
+The performance of the algorithm $A$ is usually evaluated in terms of accuracy,
+which measures how close the rating predictions $\predrui$ are to the true
+ratings $\rui$, for every possible prediction. The Root Mean Squared Error
+(RMSE) is probably the most common indicator of how accurate an algorithm is,
+and is calculated as follows:
+$$\text{RMSE}(A) = \sqrt{\frac{1}{|\Rtest|} \cdot \sum_{\rui \in
+\Rtest}(\predrui - \rui)^2}.$$
+
+Another common indicator for accuracy is the Mean Absolute Error (MAE), where
+important errors are not penalized more than small ones:
+$$\text{MAE}(A) = \frac{1}{|\Rtest|} \cdot \sum_{\rui \in \Rtest}|\predrui -
+\rui|.$$
+
+RMSE probably is by far the most important the most popular measure for
+evaluating the performance of a recommender system. The simple fact that \$1
+million was awarded for a 10\% improvement of RMSE during the Netflix competition
+illustrates the supremacy of RMSE. Yet this measure is also criticized, let
+only because it is not very easy to interpret in a meaningful way: if you
+end-up with an RMSE of $0.5$, how do you know if it is good or not? You would
+need to compare multiple algorithms before knowing what can be thought as a
+good RMSE, which by the way highly depends on  the rating scale.
+
+Another issue with RMSE is that they do not properly reflect the way users
+interact with a recommendation system.  Ultimately, the most important feature
+of a recommender system probably is how well it can \textbf{order} the
+different items for a given user, with regards to its preferences. Indeed, it
+would be harmful to rank a disliked item higher than an item for which the user
+has a strong preference, and conversely predicting a rating $\predrui$ of $2.5$
+while the true rating is $1$ (i.e. with a potentially high error) is not as
+serious, because the corresponding item would not have been recommended anyway.
+
+A related concern is that when using a suitable loss function, some algorithms
+can have a great RMSE score while still having no recommendation power, i.e.
+the recommendations would be the same of all the users \cite{KorSillRECSYS11}.
+As we will see, in Section \ref{TODO}, a simple baseline predictor that has no
+recommendation power still can outperform the RMSE of many other approaches.
+
+To better reflect the user-system interaction, other precision-oriented metrics
+are sometimes used in order to provide a more informed view.
+
+\paragraph{Precision and recall\\}
+Precision and recall help measuring the ability of a system to provide relevant
+recommendations, and are therefore indicators of the performance of the
+recommendation strategy $S$. They are defined by means of the number of true
+postives, true negatives, false positives and false negatives. As such, they
+are mostly used in an implicit rating scheme (or at least with binary rating
+scales), but they can also be used when the rating scale is gradual. In this
+latter case, the recommendation strategy has to be clearly defined.
+
+In the following, we denote by $I^S$ the set of items that the strategy $S$
+will suggest to the users using the predictions coming from $A$. For
+ratings in the interval $[1, 5]$, a simple strategy could be for example to
+recommend an item $i$ to user $u$ if the estimation rating $\predrui$ is
+greater than $4$:
+$$I^S \eqdef \Set{i \in I | \exists u \in U, ~\predrui \geq 4,~ \rui \in \Rtest}.$$
+
+We also define $I^*$ as the set of items that are \textbf{actually} relevant to
+the users, i.e.  the set of items that would have been recommended to users if
+all the predictions made by $A$ were exact:
+$$I^* \eqdef \Set{i \in I | \exists u \in U, ~\rui \geq 4,~ \rui \in \Rtest}.$$
+
+\noindent
+The \textbf{precision} of the
+system is
+defined as the fraction of recommended items that are relevant to the users,
+and the \textbf{recall} is defined as the fraction of relevant recommended
+items over all relevant items:
+\begin{align*}
+  \text{Precision} &\eqdef \frac{\mid I^S \cap I^*\mid}{\mid I^S \mid},\\
+  \text{Recall} &\eqdef \frac{\mid I^S \cap I^*\mid}{\mid I^* \mid}.
+\end{align*}
+
+Precision and recall are complementary metrics: it would not make sense to
+evaluate an algorithm performance by only looking at the precision, without
+considering the recall. It is indeed quite easy to obtain a high precision (by
+simply recommending all of the items), but that would lead to a terrible
+value of recall. Precision and recall are commonly summarized into the
+F-measure, which is their harmonic mean:
+  $$
+  \text{F} \eqdef 2 \cdot \frac{\text{Precision} \cdot
+  \text{Recall}}{\text{Precision} + \text{Recall}}.
+  $$
+
+If accurate predictions are crucial, it is widely agreed that it is
+insufficient for deploying an effective recommendation engine. Indeed, still
+other dimensions are worth estimating in order to get a complete picture of the
+performance of a system
+\cite{NeeRieKonACM2006,HerKonJohTerRieACM2004,KamBriRecSys2014}.  For instance,
+one may naturally expect from a recommender system not only to be accurate, but
+also to be surprising, and to be able to recommend a large number of items.
+
+\paragraph{Coverage\\}
+Coverage, in its simplest form, is used to measure the ability of a system to
+recommend a large amount of items: it is quite easy indeed to create a
+recommender system that would only recommend very popular items. Such a
+recommender system would drop to zero added value. We here define the
+\textbf{coverage} as the proportion of recommended items out of all existing
+items:
+$$\text{Coverage} \eqdef \frac{\mid I^S\mid}{\mid I\mid}.$$
+
+\paragraph{Surprise\\}
+Users expect a recommender system to be surprising: recommending an extremely
+popular item is not really helpful. Following the works of
+\cite{KamBriRecSys2014}, the surprise associated with a recommendation can be evaluated with
+the help of the pointwise mutual information (PMI). The PMI between two items
+$i$ and $j$ is defined as follows:
+$$\text{PMI}(i, j) \eqdef -\log_2 \frac{P(i, j)}{P(i)P(j)} / \log_2 P(i, j),$$
+where $P(i)$ and $P(j)$  represent the probabilities for the items to be rated
+by any user, and $P(i, j)$ is the probability for $i$ and $j$ to be rated
+together. They are estimated by $P(i) \approx \frac{\mid U_i \mid}{\mid U
+\mid}$ and $P(i, j) \approx \frac{\mid U_i \cap U_j \mid}{\mid U\mid}$. PMI
+values fluctuate between the interval $[-1, 1]$, $-1$ meaning that $i$ and $j$
+are never rated together and $1$ meaning that they are always rated together.
+To estimate the surprise of recommending an item $i$ to a user $u$, the authors
+propose two definitions:
+\begin{itemize}
+\item either to take the maximum of the PMI values for $i$ and all other items
+  rated by $u$, with $\surpmax(u, i) \eqdef \max\limits_{j\in I_u}
+    \text{PMI}(i, j),$
+\item
+ or to take the mean of these PMI values with $\surpavg(u, i) \eqdef
+    \frac{\sum_{j \in I_u} \text{PMI}(i, j)}{\mid I_u\mid }$.
+\end{itemize}
+
+The overall capacity of a recommender to surprise its users can be defined as
+the mean of all the surprise values for each perdiction. Because they are
+defined using the pointwise mutual information, the \textbf{lower} the values
+of $\surpmax$ and $\surpavg$, the most \textit{surprising} the recomendations.
+
+
+\section{Two collaborative filtering techniques: neighborhood-based, and matrix
+factorization}
+
+We will here present two families of collaborative filtering algorithms: the
+neighborhood approach based on the well known $k$-NN algorithm, and the matrix
+factorization techniques whose groundings come from linear algebra and that
+lead to elegant and accurate models.
 
 \subsection{The neighborhood approach}
 
@@ -292,14 +511,16 @@ Notice that none of these metrics take into account the support between the two
 users $u$ and $v$, i.e. the number of items that they have commonly rated. It
 would be foolish to have the same faith in a similarity computed over hundreds
 of common items as in a similarity computed only over a few items. This is why
-in practice, some sort of shrinkage is usually performed, giving a high value
-to similarities with a high support:
+in practice, it is common to give a higher weight to the similarities that have
+a high support. Another option is to \textit{shrink} the similarity measure of
+two users toward zero if their support is low:
 $$\text{actual\_sim}(u, v) \eqdef \frac{\mid \Iuv \mid - 1}{\mid \Iuv \mid - 1
 + \lambda} \cdot \ssim(u, v),$$
-where $\lambda$ is a sort of regularization constant. Such  a technique can be
-motivated from a Bayesian perspective, and usually leads to significant
-improvements in the system performances. We will not consider shrinkage in any
-of our experiments.
+where $\lambda$ is a sort of regularization constant. Such shrinkage technique
+can be motivated from a Bayesian perspective, and usually leads to significant
+improvements in the system performances. It only makes sense however for
+similarity measures that are centered around zero, such as the Pearson
+similarity. We will not consider shrinkage in any of our experiments.
 
 \subsubsection{Similarity computation}
 
@@ -332,10 +553,9 @@ In the worst case, we can consider that $\mid I_u \mid = \mid I_v \mid = \mid I
 \mid$ for all $u, v$, so the complexity of this naive algorithm is
 $\mathcal{O}(\mid U \mid^2 \mid I \mid^2)$.
 
-However, the complexity can be taken
-down by a great deal if we proceed in sort of MapReduce fashion
-\cite{DeaGhe04}, as described in Algorithm \ref{ALGO:cosine} which illustrate
-how to compute cosine similarities.
+However, the complexity can be taken down by a great deal if we proceed in a
+MapReduce fashion \cite{DeaGhe04}, as described in Algorithm \ref{ALGO:cosine}
+which illustrate how to compute cosine similarities.
 \begin{algorithm}[!ht]
  \caption{Computation of the cosine similarity.}
        \label{ALGO:cosine}
@@ -372,20 +592,20 @@ how to compute cosine similarities.
 Actually, any other similarity measure that rely on the set $I_{uv}$ can be
 computed this way (see \cite{SchBodVolRECSYS12}). Considering again the worst
 case where $\mid U_i \mid = \mid U \mid$, the complexity of Algorithm
-\ref{ALGO:cosine} is  $\mathcal{O}(\mid I \mid \cdot \mid U \mid^2 + \cdot \mid
-U \mid^2) = \mathcal{O}( \cdot \mid U \mid^2 [ \mid I \mid + 1])$, which is far
+\ref{ALGO:cosine} is  $\mathcal{O}(\mid I \mid \cdot \mid U \mid^2 + \mid
+U \mid^2) = \mathcal{O}( \mid U \mid^2 \cdot [ \mid I \mid + 1])$, which is far
 less than that of Algorithm \ref{ALGO:naive_sim}. Another undeniable advantage
 of Algorithm  \ref{ALGO:cosine} is that it follows the MapReduce framework, and
 as such can be easily parallelized for another significant performance gain.
-Indeed, the first three embedded for loops could be dispatched in various
-cluster, each dealing with a given set of items (this is the MAP stage). Each
-of the clusters would have its own three sum matrices $\text{sum\_prod}$,
-$\text{sum\_squ}$ and $\text{sum\_sqi}$, which could then all be aggregated to
-rebuild the entire sum matrices (REDUCE stage).
+Indeed, the first three embedded \texttt{for} loops could be dispatched in various
+clusters, each dealing with a given set of items (this is the Map stage). Each
+of the clusters would have its own three sum matrices \texttt{sum\_prod},
+\texttt{sum\_squ} and \texttt{sum\_sqi}, which could then all be aggregated to
+rebuild the entire sum matrices (Reduce stage).
 
 In the next section, we describe another very popular collaborative filtering
 technique, which models the data in a significantly different (but meaningful!)
-way.
+way: matrix factorization techniques.
 
 \subsection{Matrix factorization techniques}
 
@@ -398,8 +618,8 @@ about 100M of ratings of 480.000 user sand 17.700 movies. Unfortunately, their
 dataset is no longer publicly available, but the challenge led to the emergence
 of many successful recommendation techniques, among which matrix factorization
 methods clearly stand out. Let's be honest: the author of this document has a
-crush on matrix factorization techniques, so we will try to give here a
-detailed description of such techniques.
+crush on matrix factorization techniques, and as a consequence they will be
+thoroughly detailed.
 
 The matrix factorization approach we will describe here is heavily inspired by
 the Singular Value Decomposition (SVD) of a matrix, one of the highlights of
@@ -511,7 +731,7 @@ item $i$ is modeled as a vector $q_i \in \mathbb{R}^f$, where each component of
 $q_i$ models how well $i$ fits the corresponding criteria.  From then, a rating
 prediction $\predrui$ is calculated as the dot product of the two vectors $p_u$
 and $q_i$:
-$$\predrui = p_u^t \cdot q_i.$$
+$$\predrui = {q_i}^t \cdot p_u.$$
 
 Once the number of factors $f$ is set, the problem is here to estimate the
 vectors $p_u$ and $q_i$ for every possible user and item. We saw that when the
@@ -521,7 +741,7 @@ to solve the following minimization problem\footnote{From then on we will abuse
 notation and use $R$ either as a matrix (sparse or dense) and as a rating
 dataset as defined in Section \ref{TODO}.}:
 $$
-\sum_{\rui \in R} \left(\rui - q_i^t \cdot p_u \right)^2.
+\sum_{\rui \in R} \left(\rui - {q_i}^t \cdot p_u \right)^2.
 $$
 
 But what happens in a recommendation setting, where the matrix $R$ is extremely
@@ -540,15 +760,21 @@ team who ended up winning the contest.
 
 The appeal of this basic approach does not only lie in its link to SVD, but
 also because it is easily extendable. It was later improved and theoretically
-studied in many ways, for example by incorportating user and items biases (that
-will be reviewed later in Section \ref{TODO}) (see \ref{TODO}), or by adding
-some time-dependend features, taking into account items popularity over time
-\ref{TODO}. In \ref{TODO}, this technique was justified from a Bayesian
+studied in many ways, for example by incorportating user and items biases
+\ref{TODO} (which we will further detail later in Section \ref{TODO}), by
+adding the abaility to incorporate implicit ratings along with explicit ones,
+or by adding some time-dependend features, taking into account items popularity
+over time \ref{TODO}. Also in \ref{TODO}, a model combining matrix
+factorization techniques and neighborhood approaches was proposed. For a
+complete overview mixing all previsouly mentioned methods, see
+\ref{TODORefChapitreBouquin}
+
+In \ref{TODO}, the matrix factorization we just saw was studied from a Bayesian
 perspective, and was named Probabilistic Matrix Factorization (PMF), leading to
 the following regularized least squares problem:
 
 $$
-\sum_{\rui \in R} \left(\rui - q_i^t \cdot p_u \right)^2 +
+\sum_{\rui \in R} \left(\rui - {q_i}^t \cdot p_u \right)^2 +
 \lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right),
 $$
 where $\lambda$ is a regularization term that corresponds to \todo{what}. When
@@ -559,10 +785,10 @@ this task and is quite simple to implement. Because we have already talked too
 much about matrix factorization, and because a few lines more won't hurt, we
 now propose to derive the associated SGD algorithm. Let $L_{ui}$ be the cost
 associated with a single prediction $\rui$:
-$$L_{ui} \eqdef \left(\rui - q_i^t \cdot p_u \right)^2 +
+$$L_{ui} \eqdef \left(\rui - {q_i}^t \cdot p_u \right)^2 +
 \lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right).$$
 
-Denoting err the prediction error ($\text{err} = \rui - q_i^t \cdot p_u$), the
+Denoting err the prediction error ($\text{err} = \rui - {q_i}^t \cdot p_u$), the
 derivative of $L_{ui}$ with respect to $q_i$ is (remember that $q_i$ is a
 vector:
 $$\frac{\partial L_{ui}}{\partial q_i} = -\text{err} \cdot p_u + 2\lambda
@@ -585,7 +811,7 @@ solved by following Algorithm \ref{ALGO:matrix_facto_sgd}.
          \STATE Randomly initialize $p_u$ and $q_i$
          \FOR{$\text{iteration} \in [1, n]$}
          \FORALL{$\rui \in R$}
-         \STATE $\text{err} = \rui - q_i^t p_u$
+         \STATE $\text{err} = \rui - {q_i}^t \cdot p_u$
          \STATE $q_i = q_i - \alpha (\text{err} \cdot p_u - \lambda q_i)$
          \STATE $p_u = p_u - \alpha (\text{err} \cdot q_i - \lambda p_u)$
          \ENDFOR
@@ -603,134 +829,3 @@ methods is known as Alternating Least Squares.
 
 \todo{Mettre des refs}
 
-\section{Recommender system evaluation}
-\label{SEC:Recommender_system_evaluation}
-Providing an accurate measure of the overall quality of a recommender system is
-not a simple task and diverse viewpoints have to be considered (see \cite[Ch.
-??]{RecoSystemHandbook} for an extensive survey).
-% Obviously accuracy is an important matter as  any system includes a
-% prediction algorithm, but other properties are also desirable in order  to
-% deploy an effective recommendation engine.
-
-In general, we will use $k$-folds cross-validation procedures to reliably
-evaluate each of the performence measure. The set of all ratings $R$ is divided
-into $k$ (typically $5$) disjoint sets of equal size ; at each of the $k$ iterations, the test
-set $\Rtest$ is set to the $k^{\text{th}}$ subset and and the training set
-$\Rtrain$ is set as the union of the $k - 1$ remaining subsets: the system will
-be trained on $\Rtrain$ and tested on $\Rtest$. The reported performances are
-then the average of the $k$ measures.
-
-\paragraph{Accuracy\\}
-The performance of the algorithm $A$ is usually evaluated in terms of accuracy,
-which measures how close the rating predictions $\predrui$ are to the true
-ratings $\rui$, for every possible prediction. The Root Mean Squared Error
-(RMSE) is probably the most common indicator of how accurate an algorithm is,
-and is calculated as follows:
-$$\text{RMSE}(A) = \sqrt{\frac{1}{|\Rtest|} \cdot \sum_{\rui \in
-\Rtest}(\predrui - \rui)^2}.$$
-
-Another common indicator for accuracy is the Mean Absolute Error (MAE), where
-important errors are not penalized more than small ones:
-$$\text{MAE}(A) = \frac{1}{|\Rtest|} \cdot \sum_{\rui \in \Rtest}|\predrui -
-\rui|.$$
-
-RMSE probably is by far the most important the most popular measure for
-evaluating the performance of a recommender system. The simple fact that \$1
-million was awarded for a 10\% improvement of RMSE during the Netflix competition
-illustrates the supremacy of RMSE. Yet this measure is also criticized, let
-only because it is not very easy to interpret in a meaningful way: if you
-end-up with an RMSE of $0.5$, how do you know if it is good or not? You would
-need to compare multiple algorithms before knowing what can be thought as a
-good RMSE, which by the way highly depends on  the rating scale.
-\todo{continuer en citant papier}
-To better reflect the user-system interaction, other precision-oriented metrics
-are sometimes used in order to provide a more informed view.
-
-\paragraph{Precision and recall\\}
-Precision and recall help measuring the ability of a system to provide relevant
-recommendations, and are therefore indicators of the performance of the
-recommendation strategy $S$. They are defined by means of the number of true
-postives, true negatives, false positives and false negatives. As such, they
-are mostly used in an implicit rating scheme (or at least with binary rating
-scales), but they can also be used when the rating scale is gradual. In this
-latter case, the recommendation strategy has to be clearly defined.
-
-In the following, we denote by $I^S$ the set of items that the strategy $S$
-will suggest to the users using the predictions coming from $A$. For
-ratings in the interval $[1, 5]$, a simple strategy could be for example to
-recommend an item $i$ to user $u$ if the estimation rating $\predrui$ is
-greater than $4$:
-$$I^S \eqdef \Set{i \in I | \exists u \in U, ~\predrui \geq 4,~ \rui \in \Rtest}.$$
-
-We also define $I^*$ as the set of items that are \textbf{actually} relevant to
-the users, i.e.  the set of items that would have been recommended to users if
-all the predictions made by $A$ were exact:
-$$I^* \eqdef \Set{i \in I | \exists u \in U, ~\rui \geq 4,~ \rui \in \Rtest}.$$
-
-\noindent
-The \textbf{precision} of the
-system is
-defined as the fraction of recommended items that are relevant to the users,
-and the \textbf{recall} is defined as the fraction of relevant recommended
-items over all relevant items:
-\begin{align*}
-  \text{Precision} &\eqdef \frac{\mid I^S \cap I^*\mid}{\mid I^S \mid},\\
-  \text{Recall} &\eqdef \frac{\mid I^S \cap I^*\mid}{\mid I^* \mid}.
-\end{align*}
-
-Precision and recall are complementary metrics: it would not make sense to
-evaluate an algorithm performance by only looking at the precision, without
-considering the recall. It is indeed quite easy to obtain a high precision (by
-simply recommending all of the items), but that would lead to a terrible
-value of recall. Precision and recall are commonly summarized into the
-F-measure, which is their harmonic mean:
-  $$
-  \text{F} \eqdef 2 \cdot \frac{\text{Precision} \cdot
-  \text{Recall}}{\text{Precision} + \text{Recall}}.
-  $$
-
-If accurate predictions are crucial, it is widely agreed that it is
-insufficient for deploying an effective recommendation engine. Indeed, still
-other dimensions are worth estimating in order to get a complete picture of the
-performance of a system
-\cite{NeeRieKonACM2006,HerKonJohTerRieACM2004,KamBriRecSys2014}.  For instance,
-one may naturally expect from a recommender system not only to be accurate, but
-also to be surprising, and to be able to recommend a large number of items.
-
-\paragraph{Coverage\\}
-Coverage, in its simplest form, is used to measure the ability of a system to
-recommend a large amount of items: it is quite easy indeed to create a
-recommender system that would only recommend very popular items. Such a
-recommender system would drop to zero added value. We here define the
-\textbf{coverage} as the proportion of recommended items out of all existing
-items:
-$$\text{Coverage} \eqdef \frac{\mid I^S\mid}{\mid I\mid}.$$
-
-\paragraph{Surprise\\}
-Users expect a recommender system to be surprising: recommending an extremely
-popular item is not really helpful. Following the works of
-\cite{KamBriRecSys2014}, the surprise associated with a recommendation can be evaluated with
-the help of the pointwise mutual information (PMI). The PMI between two items
-$i$ and $j$ is defined as follows:
-$$\text{PMI}(i, j) \eqdef -\log_2 \frac{P(i, j)}{P(i)P(j)} / \log_2 P(i, j),$$
-where $P(i)$ and $P(j)$  represent the probabilities for the items to be rated
-by any user, and $P(i, j)$ is the probability for $i$ and $j$ to be rated
-together. They are estimated by $P(i) \approx \frac{\mid U_i \mid}{\mid U
-\mid}$ and $P(i, j) \approx \frac{\mid U_i \cap U_j \mid}{\mid U\mid}$. PMI
-values fluctuate between the interval $[-1, 1]$, $-1$ meaning that $i$ and $j$
-are never rated together and $1$ meaning that they are always rated together.
-To estimate the surprise of recommending an item $i$ to a user $u$, the authors
-propose two definitions:
-\begin{itemize}
-\item either to take the maximum of the PMI values for $i$ and all other items
-  rated by $u$, with $\surpmax(u, i) \eqdef \max\limits_{j\in I_u}
-    \text{PMI}(i, j),$
-\item
- or to take the mean of these PMI values with $\surpavg(u, i) \eqdef
-    \frac{\sum_{j \in I_u} \text{PMI}(i, j)}{\mid I_u\mid }$.
-\end{itemize}
-
-The overall capacity of a recommender to surprise its users can be defined as
-the mean of all the surprise values for each perdiction. Because they are
-defined using the pointwise mutual information, the \textbf{lower} the values
-of $\surpmax$ and $\surpavg$, the most \textit{surprising} the recomendations.

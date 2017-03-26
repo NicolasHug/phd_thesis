@@ -507,8 +507,16 @@ alternating least squares. The regularization terms are here to avoid
 overfitting: they allow to give more confidence to biases that are computed on
 a high number of ratings. In our previous example, the user had only rated $3$
 items so we cannot say reliably say that its real bias is really close $-1$.
-This regularization can actually be justified using a Bayesian view, but we
-will not describe it here.
+
+As a side note, notice that this optimization problem has the same look as the
+one we used for the PMF algorithm of Section \ref{TODO}. In fact, the use of
+baselines can be easily combined with the matrix factorization model, leading
+to the following optimization problem:
+$$\min_{b_u, b_i, p_u, q_i} \sum_{r_{ui} \in R} \left[r_{ui} - \predrui\right]^2
++ \lambda \left(\norm{}{q_i}^2 + \norm{}{p_u}^2 + b_u^2 + b_i^2 \right),$$
+with $\predrui = \mu + b_u + b_i + q_i^tp_u$. This prediction algorithm is
+called SVD \cite{TODO}, and is nothing but the PMF algorithm with user and
+items biases.
 
 In their work, the author have used this particular similarity metric, that is
 in perfect accordance with their prediction formula:
@@ -553,16 +561,19 @@ of these two approaches will be discussed in the next section.
 
 To assess the suitability of our clone-based view of recommendation, we have
 evaluated the accuracy of the brute-force and Clone algorithms, and compared
-them to the previously mentioned approaches: the basic neighborhood method, and
-the neighborhood method taking into account user and item biases. The
-evaluation protocol is the same as that of Section \ref{TODO}, i.e. results are
-averaged over a 5-folds cross-validation procedure. In addition to
-the Movielens-100k dataset presenter earlier, we also used the Movielens-1M
-dataset containing 1 million ratings with 6000 users and 4000 movies.
-For each of these algorithms, the number of neighbors or clones used to output
-a prediction is $k = 40$, except for the brute-force algorithm where the number
-of clones can not be controlled. The RMSE and MAE of the algorithms are
-reported on Table
+them to the previously mentioned approaches: the basic neighborhood method
+($k$-NN), and
+the neighborhood method taking into account user and item biases ($\knns$). For
+reasons that will become clear at the end of this discussion, we also evluated
+the Bsl algorithm, whose prediction is simply the baseline predictor, i.e.
+$\predrui = b_{ui}$. The evaluation protocol is the same as that of Section
+\ref{TODO}, i.e. results are averaged over a 5-folds cross-validation
+procedure. In addition to the Movielens-100k dataset presenter earlier, we also
+used the Movielens-1M dataset containing 1 million ratings with 6000 users and
+4000 movies.  For each of these algorithms, the number of neighbors or clones
+used to output a prediction is $k = 40$, except for the brute-force algorithm
+where the number of clones can not be controlled. The RMSE and MAE of the
+algorithms are reported on Table
 \ref{TAB:clone_based_rmse_mae}.
 
 \begin{table}[ht]
@@ -581,6 +592,7 @@ reported on Table
                            & MSD & $k=40$ &  .931 &  .732 & .897 &  .707\\
   \cmidrule(lr){1-2}
     $\knns$ & & $k=40$ & .921 & .721 & .869& .680\\
+    Bsl & &  & .945 & .749 & .909& .719\\
 \bottomrule
 \end{tabular}
   \caption{RMSE and MAE of our clone-based algorithms on the movielens 100k and
@@ -638,6 +650,18 @@ share, the more confident we are when computing their similarity
 \cite{KorACM2010}. Such techniques can further improve both RMSE and MAE of the
 algorithm.  Similarly, in the clone-based approach, it might be of interest to
 discount clones that rely on a too small number of common items.
+
+Let us focus now on the Bsl predictor. Bsl outperforms by far the RMSE of the
+$k$-NN algorithm, and in fact if we go back to table
+\ref{TAB:parall_performances_comparison}, we see that it outperforms also the
+algortihms mentioned there. Yet, this algorithm is unable to output
+personalized recommendation: all recommendations would be the same for
+\textbf{any} user! This is simply due to the fact that in the prediction
+$\predrui = \mu  + b_u + b_i$, the only user-dependent factor is the term
+$b_u$, which is the \textbf{same} in all the predictions. This point of this
+remark is to exhibit one of the drawbacks of RMSE that we already mentioned
+before: RMSE is not an appropriate measure when it comes to assess user-system
+interactions. Faire lien avec partie suivante grace à ça.
 
 \subsection{Towards an ordinal view of ratings}
 \label{ORDINAL_POV}
