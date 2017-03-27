@@ -698,7 +698,7 @@ possible algorithm would be as follows:
 \begin{enumerate}
   \item Compute similarities between users, based on their rankings. A very
     popular similarity ranking measure is the Spearman's rank correlation
-    coefficient, or Spearman's rho.
+    coefficient (or Spearman's rho), that will be described later.
   \item Compute an estimated rank $\hat{\rho}_{ui}$ as an aggregation of all the
     rankings $\rho_{vi}$ extracted from the $k$ nearest neighbors (using
     Spearman's rho as similarity):
@@ -710,21 +710,63 @@ This is obviously very similar to the neighborhood approach described in
 section \ref{MODELING_CLONES}, but instead of predicting a rating, we output a
 predicted rank. This approach is denoted as \textit{RankAnlg}.
 
+The computation of Spearman's rho takes into account the relative rankings of
+the ratings, and is mmoputed as follows:
+$$
+\text{Spearman}(u, v) \eqdef \frac{\mathop{\text{Cov}}\limits_{i \in I_{uv}}(\rho_{ui},
+\rho_{vi})}{\mathop{\text{std}}\limits_{i \in I_{uv}}(\rho_{ui}) \cdot
+\mathop{\text{std}}\limits_{i \in
+I_{uv}}(\rho_{vi})},
+$$
+where Cov naturally stands for covariance and std is the standard deviation.
+Spearman's rho is usually defined as a statistic for random variables, and we
+here have translated it as a realization of this statistic in our
+recommendation setting. A common issue when dealing with rankings is that there
+may be ties in the data. Consider for example user $u$ from Table
+\ref{TAB:rankings}, who's ratings are $1, 1, 2, 3, 3, 3$ for items $i_1, i_2,
+i_3, i_4, i_5$ and $i_6$.
+\begin{table}[h!]
+\centering
+  \begin{tabular}{ l  l  l  l  l  l  l }
+\toprule
+    & $i_1$ & $i_2$ & $i_3$ & $i_4$ & $i_5$ & $i_6$\\
+  \midrule
+    $r_{ui}$ & 1 & 1 & 2 & 3 & 3 & 3\\
+    Raw rankings & 1 & 2 & 3 & 4 & 5 & 6 \\
+    Processed rankings $\rho_{ui}$ & 1.5 & 1.5 & 3 & 5 & 5 & 5 \\
+\bottomrule
+\end{tabular}
+  \caption{Values of $\rho_{ui}$ for the user $u$.}
+\label{TAB:rankings}
+\end{table}
+As $i_1$ and $i_2$ have the same ratings, there is no reason to rank $i_1$
+before $i_2$, or $i_2$ before $i_1$. The same goes for $i_4, i_5$ and $i_6$,
+and this is why the first ranking option (raw rankings) is not a suitable one.
+Instead, it is common to consider that the ranking of a given item is the mean
+of the raw rankings for the items that share the same rating value. In our case,
+$\rho_{u{i_1}} = \rho_{u{i_2}} = \frac{1 + 2}{2}$, and $ \rho_{u{i_4}} =
+\rho_{u{i_5}} =  \rho_{u{i_6}} = \frac{4 + 5 + 6}{3}$.
+This way to
+proceed leads to a better estimation of Spearman's rho, and is equivalent to
+averaging over all possible permutations between the raw ranks of items with
+equal ratings.
+
+
 
 \subsubsection{Experiments}
 
 We evaluated the performance of our algorithm and compared it to other
 previously described approaches, using the exact same evaluation protocol as in
-the previous sections. The Movielens-1A dataset was not benchmarked, because
+the previous sections. The Movielens-1M dataset was not benchmarked, because
 the computation of Spearman'rho was too computationally intensive.
 
 RMSE and MAE are good measure for evaluation rating prediction accuracy, but
 are not suitable when it comes to evaluate rankings. A better measure is the
-Fraction of Concordant Pairs, which evaluates the probability that given any two
+Fraction of Concordant Pairs (FCP), which evaluates the probability that given any two
 items $i$ and $j$ rated by any user $u$, the system has correctly estimated
-whether $u$ prefers $i$ over $j$ or the inverse. To compute the FCP, we need to
-intermediate measures. Following the notation of \ref{TODO}, $c_u$ defines the
-number of concordant pairs for user $u$, and $d_u$ its number of discordant
+whether $u$ prefers $i$ over $j$, or the reverse. To compute the FCP, we need to
+use intermediate measures. Following the notation of \ref{TODO}, $c_u$ defines the
+number of concordant pairs for user $u$, and $d_u$ is the number of discordant
 pairs. The FCP is then computed over all users as the proportion of concordant
 pairs.
 
@@ -736,16 +778,15 @@ pairs.
   \FCP &\eqdef \frac{\sum\limits_{u \in U} c_u}{\sum\limits_{u \in U} c_u +
   \sum\limits_{u \in U} d_u}.
 \end{align*}
-Note that $\predrui$ here may represent either a rating prediction or a
-ranking prediction $\hat{\rho_{ui}}$.
+Here, $\predrui$ here may represent either a rating prediction or a ranking
+prediction $\hat{\rho_{ui}}$.
 
 Results are reported in table \ref{table:res100kRank}.
-
 \begin{table}[!ht]
 \centering
 \begin{tabular}{ l l  l l }
 \toprule
-     & RankAnlg &  k-NN & $\knns$\\
+     & RankAnlg &  $k$-NN & $\knns$\\
 \midrule
 \FCP  &  .7063   & .7096 &  .7163   \\
 \bottomrule
@@ -754,21 +795,20 @@ Results are reported in table \ref{table:res100kRank}.
   dataset.}
 \label{table:res100kRank}
 \end{table}
-
-Unfortunately, even a basic algorithm that was not designed for ranking
+Unfortunately, even a basic algorithm such as $k$-NN that was not designed for ranking
 prediction performs better in terms of FCP. To explain this difference, one may
 look at the distribution of average support over all the predictions, as shown
-on figure \ref{FIG_SUPPORT}. Between
+on figure \ref{FIG:support_spearman_MSD}. Between
 two users $u$ and $v$, the support is defined as the number of common items
-($|I_{uv}|$), which was used to compute the similarity between $u$ and $v$. For
+$|I_{uv}|$ which was used to compute the similarity between $u$ and $v$. For
 a given prediction $\predrui$, the average support is the average of all the
 supports $|I_{uv}|$ over all users $v \in N_i^k(u)$.
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=2.5in]{figures/support.pdf}
-\caption{Distribution of average support.}
-\label{FIG_SUPPORT}
+\caption{Distribution of average support for Spearman's rho and MSD.}
+\label{FIG:support_spearman_MSD}
 \end{figure}
 
 The use Spearman's rho tends to provide with neighbors that have smaller

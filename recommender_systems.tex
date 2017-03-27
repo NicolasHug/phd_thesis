@@ -15,8 +15,8 @@ They do so by providing the user with a list of recommendations.
 \label{SEC:taxonomy_rec_sys}
 
 Undoubtly, there are many different tasks that range among the general problem
-of recommendation. If they all share the ultimate goal of providing user with
-relevant recommendation, they greatly differ in nature by the items that are
+of recommendation. If they all share the ultimate goal of providing users with
+relevant recommendations, they greatly differ in nature by the items that are
 recommended, and by the technical means that are involved.
 
 To provide a clear view of the vast recommendation landscape, various taxonomies
@@ -27,8 +27,9 @@ AdoTuzIEEE2005, Bur07}, and more recently \cite{BurRam11}. Using that of
 three sections.
 
 Rest assured that in real systems the frontiers between these three families
-are not that sharp, and practical recommendation solutions usually fall in more
-than one category. We refer to such systems as \textbf{hybrid} recommenders.
+are not that sharp, and practical recommendation solutions usually fall into
+more than one single category. We refer to such systems as \textbf{hybrid}
+recommenders.
 
 \subsection{Content-based techniques}
 
@@ -123,13 +124,50 @@ factorization-based methods.
 \subsection{Knowledge-based systems}
 
 The two families we have described so far (content-based and collaborative
-filtering) are only suitable for certain kinds of items. While movies, books,
-or music can all fit quite well within these two framework, this is not the
-case for some other items. Take for example the problem of car recommendation.
+methods) are only suitable for certain kinds of items. While movies, books,
+music or news can all fit quite well within these two frameworks, this is not
+the case for some other items such as cars, bank loans, or real estates. Take
+for example the problem of car recommendation. A content-based approach would
+need to know what kind of cars the user have owned in the past, and would
+recommend some new cars that are similar to those past vehicles. This method is
+obviously bound to fail, not only because in practice such in formation about
+past vehicles is never available, but also because the recommendation would be
+based on some years-old preferences. As for collaborative methods, they would
+require the system to dispose of a massive amount of past transactions, and
+people do not buy as many cars as they watch movies: only very few information
+would be available, leading to disastrous results.
 
-a content based would fail because too old info and collaborative filtering
-impossible BLABLABALABL
+In broad terms, we refer to knowledge-based systems as any method that is
+neither content-based or collaborative. In general, these systems are used in
+settings where the domain and contextual knowledge (i.e. the knowledge about the
+items that are available in the system) prevails over any other source of
+information (such as social information for example).
 
+A practical instance of  knowledge-based recommendation takes the form of a
+recommendation session, where the user indicates its needs in an interactive
+manner, and the systems tries to match these needs as best as possible to
+provide useful recommendations. According to \cite{FelBur08}, there exists two
+kinds of knowledge-based systems, that differ in the way recommendations are
+computed. The first category is made up of the \textbf{case-based} systems.
+Case-based recommenders obviously draw from research in case-base reasonning,
+described in Section \ref{TODO}, and computations are based on similarities:
+the system will try to recommend items that are similar to an ideal item
+expresseed by the user's needs. In
+this respect, case-based recommenders are close to the aforementioned
+content-based systems. The second  kind of knowledge-based recommender are the
+so-called \textbf{constraint-based} systems (see \cite{FelFriJanZan11} for a complete
+review). In such systems, user and items are described
+by a set of properties, along with a set of constraints. In the car
+recommendation example, an item contraint could for example state that a
+convertible car should not posess a sunroof, and user constraint could state
+that the car color should not be green. The problem of recommending an item to
+a user then takes the form of a classical constraint satisfaction
+problem.
+
+We are well aware that these two definitions of case-based and constraint-based
+systems are quite general and vague, but the fact remains that practical
+implementation of such systems are so domain-dependent that is is difficult to
+exhibit a clear unifying framework that would still be accurate.
 
 \section{sais pas}
 \subsection{Problem formalization and notation}
@@ -249,19 +287,35 @@ approaches to collaborative filtering.
 \subsection{Recommender system evaluation}
 \label{SEC:Recommender_system_evaluation}
 Providing an accurate measure of the overall quality of a recommender system is
-not a simple task and diverse viewpoints have to be considered (see \cite[Ch.
-??]{RecoSystemHandbook} for an extensive survey).
-% Obviously accuracy is an important matter as  any system includes a
-% prediction algorithm, but other properties are also desirable in order  to
-% deploy an effective recommendation engine.
+not a simple task and diverse viewpoints have to be considered.
 
-In general, we will use $k$-folds cross-validation procedures to reliably
-evaluate each of the performence measure. The set of all ratings $R$ is divided
-into $k$ (typically $5$) disjoint sets of equal size ; at each of the $k$ iterations, the test
-set $\Rtest$ is set to the $k^{\text{th}}$ subset and and the training set
+We can distinguish three main evaluation settings. The first one is to perform
+\textbf{user studies}, where actual users are asked to interact with a given sytem and to
+provide some feedback. This evaluation process is probably the one that allows
+to best capture users need, because feedback is explicitely given. Naturally,
+this is also the most expensive kind of experiment to conduct, because it
+requires a lot of user time. The second evaluation setting is to perform online
+studies. In its most simple form, this is equivalent to A/B testing: to see
+which of the two version of our recommender performs better, we provide some
+users with the first version and some other users with the second version. We
+can then assess the change in performance between the two version and decide
+which one is the most suitable to our need.
+
+Finally, the last option available to evaluate recommender systems is to
+perform off-line evaluation: in this setting, we dispose of a dataset of past
+transactions (the set of all ratings $R$), and try to simulate user behaviour
+to assess different measures.  In general, we will use $k$-folds
+cross-validation procedures to reliably evaluate each of the performance
+measures. The set of all ratings $R$ is divided into $k$ (typically $5$)
+disjoint sets of equal size ; at each of the $k$ iterations, the test set
+$\Rtest$ is set to the $k^{\text{th}}$ subset and and the training set
 $\Rtrain$ is set as the union of the $k - 1$ remaining subsets: the system will
 be trained on $\Rtrain$ and tested on $\Rtest$. The reported performances are
 then the average of the $k$ measures.
+
+The first two evaluation settings (users studies and online studies) require
+the use of an actual, working recommender system. Thus, we will here only focus
+on measures that can be calculated in an off-line evaluation process.
 
 \paragraph{Accuracy\\}
 The performance of the algorithm $A$ is usually evaluated in terms of accuracy,
@@ -394,6 +448,18 @@ defined using the pointwise mutual information, the \textbf{lower} the values
 of $\surpmax$ and $\surpavg$, the most \textit{surprising} the recommendations.
 
 
+\paragraph{Other dimensions\\}
+
+There are  many other measures that can assess the performances of a
+recommender system (see \cite{ShaGun11} for an extensive survey). We can cite
+for example \textbf{trust} which characterises the confidence that a user would
+put into a recommendation, or also \textbf{diversity} that evaluates how
+various recommendation are distinct from each others.  Unfortunately these
+dimensions are actually a lot harder to assess in an off-line setting, and
+there are no popular quantitative measure that can evaluate them in a
+satisfactory way.
+
+
 \section{Two collaborative filtering techniques: neighborhood-based, and matrix
 factorization}
 
@@ -428,7 +494,9 @@ weighted by the similarity between $u$ and $v$:
 \end{definition}
 
 The estimation process of the neighborhood approach is described in Algorithm
-\ref{ALGO:neighborhood_prediction}.
+\ref{ALGO:neighborhood_prediction}.  Obviously, the training stage only needs
+to be done once. Then, the
+similarities can be reused for later predictions.
 
 \begin{algorithm}[!ht]
  \caption{The neighborhood recommender.}
@@ -457,8 +525,28 @@ The estimation process of the neighborhood approach is described in Algorithm
 \end{algorithmic}
 \end{algorithm}
 
-Obviously, the training stage only needs to be done once. Then, the
-similarities can be reused for later predictions.
+We need here to make an important point: instead of recommending an item to a
+user, we could perfectly recommend a user to an item, which is exactly the
+same. The prediction $\predrui$ would be the exact counterpart of the one we
+described above, but instead of considering similarities between users, we
+would compute similarities between items:
+$$\predrui = \frac{\sum\limits_{j \in N_u^k(i)} r_{uj} \cdot \ssim(i, j)}
+{\sum\limits_{j \in N_u^k(i)}\ssim(i, j)}.$$
+We can interpret this prediction as an edge-case of content-based
+recommendation: we clearly are recommending to $u$ some items $j$ that are
+close to those he has already rated in the past, which is exactly what a
+content-based recommender does. In this case though, we did not use any
+metadata about the items, as items where represented as vectors of ratings.
+
+The choice between user-based or item-based recommendation mainly depends on
+the system at hand. When the number of users is high with regard to the number
+of items, computing similarities between items can help saving memmory and
+computation time, but it is also important to assess the potential number of
+neighbors for any given $u$ or $i$: it is always more desirable to compute
+similarities over a high number of ratings. Also, item-based methods are
+more easily justified: when presenting a recommendation to a user $u$, it is
+easier to explain how two items relate to each other rather than involving
+other users that $u$ does not even know.
 
 \subsubsection{The similarity measures}
 
@@ -614,7 +702,7 @@ was to improve the RMSE (defined in Section \ref{TODO}) of their standard
 prediction algorithm by $10\%$. The challenge quickly became very popular, not
 only because the winning prize was of \$1 million, but also because the dataset
 was orders of magnitude larger than any other available dataset at the time:
-about 100 million ratings from 480.000 users and 17.700 movies. Unfortunately, the 
+about 100 million ratings from 480.000 users and 17.700 movies. Unfortunately, the
 dataset is no longer publicly available, but the challenge led to the emergence
 of many successful recommendation techniques, among which matrix factorization
 methods clearly stand out. Let's be honest: the author of this document has a
@@ -787,6 +875,25 @@ now propose to derive the associated SGD algorithm.
 
 \subsubsection{Optimization by Stochastic Gradient Descent}
 
+When we need to minimize a loss function $L$ of the form $L(\theta) = \sum_k
+L_k(\theta)$, where $\theta$ is a (potentially multidimensional) parameter, SGD
+comes up as a very popular optimization technique. While a vanilla gradient
+descent would require to compute the derivative of $L$ with respect to
+$\theta$, in SGD we just assume that the derivative of each $L_k$ is enough.
+SGD is an iterative optimization process where the value of $\theta$ is updated
+using the following rule: $\theta = \theta - \alpha \frac{\partial
+L_k}{\partial \theta}$ where $\alpha$ the learning rate (or stepsize). This
+update is performed over all $k$' for a given number of times. Various
+theoretical guanrantees about the convergence of this algorithm have been
+derived, that obviously depend on the stepsize and on some regularity
+conditions on the loss function $L$: see for example  for a recent overview
+\cite{BotCurNoc16}.
+
+As far as we are concerned, our loss function is
+$$
+L(p_u, q_i) \eqdef \sum_{\rui \in R} \left(\rui - {q_i}^t \cdot p_u \right)^2 +
+\lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right).
+$$
 Let $L_{ui}$ be the cost associated with a single prediction $\rui$: $$L_{ui}
 \eqdef \left(\rui - {q_i}^t \cdot p_u \right)^2 + \lambda\left(\norm{}{q_i}^2 +
 \norm{}{p_u}^2\right).$$
