@@ -338,7 +338,7 @@ sense that two clones are two users following parallel paths.
 \begin{figure}[!h]
 \centering
 \includegraphics[width=4in]{figures/clones.pdf}
-\caption{Bob is a perfect clone of Alice.}
+\caption{Bob is a perfect clone of Alice, and Alice is a perfect clone of Bob.}
 \label{FIG:alice_and_bob_clones}
 \end{figure}
 
@@ -359,12 +359,7 @@ $$r_{ui} : r_{vi} :: r_{uj} : r_{vj},~~ r_{uj} : r_{vj} :: r_{uk} : r_{vk},
 where $i, j, k, \cdots$ are the common items of $u$ and $v$.
 
 
-In the next two sections, we investigate this idea of a clone-based prediction,
-first when ratings are viewed as numerical quantities in section
-\ref{TODO}, and then when they have an ordinal meaning only in
-section \ref{TODO}.
-
-\subsection{Ratings as numerical quantities}
+\subsection{Two new algorithms}
 
 In the following, $C_i(u)$ will denote as the set of users that are clones of
 $u$ and that have rated item $i$. From the previous unformal definitions, one
@@ -658,23 +653,32 @@ algortihms mentioned there. Yet, this algorithm is unable to output
 personalized recommendation: all recommendations would be the same for
 \textbf{any} user! This is simply due to the fact that in the prediction
 $\predrui = \mu  + b_u + b_i$, the only user-dependent factor is the term
-$b_u$, which is the \textbf{same} in all the predictions. This point of this
-remark is to exhibit one of the drawbacks of RMSE that we already mentioned
-before: RMSE is not an appropriate measure when it comes to assess user-system
-interactions. Faire lien avec partie suivante grace à ça.
+$b_u$, which is the \textbf{same} in all the predictions regardless of the
+item. The point of this remark is to exhibit one of the drawbacks of RMSE that
+we already mentioned before: RMSE is not an appropriate measure when it comes
+to assess user-system interactions.
+
+Indeed, what ultimately matters is how well a recommender system can
+\textbf{rank} the preferences of a user for all the items. Also, rather than
+defining clones with the general numerical criteria ($r_{ui} = r_{vi} +
+t_{vu}$), we may instead consider that two users are clones if they order their
+common items in the same way. Back to Figure \ref{FIG:alice_and_bob_clones}, we
+see that Alice and Bob are perfect clones and we actually do not need to know
+the real rating values: only the order matters. The goal of the next section is
+precisely to investigate this ordinal view of ratings in our clone-based
+framework.
 
 \subsection{Towards an ordinal view of ratings}
-\label{ORDINAL_POV}
 
-We may wonder if one can devise a counterpart of the numerical clone-based
+We here investigate if we can devise a counterpart of the numerical clone-based
 approach, which would be compatible with an ordinal view of the ratings.
 Indeed, an extreme way for unbiasing and comparing two sets of ratings is to
-forget about their numerical values, and only consider their rankings.  The
-idea of viewing ratings in a ordinal manner has been advocated in
-\cite{KorSillRECSYS11}.
-In this section, we discuss an ordinal counterpart of the analogical approach
-previously presented.  Analogical reasoning with ordinal data has first been
-proposed in \cite{MicBarCAP09}, yet with a different concern.
+forget about their numerical values, and only consider their rankings. The
+idea of viewing ratings in a ordinal manner is not new, and has been advocated
+for example in \cite{KorSillRECSYS11}.  In this section, we discuss an ordinal
+counterpart of the analogical approach previously presented.  Analogical
+reasoning with ordinal data has first been proposed in \cite{MicBarCAP09}, yet
+with a different concern.
 
 \subsubsection{An algorithm for rank prediction}
 Indeed the idea that ``\textit{the rating of user $u$ for item $i$ is to the
@@ -690,7 +694,7 @@ This means that we need to compare the rankings given by two users $u$ and $v$
 on their common items. In the following, $\rho_{ui}$ denotes the relative
 ranking of item $i$ out of all the items rated by $u$. Our goal is to estimate
 all values of $\rho_{ui}$, for any user and any item. The main steps of a
-possible algorithm is as follows:
+possible algorithm would be as follows:
 \begin{enumerate}
   \item Compute similarities between users, based on their rankings. A very
     popular similarity ranking measure is the Spearman's rank correlation
@@ -698,8 +702,8 @@ possible algorithm is as follows:
   \item Compute an estimated rank $\hat{\rho}_{ui}$ as an aggregation of all the
     rankings $\rho_{vi}$ extracted from the $k$ nearest neighbors (using
     Spearman's rho as similarity):
-    $$\hat{\rho}_{ui} = \frac{\sum_{v \in N_i^k(u)} \rho_{vi} \cdot
-    sim(u, v)}{\sum_{v \in N_i^k(u)} sim(u, v)}.$$
+    $$\hat{\rho}_{ui} = \frac{\sum\limits_{v \in N_i^k(u)} \rho_{vi} \cdot
+    \ssim(u, v)}{\sum\limits_{v \in N_i^k(u)} \ssim(u, v)}.$$
 \end{enumerate}
 
 This is obviously very similar to the neighborhood approach described in
@@ -711,17 +715,18 @@ predicted rank. This approach is denoted as \textit{RankAnlg}.
 
 We evaluated the performance of our algorithm and compared it to other
 previously described approaches, using the exact same evaluation protocol as in
-section \ref{expeDiscuss}. The Movielens-1m dataset was not benchmarked, as our
-algorithm is too computationally intensive.
+the previous sections. The Movielens-1A dataset was not benchmarked, because
+the computation of Spearman'rho was too computationally intensive.
 
 RMSE and MAE are good measure for evaluation rating prediction accuracy, but
 are not suitable when it comes to evaluate rankings. A better measure is the
-Fraction of Concordant Pair, which evaluates the probability that given any two
+Fraction of Concordant Pairs, which evaluates the probability that given any two
 items $i$ and $j$ rated by any user $u$, the system has correctly estimated
 whether $u$ prefers $i$ over $j$ or the inverse. To compute the FCP, we need to
-intermediate measures. $c_u$ defines the number of concordant pairs for user
-$u$, and $d_u$ its number of discordant pairs. The FCP is then computed over all
-users as the proportion of concordant pairs.
+intermediate measures. Following the notation of \ref{TODO}, $c_u$ defines the
+number of concordant pairs for user $u$, and $d_u$ its number of discordant
+pairs. The FCP is then computed over all users as the proportion of concordant
+pairs.
 
 \begin{align*}
   c_u &\eqdef \Set{(i, j) \in I^2 \quad | \quad \predrui > \predruj \text{ and
@@ -1024,6 +1029,9 @@ note appartient à l'échelle $[1, 2, 3, 4, 5]$, mais nous l'avons ramenée à u
 échelle binaire de la façon suivante : un utilisateur $u$ aime un film s'il lui
 a attribué une note supérieure à $\mu_u$, où $\mu_u$ est la note moyenne que
 $u$ donne aux films qu'il a vus.
+
+DIRE QUE CEST PAS FORCEMENT GENIAL CAR LES USERS ONT TENDANCE A NOTER SEULEMNET
+LES FILMS QUILS AIMENT ET PAS CEUX QUILS AIMENT PAS
 
 En plus de choisir un critère de support minimal, nous avons aussi imposé un
 support maximal : les films très populaires vus par beaucoup de monde font

@@ -391,7 +391,7 @@ propose two definitions:
 The overall capacity of a recommender to surprise its users can be defined as
 the mean of all the surprise values for each perdiction. Because they are
 defined using the pointwise mutual information, the \textbf{lower} the values
-of $\surpmax$ and $\surpavg$, the most \textit{surprising} the recomendations.
+of $\surpmax$ and $\surpavg$, the most \textit{surprising} the recommendations.
 
 
 \section{Two collaborative filtering techniques: neighborhood-based, and matrix
@@ -514,7 +514,7 @@ of common items as in a similarity computed only over a few items. This is why
 in practice, it is common to give a higher weight to the similarities that have
 a high support. Another option is to \textit{shrink} the similarity measure of
 two users toward zero if their support is low:
-$$\text{actual\_sim}(u, v) \eqdef \frac{\mid \Iuv \mid - 1}{\mid \Iuv \mid - 1
+$$\text{shrunk\_sim}(u, v) \eqdef \frac{\mid \Iuv \mid - 1}{\mid \Iuv \mid - 1
 + \lambda} \cdot \ssim(u, v),$$
 where $\lambda$ is a sort of regularization constant. Such shrinkage technique
 can be motivated from a Bayesian perspective, and usually leads to significant
@@ -614,7 +614,7 @@ was to improve the RMSE (defined in Section \ref{TODO}) of their standard
 prediction algorithm by $10\%$. The challenge quickly became very popular, not
 only because the winning prize was of \$1 million, but also because the dataset
 was orders of magnitude larger than any other available dataset at the time:
-about 100M of ratings of 480.000 user sand 17.700 movies. Unfortunately, their
+about 100 million ratings from 480.000 users and 17.700 movies. Unfortunately, the 
 dataset is no longer publicly available, but the challenge led to the emergence
 of many successful recommendation techniques, among which matrix factorization
 methods clearly stand out. Let's be honest: the author of this document has a
@@ -714,7 +714,7 @@ clear semantic meaning to the different $U_i$ or $I_i$, and the way they are
 defined highly depends on the matrix $R$.
 
 Moving further, each rating $\rui \in R$ is defined as a dot product $\rui =
-q_i^t \cdot p_u$, where $q_i \in \mathbb{R}^r$ is a row in $U$ and represents
+{q_i}^t \cdot p_u$, where $q_i \in \mathbb{R}^r$ is a row in $U$ and represents
 the item $i$, and $p_u \in \mathbb{R}^r$ is a column in $I$ and represents the
 user $u$. We can now understand that, \textbf{$p_u$ represents how well $u$
 agrees with each of the $r$ prototype movies, and $q_i$ represents how well $i$
@@ -722,7 +722,7 @@ suits the tastes of the $r$ prototype users}.
 
 \subsubsection{Application to recommendation}
 
-This statement is the principal motivation for the use of SVD in recommendation
+The above statement is the principal motivation for the use of SVD in recommendation
 settings. It postulates the existence of $f$ factors/criteria (whose nature is
 not necessarily known) that determine the value of any rating $\rui$.  A user
 $u$ is modeled as a vector $p_u \in \mathbb{R}^f$, where each component of
@@ -749,7 +749,7 @@ sparse? The SVD of $R$ is not even properly defined! One of the main
 contribution during the Netflix competition was made by Simon Funk, who
 empirically showed that we should actually just not care that the matrix $R$ is
 sparse, and still solve the same optimization problem only on the known
-ratings.  When $R$ is sparse, the problem is not convex in both $p_u$ and $w_i$
+ratings.  When $R$ is sparse, the problem is not convex in both $p_u$ and $q_i$
 so this optimization will only lead to a local minimum,
 but this solution turned out very efficient in practice. Before that,
 techniques usually involved  a preliminary step where the matrix $R$ was filled
@@ -783,14 +783,17 @@ solution of this optimization problem exactly corresponds that of the SVD.  Not
 surprisingly, stochastic gradient descent (SGD) tend to perform really well on
 this task and is quite simple to implement. Because we have already talked too
 much about matrix factorization, and because a few lines more won't hurt, we
-now propose to derive the associated SGD algorithm. Let $L_{ui}$ be the cost
-associated with a single prediction $\rui$:
-$$L_{ui} \eqdef \left(\rui - {q_i}^t \cdot p_u \right)^2 +
-\lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right).$$
+now propose to derive the associated SGD algorithm.
+
+\subsubsection{Optimization by Stochastic Gradient Descent}
+
+Let $L_{ui}$ be the cost associated with a single prediction $\rui$: $$L_{ui}
+\eqdef \left(\rui - {q_i}^t \cdot p_u \right)^2 + \lambda\left(\norm{}{q_i}^2 +
+\norm{}{p_u}^2\right).$$
 
 Denoting err the prediction error ($\text{err} = \rui - {q_i}^t \cdot p_u$), the
 derivative of $L_{ui}$ with respect to $q_i$ is (remember that $q_i$ is a
-vector:
+vector):
 $$\frac{\partial L_{ui}}{\partial q_i} = -\text{err} \cdot p_u + 2\lambda
 q_i.$$
 Similarly, the derivative of $L_{ui}$ with respect to $p_u$ is:
@@ -804,8 +807,8 @@ solved by following Algorithm \ref{ALGO:matrix_facto_sgd}.
        \label{ALGO:matrix_facto_sgd}
        \begin{algorithmic}
 
-         \STATE {\bf Input}: A set of ratings $R$, a learning rate $\alpha$ and
-         a regularization penalty $\lambda$, a number of iterations $n$.
+         \STATE {\bf Input}: A set of ratings $R$, a learning rate $\alpha$, a
+         regularization penalty $\lambda$ and a number of iterations $n$.
          \STATE {\bf Output}: $p_u$ and $q_i$, the user and item biases.
          \STATE {\it Initialization:}
          \STATE Randomly initialize $p_u$ and $q_i$
