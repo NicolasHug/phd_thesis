@@ -1160,11 +1160,12 @@ which would be byt the way quite arbitrary. Instead, we will only be interested
 in comparing proportions. We have chosen to compare two proportions by first
 computing the truth value of each of their component-wise proportions using
 $A$, and then by comparing these truth values in lexicographic order. Consider
-for example the two $4$-itemsets of Table \ref{TAB:lexicographic_order}. We
-will consider that the first $4$-tuple (on the right) is is a better proportion than
-the second one because once their truth values are sorted, the one of the right
-comes first. Had we chosen to compare them with the mean of the truth values,
-the best proportion would have been the second one.
+for example the two $4$-itemsets of Table \ref{TAB:lexicographic_order}, where
+ratings $[1, 2, 3, 4, 5]$ have been mapped to $[0, .25, .5, .75, 1]$. We
+will consider that the first $4$-tuple (on the right) is a better proportion
+than the second one because once their truth values are sorted, the one of the
+right comes first. Had we chosen to compare them with the mean of the truth
+values, the best proportion would have been the second one.
 
 \begin{table}[h!]
 \centering
@@ -1194,6 +1195,81 @@ the best proportion would have been the second one.
   truth value ($A$).}
 \label{TAB:lexicographic_order}
 \end{table}
+
+Using this comparison procedure, we have looked for the 10 best proportions
+with a minimum support of $200$ common users. The results are reported on Table
+\ref{TAB:ten_best_proportions}.
+\begin{table}[h!]
+\centering
+  \begin{tabular}{ l l  l  l}
+\toprule
+    \multicolumn{1}{c}{$i_1$}  & \multicolumn{1}{c}{$i_2$} &
+    \multicolumn{1}{c}{$i_3$} & \multicolumn{1}{c}{$i_4$}\\
+  \midrule
+    Star Wars & The Empire Strikes Back & Raiders of the Lost Ark & Return of the Jedi  \\
+Star Wars & Return of the Jedi & Raiders of the Lost Ark & The Empire Strikes Back  \\
+Star Wars & The Empire Strikes Back & Return of the Jedi & Raiders of the Lost Ark  \\
+Star Wars & Raiders of the Lost Ark & Return of the Jedi & I.J. and the Last Crusade  \\
+Star Wars & Return of the Jedi & Raiders of the Lost Ark & The Fugitive  \\
+Star Wars & Raiders of the Lost Ark & Return of the Jedi & Back to the Future  \\
+Star Wars & The Empire Strikes Back & Raiders of the Lost Ark & I.J. and the Last Crusade  \\
+Star Wars & The Empire Strikes Back & Return of the Jedi & I.J. and the Last Crusade  \\
+Star Wars & The Empire Strikes Back & I.J. and the Last Crusade & Return of the Jedi  \\
+Star Wars & Raiders of the Lost Ark & The Empire Strikes Back & The Fugitive\\
+\bottomrule
+\end{tabular}
+\caption{The ten best item proportions with a support of more than $200$ common
+  ratings.}
+\label{TAB:ten_best_proportions}
+\end{table}
+
+The first obvious observation is that only a few movies (exactly $7$) make up
+these 10 proportions. This is not really surprising, as we have set the support
+threshold quite high, and only a few movies are rated by more than 200 users.
+In fact, we found 331 4-itemsets with more than 200 common users, but they only
+contain 37 unique movies. Clearly here, the involved movies (Star Wars, Indiana
+Jones\dots) are extremely popular.
+
+Some of the analogies are actually really good. For example the fourth one
+\textit{Star Wars (1977)} is to \textit{Raiders of the Lost Ark (1981)} as
+\textit{Return of the Jedi (1983)} is to \textit {Indiana Jones and the Last
+Crusade (1989)} or the seventh one which is similar: \textit{Star Wars (1977)}
+is to \textit{The Empire Strikes Back} as \textit{Raiders of the Lost Ark
+(1981)} is to \textit{Indiana Jones and the Last Crusade (1989)}
+
+Looking at the first and third proportions though, we see that the two forms
+$i_1:i_2::i_3:i_4$ and $i_1:i_2::i_4:i3$ are present in the table. These two
+forms are non-equivalent, and it does not seem natural to consider these two
+proportions as (almost) equally valid. But this result can be explained by
+looking at the actual rating values: a great number of them are of the form
+$r:r::r:r$ (where $r$ is usually a high rating, given that these movies are
+popular) or $r:r::r':r'$. In the two cases, a swith between $i_3$ and $i_4$ has
+absolutely no effect on the truth values of the analogies.
+
+This leads us to another point: all these analogies are, after all, quite
+trivial. They all concern quite similar movies. We do not mean to offend any
+cinema fan, but we believe it is still fair to say that the differences between
+a Star Wars movie and an Indiana Jones movie are quite shallow. And these
+similarities are reflected in the ratings, where the most common pattern is
+$r:r::r:r$, suggesting that people like all these movies the same.
+
+To try to discover some more surprising analogies, we have two options. The
+first one is to lower the minimum support threshold, to allow movies that are
+rated by a reasonable (and not necessarily very high) number of users. As we
+have seen, movies with a very high number of ratings are likely yo lead to
+trivial proportions precisely because they are popular, and because people like
+them all equally well. If we really want to ban popular movie, we can also set
+a \textbf{maximum} support threshold, which will have the benefit to limit the
+number of itemsets that we consider, thus leading to significant performance
+improvements.  The second option is to tweak a bit our quality function $f$
+(and in our case, our comparison function) by penalizing proportions whose
+pattern is $r:r::r:r$. 
+
+
+
+Dire à la fin que bon, finalement les seules analogies convaincantes qu'on a
+trouvées c'était des analogies aaaa et donc uqi pouvaient se trouver par knn
+directmeent plutôt que de se faire chier avec l'analogie.
 
 %Nous avons expérimenté cet algorithme sur la base de données
 %Movielens\footnote{http://grouplens.org/datasets/movielens/},
