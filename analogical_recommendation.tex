@@ -1,12 +1,14 @@
 \chapter{Analogical recommendation}
 \label{CHAP:analogical_recommendation}
 
+\initial{I}n this chapter, we present our contribution to...
+
+
+\section{An algorithm using arithmetic proportion}
 We will here describe our first attempt to use an analogical proportion-based
 algorithm for recommender systems. The main idea is quite simple and is
 directly inpspired by the analogical classifiers that we have extensively
 studied in Chapter \ref{CHAP:functional_definition}.
-
-\section{An algorithm using arithmetic proportion}
 \subsection{Algorithm}
 
 Here again, we will make use of the analogical inference principle, but we will
@@ -18,11 +20,16 @@ also be in proportion.  Here, we will say that if an analogical proportion
 stands between four users $a, b, c, d$, meaning that for each item $j$ that
 they have commonly rated, the analogical proportion $r_{aj} : r_{bj} :: r_{cj}
 : r_{dj}$ holds, then it should also hold for an item $i$ that $a, b, c$ have
-rated but $d$ has not (i.e. $r_{di}$ is the missing component). This leads us
-to estimate $r_{di}$ as the solution $y$ of the following analogical
-equation: $$r_{ai} : r_{bi} :: r_{ci} : y.$$
-\noindent
-
+rated but $d$ has not (i.e. $r_{di}$ is the missing component):
+$$
+\infer{
+r_{ai} : r_{bi} :: r_{ci} : r_{di} ~~ \forall i \in I_a \cap I_b \cap I_c,
+\text{ and } i\notin I_d }{r_{aj} : r_{bj} :: r_{cj} : r_{dj} ~~ \forall j \in
+I_a \cap I_b \cap I_c \cap  I_d}
+$$
+This leads us to estimate $r_{di}$ as the solution $y$ of the following
+analogical equation:
+$$r_{ai} : r_{bi} :: r_{ci} : y.$$
 Given a pair $(u,i)$ such that $\rui \notin R$, the main procedure to
 estimate $\rui$ is as follows:
 \begin{enumerate}
@@ -39,18 +46,17 @@ Section \ref{SEC:conservative_classifier}, except that here, the instance space
 (i.e. the space of $a, b, c, u$) changes with every pair $(u, i)$.
 
 In our implementation, we have used the arithmetic proportion in
-$\mathbb{R}^m$: $a:b::c:u \iff a - b = c - u$.
-The four users $a, b, c, d$ are here considered as vectors of ratings in a
-space defined by their common items. For the sake of clarity though, we will
-not write them with boldface letters and $a$ will denote both the user $a$ as
-well as its vectorial representation. Let us consider
-Figure \ref{FIG:analogical_recommendation}: the four users $a, b, c$ and $u$
-are in proportion, i.e. they make up a parallelogram in the 2-dimensional space of their
-common items, here Titanic and Toy story. If the three users $a, b, c$ have
-rated a movie $i$ that $u$ has not rated, the estimation of $\rui$ will be such
-that $a, b, c$ and $u$ still make up a parallelogram, but this time in a
-3-dimensional space. This process is also explained in Table
-\ref{TAB:analogical_recommendation}
+$\mathbb{R}^m$: $a:b::c:u \iff a - b = c - u$.  The four users $a, b, c, d$ are
+here considered as vectors of ratings in a space defined by their common items.
+For the sake of clarity though, we will not write them with boldface letters
+and $a$ will denote both the user $a$ as well as its vectorial representation.
+Let us consider Figure \ref{FIG:analogical_recommendation}: the four users $a,
+b, c$ and $u$ are in proportion, i.e. they make up a parallelogram in the
+2-dimensional space of their common items, here Titanic and Toy story. If the
+three users $a, b, c$ have rated a movie $i$ that $u$ has not rated, the
+estimation of $\rui$ will be such that $a, b, c$ and $u$ still make up a
+parallelogram, but this time in a 3-dimensional space. This process is also
+explained in Table \ref{TAB:analogical_recommendation}
 
 \begin{figure}[!h]
 \centering
@@ -309,13 +315,18 @@ precision, recall, etc. are not defined (or simply 0).
 We are now led to computation time... The nightmare of every analogical
 proportion-based algorithm. All of the other algorithms can manage through the
 five-folds cross-validation procedure in less than a minute, but our
-analogy-based algorithms need hours to yield decent performances. This issue is
-linked to the cubic complexity of the analogy-based learners, which cannot cope
-with big amounts of data. For now, this limitation clearly prevents
+analogy-based algorithms need hours to yield only decent performances. This
+issue is linked to the cubic complexity of the analogy-based learners, which
+cannot cope with big amounts of data. For now, this limitation prevents
 analogy-based learners to be relevent in real-world applications such as
-recommender systems.
+recommender systems, where computation time is one of the most decisive factor.
 
-\section{Clones}
+Nonetheless, it is still possible to design analogy-inspired solutions for
+recommendation. In the next section, we describe other algorithms that rely on
+the concept of \textbf{clones} and the generalize the classical neighborhood
+approach.
+
+\section{A clone-based view of analogical recommendation}
 
 Considering analogies between four users has shown to be computationally
 intensive, thus not really suitable for recommendation purposes, where time is
@@ -332,7 +343,7 @@ rating of $3$ would simply mean \textit{decent} or \textit{good enough}.  In
 the following, we refer such users that \textit{semantically} agree on their
 common items (but not necessarily \textit{numerically}) as \textit{clones}, as
 illustrated in Figure \ref{FIG:alice_and_bob_clones}. Please note that the word
-$clone$ is not used here to mean \textit{strictly identical}, but more in the
+$clone$ is not used here to mean \textit{strictly identical}, but rather in the
 sense that two clones are two users following parallel paths.
 
 \begin{figure}[!h]
@@ -356,10 +367,13 @@ Bob's ratings and those of Alice. When two users $u$ and $v$ are clones, we can
 come back to an analogical proportion-based viewpoint by noticing that we have:
 $$r_{ui} : r_{vi} :: r_{uj} : r_{vj},~~ r_{uj} : r_{vj} :: r_{uk} : r_{vk},
 \dots,$$
-where $i, j, k, \cdots$ are the common items of $u$ and $v$.
+where $i, j, k, \cdots$ are the common items of $u$ and $v$. The algorithms we
+will derive will however be much more efficient than those of the previous
+section, because they will not rely on an extensive search of 3-tuples of
+users.
 
 
-\subsection{Two new algorithms}
+\subsection{Two new analogical algorithms}
 
 In the following, $C_i(u)$ will denote as the set of users that are clones of
 $u$ and that have rated item $i$. From the previous unformal definitions, one
@@ -511,7 +525,8 @@ $$\min_{b_u, b_i, p_u, q_i} \sum_{r_{ui} \in R} \left[r_{ui} - \predrui\right]^2
 + \lambda \left(\norm{}{q_i}^2 + \norm{}{p_u}^2 + b_u^2 + b_i^2 \right),$$
 with $\predrui = \mu + b_u + b_i + q_i^tp_u$. This prediction algorithm is
 called SVD \cite{TODO}, and is nothing but the PMF algorithm with user and
-items biases.
+items biases. Its extension to handling implicit ratings is called SVD++, but
+we will not describe it here.
 
 In their work, the author have used this particular similarity metric, that is
 in perfect accordance with their prediction formula:
@@ -815,7 +830,52 @@ The use Spearman's rho tends to provide with neighbors that have smaller
 support, thus leading to a less significant and less accurate estimation of the
 neighborhood, which may explain the differences in performance.
 
+This closes for now our contributions to analogical recommendation. We will
+come back to it in the conclusion of this chapter, and we will now focus on a
+somewhat unrelated problem: analogical proportion mining in databases. As we
+will see though, analogical recommendation can in fact be view as both a motivation
+and as a purpose for analogical proportion mining.
+
 \section{Mining analogical proportions}
+
+Let us recap a bit the first section of this chapter, where we desribed our
+first attempt to design an analogical-based recommendation algorithm. As it is
+a direct application of the analogical inference principle, our algorithm
+suffers from the same drawbacks as the conservative and extended learners
+introduced in Chapter \ref{TODO}: the time complexity is cubic, which makes it
+impossible to use in actual systems and hard to evaluate accurately. Also, the
+performances of this algorithm were quite modest, even in its most elaborated
+forms.
+
+Our analogical inference principle states that if four users are in analogy,
+then their ratings for an item $i$ that $d$ has not rated should also be in
+analogy:
+$$
+\infer{ r_{ai} : r_{bi} :: r_{ci} : r_{di} ~~ \forall i \in I_a \cap I_b \cap
+I_c, \text{ and } i\notin I_d }{r_{aj} : r_{bj} :: r_{cj} : r_{dj} ~~ \forall j
+\in I_a \cap I_b \cap I_c \cap  I_d}
+$$
+But we have so far neglected a central question: do such proportions actually
+exist in our database? Can we find enough 4-tuples of users such that their
+common ratings are in proportion? How good are these proportions? We already
+acknowledged that absolutely perfect proportions are actually hard to find, and
+this is why we have relaxed the condition for an analogy to hold in Algorithm
+\ref{ALGO:analogical_recommendation}.
+
+In this section, we will design an algorithm that is able to extract all the
+analogical proportions underlying a database satisfying some given quality
+criteria. This will allow us to answer the previous questions: how many
+proportion are there, and how \textit{good} are they? We will apply this
+algorithm to the Movielens database, and see how this relates to ou
+recommendation task.  We will here look for analogies between items (movies in
+our case) instead of looking for analogies between users, because the
+interpretation of a movie-based proportion is actually easier, and because the
+parallel with association rules (described below) will be more natural. Both
+problems are symmetric though, and our solution can be adapted to user
+proportions in a straighforward manner.
+
+Because our method for mining analogical proportion is inspired from the mining
+of association rules, we first review this topic in the next nection.
 
 \subsection{Association rules}
 
@@ -832,18 +892,18 @@ problem of association rule mining.
 
 Let $I = \Set{i_1, i_2, ..., i_m}$ be a set of $m$ items, and let $T =
 \Set{t_1, t_2, ..., t_n}$ be a multiset of transactions, where each transaction
-is a subset of $I$: $t_i \subseteq I$. A transaction simply is a set of items
+is a subset of $I$: $t_i \subseteq I~\forall i$. A transaction simply is a set of items
 that are purchased together. An association rule is expressed in the form $ X
 \implies
 Y$, where $ X \subset I, ~ Y \subset I$, and $X \cap Y = \varnothing$. $X$ and
-$ Y $ are sets of items that we will call \textbf {itemsets}. Usually, $Y$ is
-restricted to a single item. We define
-\textbf{support} $\supp (X) $ of an itemset $X$ as the proportion of
-transactions that contain it:
+$ Y $ are sets of items that we will call \textbf {itemsets}, and usually, $Y$
+is restricted to a single item. We define the \textbf{support} $\supp (X) $ of
+an itemset $X$ as the proportion of transactions that contain it:
 $$\supp(X) \eqdef \frac{\mid \Set{t \in T | X \subseteq t}\mid}{\mid T \mid}.$$
-Sometimes, the support is not defined as a propoertion but rather as the
+Sometimes, the support is not defined as a proportion but rather as the
 absolute number $\mid \Set{t \in T | X \subseteq t}\mid$, but it only makes
-sense to consider it with regard to the total number of transactions. Various
+sense to consider it with respect to the total number of transactions $\mid T
+\mid$. Various
 measures can be used to evaluate the quality of an association rule, such as
 the \textbf{confidence } which can be expressed as:
 $$\text{Conf}(X \implies Y)~\eqdef~\frac{\supp (X \cup Y)}{\supp (X)}.$$
@@ -853,7 +913,7 @@ if the set $X$ is sometimes found in a transaction that does not contain $Y$.
 
 The mining of association rules is a popular research topic, and has been
 extensively studied. In a perfect world with unlimited computational resources,
-an association rules mining algorithm would be as follows:
+a naive association rules mining algorithm would be as follows:
 \begin{enumerate}
 \item First, generate the power set of $I$, i.e. the set of all subsets of $I$
   that we denote $2^I$.  We know that the elements in $2^I$ are partially
@@ -870,8 +930,8 @@ first one is obviously impossible in practice due to the terrific size $2^I$,
 when real-world databases usually contain hundreds or thousands of items.
 The most famous algorithm for association rule mining probably is the
 \textbf{Apriori} algorithm introduced in \cite{AgrSriVLDB94}, that we will
-briefly review. Using Apriori allows to scan the lattice in an efficient way,
-avoiding many useless nodes.
+briefly review. Using Apriori allows to scan the itemset lattice in an
+efficient way, avoiding many useless nodes.
 
 Ultimately, we are only interested in association rules where the support of
 the involved itemsets is high. An itemset whose support is above some given
@@ -881,7 +941,7 @@ subsets are also frequent itemets. For example, if the itemset
 $\Set{\text{apple, banana, orange}}$ is found in more than 30 transactions,
 then the three subsets $\Set{\text{apple, banana}}$, $\Set{\text{apple,
 orange}}$ and $\Set{\text{banana, orange}}$ must also be found in \textbf{at
-least} 30 transactions. Conversely, the two sets $\Set{\text{kiwi, pear}}$ and
+least} 30 transactions. Conversely, if the two sets $\Set{\text{kiwi, pear}}$ and
 $\Set{\text{kiwi, strawberry}}$ are found in less than $30$ transactions, we
 are sure that their union $\Set{\text{kiwi, pear, strawberry}}$ will also be
 found in less than $30$ transactions. So if we are only interested in itemsets
@@ -899,7 +959,7 @@ in the following steps:
   \item Etc, etc... All the frequent $k$-itemsets are built by joining the
     frequent $k-1$ itemsets.
   \item Once all the frequent itemsets have been computed, the second step of
-    the above naive algorithm can still be used to assess the confidence of the
+    the above naive algorithm is used to assess the confidence of the
     association rules.
 \end{enumerate}
 
@@ -915,24 +975,46 @@ the elements of our database.
 %celle liant beurre et biscottes.
 
 Just like association rules, the identification of analogical proportions in a
-database is an additional information source, and deserves to be addressed.
+database is an additional information source, and deserves to be addressed. We
+now get to the heart of the matter.
 
+\subsection{Looking for analogies in an incomplete database}
 
-\subsection{Looking for analogies}
+In order to avoid any ambiguity, we formally define our problem first. 
+\subsubsection{Problem definition and links to association rules}
 
+We will be looking for analogies between items in the Movielens database, but
+our method can naturally be extended to any other database with the same
+structure.  We dispose of a set of users $U$ and a set of items $I$. Each user
+$u$ has rated (or purchased) a given set of movies $I_u \subseteq I$. In this
+setting, each user $u$ is actually considered to be a transaction $t_i$, as
+defined in the previous section. The set of all the ratings $\rui$ is denoted
+$R$ and can be viewed as a sparse matrix where user are columns and items are
+rows (or the reverse).  For now, we do not care about the rating values and
+just focus on whether the rating exists or not (just like we only care about
+the fact that an item has been bought in the case of association rules). We
+will only make use of the rating values when we will evaluate how good the
+proportions are, in later subsections.
 
-Dans la suite, on recherche des analogies dans une base de données dédiée à la
-recommandation.
-L'objectif d'un système de recommandation est de fournir à un utilisateur une
-liste personnalisée d'articles susceptibles de l'intéresser.  Soit $U$ un
-ensemble d'utilisateurs et $I$ un ensemble d'items. Pour certaines paires $(u,
-i) \in U \times I$, on connait la note $r_{ui}$, qui exprime l'intérêt que
-l'utilisateur $u$ porte à l'item $i$ : on trouvera souvent $r_{ui} \in
-[\text{aime, n'aime pas}]$ ou bien $r_{ui} \in [1, 2, 3, 4, 5]$. Nous dénotons l'ensemble des notes
-connues du système par $R$.
+We need to insist here on the fact that we are dealing with a \textbf{sparse}
+database.  In the case where all values in $R$ are known, the problem of mining
+analogical proportion is pretty trivial: all we need is to look for all
+$4$-tuples of items, and evaluate how good the proportion $a:b::c:d$ is. This
+search is in $\mid I \mid^4$ which is absolutely aweful, but there is simply no
+other way around. This problem is not really interesting in the sense that
+there is no need to come up with an elaborated algorithm. Its parallel in the
+association rules world corresponds to the case where the each transaction
+$t_i$ contains all the items ($\forall i, t_i = I$): the very idea of
+association rule does not make sense anymore. The problem we propose to address
+here is different: the matrix $R$ is sparse and the set of users that have
+rated (purchased) the items is different each time: for all items $i$ and $j$
+(or at least for most), we have $U_i \neq U_j$. We thus cannot just look at all
+$4$-tuples of items and check if they are in analogy. Or more accuratly we
+could, but as we are ultimately interested in good analogies (i.e. analogies
+involving a sufficient number of ratings), we can make use of the
+downward-closure property just like the Apriori algorithm, which will allow us
+to avoid many $4$-tuples that could not lead to good analogies.
 
-Parler des users qui font office de transaction et ptet mettre lhistoire des
-echelles ici.
 Let's now consider four items $a, b, c, d$, and our task is to find out if
 these four users make up a valid analogy. For now, we do not know in which
 order we need to consider them.  Just like for association rules, the notion of
@@ -944,11 +1026,11 @@ than some threshold $\alpha$: a proportion built on only two components is a
 lot less meaningful than a proportion built on dozens of components.
 
 When given four items $a, b, c, d$, the question is know to find out which is
-the proportion that actually holds. It could be $a:b::c:d$, be it could just as
-well be $a:c::c:d$ or $a:c:d:b$, or any of the $24$ ($4!$) combination of these
-four elements. Fortunately, we do not have to test all the $24$ orderings.
-We know from Chapter \ref{TODO} that there are exactly 3 equivalent classes of
-analogies, which are represented by:
+the proportion that actually holds. It could be $a:b::c:d$, but it could just
+as well be $a:b::d:c$ or $a:c:d:b$, or any of the $24$ ($4!$) combination of
+these four elements. Fortunately, we do not have to test all the $24$
+orderings.  We know from Chapter \ref{TODO} that there are exactly 3 equivalent
+classes of analogies, which are represented by:
 \begin{itemize}
   \item $a:b::c:d$,
   \item $a:b::d:c$,
@@ -957,29 +1039,29 @@ analogies, which are represented by:
 Thus, testing these three orderings is enough to find out about the $24$
 possibles forms of analogies. To assess the quality of a proportion, we will
 use a function $f$ that plays a similar role to the confidence function for
-association rules. Then, it would be natural to only consider analogies that
+association rules. Then, it will be natural to only consider analogies that
 are below some given quality threshold. Simply put, we would consider
 $a:b::c:d$ as a valid analogy if $(a:b::c:d) \geq \beta$. In the end we are
-left with a set of proportion that represent analogical realtions between four
+left with a set of proportions that represent analogical realtions between four
 items.
 
-\subsubsection{Some quality functions}
+\subsubsection{Assessin the quality of a proportion}
 
 We here describe various functions $f$ that can assess the quality of a
 proportion. The four items $a, b, c, d$ are considered as vectors of ratings in
 the space of their common users,
-and we will consider two cases: that of the binary rating scale $[0, 1]$, and  
+and we will consider two cases: that of the binary rating scale $[0, 1]$, and
 that of a gradual rating scale (e.g. $[1, 5]$). Note that here, in case of the
 binary rating scale, the value $1$ is associated with \textit{like} and the
 value $0$ is associated with \textit{dislike}, but a value of $0$
 \textbf{still} means that the user $u$ has rated the item $i$. In some
-settings, a value of $0$ can be interpreted as the absence of rating, but this
-view is not compatible with our problem: if $\rui = 0$ means $\rui \notin R$,
-the four items $a, b, c, d$ would only be represented as vectors of constant
-value $1$, where analogies are not really defined. Instead, when $0$ still
-means that the user has rated the item, the items can be represented as boolean
-vectors, which is fortunate because we know how to deal with Boolean
-proportions.
+settings (e.g. with the unary rating scale), a value of $0$ can be interpreted
+as the absence of rating, but this view is not compatible with our problem: if
+$\rui = 0$ means $\rui \notin R$, the four items $a, b, c, d$ would only be
+represented as vectors of constant value $1$, where analogies are all trivial
+because their only pattern is $1:1::1:1$. Instead, when $0$ still means that
+the user has rated the item, the items can be represented as boolean vectors,
+which is fortunate because we know how to deal with Boolean proportions.
 
 Naturally, the quality functions that we can define will depend on the nature
 of the rating scale.
@@ -1003,21 +1085,22 @@ of the rating scale.
     will be given a cost of $1$ instead of $2$. Here again, considering a
     proportion rather than an absolute number may be more meaningful, because
     of the different dimensions.
-  \item When the rating scale is gradual, the analogical dissimilarity is
+  \item When the rating scale is numerical (e;g. $[1, 5]$), the analogical dissimilarity is
     defined as $\norm{p}{(a - b) - (c - d)}$, and indicates how well the
     parallelogram $abcd$ holds. Clearly, this can also be used as a measure of
     quality of the proportion.
   \item Another option for the gradual rating scale is to use the definitions
-    of fuzzy analogy of section \ref{TODO}\todo{completer}. When the quality
+    of fuzzy analogy of section \ref{TODO}\todo{completer}. As the quality
     each proportion is evaluated in a component-wise fashion, we can choose
-    various aggregation functions: mean, max, min, etc. Make a table with an
-    example.
+    various aggregation functions to assess the overall quality: mean, max,
+    min, or also compare two proportion by lexicographic order. We will give
+    further details in the experiments section.
   \item Finally, by adopting a statistical point of view, we can try to
     evaluate the probability of observing the proportion $a:b::c:d$, and
     consider it as a meaningful proportion if it is unlikely that we could have
     observed this proportion by random chance alone. This method is highly
-    linked to statistical test theory and will be discussed further in Section
-    \ref{TODO}.
+    linked to statistical test theory and will be discussed further in the
+    experiments sectios.
 \end{itemize}
 
 \subsubsection{Algorithm}
@@ -1061,55 +1144,104 @@ in $\mathcal{P}$, so if this happens this is probably because the quality
 fonction $f$ that is too permisive, or because the threshold $\beta$ is not
 correctly tuned.
 
-\subsection{Premières expériences}
+We also want to stress the point that the actual rating values are only used in
+the second part of the algorithm, i.e. when we evaluate the quality of the
+proportions. In the first part involving the Apriori algorithm, the only
+information that matter is that a rating exists. Its value is not taken into
+account.
 
-Nous avons expérimenté cet algorithme sur la base de données
-Movielens\footnote{http://grouplens.org/datasets/movielens/},
-constituée de $100~000$ notes de $1700$ films par $1000$ utilisateurs. Chaque
-note appartient à l'échelle $[1, 2, 3, 4, 5]$, mais nous l'avons ramenée à une
-échelle binaire de la façon suivante : un utilisateur $u$ aime un film s'il lui
-a attribué une note supérieure à $\mu_u$, où $\mu_u$ est la note moyenne que
-$u$ donne aux films qu'il a vus.
+\subsection{Experiments}
 
-DIRE QUE CEST PAS FORCEMENT GENIAL CAR LES USERS ONT TENDANCE A NOTER SEULEMNET
-LES FILMS QUILS AIMENT ET PAS CEUX QUILS AIMENT PAS
+As previously indicated, we have considered the Movielens-100k dataset for our experiments: 100,000
+ratings in $[1, 5]$ from $1000$ users and $1700$ movies.
 
-En plus de choisir un critère de support minimal, nous avons aussi imposé un
-support maximal : les films très populaires vus par beaucoup de monde font
-généralement consensus (les gens les apprécient), et ont peu de chance de
-construire des analogies intéressantes. Cela a de plus l'avantage de réduire
-l'espace de recherche, et donc accélerer significativement la recherche de
-4-itemsets. De plus, toujours dans le but d'éviter de construire des analogies
-trop triviales, on ne retient pas les proportions de la forme $x:x::x:x$.
+For our purpose, we actually do not need to set a quality threshold $\beta$,
+which would be byt the way quite arbitrary. Instead, we will only be interested
+in comparing proportions. We have chosen to compare two proportions by first
+computing the truth value of each of their component-wise proportions using
+$A$, and then by comparing these truth values in lexicographic order. Consider
+for example the two $4$-itemsets of Table \ref{TAB:lexicographic_order}. We
+will consider that the first $4$-tuple (on the right) is is a better proportion than
+the second one because once their truth values are sorted, the one of the right
+comes first. Had we chosen to compare them with the mean of the truth values,
+the best proportion would have been the second one.
 
-En choisissant un support minimal de 40 et un support maximal de 150, nous
-obtenons les mesures de qualités (calculées comme la proportion d'analogies
-parfaites) illustrées par la figure \ref{qualite}. Comme on peut le voir, la
-meilleure proportion a une qualité d'environ $40$\%, ce qui peut paraître peu
-convainquant. Néanmoins, en remarquant que pour une composante il y a 4 chances
-sur 16 d'obtenir une analogie significative (on ignore les $x:x::x:x$), et en supposant que les composantes sont
-indépendantes les unes des autres, le nombre de composantes pour lesquelles
-l'analogie est vraie suit une loi binomiale de paramètres $\mathcal{B}(40,
-\frac{1}{4})$, où $40$ est la dimension des vecteurs. Sous ces hypothèses, la
-probabilité d'obtenir $40$\% ou plus d'analogies parfaites est de $0.026$, ce qui
-tend à montrer qu'un tel quadruplet d'items reste significatif, en cela que la
-proportion analogique observée a peu de chance d'être due au hasard.
+\begin{table}[h!]
+\centering
+  \begin{tabular}{ c c  c  c  c }
+\toprule
+ $i_1 $ & $i_2$ & $i_3$ & $i_4$ & $A$\\
+  \midrule
+    0 & 1 & 0 & 1 & \textbf{1} \\
+    0 & .5 & .25 & .75 & \textbf{1} \\
+    1 & .5 & 1 & .25 & \textbf{.75} \\
+    0 & .5 & 1 & .25 & \textbf{.25} \\
+\bottomrule
+\end{tabular}
+\quad
+  \begin{tabular}{ c c  c  c  c }
+\toprule
+ $i_1 $ & $i_2$ & $i_3$ & $i_4$ & $A$\\
+  \midrule
+    0 & 0 & 0 & 0 & \textbf{1} \\
+    0 & .25 & 1 & .75 & \textbf{.75} \\
+    1 & .5 & 1 & .25 & \textbf{.75} \\
+    1 & 1 & 1 & .75 & \textbf{.75} \\
+\bottomrule
+\end{tabular}
 
-\begin{figure}[h]
-  \vspace{-0.4cm}
-\caption{Qualité des proportions trouvées}
-\label{qualite}
-\includegraphics[scale=0.6]{figures/quality_of_proportions.pdf}
-\vspace{-0.4cm}
-\end{figure}
-Les mêmes expériences ont été menées en gardant l'échelle de notes numérique
-($[1, 2, 3, 4, 5]$) et en utilisant une expression multivaluée de l'analogie.
-Les meilleures proportions obtenues s'avèrent être globalement les mêmes que
-celles qui ressortent de l'échelle binaire, montrant ainsi la cohérence des
-deux approches. La m\'ediocre qualit\'e des proportions analogiques trouv\'ees,
-m\^eme si elles sont statistiquement significatives,
-ne permet pas d'utiliser raisonnablement l'inf\'erence analogique dans cet exemple.
-Ceci  tend \`a expliquer a posteriori pourquoi une approche pour la
-pr\'ediction de notes manquantes, bas\'ee sur la recherche de triplets
-analogiques, avait obtenu des r\'esultats modestes \cite{HugPraRicISMIS15}.
+\caption{Two $4$-itemsets and their related proportions, with corresponding
+  truth value ($A$).}
+\label{TAB:lexicographic_order}
+\end{table}
+
+%Nous avons expérimenté cet algorithme sur la base de données
+%Movielens\footnote{http://grouplens.org/datasets/movielens/},
+%constituée de $100~000$ notes de $1700$ films par $1000$ utilisateurs. Chaque
+%note appartient à l'échelle $[1, 2, 3, 4, 5]$, mais nous l'avons ramenée à une
+%échelle binaire de la façon suivante : un utilisateur $u$ aime un film s'il lui
+%a attribué une note supérieure à $\mu_u$, où $\mu_u$ est la note moyenne que
+%$u$ donne aux films qu'il a vus.
+%
+%DIRE QUE CEST PAS FORCEMENT GENIAL CAR LES USERS ONT TENDANCE A NOTER SEULEMNET
+%LES FILMS QUILS AIMENT ET PAS CEUX QUILS AIMENT PAS
+%
+%En plus de choisir un critère de support minimal, nous avons aussi imposé un
+%support maximal : les films très populaires vus par beaucoup de monde font
+%généralement consensus (les gens les apprécient), et ont peu de chance de
+%construire des analogies intéressantes. Cela a de plus l'avantage de réduire
+%l'espace de recherche, et donc accélerer significativement la recherche de
+%4-itemsets. De plus, toujours dans le but d'éviter de construire des analogies
+%trop triviales, on ne retient pas les proportions de la forme $x:x::x:x$.
+%
+%En choisissant un support minimal de 40 et un support maximal de 150, nous
+%obtenons les mesures de qualités (calculées comme la proportion d'analogies
+%parfaites) illustrées par la figure \ref{qualite}. Comme on peut le voir, la
+%meilleure proportion a une qualité d'environ $40$\%, ce qui peut paraître peu
+%convainquant. Néanmoins, en remarquant que pour une composante il y a 4 chances
+%sur 16 d'obtenir une analogie significative (on ignore les $x:x::x:x$), et en supposant que les composantes sont
+%indépendantes les unes des autres, le nombre de composantes pour lesquelles
+%l'analogie est vraie suit une loi binomiale de paramètres $\mathcal{B}(40,
+%\frac{1}{4})$, où $40$ est la dimension des vecteurs. Sous ces hypothèses, la
+%probabilité d'obtenir $40$\% ou plus d'analogies parfaites est de $0.026$, ce qui
+%tend à montrer qu'un tel quadruplet d'items reste significatif, en cela que la
+%proportion analogique observée a peu de chance d'être due au hasard.
+%
+%\begin{figure}[h]
+%  \center
+%\caption{Qualité des proportions trouvées}
+%\label{qualite}
+%\includegraphics[scale=0.6]{figures/quality_of_proportions.pdf}
+%\vspace{-0.4cm}
+%\end{figure}
+%Les mêmes expériences ont été menées en gardant l'échelle de notes numérique
+%($[1, 2, 3, 4, 5]$) et en utilisant une expression multivaluée de l'analogie.
+%Les meilleures proportions obtenues s'avèrent être globalement les mêmes que
+%celles qui ressortent de l'échelle binaire, montrant ainsi la cohérence des
+%deux approches. La m\'ediocre qualit\'e des proportions analogiques trouv\'ees,
+%m\^eme si elles sont statistiquement significatives,
+%ne permet pas d'utiliser raisonnablement l'inf\'erence analogique dans cet exemple.
+%Ceci  tend \`a expliquer a posteriori pourquoi une approche pour la
+%pr\'ediction de notes manquantes, bas\'ee sur la recherche de triplets
+%analogiques, avait obtenu des r\'esultats modestes \cite{HugPraRicISMIS15}.
 
