@@ -1,19 +1,28 @@
 \chapter{Background on recommender systems}
 
-In a world of information overload, automatic filtering tools are essential to
-extract relevant information from basic noise. In the field of e-commerce,
-recommender systems play the role of search engines when surfing the entire
-web: they filter available items to provide relevant suggestions to customers.
+\initial{I}n a world of information overload, automatic filtering tools are
+essential to extract relevant information from basic noise. In the field of
+e-commerce, recommender systems play the role of search engines when surfing
+the entire web: they filter available items to provide relevant suggestions to
+customers.
 
 With the huge development of online businesses, recommender systems have become
 more and more popular \cite{RecoSystemHandbook,AdoTuzIEEE2005}. They help to
 answer questions as diverse as ``what movie to rent?", ``what car to buy?" or
-``which restaurant to try?".
-They do so by providing the user with a list of recommendations.
+``which restaurant to try?".  They do so by providing the user with a list of
+recommendations.
 
-
-In this chapter, we will provide some background on recommender systems, but we
-will also give some other background in later chapters when approriate.
+In this chapter, we will provide some background on recommender systems. We
+first provide a taxonomy of current research in the recommender systems area in
+Section \ref{SEC:taxonomy_rec_sys}, and set ourselve withing the collaborative filtering
+framework. In Section \ref{SEC:saispas}, we formally define the recommendation problem
+that we will address in this document, and explain how to assess the quality of
+a recommender system. In Section
+\ref{SEC:neighborhood_and_matrix_facto_review}, we extensively desribe two
+collaborative filtering methods: neighborhood-based algorithms, and matrix
+factorization-based techniques. These two families of algorithm will serve as
+baselines to which we will compare our own prediction algorithms in Chapter
+\ref{CHAP:analogical_recommendation}.
 
 \section{Taxonomy of recommender systems}
 \label{SEC:taxonomy_rec_sys}
@@ -41,8 +50,8 @@ Content-based algorithms try to recommender to a user some items that are
 \textbf{similar} to those that the user has liked in the past. For example, if
 the renting history of a user mainly contains science fiction movies, the aim
 of the system is to learn these preferences and recommend some other science
-fiction movies to the user. We recommend \cite[Ch.~3]{RecoSystemHandbook} for a
-recent overview of content-based methods.
+fiction movies to the user. We recommend \cite{LopGemSem11} for a recent
+overview of content-based methods.
 
 To find out similar items to those that a user has liked, these systems usually
 rely on a similarity metric whose nature strongly depends on the representation
@@ -53,8 +62,8 @@ been visisted (yes, this is the reason why some online systems will try to sell
 you a fridge even though you just bought a brand new one). In systems were
 items are more homogeneous, i.e. in a movie store system, more  sophisticated
 approaches can be built relying on some metadata about the items (hence the
-name \textit{content}-based), for example movies genre, main actors, film
-director, etc\dots.
+name \textit{content}-based), for example the movies genre, main actors, film
+director, etc\dots
 
 As content-based techniques do not rely on the set of ratings to compute item
 similarities, a nice resulting feature is that new items that have not yet been
@@ -174,6 +183,7 @@ implementation of such systems are so domain-dependent that is is difficult to
 exhibit a clear unifying framework that would still be accurate.
 
 \section{sais pas}
+\label{SEC:saispas}
 \subsection{Problem formalization and notation}
 Let $U$ be a set of users and $I$ a set of items. For some pairs $(u,i) \in U
 \times I$, a rating  $\rui$ is supposed to have been given by $u$ to express
@@ -466,6 +476,7 @@ satisfactory way.
 
 \section{Two collaborative filtering techniques: neighborhood-based, and matrix
 factorization}
+\label{SEC:neighborhood_and_matrix_facto_review}
 
 We will here present two families of collaborative filtering algorithms: the
 neighborhood approach based on the well known $k$-NN algorithm, and the matrix

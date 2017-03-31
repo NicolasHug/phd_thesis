@@ -1,8 +1,9 @@
 \chapter{Analogical recommendation}
 \label{CHAP:analogical_recommendation}
 
-\initial{I}n this chapter, we present our contribution to...
-
+\initial{I}n this chapter, we present our contribution to analogical
+recommendation. Now that we have enough background on recommender systems, we
+are in position to present our contribution to analogical recommendation.  
 
 \section{An algorithm using arithmetic proportion}
 We will here describe our first attempt to use an analogical proportion-based
@@ -833,8 +834,8 @@ neighborhood, which may explain the differences in performance.
 This closes for now our contributions to analogical recommendation. We will
 come back to it in the conclusion of this chapter, and we will now focus on a
 somewhat unrelated problem: analogical proportion mining in databases. As we
-will see though, analogical recommendation can in fact be view as both a motivation
-and as a purpose for analogical proportion mining.
+will see though, analogical recommendation can in fact be view as both a
+motivation and as a purpose for analogical proportion mining.
 
 \section{Mining analogical proportions}
 
@@ -1153,7 +1154,11 @@ account.
 \subsection{Experiments and discussion}
 
 As previously indicated, we have considered the Movielens-100k dataset for our experiments: 100,000
-ratings in $[1, 5]$ from $1000$ users and $1700$ movies.
+ratings in $[1, 5]$ from $1000$ users and $1700$ movies. We will first treat
+ratings as numerical values, and then in the second part of this investigation
+we will binarize them.
+
+\subsubsection{Numerical ratings}
 
 For our purpose, we actually do not need to set a quality threshold $\beta$,
 which would be byt the way quite arbitrary. Instead, we will only be interested
@@ -1365,6 +1370,8 @@ $a:b::d:c$. This comes from the fact that these movies are often given similar
 90's and that have revieved pretty bad reviews from critics: they seem to be
 \textit{so bad it's good} kind.
 
+\subsubsection{Boolean ratings}
+
 To complete this investigation, have led the same experiments with binary
 ratings. The ratings of the MovieLens dataset have been binarized by
 associating the value $1$ if the a rating $\rui$ is above the user's average
@@ -1389,41 +1396,120 @@ still are the same is an argument in support of the coherence of the two
 quality functions.
 
 There are in total 993 candidate 4-itemsets. Figure
-\ref{FIG:quality_of_proportions} shows the quality of these 993 proportions in
+\ref{FIG:quality_proportions} shows the quality of these 993 proportions in
 descending order.
 \begin{figure}[!h]
 \centering
   \includegraphics[width=4in]{figures/quality_of_proportions.pdf}
-  \caption{Quality of the proportions}
+  \caption{Quality of the proportions 993 proportions. The quality of a
+  proportion is defined as the faction of components that make up perfect
+  proportions.}
 \label{FIG:quality_proportions}
 \end{figure}
 For the best proportions, a perfect analogy stands on more than 70\% of the
 components. This is quite significant as we are measuring this fraction over
 more than 200 components. However, we have seen that much of these proportions
 are not really interesting as all the common users tend to agree on the popular
-movies.
+movies, and the four movies of a proportion tend to be clustered into the same
+genre.
 
-We used another quality function: an analogy stands if the calssical analogy
-stands and if we have $a \neq b$ and $c \neq d$. Figure
-\ref{quality_proportions_different_ab_cd} gives us the fraction of correct
-proportions for the 993 potential analogies.
+To try to exhibit disagreements in the ratings, we used another quality
+function. We assign a truth value of $1$ to an analogy $r_1:r_2::r_3:r_4$ if
+and only if the proportion complies with one of the following patterns:
+\begin{itemize}
+  \item $0:1::0:1$,
+  \item $1:0::1:0$,
+  \item $0:0::1:1$,
+  \item $1:1::0:0$.
+\end{itemize}
+Simply put, we have forbidden the \textit{agreeding analogies} $0:0::0:0$ and
+$1:1::1:1$. Figure \ref{FIG:quality_proportions_different_ab_cd} gives us the
+fraction of correct proportions for the 993 potential analogies, using this
+custom quality function.
 \begin{figure}[!h]
 \centering
   \includegraphics[width=4in]{figures/quality_of_proportions_different.pdf}
-  \caption{Quality of the proportions}
+  \caption{Quality of the proportions 993 proportions. The quality of a
+  proportion is defined as the faction of components that make up perfect
+  proportions, forbidding patterns $0:0::0:0$ and $1:1::1:1$.}
 \label{FIG:quality_proportions_different_ab_cd}
 \end{figure}
 Obviously, the quality drops significantly because we have forbidden patterns
-like $r:r::r:r$. The only two available patterns are $r:r::r':r'$ and
-$r:r'::r:r'$, where $r$ and $r'$ can both take values $0$ and $1$.
-
-This tells us that there are not a lot of interesting analogies. And that all
-we're doing is mostly nearest neighbors stuff.
-
-
-Dire à la fin que bon, finalement les seules analogies convaincantes qu'on a
-trouvées c'était des analogies aaaa et donc uqi pouvaient se trouver par knn
-directmeent plutôt que de faire de l'analogie.
-
+like $r:r::r:r$. This tells us that in fact, there are simply not a lot of
+interesting analogies: the best proportion that we found is
+\textit{interesting} on less than 30\% of its components, which is quite small.
+This confirms our previous observation that sadly, most of the analogies we
+find tend to relate four movies that are actual \textbf{neighbors}.
 
 \section{Conclusion}
+
+In this chapter, we have detailed our contributions to the field of recommender
+systems. We have proposed two frameworks based on analogy for the design of
+rating prediction algorithms, and also proposed a method for mining analogical
+proportions.
+
+Section \ref{TODO} described our first attempt at building an analogy-based
+prediction algortihm for recommendation. This algorithm was a direct
+application of the analogical inference principle, and is strongly related to
+the extended classifier that we have described in Chapter \ref{TODO}. The basic
+underlying idea is that if four users $(a, b, c, d)$ are in analogy on their
+common items (using the arithmetic proportion), then it should also be the
+case for other items that $d$ has not yet rated. We presented a user-based view
+where analogies were considered between users, but it is perfectly possible to
+consider analogies between items.
+
+We have compared this algorithm with the two main approaches of collaborative
+filtering algorithms, namely neighborhood methods and matrix
+factorization-based techniques. Our algorithm yields decent accuracy compared
+to neighborhood methods, but is extremely expensive in computational resources.
+It was clear that this simple and straighforward application of the analogical
+inference principle could not be used in real-world settings, where computation
+time is a scarce resource.
+
+These observations led us to consider another framework for analogical
+recommendation. Acknowledging the fact that each user tends to have its very
+own idea of what a good (or bad) rating, we introduced the notion of clones
+which captures how two users tend to agree semantically on a rating. This
+semantic agreement is not necessarily reflected in the ratings: for $u$ 3 may
+be a good rating, while for $v$ it may be a bad one. We derived two algorithms
+relying on this clone-based view of the ratings. We also described a quite
+recent technique in collaborative filtering, that allows to address user and
+item biases. This method is based on the fact that some users tend to give
+higher ratings than other, and some items tend to be rated higher than some
+other items. We discussed how this view (using biases) related to our view
+(using clones), and pointed out the similarities and differences of the two
+approaches. It turns out that these two techniques are really close, and the
+resemblance is reflected in the algorithms performances. Yet, as the bias-based
+method relies on a global optimization problem, it tends to be better at
+capturing the overall noise in the data, and still outperforms our method. Our
+last contribution to analogical recommendation was to consider an extreme case
+of clone-users, considering that the rating scale $[1, 5]$ could be interpreted
+as purely ordinal. This topic did not produced promising results.
+
+In Section \ref{TODO}, we proposed an algorithm for the mining of analogical
+proportions in a partially described database. This general method perfectly
+applies to the problem of mining analogies between users or items in a rating
+dataset, such as the one we used in the two previous sections. Based on the
+Apriori algorithm, our method is inspired from the mining of association rules
+in databases and allows to extract the potential analogies in an efficient way.
+We proposed many different quality functions allowing to assess the quality of
+a proportion, and naturally some of the quality functions are strongly related
+to the Analogical Dissimilarity as defined in Chapter \ref{TODO}. We gave
+examples of some of the analogies that we found using different variations of
+the general mining algorithm, treating ratings as numerical values and as
+Boolean values. The main take-away message was that the best analogies that we
+found between items related users with similar tastes: the four movies of a
+proportion were mostly neighbors, in the sense that users tend to agree on
+their respective ratings. Also, the quality of the proportions were there was a
+disagreement in the ratings were pretty bad.
+
+This allows us to retrospectively interpret the results of our first
+analogy-based prediction algorithm. We saw that its performances were close to
+that of a neighborhood-based technique, but in the light of what has just been
+explained we can fairly say that there were no analogies to find in the
+database, except for those involving four neighbors. So afterall, our
+analogy-based inference principle was reduced to that of the classical $k$-NN
+approach. This is entirely dependent on the database that was used (in our
+case, the Movielens dataset), and we may still presume that there should exist
+a dataset were the use of analogical proportion is beneficial over a simple
+neighborhood approach.
