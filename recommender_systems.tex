@@ -14,11 +14,11 @@ recommendations.
 
 In this chapter, we will provide some background on recommender systems. We
 first provide a taxonomy of current research in the recommender systems area in
-Section \ref{SEC:taxonomy_rec_sys}, and set ourselve withing the collaborative filtering
+Section \ref{SEC:taxonomy_rec_sys}, and set ourselves withing the collaborative filtering
 framework. In Section \ref{SEC:saispas}, we formally define the recommendation problem
 that we will address in this document, and explain how to assess the quality of
 a recommender system. In Section
-\ref{SEC:neighborhood_and_matrix_facto_review}, we extensively desribe two
+\ref{SEC:neighborhood_and_matrix_facto_review}, we extensively describe two
 collaborative filtering methods: neighborhood-based algorithms, and matrix
 factorization-based techniques. These two families of algorithm will serve as
 baselines to which we will compare our own prediction algorithms in Chapter
@@ -27,7 +27,7 @@ baselines to which we will compare our own prediction algorithms in Chapter
 \section{Taxonomy of recommender systems}
 \label{SEC:taxonomy_rec_sys}
 
-Undoubtly, there are many different tasks that range among the general problem
+Undoubtedly, there are many different tasks that range among the general problem
 of recommendation. If they all share the ultimate goal of providing users with
 relevant recommendations, they greatly differ in nature by the items that are
 recommended, and by the technical means that are involved.
@@ -58,7 +58,7 @@ rely on a similarity metric whose nature strongly depends on the representation
 of the items. In large-scale online shopping systems were items are extremely
 diverse and abundant, a similarity measure between two items would be for
 example the number of web sessions on which the two item pages have jointly
-been visisted (yes, this is the reason why some online systems will try to sell
+been visited (yes, this is the reason why some online systems will try to sell
 you a fridge even though you just bought a brand new one). In systems were
 items are more homogeneous, i.e. in a movie store system, more  sophisticated
 approaches can be built relying on some metadata about the items (hence the
@@ -86,7 +86,7 @@ capture a very limited subset of item features, which are not necessarily the
 most important ones when it comes to the users personal tastes. Going back to
 our science fiction fan, it is very plausible that the user has a strong
 preference for the steampunk genre, and yet is perfectly indifferent to the
-superhero fiction movies, and both can still be considered as subgenres of
+superhero fiction movies, and both can still be considered as sub-genres of
 science fiction. A system that could not distinguish these two kinds of movies
 would fail to provide our steampunk fan with relevant recommendations.
 
@@ -118,7 +118,7 @@ to output a prediction. Thanks to this, they also allow to build systems that
 can deal with items of different natures. It is indeed plausible to imagine a
 collaborative filtering system recommending both books and movies, on the basis
 that users that love the same books usually like the same movies. As books and
-movies cannot be described using the same set of features (eventhough they are
+movies cannot be described using the same set of features (even though they are
 close), the use of content-based techniques would make the task much more
 difficult, or would again require largely hand-crafted work.
 
@@ -162,17 +162,17 @@ manner, and the systems tries to match these needs as best as possible to
 provide useful recommendations. According to \cite{FelBur08}, there exists two
 kinds of knowledge-based systems, that differ in the way recommendations are
 computed. The first category is made up of the \textbf{case-based} systems.
-Case-based recommenders obviously draw from research in case-base reasonning,
+Case-based recommenders obviously draw from research in case-base reasoning,
 described in Section \ref{TODO}, and computations are based on similarities:
 the system will try to recommend items that are similar to an ideal item
-expresseed by the user's needs. In
+expressed by the user's needs. In
 this respect, case-based recommenders are close to the aforementioned
 content-based systems. The second  kind of knowledge-based recommender are the
 so-called \textbf{constraint-based} systems (see \cite{FelFriJanZan11} for a complete
 review). In such systems, user and items are described
 by a set of properties, along with a set of constraints. In the car
-recommendation example, an item contraint could for example state that a
-convertible car should not posess a sunroof, and user constraint could state
+recommendation example, an item constraint could for example state that a
+convertible car should not possess a sunroof, and user constraint could state
 that the car color should not be green. The problem of recommending an item to
 a user then takes the form of a classical constraint satisfaction
 problem.
@@ -194,10 +194,10 @@ rating scales:
 
 \begin{itemize}
   \item It is quite common that  $\rui$ belongs to a \textbf{numerical} rating
-    scale. A typicall numerical scale is $[1, 5]$, where  5 means a strong
+    scale. A typical numerical scale is $[1, 5]$, where  5 means a strong
     preference for item $i$, 1 means a strong rejection, and 3 means
     indifference, or just an average.
-  \item A subcase of the previous scale is the \textbf{binary} rating scale,
+  \item A sub-case of the previous scale is the \textbf{binary} rating scale,
     where ratings belong to $[0, 1]$. In this case, we associate the value $0$
     with the meaning \textit{dislike} and the value $1$ with the meaning
     \textit{like}.
@@ -207,10 +207,10 @@ rating scales:
     the absence of rating.
   \item Sometimes, the rating scale can be considered as \textbf{ordinal},
     where the elements of the scale have no absolute meaning and are only
-    meaninful when compared to others, i.g. $[$\textit{reject, indifference,
+    meaningful when compared to others, i.g. $[$\textit{reject, indifference,
     agreement}$]$.
 \end{itemize}
-In practice, these semmantic disctinctions are purely contextual: a rating
+In practice, these semantic distinctions are purely contextual: a rating
 scale $[1, 5]$ rating scale could perfectly be interpreted as purely numerical,
 or conversely as purely ordinal. This observation has been addressed for
 example in \ref{KorSillRECSYS11}, and will also be discussed here in Section
@@ -220,7 +220,7 @@ scale.
 
 Ratings may be collected in different ways, and we distinguish explicit and
 implicit ratings. \textbf{Explicit} ratings are those for which users have
-explicitely expressed their preference towards the items. \textbf{Implicit}
+explicitly expressed their preference towards the items. \textbf{Implicit}
 ratings belong to a binary or unary scale, and correspond to the result of
 collected data about users behaviour, without any active involvement. For
 example, if a user has listened to a given track more than 10 times, we might
@@ -231,7 +231,7 @@ ratings was extended to deal with implicit ratings, which improved the RMSE of
 the system (defined later) by a great deal. When no implicit ratings are
 available, the same authors showed that the simple modeling of implicit ratings
 as $r_{ui}' = 1 \iff r_{ui} \in R$ led to significant improvements. Here,
-$r_{ui}'$ is an implicite rating stating that $u$ has rated $i$, regardless of
+$r_{ui}'$ is an implicit rating stating that $u$ has rated $i$, regardless of
 the rating value.
 
 In our work, we will mostly focus on the explicit and numerical rating scheme.
@@ -266,7 +266,7 @@ When using a unary or binary rating scale, these two stages are usually
 indistinguishable: it is natural to recommend an item to a user if the
 estimated predicted rating is $1$. In practice, the recommendation strategy
 depends a lot on the pragmatic constraints of the system: a store manager way
-want to push forward a given item to boost its sellings, regardless of the
+want to push forward a given item to boost its sells, regardless of the
 rating predictions outputted by the algorithm. As a result, most of the
 research has focused on the prediction algorithms, and so will we. Note also
 that this view is only meaningful for non-ordinal rating scale. When the output
@@ -277,7 +277,7 @@ Prediction algorithms implementations are strongly influenced by the fields of
 data mining and of course machine learning. However, we want to emphasize that
 the general setting of recommender systems is actually quite different than
 that of classification or regression, the two main prediction tasks of machine
-learning. A naïve reasoning could lead us to consider that the rating
+learning. A naive reasoning could lead us to consider that the rating
 prediction problem with the rating scale $[1, 5]$ is nothing but a
 classification task with five classes $1, 2, 3, 4, 5$. But this is forgetting
 that the values $1, 2, 3, 4, 5$ are actually ordinal, and that the difference
@@ -291,7 +291,7 @@ end up with instances that are only (very) partially described, because of
 course no user has rated the whole set of items. All the more, as the number of
 items is usually very high, we would end up with a very high dimensional
 problem, where traditional learning algorithms tend to fail due to the
-so-called curse of dimentionality. Our point here is that recommender systems
+so-called curse of dimensionality. Our point here is that recommender systems
 problems do not really fit within the traditional machine learning setting, and
 represent a new setting in their own right.
 
@@ -304,9 +304,9 @@ Providing an accurate measure of the overall quality of a recommender system is
 not a simple task and diverse viewpoints have to be considered.
 
 We can distinguish three main evaluation settings. The first one is to perform
-\textbf{user studies}, where actual users are asked to interact with a given sytem and to
+\textbf{user studies}, where actual users are asked to interact with a given system and to
 provide some feedback. This evaluation process is probably the one that allows
-to best capture users need, because feedback is explicitely given. Naturally,
+to best capture users need, because feedback is explicitly given. Naturally,
 this is also the most expensive kind of experiment to conduct, because it
 requires a lot of user time. The second evaluation setting is to perform online
 studies. In its most simple form, this is equivalent to A/B testing: to see
@@ -376,7 +376,7 @@ are sometimes used in order to provide a more informed view.
 Precision and recall help measuring the ability of a system to provide relevant
 recommendations, and are therefore indicators of the performance of the
 recommendation strategy $S$. They are defined by means of the number of true
-postives, true negatives, false positives and false negatives. As such, they
+positives, true negatives, false positives and false negatives. As such, they
 are mostly used in an implicit rating scheme (or at least with binary rating
 scales), but they can also be used when the rating scale is gradual. In this
 latter case, the recommendation strategy has to be clearly defined.
@@ -457,7 +457,7 @@ propose two definitions:
 \end{itemize}
 
 The overall capacity of a recommender to surprise its users can be defined as
-the mean of all the surprise values for each perdiction. Because they are
+the mean of all the surprise values for each prediction. Because they are
 defined using the pointwise mutual information, the \textbf{lower} the values
 of $\surpmax$ and $\surpavg$, the most \textit{surprising} the recommendations.
 
@@ -466,7 +466,7 @@ of $\surpmax$ and $\surpavg$, the most \textit{surprising} the recommendations.
 
 There are  many other measures that can assess the performances of a
 recommender system (see \cite{ShaGun11} for an extensive survey). We can cite
-for example \textbf{trust} which characterises the confidence that a user would
+for example \textbf{trust} which characterizes the confidence that a user would
 put into a recommendation, or also \textbf{diversity} that evaluates how
 various recommendation are distinct from each others.  Unfortunately these
 dimensions are actually a lot harder to assess in an off-line setting, and
@@ -555,7 +555,7 @@ metadata about the items, as items where represented as vectors of ratings.
 
 The choice between user-based or item-based recommendation mainly depends on
 the system at hand. When the number of users is high with regard to the number
-of items, computing similarities between items can help saving memmory and
+of items, computing similarities between items can help saving memory and
 computation time, but it is also important to assess the potential number of
 neighbors for any given $u$ or $i$: it is always more desirable to compute
 similarities over a high number of ratings. Also, item-based methods are
@@ -757,7 +757,7 @@ eigenvalues are the squared entries of $\Sigma$, called the singular values
 
 The key point is that the columns of $U$ are actually an orthonormal basis for
 the column space of $R$, and the columns of $I$ are an orthonormal basis for the
-row space of $R$. Maybe this statement is worth some explaination. The column
+row space of $R$. Maybe this statement is worth some explanation. The column
 space of $R$ is the vector space that is spanned by the $n$ columns or $R$,
 i.e. the set of vectors that are a linear combination of the columns of $R$. As
 some of the columns of $R$ may be linearly dependent, this vector space is of
@@ -773,7 +773,7 @@ columns of $U$ are orthonormal, each column has a unique contribution that
 cannot be compensated by the others. Symmetrically, \textbf{any row of $R$ is a
 linear combination of the columns of $I$.} What does it have to do with our
 recommendation problem? Imagine for a moment that $R$ is a dense rating matrix,
-where the rows reprensent items and the columns reprensent users:
+where the rows represent items and the columns represent users:
 $$
 R = \begin{blockarray}{cccc}
   \text{Alice} & \text{Bob} & \text{Charlie} \\
@@ -812,7 +812,7 @@ to build up Titanic, Toy Story, etc\dots We can consider each vector $I_i$
 to be some sort of idealized movie type, for example $I_1$ is a typical action
 movie, while $I_2$ would be a typical romantic movie, etc. Similarly, the
 $U_i$'s can be viewed as some idealized critics, with specific tastes toward
-some kind of movies. Obviously in practice, there is no way to assoociate a
+some kind of movies. Obviously in practice, there is no way to associate a
 clear semantic meaning to the different $U_i$ or $I_i$, and the way they are
 defined highly depends on the matrix $R$.
 
@@ -863,13 +863,13 @@ team who ended up winning the contest.
 
 The appeal of this basic approach does not only lie in its link to SVD, but
 also because it is easily extendable. It was later improved and theoretically
-studied in many ways, for example by incorportating user and items biases
+studied in many ways, for example by incorporating user and items biases
 \ref{TODO} (which we will further detail later in Section \ref{TODO}), by
-adding the abaility to incorporate implicit ratings along with explicit ones,
-or by adding some time-dependend features, taking into account items popularity
+adding the ability to incorporate implicit ratings along with explicit ones,
+or by adding some time-dependent features, taking into account items popularity
 over time \ref{TODO}. Also in \ref{TODO}, a model combining matrix
 factorization techniques and neighborhood approaches was proposed. For a
-complete overview mixing all previsouly mentioned methods, see
+complete overview mixing all previously mentioned methods, see
 \ref{TODORefChapitreBouquin}
 
 In \ref{TODO}, the matrix factorization we just saw was studied from a Bayesian
@@ -899,7 +899,7 @@ SGD is an iterative optimization process where the value of $\theta$ is updated
 using the following rule: $\theta = \theta - \alpha \frac{\partial
 L_k}{\partial \theta}$ where $\alpha$ the learning rate (or stepsize). This
 update is performed over all $k$' for a given number of times. Various
-theoretical guanrantees about the convergence of this algorithm have been
+theoretical guarantees about the convergence of this algorithm have been
 derived, that obviously depend on the stepsize and on some regularity
 conditions on the loss function $L$: see for example  for a recent overview
 \cite{BotCurNoc16}.
