@@ -15,9 +15,9 @@ recommendations.
 In this chapter, we will provide some background on recommender systems. We
 first provide a taxonomy of current research in the recommender systems area in
 Section \ref{SEC:taxonomy_rec_sys}, and set ourselves withing the collaborative filtering
-framework. In Section \ref{SEC:saispas}, we formally define the recommendation problem
-that we will address in this document, and explain how to assess the quality of
-a recommender system. In Section
+framework. In Section \ref{SEC:recommendation_rating_prediction}, we formally
+define the recommendation problem that we will address in this document, and
+explain how to assess the quality of a recommender system. In Section
 \ref{SEC:neighborhood_and_matrix_facto_review}, we extensively describe two
 collaborative filtering methods: neighborhood-based algorithms, and matrix
 factorization-based techniques. These two families of algorithm will serve as
@@ -71,7 +71,7 @@ rated by anybody can still be recommended. This is not the case for a new user
 though: as we have no information about the items this user may like, a
 content-based recommender would not be able to output any prediction. These
 techniques also stand out by their explanatory potential: the motto
-\textit{Here are some items that are akin to those you liked} is perfectly
+\textit{here are some items that are akin to those you liked} is perfectly
 understandable and seems sound.  Recommender systems usually strive for
 explanatory power, because it is recognized that when confronted with a given
 recommendation users are more likely to accept the recommendation is they
@@ -95,7 +95,8 @@ overfit and recommend only items that users may already know or do not need
 anymore (such as a fridge!). The recommendations tend to lack in novelty,
 surprise and diversity. Also, content-based systems tend to output much less
 accurate prediction than the collaborative filtering methods (the way accuracy
-is computed will be described in Section \ref{TODO}).
+is computed will be described in Section
+\ref{SEC:Recommender_system_evaluation}).
 
 \subsection{Collaborative filtering}
 
@@ -107,20 +108,20 @@ recommendation based on the behaviour of their peers.
 
 Probably the most common way of modeling the social environment of a user is to
 use historical transaction stored in the system, for example using user-item
-ratings: two users are peers if their ratings are similar. For example if Bob
-and Alice usually agree on their movie ratings, i.e. they like the same movies
-and dislike the same movies, if Alice has not seen a movie that Bob has liked,
+ratings: two users are peers if their ratings are similar. If Bob and Alice
+usually agree on their movie ratings, i.e. they like the same movies and
+dislike the same movies, and if Alice has not seen a movie that Bob has liked,
 then it will be recommended to Alice.
 
 A main advantage of collaborative filtering methods over content-based ones is
-that they do not require any item or user knowledge: only user-item feedback is needed
-to output a prediction. Thanks to this, they also allow to build systems that
-can deal with items of different natures. It is indeed plausible to imagine a
-collaborative filtering system recommending both books and movies, on the basis
-that users that love the same books usually like the same movies. As books and
-movies cannot be described using the same set of features (even though they are
-close), the use of content-based techniques would make the task much more
-difficult, or would again require largely hand-crafted work.
+that they do not require any item or user knowledge: only user-item feedback is
+needed to output a prediction. Thanks to this, they also allow to build systems
+that can deal with items of different natures. It is indeed plausible to
+imagine a collaborative filtering system recommending both books and movies, on
+the basis that users that love the same books usually like the same movies. As
+books and movies cannot be described using the same set of features (even
+though they are close), the use of content-based techniques would make the task
+much more difficult, or would again require largely hand-crafted work.
 
 The main advantage of collaborative filtering methods is also its main
 weakness. Before they can become effective, these systems require a serious
@@ -130,9 +131,9 @@ is no way to yield recommendations for new users that have no known ratings,
 and the same goes for new items that nobody has rated.
 
 All the recommendation algorithms that we will propose in this document are of
-a collaborative nature. Section \ref{TODO} will be devoted to an overview of
-two main collaborative techniques: the neighborhood approach and matrix
-factorization-based methods.
+a collaborative nature. Section \ref{SEC:neighborhood_and_matrix_facto_review}
+will be devoted to an overview of two main collaborative techniques: the
+neighborhood approach and matrix factorization-based methods.
 
 \subsection{Knowledge-based systems}
 
@@ -182,14 +183,19 @@ systems are quite general and vague, but the fact remains that practical
 implementation of such systems are so domain-dependent that is is difficult to
 exhibit a clear unifying framework that would still be accurate.
 
-\section{sais pas}
-\label{SEC:saispas}
+\section{Recommendation by rating prediction}
+\label{SEC:recommendation_rating_prediction}
+
+In this section, we formally define the problem of recommendation that we plan
+to address later in Chapter \ref{CHAP:analogical_recommendation}. We also
+describe how to assess the quality of a recommender system.
+
 \subsection{Problem formalization and notation}
 Let $U$ be a set of users and $I$ a set of items. For some pairs $(u,i) \in U
 \times I$, a rating  $\rui$ is supposed to have been given by $u$ to express
 its preferences towards the item $i$. The way the preferences are expressed
 depend on the rating scale that is used, which can be of different nature.
-According to \ref{SchFraHerSen07}, we can distinguish four different kinds of
+According to \cite{SchFraHerSen07}, we can distinguish four different kinds of
 rating scales:
 
 \begin{itemize}
@@ -213,8 +219,8 @@ rating scales:
 In practice, these semantic distinctions are purely contextual: a rating
 scale $[1, 5]$ rating scale could perfectly be interpreted as purely numerical,
 or conversely as purely ordinal. This observation has been addressed for
-example in \ref{KorSillRECSYS11}, and will also be discussed here in Section
-\ref{TODO}. However, the rating scale is a decisive component of a recommender
+example in \cite{KorSillRECSYS11}, and will also be discussed here in the next
+chapter. However, the rating scale is a decisive component of a recommender
 system, and algorithms are usually designed to work with only one single rating
 scale.
 
@@ -226,13 +232,13 @@ collected data about users behaviour, without any active involvement. For
 example, if a user has listened to a given track more than 10 times, we might
 consider this as an implicit rating of $1$. The ability to deal with both
 explicit and implicit ratings can lead to significant improvements for a
-recommender system. In \ref{TODO}, a model using only explicit numerical
-ratings was extended to deal with implicit ratings, which improved the RMSE of
-the system (defined later) by a great deal. When no implicit ratings are
-available, the same authors showed that the simple modeling of implicit ratings
-as $r_{ui}' = 1 \iff r_{ui} \in R$ led to significant improvements. Here,
-$r_{ui}'$ is an implicit rating stating that $u$ has rated $i$, regardless of
-the rating value.
+recommender system. In \cite{KorSillRECSYS11}, a model using only explicit
+numerical ratings was extended to deal with implicit ratings, which improved
+the RMSE of the system (defined later) by a great deal. When no implicit
+ratings are available, the same authors showed that the simple modeling of
+implicit ratings as $r_{ui}' = 1 \iff r_{ui} \in R$ led to significant
+improvements. Here, $r_{ui}'$ is an implicit rating stating that $u$ has rated
+$i$, regardless of the rating value.
 
 In our work, we will mostly focus on the explicit and numerical rating scheme.
 Let us denote by $R$ the set of known ratings recorded in the system. In real
@@ -366,8 +372,9 @@ serious, because the corresponding item would not have been recommended anyway.
 A related concern is that when using a suitable loss function, some algorithms
 can have a great RMSE score while still having no recommendation power, i.e.
 the recommendations would be the same of all the users \cite{KorSillRECSYS11}.
-As we will see, in Section \ref{TODO}, a simple baseline predictor that has no
-recommendation power still can outperform the RMSE of many other approaches.
+As we will see, in Section \ref{SEC:experiments_clone}, a simple baseline
+predictor that has no recommendation power still can outperform the RMSE of
+many other approaches.
 
 To better reflect the user-system interaction, other precision-oriented metrics
 are sometimes used in order to provide a more informed view.
@@ -484,6 +491,7 @@ factorization techniques whose groundings come from linear algebra and that
 lead to elegant and accurate models.
 
 \subsection{The neighborhood approach}
+\label{SEC:neighborhood_approach}
 
 \subsubsection{Prediction framework}
 
@@ -564,6 +572,7 @@ easier to explain how two items relate to each other rather than involving
 other users that $u$ does not even know.
 
 \subsubsection{The similarity measures}
+\label{SEC:similarity_measures}
 
 There are many, many ways to define the similarity metric between two users.
 Probably the most common one is the cosine similarity.
@@ -711,18 +720,19 @@ technique, which models the data in a significantly different (but meaningful!)
 way: matrix factorization techniques.
 
 \subsection{Matrix factorization techniques}
+\label{SEC:matrix_facto}
 
 About ten years ago, the Netflix company organized a competition where the goal
-was to improve the RMSE (defined in Section \ref{TODO}) of their standard
-prediction algorithm by $10\%$. The challenge quickly became very popular, not
-only because the winning prize was of \$1 million, but also because the dataset
-was orders of magnitude larger than any other available dataset at the time:
-about 100 million ratings from 480.000 users and 17.700 movies. Unfortunately, the
-dataset is no longer publicly available, but the challenge led to the emergence
-of many successful recommendation techniques, among which matrix factorization
-methods clearly stand out. Let's be honest: the author of this document has a
-crush on matrix factorization techniques, and as a consequence they will be
-thoroughly detailed.
+was to improve the RMSE of their standard prediction algorithm by $10\%$. The
+challenge quickly became very popular, not only because the winning prize was
+of \$1 million, but also because the dataset was orders of magnitude larger
+than any other available dataset at the time: about 100 million ratings from
+480.000 users and 17.700 movies. Unfortunately, the dataset is no longer
+publicly available, but the challenge led to the emergence of many successful
+recommendation techniques, among which matrix factorization methods clearly
+stand out. Let's be honest: the author of this document has a crush on matrix
+factorization techniques, and as a consequence they will be thoroughly
+detailed.
 
 The matrix factorization approach we will describe here is heavily inspired by
 the Singular Value Decomposition (SVD) of a matrix, one of the highlights of
@@ -849,7 +859,8 @@ $$
 
 But what happens in a recommendation setting, where the matrix $R$ is extremely
 sparse? The SVD of $R$ is not even properly defined! One of the main
-contribution during the Netflix competition was made by Simon Funk, who
+contribution during the Netflix competition was made by Simon Funk in a blog
+post\footnote{http://sifter.org/~simon/journal/20061211.html}, who
 empirically showed that we should actually just not care that the matrix $R$ is
 sparse, and still solve the same optimization problem only on the known
 ratings.  When $R$ is sparse, the problem is not convex in both $p_u$ and $q_i$
@@ -864,15 +875,16 @@ team who ended up winning the contest.
 The appeal of this basic approach does not only lie in its link to SVD, but
 also because it is easily extendable. It was later improved and theoretically
 studied in many ways, for example by incorporating user and items biases
-\ref{TODO} (which we will further detail later in Section \ref{TODO}), by
-adding the ability to incorporate implicit ratings along with explicit ones,
-or by adding some time-dependent features, taking into account items popularity
-over time \ref{TODO}. Also in \ref{TODO}, a model combining matrix
+\cite{KorACM2010} (which we will further detail later in Section
+\ref{SEC:current_advances_neighborhood_techniques}), by adding the ability to
+incorporate implicit ratings along with explicit ones \cite{KorACM2010}, or by
+adding some time-dependent features, taking into account items popularity over
+time \cite{Kor09}. Still in \cite{KorACM2010}, a model combining matrix
 factorization techniques and neighborhood approaches was proposed. For a
 complete overview mixing all previously mentioned methods, see
-\ref{TODORefChapitreBouquin}
+\cite{KorBel11} or \cite{KorBelVol09}.
 
-In \ref{TODO}, the matrix factorization we just saw was studied from a Bayesian
+In \cite{SalMni07}, the matrix factorization we just saw was studied from a Bayesian
 perspective, and was named Probabilistic Matrix Factorization (PMF), leading to
 the following regularized least squares problem:
 
