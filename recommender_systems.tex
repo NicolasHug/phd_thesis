@@ -385,7 +385,7 @@ relying on an optimization process
 can have a great RMSE score while still having no recommendation power.
 As we will see, in Section \ref{SEC:experiments_clone}, a simple baseline
 predictor  can outperform the RMSE of many other approaches, and yet this
-algortihm has absolutely no recommendation power: the recommendations that it
+algorithm has absolutely no recommendation power: the recommendations that it
 outputs are the same of all the users.
 
 To better reflect the user-system interaction, other precision-oriented metrics
@@ -538,7 +538,7 @@ weighted by the similarity between $u$ and $v$:
 The estimation process of the neighborhood approach is described in Algorithm
 \ref{ALGO:neighborhood_prediction}.  Obviously, the training stage only needs
 to be done once. Then, the
-similarities can be reused for futur predictions.
+similarities can be reused for future predictions.
 
 \begin{algorithm}[!ht]
  \caption{The neighborhood recommender.}
@@ -802,9 +802,9 @@ of $I$, which span the row space of $R$.
 
 A particular case of this general statement is that \textbf{any column of $R$
 can be expressed as a unique linear combination of the columns of $U$}. In
-fact, we already know that for any matrices $A$ and $B$, the columns of $AB$ are
+fact, we already know that for any matrix  $AB = A \times B$, the columns of $AB$ are
 linear combinations of the columns of A (and the rows of $AB$ are linear
-combinations of the rows of $B$). The key point here is that the columns $U_i$
+combinations of the rows of $B$). But the key point here is that the columns $U_i$
 actually span the whole column space of $R$. As the
 columns of $U$ are orthonormal, each column has a unique contribution that
 cannot be compensated by the others. Symmetrically, \textbf{any row of $R$ is a
@@ -843,22 +843,56 @@ columns of $I$ (i.e. the lines of $I^t$).
 When we compute the SVD of $R$, we find in the columns of $U$ some
 \textit{prototype} users that have no real existence, but that can be combined
 (linearly) to build up any of the users: Alice, Bob and Charlie are linear
-combinations of $U_1, U_2, \dots U_r$.  Similarly, the columns of $I$ are
+combinations of $U_1, U_2, \dots U_r$. Also, any linear combination of Alice,
+Bob and Charlie can be expressed as a linear combination of the $U_i$. Similarly, the columns of $I$ are
 \textit{prototype} movies that do not properly exist but that can be combined
-to build up Titanic, Toy Story, etc\dots We can consider each vector $I_i$
+to build up Titanic, Toy Story, etc., and any of their linear combinations. We can consider each vector $I_i$
 to be some sort of idealized movie type, for example $I_1$ is a typical action
-movie, while $I_2$ would be a typical romantic movie, etc. Similarly, the
-$U_i$'s can be viewed as some idealized critics, with specific tastes toward
-some kind of movies. Obviously in practice, there is no way to associate a
-clear semantic meaning to the different $U_i$ or $I_i$, and the way they are
-defined highly depends on the matrix $R$.
+movie, while $I_2$ would be a typical romantic movie, etc. Take the example of
+Titanic, which is an \textit{action-packed romance} movie. Thanks to the SVD,
+we can express Titanic  as a linear combination $\alpha_1 \cdot I_1 + \alpha_2
+\cdot I_2 + \cdots + \alpha_r \cdot I_r$, and as $I_1$ and $I_2$ represent
+typical action and romantic movies, the values $\alpha_1$ and $\alpha_2$
+will be high. Also, if
+$I_3$ is a typical science-fiction movie, $\alpha_3$ should be fairly low (or
+even negative) for Titanic. The magic of SVD is that all these coefficients (or factors)
+are automatically derived from the matrix $R$.
 
-Moving further, each rating $\rui \in R$ is defined as a dot product $\rui =
+Similarly, the $U_i$'s can be viewed as some idealized critics, with specific
+tastes toward some particular kind of movies. Obviously in practice, there is
+no way to associate a clear semantic meaning to the different $U_i$ or $I_i$,
+and the way they are defined only depends on the matrix $R$.
+
+Moving further, let's now focus on the meaning of a single rating $r_{ui}$.
+Each $\rui \in R$ is defined as a dot product $\rui =
 {q_i}^t \cdot p_u$, where $q_i \in \mathbb{R}^r$ is a row in $U$ and represents
-the item $i$, and $p_u \in \mathbb{R}^r$ is a column in $I$ and represents the
-user $u$. We can now understand that, \textbf{$p_u$ represents how well $u$
+the item $i$, and $p_u \in \mathbb{R}^r$ is a column in $I^t$ and represents the
+user $u$. We can now understand that \textbf{$p_u$ represents how well $u$
 agrees with each of the $r$ prototype movies, and $q_i$ represents how well $i$
 suits the tastes of the $r$ prototype users}.
+
+As an example, let us consider the rating of Charlie for Titanic. We will
+assume that the rank $r$ is $3$ and that the three movies types are
+\textit{Action}, \textit{Romance}, and \textit{Science fiction}. Charlie is a
+guy who loves action movies and likes romantic movies, but does not like
+science fiction at all. The two vectors $p_u$ and $q_i$ are described in Table
+\ref{TAB:Charlie_Titanic}, and the rating $r_{ui}$ is high because Titanic
+has all the attributes (or factors) that Charlie likes\footnote{These values
+are completely arbitrary and obviously are not necessarily those that would
+appear in the true SVD of $R$.}.
+
+\begin{table}[h!] \centering \begin{tabular}{ l   c  c  c }
+\toprule
+    & Action & Romance & Science fiction\\
+  \midrule
+    Titanic $q_i$ & 1 & 3 & 0\\
+    Charlie $p_u$ & 2 & 1 & -1\\
+\bottomrule
+\end{tabular}
+  \caption{Charlie's rating for Titanic is ${q_i}^t \cdot p_u = 1 \cdot 2 + 3
+  \cdot 1 + 0 \cdot (-1) = 5$.}
+\label{TAB:Charlie_Titanic}
+\end{table}
 
 \subsubsection{Application to recommendation}
 
@@ -873,13 +907,15 @@ prediction $\predrui$ is calculated as the dot product of the two vectors $p_u$
 and $q_i$:
 $$\predrui = {q_i}^t \cdot p_u.$$
 
-Once the number of factors $f$ is set, the problem is here to estimate the
+Once the number of factors $f$ is set\footnote{$f$ must be lower than or equal
+to the rank $r$. When $f < r$ we end up with a \textbf{low-rank} approximation
+of the matrix $R$.}, the problem is here to estimate the
 vectors $p_u$ and $q_i$ for every possible user and item. We saw that when the
-matrix $R$ is dense (i.e. there is no unknown entry), there exists an analytic
+matrix $R$ is dense (i.e. when  there is no unknown entry), there exists an analytic
 solution for computing the two matrices $U$ and $I$. An equivalent solution is
 to solve the following minimization problem\footnote{From then on we will abuse
 notation and use $R$ either as a matrix (sparse or dense) and as a rating
-dataset as defined in Section \ref{TODO}.}:
+dataset as defined in Section \ref{SEC:recommendation_rating_prediction}.}:
 $$
 \sum_{\rui \in R} \left(\rui - {q_i}^t \cdot p_u \right)^2.
 $$
@@ -889,22 +925,23 @@ sparse? The SVD of $R$ is not even properly defined! One of the main
 contribution during the Netflix competition was made by Simon Funk in a blog
 post\footnote{http://sifter.org/~simon/journal/20061211.html}, who
 empirically showed that we should actually just not care that the matrix $R$ is
-sparse, and still solve the same optimization problem only on the known
+sparse, and still solve the same optimization problem only using the known
 ratings.  When $R$ is sparse, the problem is not convex in both $p_u$ and $q_i$
 so this optimization will only lead to a local minimum,
-but this solution turned out very efficient in practice. Before that,
+but this method turned out very efficient in practice. Before that,
 techniques usually involved  a preliminary step where the matrix $R$ was filled
-using some heuristic, in order to have a fully defined problem. Funk's
+using some heuristic, in order to have a fully defined problem
+\cite{SarKarKonRie00}. Funk's
 contribution led him to the top 10 competitors of the Netflix competition at
 the time, and was heavily used by other competing teams, including the BelKor
-team who ended up winning the contest.
+team who ended up winning the contest \cite{Kor09}.
 
-The appeal of this basic approach does not only lie in its link to SVD, but
+The appeal of this basic approach does not only rest upon its link to SVD, but
 also because it is easily extendable. It was later improved and theoretically
 studied in many ways, for example by incorporating user and items biases
 \cite{KorACM2010} (which we will further detail later in Section
 \ref{SEC:current_advances_neighborhood_techniques}), by adding the ability to
-incorporate implicit ratings along with explicit ones \cite{KorACM2010}, or by
+incorporate implicit ratings along with explicit ones \cite{Pat07, KorACM2010}, or by
 adding some time-dependent features, taking into account items popularity over
 time \cite{Kor09}. Still in \cite{KorACM2010}, a model combining matrix
 factorization techniques and neighborhood approaches was proposed. For a
@@ -919,13 +956,14 @@ $$
 \sum_{\rui \in R} \left(\rui - {q_i}^t \cdot p_u \right)^2 +
 \lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right),
 $$
-where $\lambda$ is a regularization term that corresponds to \todo{what}. When
-$R$ is a dense matrix with no unknown entry (and when $\lambda$ is null), the
-solution of this optimization problem exactly corresponds that of the SVD.  Not
-surprisingly, stochastic gradient descent (SGD) tend to perform really well on
-this task and is quite simple to implement. Because we have already talked too
-much about matrix factorization, and because a few lines more won't hurt, we
-now propose to derive the associated SGD algorithm.
+where $\lambda$ is a regularization term. When
+$R$ is a dense matrix with no unknown entry (and when $\lambda$ is zero), the
+solution of this optimization problem exactly corresponds that of the SVD,
+provided that $f=r$. Not
+surprisingly, stochastic gradient descent (SGD) tend to perform really well
+when it comes to the solving of this problem, and is quite simple to implement.
+We have already talked too much about matrix factorization, but a few lines
+more won't hurt so now propose to derive the associated SGD algorithm.
 
 \subsubsection{Optimization by Stochastic Gradient Descent}
 
@@ -940,8 +978,8 @@ L_k}{\partial \theta}$ where $\alpha$ the learning rate (or stepsize). This
 update is performed over all $k$' for a given number of times. Various
 theoretical guarantees about the convergence of this algorithm have been
 derived, that obviously depend on the stepsize and on some regularity
-conditions on the loss function $L$: see for example  for a recent overview
-\cite{BotCurNoc16}.
+conditions on the loss function $L$: see \cite{BotCurNoc16} for a recent
+overview.
 
 As far as we are concerned, our loss function is
 $$
@@ -970,7 +1008,7 @@ solved by following Algorithm \ref{ALGO:matrix_facto_sgd}.
 
          \STATE {\bf Input}: A set of ratings $R$, a learning rate $\alpha$, a
          regularization penalty $\lambda$ and a number of iterations $n$.
-         \STATE {\bf Output}: $p_u$ and $q_i$, the user and item biases.
+         \STATE {\bf Output}: $p_u$ and $q_i$, the user and item factors.
          \STATE {\it Initialization:}
          \STATE Randomly initialize $p_u$ and $q_i$
          \FOR{$\text{iteration} \in [1, n]$}
@@ -989,7 +1027,4 @@ classical least squares methods. The idea is then to first consider all $q_i$
 as constants and solve the associated linear problem. Then, the $p_u$ are
 considered constant and the associated problem is solved. Repeating these steps
 an arbitrary number of time will also converge to a local solution, and this
-methods is known as Alternating Least Squares.
-
-\todo{Mettre des refs}
-
+methods is known as Alternating Least Squares \cite{BelKor07}.
