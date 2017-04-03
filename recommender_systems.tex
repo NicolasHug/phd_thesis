@@ -46,7 +46,7 @@ recommenders.
 
 \subsection{Content-based techniques}
 
-The general idea of content-based algorithms is as follows: they try to recommender to a user some items that are
+The general idea of content-based algorithms is as follows: they try to recommend to a user some items that are
 \textbf{similar} to those that the user has liked in the past. For example, if
 the renting history of a user mainly contains science fiction movies, the aim
 of the system is to learn these preferences and to recommend some other science
@@ -327,7 +327,7 @@ requires a lot of user time. The second evaluation setting is to perform online
 studies. In its most simple form, this is equivalent to A/B testing: to see
 which of the two versions of our recommender performs better, we provide some
 users with the first version and some other users with the second version. We
-can then assess the change in performance between the two version and decide
+can then assess the change in performance between the two versions and decide
 which one is the most suitable for our needs.
 
 Finally, the last available option to evaluate recommender systems is to
@@ -456,7 +456,7 @@ Users expect a recommender system to be surprising: recommending an extremely
 popular item is not really helpful. Be warned though: surprise is one of the
 most difficult notions to grasp, especially when it comes to assess it with
 numerical measures. Following the works of \cite{KamBriRecSys2014}, we will
-define the surprise associated with a recommendation can be evaluated with the
+here define the surprise associated with a recommendation with the
 help of the pointwise mutual information (PMI). The PMI between two items $i$
 and $j$ is defined as follows:
 $$\text{PMI}(i, j) \eqdef -\log_2 \frac{P(i, j)}{P(i)P(j)} / \log_2 P(i, j),$$
@@ -568,8 +568,8 @@ similarities can be reused for future predictions.
 \end{algorithm}
 
 We need here to make an important point: instead of recommending an item to a
-user, we could perfectly recommend a user to an item, which is exactly the
-same. The prediction $\predrui$ would be the exact counterpart of the one we
+user, we could perfectly recommend a user to an item, which is a symmetric and
+equivalent point of view. The prediction $\predrui$ would be the exact counterpart of the one we
 described above, but instead of considering similarities between users, we
 would compute similarities between items:
 $$\predrui = \frac{\sum\limits_{j \in N_u^k(i)} r_{uj} \cdot \ssim(i, j)}

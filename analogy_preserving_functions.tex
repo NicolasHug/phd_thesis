@@ -1,26 +1,106 @@
 \chapter{Analogy-preserving functions}
 
-\cite{HugPraRicSerECAI16} have proved that this kind of analogical
-classification process can be formalized via two conceptual steps: first an
-{\it analogical  extension} of the training set is performed (as detailed in
-Section \ref{analogy}), and then a $k$-NN-like algorithm is applied to this
-extended training set.  As expected, the accuracy of the analogical classifier
-greatly depends on the quality of the extension. In this  paper, we introduce
-the class of Analogy Preserving (AP) functions which ensure an error-free
-extension.
+\initial{W}e first introduced the analogical inference principle in Chapter
+\ref{CHAP:formal_analogical_proportions}. This principle states that if four
+elements are in analogy, then their classes (or any relevent attribute) should
+also be in proportion. This is of course an unsound inference principle, in
+that the conclusion does not always follows from the premices. Nonetheless, we
+have seen in Chapter \ref{CHAP:functional_definition} that it can still be used to
+design classifiers, that we have named conservative and extended classifiers.
+Both in \cite{BayMicDelIJCAI07} and in our experiment section (Section
+\ref{SEC:experiments_and_empirical_validation}), these classifiers showed
+promising results, but were still used in artificial Boolean classification
+problems. Analogical classifiers still had to prove their worth in real-world
+applications, and this was precisely the purpose of the last chapter, where we
+desvised various techniques to apply analogical inference on a recommendation
+task.
 
-Our paper is structured as follows. In Section \ref{extending} we overview
-different methods currently used for extending a sample set.  In Section
-\ref{analogy} we recall the basics of analogy and its counterpart in Boolean
-logic (namely the analogical proportions), pointing out the existence of two
-potential modelings. We also recall the process of
-extending a sample set via analogy and introduce the notion of AP functions.
-Section \ref{class_of_ap_functions} is devoted to a theoretical
-characterization of AP functions. In section \ref{approximate_ap_functions} we
-define and empirically investigate \textit{approximate} AP functions. We then
-show their suitability for training set extension.
+Unfortunately, the results of a direct application of the analogical inference
+principle did not quite live up to our expectations. The conclusion of the last
+chapter offered a partial explaination to these modest results, stating that
+there were just too few decent analogies to be found on the datasets that we
+used. Even if this argument is perfectly admissible, we will not spare ourself
+the very questionning of the analogical inference principle. We say that if
+four elements are in proportion then so are their classes... But why should it
+be true, or even useful? It is indeed pretty easy to build up simple problems
+where the application of this principle would lead to disastrous results.
+
+Take for example the problem of Figure \ref{FIG:classif_in_R2}. We have
+a set $S$ of points (on the left) that belong to two classes that are linarly
+separable: an instance is a square if it is on the left side of the space, else
+it is a circle. A naive application of the analogical inference principle would
+lead us to believe that any element that is in proportion with a $3$-tuple in
+$S^3$ (i.e. the element is the fouth vertex of a parallelogram that we can
+build with three elements in $S$), then the classes of the four vertices are in
+proportion. In the right figure, we show all these elements, along with their
+estimated classes. The result is absolutely terrible, because the whole space is
+covered with instances belonging to both of the classes.
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.6\linewidth]{figures/AE_in_R2_S.pdf}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.6\linewidth]{figures/AE_in_R2_AE.pdf}
+  \label{fig:sub2}
+\end{subfigure}
+  \caption{A naive application of the analogical inference principle in
+  $\mathbb{R}^2$.}
+\label{FIG:classif_in_R2}
+\end{figure}
+
+If it is so easy for analogical inference to fail, then why does it still work
+in some cases? Back to Figure \ref{FIG:nan_vs_nn} on page
+\pageref{FIG:nan_vs_nn}, the accuracies of the NAN algorithm were definitely
+not as bad as that of the problem we have just seen, and some of them were
+actually really good. A first obvious difference between the two experiments is
+that the one we just described deals with the arithmetic proportion with
+real-valued instances. Does it mean that the analogical inference principle is
+bound to fail with the arithmetic proportion? We will probably not be able to
+completly answer this question, even though we will provide some insights.  We
+will instead focus on the Boolean setting which has seemed to be the most
+promising for analogical inference so far, and from there we will derive some
+links with the real-valued case.
+
+In this chapter, we will provide a complete characterisation of functions that
+are fully compatible with the analogical inference principle in a Boolean
+setting. Let us restate the inference principle in this context to explain what
+we mean: for any four elements $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}$
+in $\mathbb{B}^m$, the analogical inference principle states that if
+$\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$, then $f(\mathbf{a}):
+f(\mathbf{b}):: f(\mathbf{c}): f(\mathbf{d})$ where $f$ is a Boolean function
+from $\mathbb{B}^m$ to $\mathbb{B}$. We have said it before:  this principle is
+unsound. The goal of this chapter is to identify all of the functions $f$ that
+lead to a valid conclusion, i.e. the functions such that $\mathbf{a}:
+\mathbf{b}:: \mathbf{c}: \mathbf{d} \implies f(\mathbf{a}):f(\mathbf{b})::
+f(\mathbf{c}): f(\mathbf{d})$ (with some minimal and natural requirements). We
+will say that these functions are \textbf{analogy preserving}.
+
+We will tackle this problem by adopting the general point of view of training
+set extension. In Section \ref{TODO}, we first define the problem of training
+set extension, described some previous works and describe how this problem will
+motivate the research of analogy preserving functions.
 
 \section{Extending a training set}\label{extending}
+
+We have proved in Chapter \ref{CHAP:functional_definition} that the analogical
+classification process can be formalized via two conceptual steps:
+\begin{enumerate}
+  \item First, the analogical extension of the training set is computed. This
+    extension is the set of all elements in the instance space that are in
+    analogy with one $3$-tuple in the training set, provided that the
+    associated class equation is solvable. Each element of the extension is
+    associated with an estimated label: the analogical label.
+  \item Then, $k$-NN algorithm is run, considering that the training set is
+    actually the analogical extension.
+\end{enumerate}
+
+But why should we 
+
 Extension of a sample set (or training set) of a given universe $\mathcal{X}$
 is a simple idea to improve generalization power. The more examples you have,
 the better you learn! The point is then to add to the sample set $S$ some new
@@ -67,7 +147,8 @@ examples. We may build a new example starting from
 \end{enumerate}
 In this paper, we investigate this last option in depth.
 
-\section{Analogy-preserving functions}
+\section{Safely extending a training set}
+\subsection{Analogy-preserving functions}
 \label{analogy-preserv}
 
 \begin{definition}
