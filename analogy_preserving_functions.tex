@@ -67,7 +67,8 @@ examples. We may build a new example starting from
 \end{enumerate}
 In this paper, we investigate this last option in depth.
 
-\subsection{Analogy-preserving functions}\label{analogy-preserv}
+\section{Analogy-preserving functions}
+\label{analogy-preserv}
 
 \begin{definition}
   We say that $\mathbf{E}_S(f)$ is {\bf sound} if
@@ -150,13 +151,8 @@ $\bigskip
 In the next section, we provide a complete description of AP functions and give
 an answer to Problem \ref{prob}.
 
-\section{The class of AP functions}
-\label{class_of_ap_functions}
 
-We first need to recall some basic notions in the theory of essential variables
-of functions.
-
-\subsection{Essential variables and sections of functions}
+\subsection{Background}
 
 For $k\in [1,m]$, $\boldsymbol{\alpha}\in \mathbb{B}^m$, and $c \in
 \mathbb{B}$, let ${\boldsymbol{\alpha}}_{k}^c$ be the tuple in $\mathbb{B}^{m}$
@@ -225,7 +221,30 @@ In the following, the AND operator `$\wedge$' will be denoted `$\cdot$' to fit
 with an algebraic notation. Also, `$+$' will now denote the modulo-2 addition,
 equivalent to the XOR operator. Note that $x + 1 = \neg x$.
 
-\subsection{The affine functions}
+For that we shall make use of the  polynomial representation of Boolean functions.
+A \textbf{ monomial} is a term of the form:
+$$
+\mathbf{x}_I=\underset{i\in I}{\prod}x_i, $$ for some possibly empty finite set of
+positive integers $I$, where $|I|$ is called the \textbf{degree} of
+$\mathbf{x}_I$.   We take the convention that $1$ is the empty monomial
+$\mathbf{x}_\emptyset $. A \textbf{ polynomial} is a sum of monomials and its
+degree is the largest degree of its monomials.  It is well-known
+\cite{StoneAlgebra36,ZhegalkinAlgebra27} that any function
+$f:\mathbb{B}^m\rightarrow \mathbb{B}$ is uniquely represented by a polynomial,
+also called the Algebraic Normal Form: $$f(x_1,\ldots,x_m)=\sum_{I\subseteq
+\{1,\ldots,m\}}a_I\cdot \mathbf{x}_I$$ where each $a_I$ belongs to
+$\mathbb{B}$. Note that the constant function $0$ is represented by
+$a_\emptyset\cdot \mathbf{x}_\emptyset$ with $a_\emptyset =0$. The degree of a
+function $f:\mathbb{B}^m\rightarrow \mathbb{B}$, denoted $d(f)$, is defined as
+the degree of the unique polynomial representing $f$.
+
+Note that the class of functions with degree at most $1$ is exactly the class
+$L$ of affine functions, which are AP. We will show that the class of AP
+functions is the class of affine functions by proving that if a function $f$ is
+AP, then $d(f)\leq 1$. We first consider the case where $d(f) = 2$.
+
+
+\subsection{A complete description of AP functions}
 
 We are now in a position to see some examples of AP functions. We will show that
 any affine function is AP.
@@ -289,32 +308,8 @@ Let $f \colon \mathbb{B}^m \to \mathbb{B} \in L$. Using the obvious fact that
 \end{proof}
 
 
-\subsection{A complete description of AP functions}
-
 We have seen that every affine function is AP. We will here give a stronger
 result: the affine functions are the \textbf{only} AP functions.
-
-For that we shall make use of the  polynomial representation of Boolean functions.
-A \textbf{ monomial} is a term of the form:
-$$
-\mathbf{x}_I=\underset{i\in I}{\prod}x_i, $$ for some possibly empty finite set of
-positive integers $I$, where $|I|$ is called the \textbf{degree} of
-$\mathbf{x}_I$.   We take the convention that $1$ is the empty monomial
-$\mathbf{x}_\emptyset $. A \textbf{ polynomial} is a sum of monomials and its
-degree is the largest degree of its monomials.  It is well-known
-\cite{StoneAlgebra36,ZhegalkinAlgebra27} that any function
-$f:\mathbb{B}^m\rightarrow \mathbb{B}$ is uniquely represented by a polynomial,
-also called the Algebraic Normal Form: $$f(x_1,\ldots,x_m)=\sum_{I\subseteq
-\{1,\ldots,m\}}a_I\cdot \mathbf{x}_I$$ where each $a_I$ belongs to
-$\mathbb{B}$. Note that the constant function $0$ is represented by
-$a_\emptyset\cdot \mathbf{x}_\emptyset$ with $a_\emptyset =0$. The degree of a
-function $f:\mathbb{B}^m\rightarrow \mathbb{B}$, denoted $d(f)$, is defined as
-the degree of the unique polynomial representing $f$.
-
-Note that the class of functions with degree at most $1$ is exactly the class
-$L$ of affine functions, which are AP. We will show that the class of AP
-functions is the class of affine functions by proving that if a function $f$ is
-AP, then $d(f)\leq 1$. We first consider the case where $d(f) = 2$.
 
 \begin{property} \label{degree_2_not_AP}
  Let $f\colon \mathbb{B}^m\to \mathbb{B}$ with $d(f)=2$. $f$ is not AP.
