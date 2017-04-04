@@ -5,15 +5,15 @@
 elements are in analogy, then their classes (or any relevent attribute) should
 also be in proportion. This is of course an unsound inference principle, in
 that the conclusion does not always follows from the premices. Nonetheless, we
-have seen in Chapter \ref{CHAP:functional_definition} that it can still be used to
-design classifiers, that we have named conservative and extended classifiers.
-Both in \cite{BayMicDelIJCAI07} and in our experiment section (Section
-\ref{SEC:experiments_and_empirical_validation}), these classifiers showed
-promising results, but were still used in artificial Boolean classification
-problems. Analogical classifiers still had to prove their worth in real-world
-applications, and this was precisely the purpose of the last chapter, where we
-desvised various techniques to apply analogical inference on a recommendation
-task.
+have seen in Chapter \ref{CHAP:functional_definition} that it can still be used
+to design classifiers, that we have named conservative and extended
+classifiers.  Both in \cite{BayMicDelIJCAI07} and in our experiment section
+(Section \ref{SEC:experiments_and_empirical_validation}), these classifiers
+showed promising results, but were still only used in artificial Boolean
+classification problems. Analogical classifiers still had to prove their worth
+in real-world applications, and this was precisely the purpose of the last
+chapter, where we designed various techniques to apply analogical inference on
+a recommendation task.
 
 Unfortunately, the results of a direct application of the analogical inference
 principle did not quite live up to our expectations. The conclusion of the last
@@ -23,14 +23,14 @@ used. Even if this argument is perfectly admissible, we will not spare ourself
 the very questionning of the analogical inference principle. We say that if
 four elements are in proportion then so are their classes... But why should it
 be true, or even useful? It is indeed pretty easy to build up simple problems
-where the application of this principle would lead to disastrous results.
+where the application of this principle leads to disastrous results.
 
 Take for example the problem of Figure \ref{FIG:classif_in_R2}. We have
 a set $S$ of points (on the left) that belong to two classes that are linarly
 separable: an instance is a square if it is on the left side of the space, else
 it is a circle. A naive application of the analogical inference principle would
-lead us to believe that any element that is in proportion with a $3$-tuple in
-$S^3$ (i.e. the element is the fouth vertex of a parallelogram that we can
+lead us to believe that for any element that is in proportion with a $3$-tuple
+in $S^3$ (i.e. the element is the fouth vertex of a parallelogram that we can
 build with three elements in $S$), then the classes of the four vertices are in
 proportion. In the right figure, we show all these elements, along with their
 estimated classes. The result is absolutely terrible, because the whole space is
@@ -53,18 +53,19 @@ covered with instances belonging to both of the classes.
 \label{FIG:classif_in_R2}
 \end{figure}
 
-If it is so easy for analogical inference to fail, then why does it still work
-in some cases? Back to Figure \ref{FIG:nan_vs_nn} on page
+But if it is so easy for analogical inference to fail, then why does it still
+work in some cases? Back to Figure \ref{FIG:nan_vs_nn} on page
 \pageref{FIG:nan_vs_nn}, the accuracies of the NAN algorithm were definitely
 not as bad as that of the problem we have just seen, and some of them were
 actually really good. A first obvious difference between the two experiments is
 that the one we just described deals with the arithmetic proportion with
-real-valued instances. Does it mean that the analogical inference principle is
-bound to fail with the arithmetic proportion? We will probably not be able to
-completly answer this question, even though we will provide some insights.  We
-will instead focus on the Boolean setting which has seemed to be the most
-promising for analogical inference so far, and from there we will derive some
-links with the real-valued case.
+real-valued instances, while the other one deal with Boolean attributes. Does
+it mean that the analogical inference principle is bound to fail with the
+arithmetic proportion? We will probably not be able to completly answer this
+question, even though we will provide some insights.  We will instead focus on
+the Boolean setting which has seemed to be the most promising for analogical
+inference so far, and from there we will derive some links with the real-valued
+case.
 
 In this chapter, we will provide a complete characterisation of functions that
 are fully compatible with the analogical inference principle in a Boolean
@@ -82,10 +83,10 @@ will say that these functions are \textbf{analogy preserving}.
 
 We will tackle this problem by adopting the general point of view of training
 set extension. In Section \ref{TODO}, we first define the problem of training
-set extension, described some previous works and describe how this problem will
+set extension, described some previous works and explain how this problem will
 motivate the research of analogy preserving functions.
 
-\section{Extending a training set}\label{extending}
+\section{Analogy as a training set extension}
 
 We have proved in Chapter \ref{CHAP:functional_definition} that the analogical
 classification process can be formalized via two conceptual steps:
@@ -95,11 +96,23 @@ classification process can be formalized via two conceptual steps:
     analogy with one $3$-tuple in the training set, provided that the
     associated class equation is solvable. Each element of the extension is
     associated with an estimated label: the analogical label.
-  \item Then, $k$-NN algorithm is run, considering that the training set is
-    actually the analogical extension.
+  \item Then, a $k$-NN algorithm is run, considering that the training set is
+    actually the analogical extension. This $k$-NN classifier allows to
+    classify all the elements of the universe that are not in the analogical
+    extension.
 \end{enumerate}
 
-But why should we 
+But then a natural question arises: why should we stick to a $k$-NN classifier?
+The reason why the $k$-NN algorithm is used is because in their algorithmic
+description, exctended learners rely on an analogical dissimilarity, which is
+strongly related to a distance on the instance space. But now that we have an
+equivalent definition of extended classifiers that does not rely explicitely on
+an analogical dissimilarity, nothing actually prevents us from using any other
+classifier such as a decision tree, a support vector machine, or any of the
+dozens of learners available out there. This would lead us to a different
+paradigm for analogical learning: you first extend the training set by building
+the analogical extension, and then you are free to do how you please and use
+this extension as a bigger training set with any classifier.
 
 Extension of a sample set (or training set) of a given universe $\mathcal{X}$
 is a simple idea to improve generalization power. The more examples you have,
@@ -108,16 +121,15 @@ examples, but we have to do that in a way that preserves the \textit{quality}
 of $S$.
 
 Formally, we start with a set $S= \{x^{(i)} \in \mathcal{X}| i \in [1,n]\}$ of
-examples ($n$ is supposed to be small), where $x^{(i)}$ is an
-element of a Cartesian product $\mathcal{X} = X_1 \times \ldots \times X_m$.
-For each element  $x^{(i)} \in S$, we associate a target  $f(x^{(i)})=y^{(i)}
-\in Y$.  In the case of regression, $y^{(i)} \in \mathbb{R}$, and in the case
-of classification $y^{(i)}$ belongs to a finite set and is called a class
-or a \textbf{label}.
+examples ($n$ is supposed to be small), where $x^{(i)}$ is an element of a
+Cartesian product $\mathcal{X} = X_1 \times \ldots \times X_m$.  For each
+element  $x^{(i)} \in S$, we associate a target  $f(x^{(i)})=y^{(i)} \in Y$.
+In the case of regression, $y^{(i)} \in \mathbb{R}$, and in the case of
+classification $y^{(i)}$ belongs to a finite set and is called a class or a
+\textbf{label}.
 
 Several methods have been proposed for extending a sample set with new
-examples. We may build a new example starting from
-1, 2 or 3 known examples.
+examples. We may build a new example starting from 1, 2 or 3 known examples.
 \begin{enumerate}
 \item With one example, a natural way to proceed is to use the classical
   neighborhood approach: given one  example $(a,f(a))$, we can generate a new
@@ -148,8 +160,22 @@ examples. We may build a new example starting from
 In this paper, we investigate this last option in depth.
 
 \section{Safely extending a training set}
+Algorithmically, the generation of $\esf$ and the computation of the
+analogical labels goes as follows:
+\begin{enumerate}
+  \item Add every $\mathbf{x} \in S$ to $\esf$. Then, for every
+    $\mathbf{a},\mathbf{b},\mathbf{c} \in S$ such that $f(\mathbf{a}) :
+    f(\mathbf{b}) :: f(\mathbf{c}) : y$ is solvable and such that there is
+    $\mathbf{x} \in \mathbb{B}^m \setminus S$ with $\mathbf{a} : \mathbf{b} ::
+    \mathbf{c} : \mathbf{x}$, add $\mathbf{x}$ to $\esf$ and save
+    $y$ as a candidate for $\albl{\mathbf{x}}$.
+\item Then for every $\mathbf{x} \in \esfs$, run a
+  \textbf{majority-vote procedure}: set $\albl{\mathbf{x}}$ as the most
+    common candidate among all solutions $y$ (in case of a tie, then randomly
+    pick one of the values). For elements in $S$, $\albl{\mathbf{x}}$ is
+    simply set to $f(\mathbf{x})$.
+\end{enumerate}
 \subsection{Analogy-preserving functions}
-\label{analogy-preserv}
 
 \begin{definition}
   We say that $\mathbf{E}_S(f)$ is {\bf sound} if
@@ -169,36 +195,33 @@ functions.
   $$
   \begin{cases}
     \mathbf{a} :  \mathbf{b} ::  \mathbf{c} :  \mathbf{d} \emph{ and }\\
-  f(\mathbf{a}) :  f(\mathbf{b}) ::  f(\mathbf{c}) :  y \emph{ is solvable  }
+    \emph{solvable}(f(\mathbf{a}), f(\mathbf{b}),  f(\mathbf{c}))
   \end{cases}
-  \implies y = f(\mathbf{d})
-  $$
+  \implies \emph{sol}\left(f(\mathbf{a}),  f(\mathbf{b}),  f(\mathbf{c})\right) =
+  f(\mathbf{d}). $$
 \end{proposition}
 \begin{proof}
-  If $f$ fulfills  this requirement, then it is clear from Section
-  \ref{analogy-extension} that for any $S \subseteq
-  \mathbb{B}^m$ and $\mathbf{x} \in \mathbf{E}^*_S(f)$, all the candidates $y$
-  for $\albl{\mathbf{x}}_f$ are equal to $f(\mathbf{x})$, so
-  $\albl{\mathbf{x}}_f$ will be invariably set to $f(\mathbf{x})$, which makes
+  If $f$ fulfills  this requirement, then it is clear from the algorithmic
+  description given above that for any $S \subseteq
+  \mathbb{B}^m$ and $\mathbf{x} \in \esfs$, all the candidates
+  for $\albl{\mathbf{x}}$ are equal to $f(\mathbf{x})$, so
+  $\albl{\mathbf{x}}$ will be invariably set to $f(\mathbf{x})$, which makes
   $f$ AP.
 
 If $f$ does not suit this requirement, then there exist $\mathbf{a},
   \mathbf{b}, \mathbf{c}$, and $\mathbf{d} \in \mathbb{B}^m$ such that
-  $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}$ but the solution $y$ to
-  $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : y$ is not equal to
+  $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}$ but the solution
+  $\sol(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))$ is not equal to
   $f(\mathbf{d})$. Taking $S_0 = \{\mathbf{a}, \mathbf{b}, \mathbf{c}\}$ we
-  obtain $\mathbf{E}^*_{S_0}(f) = \{\mathbf{d}\}$, and since $\albl{\mathbf{d}}_f = y
-  \neq f(d)$, $\mathbf{E}_{S_0}(f)$ is not sound so $f$ is not AP.
+  obtain $\mathbf{E}^{f*}_{S_0} = \{\mathbf{d}\}$, and since $\albl{\mathbf{d}}
+  = \sol(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})) \neq f(d)$, then
+  $\mathbf{E}_{S_0}^f$ is not sound so $f$ is not AP.
 \end{proof}
 
-If $f$ is AP, then $\mathbf{E}_S(f)$ is sound for any $S$ so it is a relevant
-extension of $S$ and can be used with full confidence for classification
-purposes. In the rest of the paper, we will give a definite answer to the
-following problem:
 
 \begin{problem}\label{prob}
   Give a complete description of the functions $f\colon \mathbb{B}^m\to
-  \mathbb{B}$ that ensure a sound extension $\mathbf{E}_S(f)$ for any sample
+  \mathbb{B}$ that ensure a sound extension $\esf$ for any sample
   set $S\subseteq \mathbb{B}^m$. In other words, identify all the AP
   functions.
 \end{problem}
@@ -214,6 +237,7 @@ are not stable by conjunction combination. It is also the case for the
 disjunction \cite{PraRic14}.
 
 \begin{table}[ht]
+  \center
 $\begin{array}{|c|cc|c|}
   \toprule
   ~ & x_1 & x_2 & f(\cdot) \\
@@ -229,10 +253,6 @@ $\bigskip
 \label{exampleNotAP}
 \end{table}
 
-In the next section, we provide a complete description of AP functions and give
-an answer to Problem \ref{prob}.
-
-
 \subsection{Background}
 
 For $k\in [1,m]$, $\boldsymbol{\alpha}\in \mathbb{B}^m$, and $c \in
@@ -242,12 +262,11 @@ variable $x_i$ is said to be \textbf{inessential} in $f\colon \mathbb{B}^m\to
 \mathbb{B}$ if for all $\boldsymbol{\alpha} \in \mathbb{B}^m$ and $c \in
 \mathbb{B}$, $f(\boldsymbol{\alpha}^c_i) = f(\boldsymbol{\alpha}^{\neg c}_i)$.
 Otherwise, $x_i$ is said to be \textbf{essential} in $f$, or that $f$ depends
-on $x_i$. In simple terms, an
-essential variable is a variable that has the \textit{ability} to change the
-value of $f$. For example in $f(x_1, x_2, x_3) = x_1 \wedge x_3$, $x_1$ and
-$x_3$ are essential variables while $x_2$ is inessential.  We denote by
-$\ess(f)$ the number of essential variables of $f$ (or \textbf{essential
-arity}).
+on $x_i$. In simple terms, an essential variable is a variable that has the
+\textit{ability} to change the value of $f$. For example in $f(x_1, x_2, x_3) =
+x_1 \wedge x_3$, $x_1$ and $x_3$ are essential variables while $x_2$ is
+inessential.  We denote by $\ess(f)$ the number of essential variables of $f$
+(or \textbf{essential arity}).
 
 Two functions $f\colon \mathbb{B}^m\to \mathbb{B}$ and $g\colon \mathbb{B}^n\to
 \mathbb{B}$ are said to be {\bf equivalent} if there exist two mappings
