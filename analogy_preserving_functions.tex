@@ -86,7 +86,7 @@ set extension. In Section \ref{TODO}, we first define the problem of training
 set extension, described some previous works and explain how this problem will
 motivate the research of analogy preserving functions.
 
-\section{Analogy as a training set extension}
+\section{Extending a training set}
 
 We have proved in Chapter \ref{CHAP:functional_definition} that the analogical
 classification process can be formalized via two conceptual steps:
@@ -114,11 +114,15 @@ paradigm for analogical learning: you first extend the training set by building
 the analogical extension, and then you are free to do how you please and use
 this extension as a bigger training set with any classifier.
 
+\subsection{Previous works}
+
 Extension of a sample set (or training set) of a given universe $\mathcal{X}$
 is a simple idea to improve generalization power. The more examples you have,
 the better you learn! The point is then to add to the sample set $S$ some new
 examples, but we have to do that in a way that preserves the \textit{quality}
 of $S$.
+
+BLABLA pas de trucs sérieux, seulement des trucs hadocs, mais quand même...
 
 Formally, we start with a set $S= \{x^{(i)} \in \mathcal{X}| i \in [1,n]\}$ of
 examples ($n$ is supposed to be small), where $x^{(i)}$ is an element of a
@@ -157,9 +161,12 @@ examples. We may build a new example starting from 1, 2 or 3 known examples.
     this fourth element is not necessarily in the neighborhood of the three
     others.
 \end{enumerate}
-In this paper, we investigate this last option in depth.
 
-\section{Safely extending a training set}
+Détail de miclets + dire que on va s'intéresser au cas où l'extensio nest 100%
+sound.
+
+\subsection {Analogy preserving functions: a safe way to extend}
+
 Algorithmically, the generation of $\esf$ and the computation of the
 analogical labels goes as follows:
 \begin{enumerate}
@@ -175,20 +182,37 @@ analogical labels goes as follows:
     pick one of the values). For elements in $S$, $\albl{\mathbf{x}}$ is
     simply set to $f(\mathbf{x})$.
 \end{enumerate}
-\subsection{Analogy-preserving functions}
+
+\noindent
+The extension $\esf$ is then considered to be an extended training set, where
+the labels are the analogical labels, which are not necessarily correct. Indeed
+for some elements $\mathbf{x} \in \esfs$, it may happend that
+$\albl{\mathbf{x}} \neq f(\mathbf{x})$, simply because the analogical inference
+principle may not be \textit{suitable} for the function $f$.  In this chapter,
+we  are precisely interested in the identification of all Boolean functions $f$
+that lead to perfectly sound extensions, i.e.  extensions where the analogical
+labels $\albl{\mathbf{x}}$ are always equal to the ground truth values
+$f(\mathbf{x})$. These functions will be called \textbf{Analogy preserving}
+functions:
 
 \begin{definition}
   We say that $\mathbf{E}_S(f)$ is {\bf sound} if
   $\albl{\mathbf{x}}_f=f(\mathbf{x})$, for every $\mathbf{x} \in
-  \mathbf{E}^*_S(f)$. Also, if $\mathbf{E}_S(f)$ is sound for all $S \subseteq
+  \mathbf{E}^*_S(f)$. In other words, $\mathbf{E}_S(f)$ is sound if $\omegasf
+  \eqdef P\left(\albl{\mathbf{x}} = f(\mathbf{x}) \given[\big] \mathbf{x} \in
+  \esfs\right) = 1$.
+
+  \noindent
+  Also, if $\mathbf{E}_S(f)$ is sound for all $S \subseteq
   \mathbb{B}^m$, we say that $f$ is {\bf Analogy Preserving} (AP).
 \end{definition}
 
 \noindent
-Proposition \ref{equivalent_def} gives an equivalent definition of AP
-functions.
+Proposition \ref{PROPOS:equivalent_def_AP} gives an equivalent definition of AP
+functions, that will be more useful to convey our proofs:
 
-\begin{proposition}\label{equivalent_def}
+\begin{proposition}
+  \label{PROPOS:equivalent_def_AP}
   A function $f \colon \mathbb{B}^m \to \mathbb{B}$ is AP iff for every
   $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in \mathbb{B}^m$, $f$ suits
   the following requirement:
@@ -202,11 +226,10 @@ functions.
 \end{proposition}
 \begin{proof}
   If $f$ fulfills  this requirement, then it is clear from the algorithmic
-  description given above that for any $S \subseteq
-  \mathbb{B}^m$ and $\mathbf{x} \in \esfs$, all the candidates
-  for $\albl{\mathbf{x}}$ are equal to $f(\mathbf{x})$, so
-  $\albl{\mathbf{x}}$ will be invariably set to $f(\mathbf{x})$, which makes
-  $f$ AP.
+  description given above that for any $S \subseteq \mathbb{B}^m$ and
+  $\mathbf{x} \in \esfs$, all the candidates for $\albl{\mathbf{x}}$ are equal
+  to $f(\mathbf{x})$, so $\albl{\mathbf{x}}$ will be invariably set to
+  $f(\mathbf{x})$ by the majority-vote procedure, which makes $f$ AP.
 
 If $f$ does not suit this requirement, then there exist $\mathbf{a},
   \mathbf{b}, \mathbf{c}$, and $\mathbf{d} \in \mathbb{B}^m$ such that
@@ -214,31 +237,28 @@ If $f$ does not suit this requirement, then there exist $\mathbf{a},
   $\sol(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))$ is not equal to
   $f(\mathbf{d})$. Taking $S_0 = \{\mathbf{a}, \mathbf{b}, \mathbf{c}\}$ we
   obtain $\mathbf{E}^{f*}_{S_0} = \{\mathbf{d}\}$, and since $\albl{\mathbf{d}}
-  = \sol(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})) \neq f(d)$, then
+  = \sol(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})) \neq f(\mathbf{d})$, then
   $\mathbf{E}_{S_0}^f$ is not sound so $f$ is not AP.
 \end{proof}
 
-
-\begin{problem}\label{prob}
-  Give a complete description of the functions $f\colon \mathbb{B}^m\to
-  \mathbb{B}$ that ensure a sound extension $\esf$ for any sample
-  set $S\subseteq \mathbb{B}^m$. In other words, identify all the AP
-  functions.
-\end{problem}
+\noindent
+The rest of this TODO will be devoted to a complete characterization of AP
+functions.
 
 First note that many natural functions are not AP. Consider for example the
 binary function $f(x_1,x_2)= x_1 \wedge x_2$, along with $\mathbf{a},
 \mathbf{b}, \mathbf{c}, \mathbf{d} \in \mathbb{B}^2$ in Table
 \ref{exampleNotAP}.  We have $\mathbf{a} : \mathbf{b} :: \mathbf{c} :
 \mathbf{d}$ and $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : y$ is
-solvable, yet the solution is $y=0$, which  is different from $f(\mathbf{d})=1$
-so $f$ is not AP. This actually comes from the fact that analogical proportions
-are not stable by conjunction combination. It is also the case for the
-disjunction \cite{PraRic14}.
+solvable, yet the solution is $\sol(f(\mathbf{a}), f(\mathbf{b}),
+f(\mathbf{c}))=0$, which  is different from $f(\mathbf{d})=1$ so $f$ is not AP.
+This actually comes from the fact that analogical proportions are not stable by
+conjunction combination. It is also the case for the disjunction
+\cite{PraRic14}.
 
 \begin{table}[ht]
   \center
-$\begin{array}{|c|cc|c|}
+$\begin{array}{cccc}
   \toprule
   ~ & x_1 & x_2 & f(\cdot) \\
   \midrule
@@ -253,9 +273,46 @@ $\bigskip
 \label{exampleNotAP}
 \end{table}
 
-\subsection{Background}
+\section{A complete characterization of analogy preserving functions}
 
-For $k\in [1,m]$, $\boldsymbol{\alpha}\in \mathbb{B}^m$, and $c \in
+To complete our proofs, we will need to recall some background.
+
+\subsection{Prelinimary background}
+
+In the following, the AND operator `$\wedge$' will be denoted `$\cdot$' to fit
+with an algebraic notation. Also, `$+$' will now denote the modulo-2 addition,
+equivalent to the XOR operator. Note that $x + 1 = \neg x$.
+
+Our first step will be to use a unifying notation for all of the Boolean
+functions. We shall indeed make use of the  polynomial representation of
+Boolean functions, that we now describe. A \textbf{ monomial} is a term of the
+form:
+$$
+\mathbf{x}_I=\underset{i\in I}{\prod}x_i, $$ for some possibly empty finite set of
+positive integers $I$, where $|I|$ is called the \textbf{degree} of
+$\mathbf{x}_I$.   We take the convention that $1$ is the empty monomial
+$\mathbf{x}_\emptyset $. A \textbf{ polynomial} is a sum of monomials and its
+degree is the largest degree of its monomials.  It is well-known
+\cite{StoneAlgebra36,ZhegalkinAlgebra27} that any function
+$f:\mathbb{B}^m\rightarrow \mathbb{B}$ is uniquely represented by a polynomial,
+also called the \textbf{Algebraic Normal Form} (ANF):
+$$f(x_1,\ldots,x_m)=\sum_{I\subseteq \{1,\ldots,m\}}a_I\cdot \mathbf{x}_I,$$
+where each $a_I$ belongs to $\mathbb{B}$. Note that the constant function $0$
+is represented by $a_\emptyset\cdot \mathbf{x}_\emptyset$ with $a_\emptyset
+=0$. The degree of a function $f:\mathbb{B}^m\rightarrow \mathbb{B}$, denoted
+$d(f)$, is defined as the degree of the unique polynomial representing $f$. In
+the following, we will often will refer to $f$ as both a function object and as
+the associated ANF. Here are the ANF of some common Boolean functions:
+
+\begin{itemize}
+  \item $\text{AND}(x_1, x_2) = x_1 \cdot x_2$,
+  \item $\text{OR}(x_1, x_2) = x_1 + x_2 + x_1 \cdot x_2$,
+  \item $\text{XOR}(x_1, x_2) = x_1 + x_2$,
+  \item $\text{NEG}(x_1) = x_1 + 1$.
+\end{itemize}
+
+Another key concept of our proof is the notion of essential and inessential
+variables.  For $k\in [1,m]$, $\boldsymbol{\alpha}\in \mathbb{B}^m$, and $c \in
 \mathbb{B}$, let ${\boldsymbol{\alpha}}_{k}^c$ be the tuple in $\mathbb{B}^{m}$
 whose $i$-th component is set to $c$ if $i=k$, and to $\alpha_i$ otherwise.  A
 variable $x_i$ is said to be \textbf{inessential} in $f\colon \mathbb{B}^m\to
@@ -263,10 +320,12 @@ variable $x_i$ is said to be \textbf{inessential} in $f\colon \mathbb{B}^m\to
 \mathbb{B}$, $f(\boldsymbol{\alpha}^c_i) = f(\boldsymbol{\alpha}^{\neg c}_i)$.
 Otherwise, $x_i$ is said to be \textbf{essential} in $f$, or that $f$ depends
 on $x_i$. In simple terms, an essential variable is a variable that has the
-\textit{ability} to change the value of $f$. For example in $f(x_1, x_2, x_3) =
-x_1 \wedge x_3$, $x_1$ and $x_3$ are essential variables while $x_2$ is
-inessential.  We denote by $\ess(f)$ the number of essential variables of $f$
-(or \textbf{essential arity}).
+\textit{ability} to change the value of $f$. In fact, it can be shown that if
+$x_i$ is an inessential variable for a function $f$, then $x_i$ does not appear
+in the ANF of $f$.  For example in $f(x_1, x_2, x_3) = x_1 \cdot x_3$, $x_1$
+and $x_3$ are essential variables while $x_2$ is inessential.  We denote by
+$\ess(f)$ the number of essential variables of $f$ (or \textbf{essential
+arity}).
 
 Two functions $f\colon \mathbb{B}^m\to \mathbb{B}$ and $g\colon \mathbb{B}^n\to
 \mathbb{B}$ are said to be {\bf equivalent} if there exist two mappings
@@ -278,8 +337,10 @@ $\sigma\colon
 \end{align*}
 In other words, $f$ and $g$ are equivalent if one can be obtained from the
 other by permutation of variables, addition of inessential variables, or
-identification of inessential variables. For example, $f(x_1, x_2, x_3) = x_1
-\wedge x_3$ and $g(x_1, x_2)  = x_1 \wedge x_2$ are equivalent functions. Note
+identification of inessential variables. Another point of view is to consider
+that two functions are equivalent if their ANF is the same, up to the
+renaming of variables. For example, $f(x_1, x_2, x_3) = x_1
+\cdot x_3$ and $g(x_1, x_2)  = x_1 \cdot x_2$ are equivalent functions. Note
 that two equivalent functions necessarily have the same number of essential
 variables. For further background in the theory of essential variables of
 functions, see \cite{CouceiroTCS08, CouceiroDM09, SalomaaAASF63, WillardDM96}.
@@ -303,53 +364,88 @@ J)$ be a partition of $[1, m]$. With $\mathbf{x}
 \in \mathbb{B}^m$ and $\boldsymbol{\alpha} \in \mathbb{B}^{|I|}$, the $I$-section (or simply
 section) $f^{\boldsymbol{\alpha}}_I \colon \mathbb{B}^{|J|} \to \mathbb{B}$ is the function that
 is obtained after setting all variables in $I$ to the components of
-$\boldsymbol{\alpha}$. Note that the arity of $f^{\boldsymbol{\alpha}}_I$ is
-$|J|$, and that $\ess(f^{\boldsymbol{\alpha}}_I) \leq \ess(f)$.
-For example, consider a function $f$ of three variables: $f(x_1,x_2, x_3) = (x_1
-\wedge x_2) \lor x_3$. The section $f^{(1, 0)}_{\{1, 3\}}$ is defined as $f^{(1,
-0)}_{\{1, 3\}}(x_2) = (1 \wedge x_2) \lor 0$.
+$\boldsymbol{\alpha}$.
+More formally, let us define $(\mathbf{x}^{\boldsymbol{\alpha}}_I) \in \mathbb{B}^m$
+as follows:
+$$
+\begin{cases}
+(\mathbf{x}^{\boldsymbol{\alpha}}_I)_i \eqdef x_i \mbox{ if } i \notin I\\
+(\mathbf{x}^{\boldsymbol{\alpha}}_I)_i \eqdef \alpha_j \mbox{ where } j \mbox{ is the index of } i \mbox{ in } I
+\end{cases}
+$$
+For instance, with $m=5, \mathbf{x}=(0,1,1,0,0), I=\{1,3,4\}$ and $\boldsymbol{\alpha}=(1,0,0)$ then
+$(\mathbf{x}^{\boldsymbol{\alpha}}_I)=(1,1,0,0,0)$.
+The $I$-section $f^{\boldsymbol{\alpha}}_I$ is a function from $\mathbb{B}^{\mid
+J \mid} \to \mathbb{B}$ defined as:
+$$\forall \mathbf{y} \in \mathbb{B}^{|J|},
+f^{\boldsymbol{\alpha}}_I(\mathbf{y}) \eqdef
+f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{y}_J).$$
+Note that the arity of $f^{\boldsymbol{\alpha}}_I$ is $|J|$, and that
+$\ess(f^{\boldsymbol{\alpha}}_I) \leq \ess(f)$.
+As an example, let us consider the function $f\colon \mathbb{B}^3 \to
+\mathbb{B}$ such as $$f(x_1,x_2, x_3) = x_1 \cdot x_2 +
+x_3 + x_1 \cdot x_2 \cdot x_3.$$ The section $f^{(1, 0)}_{\{1, 3\}}   \in
+\mathcal{F}_1$ is defined by $f^{(1, 0)}_{\{1, 3\}}(x_2) = x_2$.
 
 A main result about sections that will be used in other proofs is stated in
-Property \ref{section_preserve_wap}, which can be verified by noting that
-$x:x::x:x$ for any $x \in \mathbb{B}$:
+Property \ref{section_preserve_wap}:
 
 \begin{property}\label{section_preserve_wap}
 If $f\colon \mathbb{B}^m\to \mathbb{B}$ is AP, then every section of $f$ is
-also AP.  \end{property}
+  also AP.
+\end{property}
+\begin{proof}
+  This statement is actually pretty obvious but sadly, its proof is quite ugly.
+  Let $f$ be an AP function from $\mathbb{B}^m \to \mathbb{B}$, $(I,J)$
+  a partition of $[1, m]$, and $\boldsymbol{\alpha} \in \mathbb{B}^{|I|}$. We
+  will consider the section  $f^{\boldsymbol{\alpha}}_I$.  Let's now assume
+  that we have $\mathbf{a},\mathbf{b},\mathbf{c}, \mathbf{d} \in
+  \mathbb{B}^{|J|}$ with the 2 following properties:
+  $$
+  \begin{cases}
+    \mathbf{a}:\mathbf{b}::\mathbf{c}:\mathbf{d}\\
+    \solvable(f^{\boldsymbol{\alpha}}_I(\mathbf{a}),f^{\boldsymbol{\alpha}}_I(\mathbf{b}),f^{\boldsymbol{\alpha}}_I(\mathbf{c}))
+  \end{cases}
+  $$
+  We want to prove that this implies that
+  $\sol(f^{\boldsymbol{\alpha}}_I(\mathbf{a}),f^{\boldsymbol{\alpha}}_I(\mathbf{b})
+  = f^{\boldsymbol{\alpha}}_I(\mathbf{d})$.
+  First, let us note that the following property holds:
+$$\forall \mathbf{a},\mathbf{b},\mathbf{c}, \mathbf{d} \in \mathbb{B}^{|J|},~J
+  \subset [1,m], ~ \mathbf{x} \in \mathbb{B}^m,~~ \mathbf{a}: \mathbf{b} ::
+  \mathbf{c} : \mathbf{d} \implies \mathbf{x}^{\mathbf{a}}_J :
+  \mathbf{x}^{\mathbf{b}}_J:: \mathbf{x}^{\mathbf{c}}_J :
+  \mathbf{x}^{\mathbf{d}}_J,$$
+  simply due to the fact that $\mathbf{x}:\mathbf{x}::\mathbf{x}:\mathbf{x}$
+  always holds for any $\mathbf{x} \in \mathbb{B}^m$.
 
-In the following, the AND operator `$\wedge$' will be denoted `$\cdot$' to fit
-with an algebraic notation. Also, `$+$' will now denote the modulo-2 addition,
-equivalent to the XOR operator. Note that $x + 1 = \neg x$.
+Regarding the first condition $\mathbf{a}:\mathbf{b}::\mathbf{c}:\mathbf{d}$,
+since $\forall \mathbf{x} \in \mathbb{B}^m,$ we have that $
+  \mathbf{x}^{\boldsymbol{\alpha}}_I : \mathbf{x}^{\boldsymbol{\alpha}}_I ::
+  \mathbf{x}^{\boldsymbol{\alpha}}_I : \mathbf{x}^{\boldsymbol{\alpha}}_I$, we
+  deduce: $(\mathbf{x}^{\boldsymbol{\alpha}}_I)^{\mathbf{a}}_J :
+  (\mathbf{x}^{\boldsymbol{\alpha}}_I)^{\mathbf{b}}_J ::
+  (\mathbf{x}^{\boldsymbol{\alpha}}_I)^{\mathbf{c}}_J :
+  (\mathbf{x}^{\boldsymbol{\alpha}}_I)^{\mathbf{d}}_J$.
+By definition $f^{\boldsymbol{\boldsymbol{\alpha}}}_I(\mathbf{y}) =
+  f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^{\mathbf{y}}_J)$, and the second
+  condition is just:
+  $$\solvable(f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{a}_J),f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{b}_J),f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{c}_J)).$$
+  Since $f$ is AP, we have that:
+  $\sol(f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{a}_J),f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{b}_J),f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{c}_J))=
+  f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{d}_J)=f^{\boldsymbol{\alpha}}_I(\mathbf{d})$,
+  which is the condition for  $f^{\boldsymbol{\boldsymbol{\alpha}}}_I$ to be
+  AP.
+\end{proof}
 
-For that we shall make use of the  polynomial representation of Boolean functions.
-A \textbf{ monomial} is a term of the form:
-$$
-\mathbf{x}_I=\underset{i\in I}{\prod}x_i, $$ for some possibly empty finite set of
-positive integers $I$, where $|I|$ is called the \textbf{degree} of
-$\mathbf{x}_I$.   We take the convention that $1$ is the empty monomial
-$\mathbf{x}_\emptyset $. A \textbf{ polynomial} is a sum of monomials and its
-degree is the largest degree of its monomials.  It is well-known
-\cite{StoneAlgebra36,ZhegalkinAlgebra27} that any function
-$f:\mathbb{B}^m\rightarrow \mathbb{B}$ is uniquely represented by a polynomial,
-also called the Algebraic Normal Form: $$f(x_1,\ldots,x_m)=\sum_{I\subseteq
-\{1,\ldots,m\}}a_I\cdot \mathbf{x}_I$$ where each $a_I$ belongs to
-$\mathbb{B}$. Note that the constant function $0$ is represented by
-$a_\emptyset\cdot \mathbf{x}_\emptyset$ with $a_\emptyset =0$. The degree of a
-function $f:\mathbb{B}^m\rightarrow \mathbb{B}$, denoted $d(f)$, is defined as
-the degree of the unique polynomial representing $f$.
-
-Note that the class of functions with degree at most $1$ is exactly the class
-$L$ of affine functions, which are AP. We will show that the class of AP
-functions is the class of affine functions by proving that if a function $f$ is
-AP, then $d(f)\leq 1$. We first consider the case where $d(f) = 2$.
-
-
-\subsection{A complete description of AP functions}
 
 We are now in a position to see some examples of AP functions. We will show that
 any affine function is AP.
 
-\begin{proposition}\label{affine_functions_are_wap}
+\subsection{The class affine functions}
+
+\begin{proposition}
+  \label{PROPOS:affine_functions_are_wap}
 Let $L$ be the class of all affine functions, i.e. functions of the form:
   $$f(x_1,\ldots , x_m)=\alpha_1\cdot x_1+\ldots +\alpha_m\cdot  x_m+\alpha,$$
   with $\alpha_1,\ldots, \alpha_m,\alpha\in \mathbb{B}$. Every affine function
@@ -370,11 +466,12 @@ Let $f \colon \mathbb{B}^m \to \mathbb{B} \in L$. Using the obvious fact that
   functions lead to classification problems that are, in fact, highly
   \textbf{non} linearly separable.} that changing the value of any
   $x_i$ changes the value of $g$: $\forall _i, \quad g(x_1, \cdots, x_i, \cdots, x_n) =
-  \neg g(x_1, \cdots, \neg x_i, \cdots, x_n)$. From this property, it is easy to
+  \neg g(x_1, \cdots, \neg x_i, \cdots, x_n)$. This proprety is illustrated on
+  Figure \ref{FIG:affine_functions_neighbors} it is easy to
   see that:
   $$\forall \mathbf{x}, \mathbf{x}' \in \mathbb{B}^n, g(\mathbf{x}) =
-  g(\mathbf{x}') \iff h(\mathbf{x}, \mathbf{x}') \text{ is even },$$
-  where $h$ is still the Hamming distance function.
+  g(\mathbf{x}') \iff H(\mathbf{x}, \mathbf{x}') \text{ is even},$$
+  where $h$ is the Hamming distance function.
 
   Let $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in \mathbb{B}^m$  such
   that the two hypothesis in the definition of AP are satisfied, i.e.
@@ -383,33 +480,59 @@ Let $f \colon \mathbb{B}^m \to \mathbb{B} \in L$. Using the obvious fact that
   g(\mathbf{a}) : g(\mathbf{b}) :: g(\mathbf{c}) : y\quad  \text{is  solvable}.
   $$
 
-  As the equation is solvable, Table \ref{truthTableAnalogy} tells us that
-  there are three possibles cases (we will use Property
-  \ref{hamming_analogy}):
+  This equation is solvable in two possible cases: either $g(\mathbf{a}) =
+  g(\mathbf{b})$, or $g(\mathbf{a}) = g(\mathbf{c})$. This can be verified in
+  Table \ref{TAB:six_valid_patterns} on page \pageref{TAB:six_valid_patterns},
+  or by refering to Proposition \ref{PROPOS:equation_solving}.
+  Also, we know from Property \ref{PROPER:hamming_distance_boolean_proportion},
+  then if $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}$ then we have
+  that $H(\mathbf{a}, \mathbf{b}) = H(\mathbf{c}, \mathbf{d})$ and
+  $H(\mathbf{a}, \mathbf{c}) = H(\mathbf{b}, \mathbf{d})$.
+
+  Therefore, we either are in one of the two following cases:
   \begin{enumerate}
     \item $g(\mathbf{a}) = g(\mathbf{b})$, and in this case the solution is
-      $y = g(\mathbf{c})$. As $g(\mathbf{a}) = g(\mathbf{b})$, then
-      $h(\mathbf{a}, \mathbf{b})$ is even, and so is $h(\mathbf{c},
-      \mathbf{d})$. Then, $g(\mathbf{c}) = g(\mathbf{d})$ so $y = g(\mathbf{d})$.
-    \item $g(\mathbf{a}) = g(\mathbf{c})$, and in this case the solution is $y =
-      g(\mathbf{b})$. As $g(\mathbf{a}) = g(\mathbf{c})$, then
-      $h(\mathbf{a}, \mathbf{c})$ is even, and so is $h(\mathbf{b},
-      \mathbf{d})$. Then $g(\mathbf{b}) = g(\mathbf{d})$ so $y =
-      g(\mathbf{d})$.
-    \item $\neg g(\mathbf{a}) = g(\mathbf{b}) = g(\mathbf{c})$, and in this
-      case the solution is $y = g(\mathbf{a})$. As $g(\mathbf{b}) =
-      g(\mathbf{c})$, then $h(\mathbf{b}, \mathbf{c})$ is even, and so is
-      $h(\mathbf{a}, \mathbf{d})$. Then $g(\mathbf{a}) = g(\mathbf{d})$ so $y =
-      g(\mathbf{d})$.
+      $\sol(g(\mathbf{a}), g(\mathbf{b}), g(\mathbf{c})) = g(\mathbf{c})$. As
+      $g(\mathbf{a}) = g(\mathbf{b})$, then $H(\mathbf{a}, \mathbf{b})$ is
+      even, and so is $H(\mathbf{c}, \mathbf{d})$. Then, $g(\mathbf{c}) =
+      g(\mathbf{d})$, and thus $\sol(g(\mathbf{a}), g(\mathbf{b}),
+      g(\mathbf{c})) = g(\mathbf{d})$.
+    \item $g(\mathbf{a}) = g(\mathbf{c})$, and in this case the solution is
+      $\sol(g(\mathbf{a}), g(\mathbf{b}), g(\mathbf{c})) = g(\mathbf{b})$. As
+      $g(\mathbf{a}) = g(\mathbf{c})$, then $H(\mathbf{a}, \mathbf{c})$ is
+      even, and so is $H(\mathbf{b}, \mathbf{d})$. Then $g(\mathbf{b}) =
+      g(\mathbf{d})$, and thus $\sol(g(\mathbf{a}), g(\mathbf{b}),
+      g(\mathbf{c})) = g(\mathbf{d})$.
   \end{enumerate}
 
-  The third case is only relevant for the Klein modeling. In all cases we have
-  $y = g(\mathbf{d})$, thus showing that $g$ is AP, and so is any $f \in L$.
+  In both cases we have $\sol(g(\mathbf{a}), g(\mathbf{b}), g(\mathbf{c})) =
+  g(\mathbf{d})$, thus showing that $g$ is AP.
+  As $g$ and $f$ are equivalent functions, then any function $f \in L$ is AP.
 \end{proof}
 
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=2in]{figures/affine_functions_neighbors.pdf}
+  \caption{The labels as determined by the affine function $f(x_1, x_2, x_3) = x_1 + x_3 + x_3$.}
+\label{FIG:affine_functions_neighbors}
+\end{figure}
 
-We have seen that every affine function is AP. We will here give a stronger
+Proposition \ref{PROPOS:affine_functions_are_wap} can now retrospectively
+explain the results of Figure \ref{FIG:nan_vs_nn} on page \ref{FIG:nan_vs_nn}
+for the two functions $f_1$ and $f_2$, which are both instances of affine
+functions. We saw that for these two functions, $\omegasf$ (defined as the
+proportion of elements $\mathbf{x}$ in $\esfs$ for which $\albl{x} = f(x)$) was
+always equal to $1$. This result is now obvious and directly comes from the
+fact that both $f_1$ and $f_2$ are actually analogy preserving functions.
+
+We now know that every affine function is AP. We will here give a stronger
 result: the affine functions are the \textbf{only} AP functions.
+In Section \ref{TODO}, we introduce the ANF of Boolean functions and also
+defined their degree. It should be clear that the class of functions with
+degree at most $1$ is exactly the class $L$ of affine functions, which are AP.
+We will show that the class of AP functions is the class of affine functions by
+proving that if a function $f$ is AP, then $d(f)\leq 1$. We first consider the
+case where $d(f) = 2$:
 
 \begin{property} \label{degree_2_not_AP}
  Let $f\colon \mathbb{B}^m\to \mathbb{B}$ with $d(f)=2$. $f$ is not AP.
@@ -429,6 +552,34 @@ result: the affine functions are the \textbf{only} AP functions.
     f_2(x_1, x_2) = x_1 \cdot x_2 + x_1 + \alpha\\
     f_3(x_1, x_2) = x_1 \cdot x_2 + x_1 + x_2 + \alpha
   \end{cases}$$
+  Now consider Table \ref{TAB:counter_examples}, which gives the values of
+  $f_1, f_2$ and $f_3$ (with $\alpha = 0$) for the four-tuple $(\mathbf{a},
+  \mathbf{b}, \mathbf{c}, \mathbf{d})$.
+  \begin{table}[ht]
+    \center
+  $\begin{array}{cccccc}
+    \toprule
+    ~ & x_1 & x_2 & f_1 & f_2 & f_3\\
+    \midrule
+    \mathbf{a} & 0 & 0 & 0 & 0 & 0\\
+    \mathbf{b} & 0 & 1 & 0 & 0 & 1\\
+    \mathbf{c} & 1 & 0 & 0 & 1 & 1\\
+    \mathbf{d} & 1 & 1 & 1 & 0 & 1\\
+    \bottomrule
+  \end{array}
+  $\bigskip
+  \caption{Examples for $f_1, f_2, f_3$ showing that they are not AP.}
+  \label{TAB:counter_examples}
+  \end{table}
+  It is clear that $(\mathbf{a},\mathbf{b}, \mathbf{c}, \mathbf{d})$ is an
+  example for $f_1$ because we have $\mathbf{a} : \mathbf{b} :: \mathbf{c} :
+  \mathbf{d}$ and the equation $f_1(\mathbf{a}) :  f_1(\mathbf{b}) ::
+  f(\mathbf{c}) : y$ is solvable, but the solution is $0$ while $f(\mathbf{d})$
+  is $1$. Simmilarly, $(\mathbf{a},\mathbf{b}, \mathbf{c}, \mathbf{d})$ is also
+  an example for $f_2$ and $(\mathbf{d},\mathbf{c}, \mathbf{b}, \mathbf{a})$ is
+  an example for $f_3$.
+
+
   It is pretty straightforward to find examples of $\mathbf{a}, \mathbf{b},
   \mathbf{c}, \mathbf{d} \in \mathbb{B}^2$
   that show that none of these functions are AP, so $f^{\mathbf{0}}_J$ can't

@@ -274,7 +274,12 @@ We can easily verify this property in $\mathbb{B}$ from Table
 \ref{TAB:six_valid_patterns}. The general case in $\mathbb{B}^m$ immediately
 follows from Definition \ref{DEF:analogy_for_vectors}. Sadly, Property
 \ref{PROPER:hamming_distance_boolean_proportion} only offers a necessary
-condition for a proportion to hold, and not a sufficient one.
+condition for a proportion to hold, and not a sufficient one. We note that
+while the first two properties $H(\mathbf{a}, \mathbf{b}) = H(\mathbf{c},
+\mathbf{d})$ and $H(\mathbf{a}, \mathbf{c}) = H(\mathbf{b}, \mathbf{d})$ are
+classical properties for parallelograms, the third one $H(\mathbf{a},
+\mathbf{d}) = H(\mathbf{b}, \mathbf{c})$ is only true for rectangles. In fact,
+the parallelograms that we can build in $\mathbb{B}^m$ are always rectangles.
 
 \section{Machine learning with Boolean proportions: a quick walk-through}
 \label{SEC:machine_learning_with_boolean_proportions}
@@ -352,6 +357,7 @@ patterns of Table \ref{TAB:six_valid_patterns}, naturally). As we can see, the
 solution is always unique:
 
 \begin{proposition}
+  \label{PROPOS:equation_solving}
   Let $a, b, c$ in $\mathbb{B}$. The analogical equation
   $a :b::c:x$
   is solvable if and only if $a = b$ or $a = c$. The solution denoted
