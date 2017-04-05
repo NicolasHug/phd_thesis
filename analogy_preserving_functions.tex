@@ -104,7 +104,7 @@ classification process can be formalized via two conceptual steps:
 
 But then a natural question arises: why should we stick to a $k$-NN classifier?
 The reason why the $k$-NN algorithm is used is because in their algorithmic
-description, exctended learners rely on an analogical dissimilarity, which is
+description, extended learners rely on an analogical dissimilarity, which is
 strongly related to a distance on the instance space. But now that we have an
 equivalent definition of extended classifiers that does not rely explicitely on
 an analogical dissimilarity, nothing actually prevents us from using any other
@@ -114,37 +114,53 @@ paradigm for analogical learning: you first extend the training set by building
 the analogical extension, and then you are free to do how you please and use
 this extension as a bigger training set with any classifier.
 
+In the next subsection, we will formally describe the problem of training set
+extension, and present some previous works. Then in subsection
+\ref{SEC:analogy_preserving_presentation}, we will introduce the class of
+analogy prserving functions, which lead to a perfectly sound training set
+extension in all cases.
+
 \subsection{Previous works}
 
-Extension of a sample set (or training set) of a given universe $\mathcal{X}$
-is a simple idea to improve generalization power. The more examples you have,
-the better you learn! The point is then to add to the sample set $S$ some new
-examples, but we have to do that in a way that preserves the \textit{quality}
-of $S$.
+Machine learning algorithms usually require training on sufficiently large
+datasets. The problem of learning from few examples is not new and is
+referred-to as one-shot learning, where we rely on a transfer of knowledge from
+known classes to unkown classes: see  for example \cite{LiFerPerPAMI06} in a
+pattern recognition context.  But other options are available when the number
+of training instances is small, and training set extension naturally comes in
+as a handy tool. Indeed, the extension of the training set is a simple idea to
+improve generalization power of the learner.  The more examples you have, the
+better you learn! The point is here to add to the training set $S$ some new
+examples, and to try do that in a way that preserves the \textit{quality} of
+$S$.
 
-BLABLA pas de trucs sérieux, seulement des trucs hadocs, mais quand même...
+Formally, we start with a set $S= \{\mathbf{x}^{(i)} \in \mathcal{X}| i \in
+[1,n]\}$ of examples ($n$ is supposed to be small), where $\mathbf{x}^{(i)}$ is
+an element of a Cartesian product $\mathcal{X} = X_1 \times \ldots \times X_m$.
+For each element  $\mathbf{x}^{(i)} \in S$, we associate a target
+$f(\mathbf{x}^{(i)})=y^{(i)} \in Y$.  In the case of regression, $y^{(i)} \in
+\mathbb{R}$, and in the case of classification $y^{(i)}$ belongs to a finite
+set.
 
-Formally, we start with a set $S= \{x^{(i)} \in \mathcal{X}| i \in [1,n]\}$ of
-examples ($n$ is supposed to be small), where $x^{(i)}$ is an element of a
-Cartesian product $\mathcal{X} = X_1 \times \ldots \times X_m$.  For each
-element  $x^{(i)} \in S$, we associate a target  $f(x^{(i)})=y^{(i)} \in Y$.
-In the case of regression, $y^{(i)} \in \mathbb{R}$, and in the case of
-classification $y^{(i)}$ belongs to a finite set and is called a class or a
-\textbf{label}.
-
-Several methods have been proposed for extending a sample set with new
-examples. We may build a new example starting from 1, 2 or 3 known examples.
+Actually, only a few methods have been proposed for extending a sample set with
+new examples, and most of them are specific to a particular application. For
+example in \cite{CanPerArlLlo06}, some techniques are proposed but they are
+only relevent for character recognition tasks. Intuitively, we may build a new
+example starting from 1, 2 or 3 known examples.
 \begin{enumerate}
 \item With one example, a natural way to proceed is to use the classical
-  neighborhood approach: given one  example $(a,f(a))$, we can generate a new
-    example $(b,f(b))$ where  $b$ is not too far from $a$ and $f(b)$ is not too
-    far from $f(a)$. In the classification case, $f(b)$ may be chosen as
-    $f(a)$.
-\item With two examples, the previous option is still available and leads to
-  interpolate the new example from the two given ones.  A somehow different
-    option is the Feature Knockout procedure \cite{WolMar04}, which amounts
-    to build a third example obtained by modifying a randomly chosen feature
-    of the first example with that of the second one.  This way to
+  neighborhood approach: given one  example $(\mathbf{a},f(\mathbf{a}))$, we
+    can generate a new example $(\mathbf{b},f(\mathbf{b}))$ where  $\mathbf{b}$
+    is not too far from $\mathbf{a}$ and $f(\mathbf{b})$ is not too far from
+    $f(\mathbf{a})$. In the classification case, $f(\mathbf{b})$ may be chosen
+    as $f(\mathbf{a})$. This is the setting in which \cite{CanPerArlLlo06}
+    operates, where new characters are generated by slanting, shrunking, and
+    dilation of training instances.
+\item With two examples, the previous neighborhood option is still available
+  and leads to interpolate the new example from the two given ones.  A somehow
+    different option is the Feature Knockout procedure \cite{WolMar04}, which
+    amounts to build a third example obtained by modifying a randomly chosen
+    feature of the first example with that of the second one.  This way to
     proceed enjoys nice properties and appears to be equivalent to a popular
     regularization (Tikhonov) technique in the case of linear regression.  A
     related idea is used in a recent proposal \cite{BouPraRicECAI16} which
@@ -153,19 +169,37 @@ examples. We may build a new example starting from 1, 2 or 3 known examples.
     equivalent to replace the two neighbors by a fictitious representative of
     the class.
 
-\item With three examples $(a,f(a)), (b,f(b)), (c,f(c))$, the previous options
-  remain available and lead to build a fourth example which is somehow
+\item With three examples $(\mathbf{a},f(\mathbf{a})),
+  (\mathbf{b},f(\mathbf{b})), (\mathbf{c},f(\mathbf{c}))$, the previous options
+    remain available and lead to build a fourth example which is somehow
     in-between the three other ones: we still have some kind of interpolation.
     A quite different idea is to extrapolate the fourth item on the basis of
-    analogical proportion \cite{BayMouMicAnqECML07}.  In this perspective,
-    this fourth element is not necessarily in the neighborhood of the three
-    others.
+    analogical proportion.  In this perspective, this fourth element is not
+    necessarily in the neighborhood of the three others. In fact, this idea has
+    already been addressed in \cite{BayMouMicAnqECML07}.
 \end{enumerate}
 
-Détail de miclets + dire que on va s'intéresser au cas où l'extensio nest 100%
-sound.
+As far as we know, the problem of generation of new examples has never been
+addressed from a theoretical point of view (except for the Knowkout procedure,
+which is only relevent in some particular settings), and this is actually quite
+understandable. So that they can be used in an extended training set, the new
+generated examples have to be assigned an estimated label... But how do we
+estimate these labels? Well there is a name for such problems: it is called
+classification, and classification was the actual reason why we wanted to
+extend the training set in the first place, so we have a vicous circle here.
+In this some sense, extending a training set with potentially noisy data
+amounts to nothing but performing classification on a specific set of
+instances.
+
+However, training set extension can still be extremely useful if we are
+perfectly sure that the new added examples are sound, i.e. that their estimated
+labels are the correct ones. In the next subsection, we will formally define
+this problem in the context of analogical learning. Section \ref{TODO} will
+then be devoted to the identification of the cases where such a perfect
+extension is feasible.
 
 \subsection {Analogy preserving functions: a safe way to extend}
+\label{SEC:analogy_preserving_presentation}
 
 Algorithmically, the generation of $\esf$ and the computation of the
 analogical labels goes as follows:
@@ -277,37 +311,38 @@ $\bigskip
 
 To complete our proofs, we will need to recall some background.
 
-\subsection{Prelinimary background}
+\subsection{Prelinimary background on Boolean functions}
 
-In the following, the AND operator `$\wedge$' will be denoted `$\cdot$' to fit
-with an algebraic notation. Also, `$+$' will now denote the modulo-2 addition,
-equivalent to the XOR operator. Note that $x + 1 = \neg x$.
 
 Our first step will be to use a unifying notation for all of the Boolean
-functions. We shall indeed make use of the  polynomial representation of
-Boolean functions, that we now describe. A \textbf{ monomial} is a term of the
-form:
+functions, and to adopt an algebraic point of view.  In the following, the AND
+operator `$\wedge$' will be denoted `$\cdot$', and `$+$' will now denote the
+modulo-2 addition, equivalent to the XOR operator.  We shall make use of the
+polynomial representation of Boolean functions, that we now describe. A
+\textbf{ monomial} is a term of the form:
 $$
 \mathbf{x}_I=\underset{i\in I}{\prod}x_i, $$ for some possibly empty finite set of
 positive integers $I$, where $|I|$ is called the \textbf{degree} of
-$\mathbf{x}_I$.   We take the convention that $1$ is the empty monomial
-$\mathbf{x}_\emptyset $. A \textbf{ polynomial} is a sum of monomials and its
+$\mathbf{x}_I$. Simply put, a monomiam is a conjunction of variables. We take
+the convention that $1$ is the empty monomial $\mathbf{x}_\emptyset $. A
+\textbf{ polynomial} is a sum of monomials and its
 degree is the largest degree of its monomials.  It is well-known
 \cite{StoneAlgebra36,ZhegalkinAlgebra27} that any function
-$f:\mathbb{B}^m\rightarrow \mathbb{B}$ is uniquely represented by a polynomial,
-also called the \textbf{Algebraic Normal Form} (ANF):
+$f:\mathbb{B}^m\rightarrow \mathbb{B}$ is \textbf{uniquely represented by a
+polynomial}, also called the \textbf{Algebraic Normal Form} (ANF):
 $$f(x_1,\ldots,x_m)=\sum_{I\subseteq \{1,\ldots,m\}}a_I\cdot \mathbf{x}_I,$$
 where each $a_I$ belongs to $\mathbb{B}$. Note that the constant function $0$
 is represented by $a_\emptyset\cdot \mathbf{x}_\emptyset$ with $a_\emptyset
 =0$. The degree of a function $f:\mathbb{B}^m\rightarrow \mathbb{B}$, denoted
 $d(f)$, is defined as the degree of the unique polynomial representing $f$. In
 the following, we will often will refer to $f$ as both a function object and as
-the associated ANF. Here are the ANF of some common Boolean functions:
+the associated ANF. Here are the ANF of some common Boolean functions in
+$\mathbb{B}^2$ or $\mathbb{B}$:
 
 \begin{itemize}
-  \item $\text{AND}(x_1, x_2) = x_1 \cdot x_2$,
-  \item $\text{OR}(x_1, x_2) = x_1 + x_2 + x_1 \cdot x_2$,
-  \item $\text{XOR}(x_1, x_2) = x_1 + x_2$,
+  \item $\text{AND}(x_1, x_2) = x_1 \cdot x_2$ ;
+  \item $\text{OR}(x_1, x_2) = x_1 + x_2 + x_1 \cdot x_2$ ;
+  \item $\text{XOR}(x_1, x_2) = x_1 + x_2$ ;
   \item $\text{NEG}(x_1) = x_1 + 1$.
 \end{itemize}
 
@@ -359,21 +394,23 @@ value of the function $f$, and thus the AP property still holds.
 
 We now define the concept of \textbf{section} of a function, also known as a
 \textit{restriction}, or equivalently as the result of \textit{partial
-application} in computer science. Let $f$ be a function $\mathbb{B}^m\to \mathbb{B}$, and $(I,
-J)$ be a partition of $[1, m]$. With $\mathbf{x}
-\in \mathbb{B}^m$ and $\boldsymbol{\alpha} \in \mathbb{B}^{|I|}$, the $I$-section (or simply
-section) $f^{\boldsymbol{\alpha}}_I \colon \mathbb{B}^{|J|} \to \mathbb{B}$ is the function that
-is obtained after setting all variables in $I$ to the components of
-$\boldsymbol{\alpha}$.
-More formally, let us define $(\mathbf{x}^{\boldsymbol{\alpha}}_I) \in \mathbb{B}^m$
-as follows:
+application} in computer science. Let $f$ be a function $\mathbb{B}^m\to
+\mathbb{B}$, and $(I, J)$ be a partition of $[1, m]$. With $\mathbf{x} \in
+\mathbb{B}^m$ and $\boldsymbol{\alpha} \in \mathbb{B}^{|I|}$, the $I$-section
+(or simply section) $f^{\boldsymbol{\alpha}}_I \colon \mathbb{B}^{|J|} \to
+\mathbb{B}$ is the function that is obtained after setting all variables in $I$
+to the components of $\boldsymbol{\alpha}$.  More formally, let us define
+$(\mathbf{x}^{\boldsymbol{\alpha}}_I) \in \mathbb{B}^m$ as follows:
 $$
 \begin{cases}
 (\mathbf{x}^{\boldsymbol{\alpha}}_I)_i \eqdef x_i \mbox{ if } i \notin I\\
-(\mathbf{x}^{\boldsymbol{\alpha}}_I)_i \eqdef \alpha_j \mbox{ where } j \mbox{ is the index of } i \mbox{ in } I
+(\mathbf{x}^{\boldsymbol{\alpha}}_I)_i \eqdef \alpha_j \mbox{ where } j \mbox{
+  is the index of } i \mbox{ in } I.
 \end{cases}
 $$
-For instance, with $m=5, \mathbf{x}=(0,1,1,0,0), I=\{1,3,4\}$ and $\boldsymbol{\alpha}=(1,0,0)$ then
+$\mathbf{x}^{\boldsymbol{\alpha}}_I$ is nothing but the vector $\mathbf{x}$
+where the components at the  indices in $I$ have been replaces by the
+successive components of $\boldsymbol{\alpha}$. For instance, with $m=5, \mathbf{x}=(0,1,1,0,0), I=\{1,3,4\}$ and $\boldsymbol{\alpha}=(1,0,0)$ then
 $(\mathbf{x}^{\boldsymbol{\alpha}}_I)=(1,1,0,0,0)$.
 The $I$-section $f^{\boldsymbol{\alpha}}_I$ is a function from $\mathbb{B}^{\mid
 J \mid} \to \mathbb{B}$ defined as:
@@ -439,8 +476,19 @@ By definition $f^{\boldsymbol{\boldsymbol{\alpha}}}_I(\mathbf{y}) =
 \end{proof}
 
 
+This section was quite dense so let us recap what we have seen. We will
+describe functions by their ANF, which is a polynomial representation. This ANF
+allowed us to define the degree of a function, which has a similar meaning to
+the notion of degree for real valued polynomials. We also defined the notion of
+equivalent functions, and showed that two equivalent functions are either both
+AP, or none of them are. Finally, we defined the section of a function which is
+a function of lower arity, and saw that sectioning an AP function leads to
+another AP function.
+
 We are now in a position to see some examples of AP functions. We will show that
 any affine function is AP.
+
+
 
 \subsection{The class affine functions}
 
@@ -466,9 +514,9 @@ Let $f \colon \mathbb{B}^m \to \mathbb{B} \in L$. Using the obvious fact that
   functions lead to classification problems that are, in fact, highly
   \textbf{non} linearly separable.} that changing the value of any
   $x_i$ changes the value of $g$: $\forall _i, \quad g(x_1, \cdots, x_i, \cdots, x_n) =
-  \neg g(x_1, \cdots, \neg x_i, \cdots, x_n)$. This proprety is illustrated on
-  Figure \ref{FIG:affine_functions_neighbors} it is easy to
-  see that:
+  \neg g(x_1, \cdots, \neg x_i, \cdots, x_n)$, as illustrated on
+  Figure \ref{FIG:affine_functions_neighbors}. From this property, it is easy
+  to see that:
   $$\forall \mathbf{x}, \mathbf{x}' \in \mathbb{B}^n, g(\mathbf{x}) =
   g(\mathbf{x}') \iff H(\mathbf{x}, \mathbf{x}') \text{ is even},$$
   where $h$ is the Hamming distance function.
@@ -513,8 +561,11 @@ Let $f \colon \mathbb{B}^m \to \mathbb{B} \in L$. Using the obvious fact that
 \begin{figure}[!h]
 \centering
   \includegraphics[width=2in]{figures/affine_functions_neighbors.pdf}
-  \caption{The labels as determined by the affine function $f(x_1, x_2, x_3) = x_1 + x_3 + x_3$.}
-\label{FIG:affine_functions_neighbors}
+  \caption{The labels as determined by the affine function $g(x_1, x_2, x_3) =
+  x_1 + x_3 + x_3$. Note that each $1$ is surrounded by three $0$, and each $0$
+  is surrounded by three $1$. Also, note that solving any (solvable) analogical
+  equation leads to the correct solution: This is because $g$ is AP.}
+  \label{FIG:affine_functions_neighbors}
 \end{figure}
 
 Proposition \ref{PROPOS:affine_functions_are_wap} can now retrospectively
