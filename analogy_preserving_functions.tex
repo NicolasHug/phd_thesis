@@ -176,8 +176,28 @@ example starting from 1, 2 or 3 known examples.
     A quite different idea is to extrapolate the fourth item on the basis of
     analogical proportion.  In this perspective, this fourth element is not
     necessarily in the neighborhood of the three others. In fact, this idea has
-    already been addressed in \cite{BayMouMicAnqECML07}.
+    been addressed in \cite{BayMouMicAnqECML07}, where the authors generated
+    new examples that had the least analogical dissimilarity with some
+    $3$-tuples in $S^3$. The analogical dissimilarity was an AD between
+    sequences, and they used it to generate new examples of handwritten
+    characters modeled using the Freeman coding, which is a sequence of symbols
+    indicating the successive directions of the pen that are needed to write
+    the character. They used their extended training set to train an SVM and a
+    Radial Basis Function Network for a classification task, and results showed
+    that the classifiers had better results when they were trained with the
+    analogically-extended training set than when they were trained with an
+    extended training set using other generation techniques (such as those of
+    \cite{CanPerArlLlo06}).
 \end{enumerate}
+
+Note though that just like the algorithmic descriptio nof the extended
+classifier using analogical dissimilarity, we here only have an algorithmic
+description of this training set extension procedure. The authors in
+\cite{BayMouMicAnqECML07} never explicitely refer to the analogical extension
+set $\esf$, and this is normal because the unifying framework between the works
+in \cite{BayMicDelIJCAI07} and the works in \cite{StrYvoCNLL05} where only made
+later in \cite{HugPraRicSerECAI16}, as desribed in Chapter
+\ref{CHAP:functional_definition}.
 
 As far as we know, the problem of generation of new examples has never been
 addressed from a theoretical point of view (except for the Knowkout procedure,
@@ -198,11 +218,17 @@ this problem in the context of analogical learning. Section \ref{TODO} will
 then be devoted to the identification of the cases where such a perfect
 extension is feasible.
 
-\subsection {Analogy preserving functions: a safe way to extend}
+\subsection {Analogy preserving functions: a safe way to extend a training set}
 \label{SEC:analogy_preserving_presentation}
 
-Algorithmically, the generation of $\esf$ and the computation of the
-analogical labels goes as follows:
+In the rest of this chapter, we will address the problem of extending a
+training set using analogical proportions. Instead of using using an analogical
+dissimilarity like in  \cite{BayMouMicAnqECML07}, we wille use our equivalent
+functional framework described in Chapter \ref{CHAP:functional_definition},
+i.e. we will consider that the extension of the training set $S$ is the
+analogical extension $\esf$, where $f$ is the function underlying the ground
+truth labels. Algorithmically, the generation of $\esf$ and the computation of
+the analogical labels goes as follows:
 \begin{enumerate}
   \item Add every $\mathbf{x} \in S$ to $\esf$. Then, for every
     $\mathbf{a},\mathbf{b},\mathbf{c} \in S$ such that $f(\mathbf{a}) :
@@ -222,9 +248,9 @@ The extension $\esf$ is then considered to be an extended training set, where
 the labels are the analogical labels, which are not necessarily correct. Indeed
 for some elements $\mathbf{x} \in \esfs$, it may happend that
 $\albl{\mathbf{x}} \neq f(\mathbf{x})$, simply because the analogical inference
-principle may not be \textit{suitable} for the function $f$.  In this chapter,
+principle may not be \textit{suitable} for the function $f$. In this chapter,
 we  are precisely interested in the identification of all Boolean functions $f$
-that lead to perfectly sound extensions, i.e.  extensions where the analogical
+that lead to perfectly sound extensions, i.e. extensions where the analogical
 labels $\albl{\mathbf{x}}$ are always equal to the ground truth values
 $f(\mathbf{x})$. These functions will be called \textbf{Analogy preserving}
 functions:
@@ -276,10 +302,8 @@ If $f$ does not suit this requirement, then there exist $\mathbf{a},
 \end{proof}
 
 \noindent
-The rest of this TODO will be devoted to a complete characterization of AP
-functions.
 
-First note that many natural functions are not AP. Consider for example the
+First, note that many natural functions are not AP. Consider for example the
 binary function $f(x_1,x_2)= x_1 \wedge x_2$, along with $\mathbf{a},
 \mathbf{b}, \mathbf{c}, \mathbf{d} \in \mathbb{B}^2$ in Table
 \ref{exampleNotAP}.  We have $\mathbf{a} : \mathbf{b} :: \mathbf{c} :
@@ -307,12 +331,16 @@ $\bigskip
 \label{exampleNotAP}
 \end{table}
 
+The rest of this TODO will be devoted to a complete characterization of AP
+functions.
+
 \section{A complete characterization of analogy preserving functions}
 
-To complete our proofs, we will need to recall some background.
+We will show in this section that the classof AP functions is the class of
+affine functions (affine functions will be defined later). To complete our
+proofs, we will first need to recall some background.
 
 \subsection{Prelinimary background on Boolean functions}
-
 
 Our first step will be to use a unifying notation for all of the Boolean
 functions, and to adopt an algebraic point of view.  In the following, the AND
@@ -320,24 +348,22 @@ operator `$\wedge$' will be denoted `$\cdot$', and `$+$' will now denote the
 modulo-2 addition, equivalent to the XOR operator.  We shall make use of the
 polynomial representation of Boolean functions, that we now describe. A
 \textbf{ monomial} is a term of the form:
-$$
-\mathbf{x}_I=\underset{i\in I}{\prod}x_i, $$ for some possibly empty finite set of
-positive integers $I$, where $|I|$ is called the \textbf{degree} of
+$$\mathbf{x}_I=\underset{i\in I}{\prod}x_i,$$ for some possibly empty finite
+set of positive integers $I$, where $|I|$ is called the \textbf{degree} of
 $\mathbf{x}_I$. Simply put, a monomiam is a conjunction of variables. We take
 the convention that $1$ is the empty monomial $\mathbf{x}_\emptyset $. A
-\textbf{ polynomial} is a sum of monomials and its
-degree is the largest degree of its monomials.  It is well-known
-\cite{StoneAlgebra36,ZhegalkinAlgebra27} that any function
-$f:\mathbb{B}^m\rightarrow \mathbb{B}$ is \textbf{uniquely represented by a
-polynomial}, also called the \textbf{Algebraic Normal Form} (ANF):
-$$f(x_1,\ldots,x_m)=\sum_{I\subseteq \{1,\ldots,m\}}a_I\cdot \mathbf{x}_I,$$
-where each $a_I$ belongs to $\mathbb{B}$. Note that the constant function $0$
-is represented by $a_\emptyset\cdot \mathbf{x}_\emptyset$ with $a_\emptyset
-=0$. The degree of a function $f:\mathbb{B}^m\rightarrow \mathbb{B}$, denoted
-$d(f)$, is defined as the degree of the unique polynomial representing $f$. In
-the following, we will often will refer to $f$ as both a function object and as
-the associated ANF. Here are the ANF of some common Boolean functions in
-$\mathbb{B}^2$ or $\mathbb{B}$:
+\textbf{ polynomial} is a sum of monomials and its degree is the largest degree
+of its monomials.  It is well-known \cite{StoneAlgebra36,ZhegalkinAlgebra27}
+that any function $f:\mathbb{B}^m\rightarrow \mathbb{B}$ is \textbf{uniquely
+represented by a polynomial}, also called the \textbf{Algebraic Normal Form}
+(ANF): $$f(x_1,\ldots,x_m)=\sum_{I\subseteq \{1,\ldots,m\}}a_I\cdot
+\mathbf{x}_I,$$ where each $a_I$ belongs to $\mathbb{B}$. Note that the
+constant function $0$ is represented by $a_\emptyset\cdot \mathbf{x}_\emptyset$
+with $a_\emptyset =0$. The degree of a function $f:\mathbb{B}^m\rightarrow
+\mathbb{B}$, denoted $d(f)$, is defined as the degree of the unique polynomial
+representing $f$. In the following, we will often will refer to $f$ as both a
+function object and as the associated ANF. Here are the ANF of some common
+Boolean functions in $\mathbb{B}^2$ or $\mathbb{B}$:
 
 \begin{itemize}
   \item $\text{AND}(x_1, x_2) = x_1 \cdot x_2$ ;
@@ -410,19 +436,20 @@ $$
 $$
 $\mathbf{x}^{\boldsymbol{\alpha}}_I$ is nothing but the vector $\mathbf{x}$
 where the components at the  indices in $I$ have been replaces by the
-successive components of $\boldsymbol{\alpha}$. For instance, with $m=5, \mathbf{x}=(0,1,1,0,0), I=\{1,3,4\}$ and $\boldsymbol{\alpha}=(1,0,0)$ then
-$(\mathbf{x}^{\boldsymbol{\alpha}}_I)=(1,1,0,0,0)$.
-The $I$-section $f^{\boldsymbol{\alpha}}_I$ is a function from $\mathbb{B}^{\mid
-J \mid} \to \mathbb{B}$ defined as:
+successive components of $\boldsymbol{\alpha}$. For instance, with $m=5,
+\mathbf{x}=(0,1,1,0,0), I=\{1,3,4\}$ and $\boldsymbol{\alpha}=(1,0,0)$ then
+$(\mathbf{x}^{\boldsymbol{\alpha}}_I)=(1,1,0,0,0)$.  The $I$-section
+$f^{\boldsymbol{\alpha}}_I$ is a function from $\mathbb{B}^{\mid J \mid} \to
+\mathbb{B}$ defined as:
 $$\forall \mathbf{y} \in \mathbb{B}^{|J|},
 f^{\boldsymbol{\alpha}}_I(\mathbf{y}) \eqdef
 f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{y}_J).$$
 Note that the arity of $f^{\boldsymbol{\alpha}}_I$ is $|J|$, and that
-$\ess(f^{\boldsymbol{\alpha}}_I) \leq \ess(f)$.
-As an example, let us consider the function $f\colon \mathbb{B}^3 \to
-\mathbb{B}$ such as $$f(x_1,x_2, x_3) = x_1 \cdot x_2 +
-x_3 + x_1 \cdot x_2 \cdot x_3.$$ The section $f^{(1, 0)}_{\{1, 3\}}   \in
-\mathcal{F}_1$ is defined by $f^{(1, 0)}_{\{1, 3\}}(x_2) = x_2$.
+$\ess(f^{\boldsymbol{\alpha}}_I) \leq \ess(f)$.  As an example, let us consider
+the function $f\colon \mathbb{B}^3 \to \mathbb{B}$ such as
+$$f(x_1,x_2, x_3) = x_1 \cdot x_2 \cdot x_3 + x_1 \cdot x_2 + x_3.$$
+The section $f^{(1, 0)}_{\{1, 3\}}$ is a function from $\mathbb{B}$ to
+$\mathbb{B}$ and is defined by $f^{(1, 0)}_{\{1, 3\}}(x_2) = x_2$.
 
 A main result about sections that will be used in other proofs is stated in
 Property \ref{section_preserve_wap}:
@@ -433,20 +460,23 @@ If $f\colon \mathbb{B}^m\to \mathbb{B}$ is AP, then every section of $f$ is
 \end{property}
 \begin{proof}
   This statement is actually pretty obvious but sadly, its proof is quite ugly.
-  Let $f$ be an AP function from $\mathbb{B}^m \to \mathbb{B}$, $(I,J)$
-  a partition of $[1, m]$, and $\boldsymbol{\alpha} \in \mathbb{B}^{|I|}$. We
+  Let $f$ be an AP function from $\mathbb{B}^m \to \mathbb{B}$, $(I,J)$ a
+  partition of $[1, m]$, and $\boldsymbol{\alpha} \in \mathbb{B}^{|I|}$. We
   will consider the section  $f^{\boldsymbol{\alpha}}_I$.  Let's now assume
   that we have $\mathbf{a},\mathbf{b},\mathbf{c}, \mathbf{d} \in
   \mathbb{B}^{|J|}$ with the 2 following properties:
   $$
   \begin{cases}
     \mathbf{a}:\mathbf{b}::\mathbf{c}:\mathbf{d}\\
-    \solvable(f^{\boldsymbol{\alpha}}_I(\mathbf{a}),f^{\boldsymbol{\alpha}}_I(\mathbf{b}),f^{\boldsymbol{\alpha}}_I(\mathbf{c}))
+    \solvable(f^{\boldsymbol{\alpha}}_I(\mathbf{a}),
+    f^{\boldsymbol{\alpha}}_I(\mathbf{b}),
+    f^{\boldsymbol{\alpha}}_I(\mathbf{c}))
   \end{cases}
   $$
   We want to prove that this implies that
-  $\sol(f^{\boldsymbol{\alpha}}_I(\mathbf{a}),f^{\boldsymbol{\alpha}}_I(\mathbf{b})
-  = f^{\boldsymbol{\alpha}}_I(\mathbf{d})$.
+  $\sol(f^{\boldsymbol{\alpha}}_I(\mathbf{a}),
+  f^{\boldsymbol{\alpha}}_I(\mathbf{b}) =
+  f^{\boldsymbol{\alpha}}_I(\mathbf{d})$.
   First, let us note that the following property holds:
 $$\forall \mathbf{a},\mathbf{b},\mathbf{c}, \mathbf{d} \in \mathbb{B}^{|J|},~J
   \subset [1,m], ~ \mathbf{x} \in \mathbb{B}^m,~~ \mathbf{a}: \mathbf{b} ::
@@ -467,10 +497,15 @@ since $\forall \mathbf{x} \in \mathbb{B}^m,$ we have that $
 By definition $f^{\boldsymbol{\boldsymbol{\alpha}}}_I(\mathbf{y}) =
   f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^{\mathbf{y}}_J)$, and the second
   condition is just:
-  $$\solvable(f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{a}_J),f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{b}_J),f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{c}_J)).$$
+  $$\solvable(f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{a}_J),
+  f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{b}_J),
+  f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{c}_J)).$$
   Since $f$ is AP, we have that:
-  $\sol(f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{a}_J),f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{b}_J),f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{c}_J))=
-  f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{d}_J)=f^{\boldsymbol{\alpha}}_I(\mathbf{d})$,
+  $\sol(f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{a}_J),
+  f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{b}_J),
+  f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{c}_J))=
+  f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{d}_J)=
+  f^{\boldsymbol{\alpha}}_I(\mathbf{d})$,
   which is the condition for  $f^{\boldsymbol{\boldsymbol{\alpha}}}_I$ to be
   AP.
 \end{proof}
@@ -485,38 +520,56 @@ AP, or none of them are. Finally, we defined the section of a function which is
 a function of lower arity, and saw that sectioning an AP function leads to
 another AP function.
 
-We are now in a position to see some examples of AP functions. We will show that
-any affine function is AP.
+We are now in a position to see some examples of AP functions. We will first
+show that any affine function is AP, and we will then prove that these
+functions are actually the only AP functions.
 
+\subsection{The class of Analogy Preserving functions}
 
+Let us first define how we define affine functions:
+\begin{definition}
+  The class $L$ of \textbf{affine} functions is the set of functions $f$ of the
+  form:
+  $$f(x_1,\ldots , x_m)=\alpha_1\cdot x_1+\ldots +\alpha_m\cdot
+  x_m+\alpha_0,$$
+  where $\alpha_0,\ldots, \alpha_m$ are elements of $\mathbb{B}$. We also write
+  $$f(\mathbf{x}) = \boldsymbol{\alpha} \cdot \mathbf{x} + \alpha_0,$$
+  where $\boldsymbol{\alpha} \in \mathbb{B}^m$ and $\cdot$ is here a scalar
+  product.  If $\alpha_0= 0$ we say that $f$ in \textbf{linear}.
+\end{definition}
 
-\subsection{The class affine functions}
+Note that we used the polynomial representation of the function $f$, and that
+$L$ is precisely the set of functions whose degree is less than or equal to
+$1$. Informally, a linear function is a function that computes the exclusive OR
+between any subset of variables. The class $L$ is then the set of all linear
+functions along with their negations (because $f + 1$ = $\neg f$). A particular
+case of affine functions are the \textbf{projections} or \textbf{dictator}
+functions, defined by $f(\mathbf{x}) = x_i + \alpha_0$. We will use these
+functions later.
 
+Now, we will prove that every linear function is AP:
 \begin{proposition}
-  \label{PROPOS:affine_functions_are_wap}
-Let $L$ be the class of all affine functions, i.e. functions of the form:
-  $$f(x_1,\ldots , x_m)=\alpha_1\cdot x_1+\ldots +\alpha_m\cdot  x_m+\alpha,$$
-  with $\alpha_1,\ldots, \alpha_m,\alpha\in \mathbb{B}$. Every affine function
-  (also called linear when $\alpha = 0$) is AP.
+  \label{PROPOS:affine_functions_are_ap}
+  Any affine function $f$ is AP.
 \end{proposition}
 
 \begin{proof}
-Let $f \colon \mathbb{B}^m \to \mathbb{B} \in L$. Using the obvious fact that
-  $f$ is AP  iff $f + 1 = \neg f$ is AP, we may assume without loss of generality that
-  $\alpha = 0$. Also, considering that $f$ essentially depends on $n \leq m$
-  variables ($n$ is then the number of $\alpha_i$ equal to $1$), $f$ is
-  equivalent to the function $g \colon \mathbb{B}^n \to \mathbb{B}$ defined by
-  $g(x_1, \cdots, x_n) = x_1 +  \cdots + x_n$. Using Property
+  Let $f \colon \mathbb{B}^m \to \mathbb{B} \in L$. Using the obvious fact that
+  $f$ is AP  iff $f + 1 = \neg f$ is AP, we may assume without loss of
+  generality that $\alpha = 0$. Also, considering that $f$ essentially depends
+  on $n \leq m$ variables ($n$ is then the number of $\alpha_i$ equal to $1$),
+  $f$ is equivalent to the function $g \colon \mathbb{B}^n \to \mathbb{B}$
+  defined by $g(x_1, \cdots, x_n) = x_1 +  \cdots + x_n$. Using Property
   \ref{equivalent_functions}, we just need to prove that $g$ is AP to show that
   $f$ is also AP.
 
-  This function $g$ has the remarkable property\footnote{This is the reason why affine
-  functions lead to classification problems that are, in fact, highly
-  \textbf{non} linearly separable.} that changing the value of any
-  $x_i$ changes the value of $g$: $\forall _i, \quad g(x_1, \cdots, x_i, \cdots, x_n) =
-  \neg g(x_1, \cdots, \neg x_i, \cdots, x_n)$, as illustrated on
-  Figure \ref{FIG:affine_functions_neighbors}. From this property, it is easy
-  to see that:
+  This function $g$ has the remarkable property\footnote{This is the reason why
+  affine functions lead to classification problems that are, in fact, highly
+  \textbf{non} linearly separable.} that changing the value of any $x_i$
+  changes the value of $g$: $\forall _i, \quad g(x_1, \cdots, x_i, \cdots, x_n)
+  = \neg g(x_1, \cdots, \neg x_i, \cdots, x_n)$, as illustrated on Figure
+  \ref{FIG:affine_functions_neighbors}. From this property, it is easy to see
+  that:
   $$\forall \mathbf{x}, \mathbf{x}' \in \mathbb{B}^n, g(\mathbf{x}) =
   g(\mathbf{x}') \iff H(\mathbf{x}, \mathbf{x}') \text{ is even},$$
   where $h$ is the Hamming distance function.
@@ -568,44 +621,46 @@ Let $f \colon \mathbb{B}^m \to \mathbb{B} \in L$. Using the obvious fact that
   \label{FIG:affine_functions_neighbors}
 \end{figure}
 
-Proposition \ref{PROPOS:affine_functions_are_wap} can now retrospectively
+Proposition \ref{PROPOS:affine_functions_are_ap} can now retrospectively
 explain the results of Figure \ref{FIG:nan_vs_nn} on page \ref{FIG:nan_vs_nn}
 for the two functions $f_1$ and $f_2$, which are both instances of affine
 functions. We saw that for these two functions, $\omegasf$ (defined as the
 proportion of elements $\mathbf{x}$ in $\esfs$ for which $\albl{x} = f(x)$) was
 always equal to $1$. This result is now obvious and directly comes from the
-fact that both $f_1$ and $f_2$ are actually analogy preserving functions.
+fact that both $f_1$ and $f_2$ are actually analogy preserving functions: $f_1$
+was a projection function while $f_2$ was a general affine function.
 
 We now know that every affine function is AP. We will here give a stronger
-result: the affine functions are the \textbf{only} AP functions.
-In Section \ref{TODO}, we introduce the ANF of Boolean functions and also
-defined their degree. It should be clear that the class of functions with
-degree at most $1$ is exactly the class $L$ of affine functions, which are AP.
-We will show that the class of AP functions is the class of affine functions by
-proving that if a function $f$ is AP, then $d(f)\leq 1$. We first consider the
-case where $d(f) = 2$:
+result: the affine functions are the \textbf{only} AP functions.  In the
+previous subsection, we introduced the ANF of Boolean functions and also
+defined their degree. We also mentioned that the class of functions with degree
+at most $1$ is exactly the class $L$ of affine functions, which are AP.  We
+will show that the class of AP functions is the class of affine functions by
+proving that if a function $f$ is AP, then $d(f)\leq 1$. Let us first consider
+the case where $d(f) = 2$:
 
 \begin{property} \label{degree_2_not_AP}
  Let $f\colon \mathbb{B}^m\to \mathbb{B}$ with $d(f)=2$. $f$ is not AP.
 \end{property}
 \begin{proof}
-  Let's consider $f$ with $d(f) = 2$ and $\ess(f) >= 2$. We denote $\mathbf{x}_I$ one of the
-  monomial of $f$ of degree $2$. We consider the section $f^{\mathbf{0}}_J$,
-  where $J = [1, m] \setminus I$,  and $\mathbf{0}$ denotes the constant 0
-  vector in $B^{|J|}$. All variables that are not part of the monomial
-  $\mathbf{x}_I$ have been set to $0$. This section $f^{\mathbf{0}}_J$ has a
-  unique monomial of degree $2$ (namely $\mathbf{x}_I$) and $\ess(f) = 2$.
-  $f^{\mathbf{0}}_J$ is necessarily equivalent to one of the following
-  functions:
+  Let's consider $f$ with $d(f) = 2$ and $\ess(f) >= 2$. We denote
+  $\mathbf{x}_I$ one of the monomial of $f$ of degree $2$. We consider the
+  section $f^{\mathbf{0}}_J$, where $J = [1, m] \setminus I$,  and $\mathbf{0}$
+  denotes the constant 0 vector in $B^{|J|}$. All variables that are not part
+  of the monomial $\mathbf{x}_I$ have been set to $0$. This section
+  $f^{\mathbf{0}}_J$ has a unique monomial of degree $2$ (namely
+  $\mathbf{x}_I$) and $\ess(f) = 2$.  $f^{\mathbf{0}}_J$ is necessarily
+  equivalent to one of the following functions:
   $$
   \begin{cases}
-    f_1(x_1, x_2) = x_1 \cdot x_2 + \alpha \\
-    f_2(x_1, x_2) = x_1 \cdot x_2 + x_1 + \alpha\\
-    f_3(x_1, x_2) = x_1 \cdot x_2 + x_1 + x_2 + \alpha
+    f_1(x_1, x_2) = x_1 \cdot x_2 + \alpha_0 \\
+    f_2(x_1, x_2) = x_1 \cdot x_2 + x_1 + \alpha_0\\
+    f_3(x_1, x_2) = x_1 \cdot x_2 + x_1 + x_2 + \alpha_0
   \end{cases}$$
-  Now consider Table \ref{TAB:counter_examples}, which gives the values of
-  $f_1, f_2$ and $f_3$ (with $\alpha = 0$) for the four-tuple $(\mathbf{a},
-  \mathbf{b}, \mathbf{c}, \mathbf{d})$.
+  To see that none of these functions are AP, consider Table
+  \ref{TAB:counter_examples} which gives the values of $f_1, f_2$ and $f_3$
+  (with $\alpha_0 = 0$) for the four-tuple $(\mathbf{a}, \mathbf{b},
+  \mathbf{c}, \mathbf{d})$.
   \begin{table}[ht]
     \center
   $\begin{array}{cccccc}
@@ -622,19 +677,17 @@ case where $d(f) = 2$:
   \caption{Examples for $f_1, f_2, f_3$ showing that they are not AP.}
   \label{TAB:counter_examples}
   \end{table}
-  It is clear that $(\mathbf{a},\mathbf{b}, \mathbf{c}, \mathbf{d})$ is an
-  example for $f_1$ because we have $\mathbf{a} : \mathbf{b} :: \mathbf{c} :
-  \mathbf{d}$ and the equation $f_1(\mathbf{a}) :  f_1(\mathbf{b}) ::
-  f(\mathbf{c}) : y$ is solvable, but the solution is $0$ while $f(\mathbf{d})$
-  is $1$. Simmilarly, $(\mathbf{a},\mathbf{b}, \mathbf{c}, \mathbf{d})$ is also
-  an example for $f_2$ and $(\mathbf{d},\mathbf{c}, \mathbf{b}, \mathbf{a})$ is
-  an example for $f_3$.
+  It is clear that the counter-example $(\mathbf{a},\mathbf{b}, \mathbf{c},
+  \mathbf{d})$  shows that $f_1$  is note AP because we have $\mathbf{a} :
+  \mathbf{b} :: \mathbf{c} : \mathbf{d}$ and the equation $f_1(\mathbf{a}) :
+  f_1(\mathbf{b}) :: f(\mathbf{c}) : y$ is solvable, but the solution is $0$
+  while $f(\mathbf{d})$ is $1$. Similarly, $(\mathbf{a},\mathbf{b}, \mathbf{c},
+  \mathbf{d})$ is also a counter-example for $f_2$ and $(\mathbf{d},\mathbf{c},
+  \mathbf{b}, \mathbf{a})$ is a counter-example for $f_3$.
 
-
-  It is pretty straightforward to find examples of $\mathbf{a}, \mathbf{b},
-  \mathbf{c}, \mathbf{d} \in \mathbb{B}^2$
-  that show that none of these functions are AP, so $f^{\mathbf{0}}_J$ can't
-  be AP either. As $f^{\mathbf{0}}_J$ is a section of $f$, $f$ cannot be AP.
+  As $f_1, f_2, f_3$ are not AP, $f^{\mathbf{0}}_J$ can't be AP either because
+  it is equivalent to one of the $f_i$. As $f^{\mathbf{0}}_J$ is a section of
+  $f$, $f$ cannot be AP.
 \end{proof}
 
 All we need now is a property that could allow us to decrease the degree of a
@@ -674,20 +727,319 @@ We have seen that every affine function is AP, i.e. if $d(f)\leq 1$, then $f\in
 \end{proof}
 
 We can finally give a definite answer to our initial problem: {\bf the class of
-functions that ensure a sound extension of any sample set $S \subseteq
+functions that ensure a sound analogical extension of any sample set $S \subseteq
 \mathbb{B}^m$ is the class of affine functions $L$}. If the function is not
 affine, then there exist a sample set $S \subseteq \mathbb{B}^m$ for which
 $\mathbf{E}_S(f)$ is unsound.
 
-Now, while this theoretical result is interesting on its own, it is obvious
-that purely affine functions are not representative of what would be
-encountered in a real-world environment.  This leads to {\bf Problem 2}: What
-remains of the quality of the analogical extension $\mathbf{E}_S(f)$ when $f$
-deviates from being AP in different ways?  The aim of the next section is to
-empirically investigate this question.
+\subsection{The class of Strongly Analogy Preserving functions.}
 
-\section{Approximately AP functions and experiments}
-\label{approximate_ap_functions}
+Let us come back to the analogical inference principle for a moment, which
+states that if we have  $\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$, then
+we should also have $f(\mathbf{a}) :f(\mathbf{b}) :: f(\mathbf{c}) :
+f(\mathbf{d})$:
+$$
+\infer{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c})
+: f(\mathbf{d})}{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}
+$$
+Something we have overlooked so far but that is of importance, is that
+implicitly this inference principle requires that the class equation
+$f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : y$ is solvable as soon as we
+have $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}$. Indeed if the
+equation is not solvable, then we simply cannot have $f(\mathbf{a}) :
+f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})$.
+Therefore, a more explicit writing of the analogical inference priniple is as
+follows: $$
+\infer[\text{~~ Inference Principle A}]{\solvable(f(\mathbf{a}), f(\mathbf{b}),
+f(\mathbf{c})), ~~f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) :
+f(\mathbf{d}) }{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}
+$$
+
+
+Yet, in the end, the ultimate use of this principle is to infer the value of
+$f(\mathbf{d})$, and we can only do that by the actual solving of the equation
+$f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : y$: remember that when we
+build the analogical extension ste, we always require the class equation to be
+solvable. This was also the case when we where dealing with the algorithmic
+description of the conservative classifier.  So if the equation is not
+solvable, we are unable to infer anything about $f(\mathbf{d})$. This is why
+the AP functions are defined as the functions such that we have $f(\mathbf{a})
+:f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})$ provided that we have that
+$\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$ stands \textbf{and that}
+$f(\mathbf{a}) :f(\mathbf{b}) :: f(\mathbf{c}) : y$ is solvable. With regard to
+this, we can say the class of AP functions are the class of functions that
+allow the following inference principle to be sound: $$
+\infer[\text{~~ Inference principle B}]{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) :
+f(\mathbf{d})}{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}, ~~
+\solvable(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))} $$
+
+This one is the inference prinicple that is actually useful in practice: if the
+equation is not solvable then we simply try another $4$-tuple. The first one is
+too restrictive on the function $f$ because it requires that $\mathbf{a} :
+\mathbf{b} :: \mathbf{c} : \mathbf{d} \implies  \solvable(f(\mathbf{a}),
+f(\mathbf{b}), f(\mathbf{c}))$, and in practice this requirement is not
+needed.
+
+We have shown that the AP functions are those that are lead the inference
+principle B to be sound.  For the sake of completness however, we will also
+identify the functions that lead the inference principle A to be sound. These
+functions will be called Strongly Analogy Preserving functions (SAP):
+
+\begin{definition}
+  A function $f$ is Strongly Analogy Preserving (SAP) if:
+  $$\forall \mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in \mathbb{B}^m, ~~
+  \mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d} \implies
+  \begin{cases}
+    \emph{solvable}(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))\\
+     f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d}).
+  \end{cases}$$
+\end{definition}
+
+We will show that the SAP functions are the dictator functions, i.e. functions
+of the form $f(\mathbf{x)} = x_i + \alpha_0$ for some $i \in [1, m]$.
+Naturally, these are a subclass of affine functions, because every SAP function
+is necessarily AP. In Property \ref{PROPER:projections_are_sap}, we prove that
+every dictator function  is SAP.
+
+\begin{property}
+  \label{PROPER:projections_are_sap}
+  Let $f$ be a dictator function, i.e. an affine function a the form:
+  $$f(x_1, x_2, \cdots, x_m) = x_i + \alpha_0,$$
+  where $i \in [i, m]$ and $\alpha_0 \in \mathbb{B}$. Then $f$ is SAP.
+\end{property}
+\begin{proof}
+  Let $f$ be a dictator function: $f(\mathbf{x}) = x_i$ (we consider $\alpha_0$
+  to be $0$ for now). Consider $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}
+  \in \mathbb{B}^m$ such that $\mathbf{a}: \mathbf{b}:: \mathbf{c}:
+  \mathbf{d}$.
+
+  As the analogy is defined component-wise, this means that we have in
+  particular $a_i : b_i :: c_i : d_i$, which is strictly equivalent to
+  $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})$, so $f$ is
+  SAP. The case where $\alpha_0 = 1$ is derived in the same obvious way.
+\end{proof}
+
+We now show that the dictator functions are the only SAP functions:
+
+\begin{proposition}
+  The class of SAP functions is the class of dictator functions.
+\end{proposition}
+\begin{proof}
+  We already know that a SAP function is an AP function, so a SAP function
+  necessarily is affine. Consider a function $f$ that is affine but that is not
+  a dictator function, i.e. $f$ is of the form:
+  $$f(\mathbf{x}) = \alpha_1 \cdot x_1 + \cdots +\alpha_m \cdot x_m + \alpha_0,$$
+  with at least $\alpha_i = 1$ and $\alpha_j = 1$ for two indices $i$ and $j$
+  with $i\neq j \neq 0$. Without loss of generality, we will assume that
+  $\alpha_0 = 0$.
+  Consider now the four-tuple $(\mathbf{a}, \mathbf{b}, \mathbf{c},
+  \mathbf{d})$ such that:
+  \begin{itemize}
+    \item $a_k = 0$ for all $k \neq i$ and $k\neq j$ ($a_i = a_j = 1$)
+    \item $b_k = 0$ for all $k \neq i$ ($b_i = 1$)
+    \item $c_k = 0$ for all $k \neq j$ ($c_j = 1$)
+    \item $d_k = 0$ for all $k$
+  \end{itemize}
+
+  The four-tuple is summuraized in Table \ref{TAB:SAP}, where we clearly see
+  that we have $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}$, but the
+  equation $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c} : y$ is not solvable
+  or $f$ is not SAP, QED.
+
+\begin{table}[ht]
+  \center
+$\begin{array}{cccc}
+  \toprule
+  ~ & x_i & x_j & f(\cdot) \\
+  \midrule
+  \mathbf{a} & 1 & 1 & 0\\
+  \mathbf{b} & 1 & 0 & 1\\
+  \mathbf{c} & 0 & 1 & 1\\
+  \mathbf{d} & 0 & 0 & 0\\
+  \bottomrule
+\end{array}
+$\bigskip
+\caption{$f$ is not SAP because $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c})
+  : y$ is not solvable (plus, $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c} :
+  f(\mathbf{d})$ does not stand.}
+\label{TAB:SAP}
+\end{table}
+
+\end{proof}
+
+
+\section{Beyond Boolean Analogy Preserving functions}
+
+\subsection{Extension to nominam attributes}
+
+When it comes to real life applications, it is quite rare to get a purely
+Boolean dataset.  It is generally the case that the dataset  is  a mix between
+Boolean attributes and nominal attributes taking their values in finite sets.
+For instance, an attribute \textit{color} typically takes its values in, let us
+say, $\Set{red, green,blue}$. Obviously, on this set of values for attribute
+\textit{color}, there is no structure, no order and no known operator.
+Nevertheless, there is still a way to deal with such attributes within the
+analogical framework. This is what we investigate in this subsection.
+ 
+
+We have alread seen in Chapter \ref{CHAP:formal_analogical_proportions} that we
+can define an analogical proportion on a set $X$ by restricting the accepted
+analogical patterns to $a:b::a:b$ and $a:a::b:b$.  Formally, an analogy $A$
+over $X$ is a subset of $X^4$ defined as:
+$$A \triangleq  \{ (a,a,b,b)  | a, b \in X\} \cup \{ (a,b,a,b) | a, b \in X\}$$
+
+Back to the \textit{color} attribute, it means that we consider
+$red:blue::red:blue$ as a valid analogical proportion but $red:blue::red:green$
+is not valid. We can easily extend componentwise this analogy to a Cartesian
+product $X^m=\prod_{i=1}^m X_i$ which is now equipped with an analogical
+relation. In classification, this allows to deal with any kind of nominal
+attributes.  In this setting, a binary classification function $f$ is a
+function from $X^m=\prod_{i=1}^m X_i$ to $\mathbb{B}$. The question we want to
+address here is the same as that of Section \ref{}: we want to characterize all
+the functions $f$ that lead to a perfectly sound analogical extension.
+Unfortunately, we cannot turn to the previous framework because the Cartesian
+product $X^m$ is made of distinct sets and is not anymore a power of
+$\mathbb{B}$. So we will not be able to entirely identify these functions,
+simpyl because we do not even know how to \textit{write} them. When dealing
+with Boolean functions we used an algebraic poitn of view that helped us
+writing the functions with their ANF, and we identified the AP functions as
+those which have a particular ANF. But here this will not be possible because
+there are no algebraic structure on the Cartisian product that is the domain of
+our functions.
+
+Nonetheless, we will still find close links between the AP Boolean functions
+and the AP functions of our current setting, and these links are based on the
+\textit{binarization} of the nominal attribute. Indeed, any nominal attribute
+with $k$ values can be binarized into $k$ Boolean attributes. We can also choose
+$k- 1$ attributes, or some other fancy binarization procedures, but we will
+stick to the simplest one:
+binarizing the \textit{color} attribute leads to three binary attributes
+$(is\_red, is\_green, is\_blue)$ so that $red$ value is coded as $(1, 0, 0)$,
+$green$ is coded as $(0, 1 , 0)$ and $blue$ is coded as $(0, 0, 1)$. Obviously,
+the $k$ Boolean attributes are not independent: for example $(1, 1, 1)$  is not
+a valid value.  More formally, let us denote $\bin$ this injective embedding
+going from $X_i=\{v_1, \cdots, v_k\}$ to $\mathbb{B}^k$:
+$$\bin(v_i) \eqdef (0, \cdots, 0, 1, 0, \cdots 0),$$
+where $1$ is at potision $i$.  So if we have a set of nominal attributes $x_1,
+\cdots, x_m$ where $x_i$ takes its values in a finite set $X_i$, the Cartesian
+product  $\prod_{i=1}^m X_i$ can be mapped into the set $\prod_{i=1}^m
+\mathbb{B}^{\mid X_i \mid}$ by applying the injective embedding $\bin$ in a
+component-wise fashion:
+$$\bin(\prod_{i=1}^m X_i) \eqdef \prod_{i=1}^m  \bin(X_i).$$
+
+From the very definition of this embedding, we have the following immediate and
+obvious property:
+\begin{property}
+  \label{PROPER:analogy_nominal_iff_analogy_bin}
+  For any $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in X^m =
+  \prod_{i=1}^m X_i$,
+$$\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d} \iff
+ \binemph(\mathbf{a}): \binemph(\mathbf{b}):: \binemph(\mathbf{c}):
+  \binemph(\mathbf{d}).$$
+ \end{property}
+ \noindent
+ Note that the proportion $\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$
+ holds in $X^m$ while the proportion $\bin(\mathbf{a}): \bin(\mathbf{b})::
+ \bin(\mathbf{c}): \bin(\mathbf{d})$ is a regular Boolean proportion that holds
+ in $\prod_{i=1}^m\mathbb{B}^{\mid X_i \mid}$.  Now, every function $f$ from
+ $\prod_{i=1}^n X_i$ to $\mathbb{B}$ can be considered as a \textbf{partial}
+ Boolean function $f^b$ from $\prod_{i=1}^m \mathbb{B}^{|X_i|}$ to $\mathbb{B}$
+ where $f^b$ is defined as follows:
+$$
+f^b(\bin(\mathbf{x})) \eqdef f(\mathbf{x})
+$$
+
+As the initial nominal universe  $\prod_{i=1}^m X_i$  has been compiled into a
+Boolean universe, it is tempting to consider the framework that has been
+developped in Section \ref{TODO}. Unfortunately, the whole set $\prod_{i=1}^m
+\mathbb{B}^{\mid X_i\mid}$ is not the exact image of $\prod_{i=1}^m X_i$: it is
+bigger, and some elements in $\prod_{i=1}^m  \mathbb{B}^{\mid X_i\mid}$ are not
+the image of an element of $\prod_{i=1}^m X_i$ using $\bin$.  Ultimately, the
+domain of $f^b$ is just $\bin(\prod_{i=1}^m X_i)$, which is included in
+$\prod_{i=1}^m \mathbb{B}^{|X_i|}$. This is why $f^b$ is considered to be a
+partial function.
+
+Nevertheless, the AP property is still relevant for functions that are only
+partially defined: a partially defined function that always lead to a perfectly
+sound analogical extension for any training set $S$ will also be said to be
+Analogy Preserving, and will be called PAP for Partial AP. Just like in Section
+\ref{TODO}, a natural way to characterize PAP functions is given in Definition
+\ref{DEF:PAP_functions}:
+
+\begin{definition}
+  \label{DEF:PAP_functions}
+  A partial function $f^b$ is {\bf Analogy Preserving} (PAP)
+  if for all $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in
+  \emph{dom}(f^b)$,:
+  $$
+  \begin{cases}
+    \mathbf{a} :  \mathbf{b} ::  \mathbf{c} :  \mathbf{d} \emph{ and }\\
+    solvable(f^b(\mathbf{a}),f^b(\mathbf{b}),f^b(\mathbf{c}))
+  \end{cases}
+  \implies \emph{sol}(f^b(\mathbf{a}),f^b(\mathbf{b}),f^b(\mathbf{c})) =
+  f^b(\mathbf{d}).
+  $$
+\end{definition}
+
+Proposition \ref{PROPOS:PAP_eq_AP} will provide us with the link between $f$
+and $f^b$, when one of them is AP:
+
+\begin{proposition}
+  \label{PROPOS:PAP_eq_AP}
+Let $f$ be a function from $\prod_{i=1}^n X_i$ to $\mathbb{B}$. Then $f$ is AP
+if and only if $f^b$ is PAP.
+\end{proposition}
+\begin{proof}
+  Let us assume that $f$ is AP and let be 4 elements belonging to the domain of
+  $f^b$: $\bin(\mathbf{a}),\bin(\mathbf{b}), \bin(\mathbf{c}), \bin(\mathbf{d})
+  \in \bin(\prod_{i=1}^m X_i)$ such that:
+  $$\begin{cases}
+    \bin(\mathbf{a}):\bin(\mathbf{b})::\bin(\mathbf{c}):\bin(\mathbf{d}) \mbox{
+      and}\\
+    \solvable(f^b(\bin(\mathbf{a})),f^b(\bin(\mathbf{b})),f^b(\bin(\mathbf{c}))).
+  \end{cases}
+  $$
+Thanks to Property \ref{PROPER:analogy_nominal_iff_analogy_bin}, we have seen
+  that in this case we also have
+  $\mathbf{a}:\mathbf{b}::\mathbf{c}:\mathbf{d}$.  Since by definition
+  $f(\mathbf{x}) = f^b(\bin(\mathbf{x}))$,  the second condition simply is
+  $\solvable(f(\mathbf{a}),f(\mathbf{b}),f(\mathbf{c}))$. As $f$ is AP,
+  $\sol(f(\mathbf{a}),f(\mathbf{b}),f(\mathbf{c}))= f(\mathbf{d})$, and
+  $f(\mathbf{d}) = f^b(\bin(\mathbf{d}))$. So in the end, we have that
+  $\sol((f^b(\mathbf{a}),f^b(\mathbf{b}),f^b(\mathbf{c})) =
+  f^b(\bin(\mathbf{d})$, which proves that $f^b$ is PAP.
+
+  Let us now focus on the reverse implication. Consider a PAP function
+  $f^b$ and 4 elements $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in
+  \prod_{i=1}^m X_i$ such that:
+  $$
+  \begin{cases}
+  \mathbf{a}:\mathbf{b}::\mathbf{c}:\mathbf{d} \mbox{ and}\\
+  \solvable(f(\mathbf{a}),f(\mathbf{b}),f(\mathbf{c}))
+  \end{cases}
+  $$
+  Thanks again to Property \ref{PROPER:analogy_nominal_iff_analogy_bin},
+  $\bin(\mathbf{a}):\bin(\mathbf{b})::\bin(\mathbf{c}):\bin(\mathbf{d})$ holds. 
+  The second condition is just
+  $\solvable(f^b(\bin(\mathbf{a})),f^b(\bin(\mathbf{b})),f^b(\bin(\mathbf{c})))$
+  because by definition, $f(\mathbf{x}) = f^b(\bin(\mathbf{x}))$. Be cause
+  $f^b$ is PAP, we have that
+  $\sol(f^b(\bin(\mathbf{a})),f^b(\bin(\mathbf{b})),f^b(\bin(\mathbf{c}))) =
+  f^b(\bin(\mathbf{d}))$. As $f^b(\bin(\mathbf{d}))=f(\mathbf{d})$ by
+  definition, we have that $f$ is AP.
+\end{proof}
+
+In the end, the notions of AP function is smoothly transferable to the notion
+of PAP function. This result is only purely theoretical, and sadly there are
+not much we can extract from it for practical use. Proposition
+\ref{PROPOS:PAP_eq_AP} tells us that when dealing with nominal attributes, if
+the function underlying the ground truth labels is affine once the dataset has
+been binarized, then we can safely extend our training set. Sadly, as there are
+no common operators on the set  $\prod_{i=1}^n X_i$, we are not able to give a
+more accurate characterization of AP functions in such settings.
+
+\subsection{Approximately AP functions and experiments}
+\label{SEC:approximate_ap_functions}
 
 Given two Boolean functions $f$ and $g$, we define their distance
 $\text{dist}(f, g) = P_\mathbf{x}\left[f(\mathbf{x}) \neq
@@ -697,7 +1049,7 @@ random variable. We say that $f$ is $\epsilon$-close to $g$ if $\text{dist}(f,
 g) \leq \epsilon$, and that $f$ is $\epsilon$-close to $L$ if $\exists g \in L$
 such that $f$ is $\epsilon$-close to $g$. Given a sample $S$, we define
 $\omega$ as the quality of the extension $\mathbf{E}_S(f)$ with $\omega =
-P_{\mathbf{x}\in \mathbf{E}^*_S(f)}\left[\albl{\mathbf{x}}_f =
+P_{\mathbf{x}\in \mathbf{E}^*_S(f)}\left[\albl{\mathbf{x}} =
 f(\mathbf{x})\right]$. By definition, $\omega=1$ for all $S$ iff $f$ is AP.
 Note that there exist statistical tests allowing the practitioner to query a
 partially-known function to find out if it is $\epsilon$-close to L (see for
@@ -731,10 +1083,10 @@ symmetrical with respect to the axis $\epsilon = \frac{1}{2}$.
 When $\epsilon = 0$ we get $\omega = 1$, as expected from
 Proposition \ref{AP_is_L}. We observe an almost linear decrease in $\omega$ as
 $\epsilon$ grows to $0.3$ then leading to a plateau where $\omega =
-\frac{1}{2}$, indicating that the analogical labels $\albl{\mathbf{x}}_f$ are
+\frac{1}{2}$, indicating that the analogical labels $\albl{\mathbf{x}}$ are
 more or less random. Moreover, $\omega$ appears to decrease faster for small
 samples $S$. This is due to the fact that the analogical labels
-$\albl{\mathbf{x}}_f$ are the result of a majority-vote procedure among the
+$\albl{\mathbf{x}}$ are the result of a majority-vote procedure among the
 candidate solutions that one can build from $S$, and the number of candidates
 becomes smaller as $|S|$ decreases, thus altering the quality of the
 prediction. The determination of a functional dependence between $\omega$,
@@ -794,3 +1146,4 @@ other experiments, which we do not mention here for lack of space. This may be
 explained by the fact that, as mentioned earlier, the Klein modeling obeys
 the following property, unnatural  for an analogy: $A_K(a, b, c, d)
 \iff A_K(b, a, c, d)$.
+
