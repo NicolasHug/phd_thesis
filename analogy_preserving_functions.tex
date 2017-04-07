@@ -6,35 +6,53 @@ elements are in analogy, then their classes (or any relevant attribute) should
 also be in proportion. This is of course an unsound inference principle, in
 that the conclusion does not always follows from the premises. Nonetheless, we
 have seen in Chapter \ref{CHAP:functional_definition} that it can still be used
-to design classifiers, that we have named conservative and extended
-classifiers.  Both in \cite{BayMicDelIJCAI07} and in our experiment section
-(Section \ref{SEC:experiments_and_empirical_validation}), these classifiers
+to design some classifiers that we have named conservative and extended
+classifiers.  Both in \cite{BayMicDelIJCAI07} and in our experiments in Section
+\ref{SEC:experiments_and_empirical_validation}, these classifiers
 showed promising results, but were still only used in artificial Boolean
 classification problems. Analogical classifiers still had to prove their worth
 in real-world applications, and this was precisely the purpose of the last
-chapter, where we designed various techniques to apply analogical inference on
-a recommendation task.
+chapter, where we designed various techniques to apply the analogical inference
+on a recommendation task.
 
 Unfortunately, the results of a direct application of the analogical inference
 principle did not quite live up to our expectations. The conclusion of the last
 chapter offered a partial explanation to these modest results, stating that
 there were just too few decent analogies to be found on the datasets that we
-used. Even if this argument is perfectly admissible, we will not spare ourselves
+used. Even if this argument is perfectly admissible, we cannot spare ourselves
 the very questioning of the analogical inference principle. We say that if
 four elements are in proportion then so are their classes... But why should it
-be true, or even useful? It is indeed pretty easy to build up simple problems
-where the application of this principle leads to disastrous results.
+even be true? Actually, this question of \textit{why} will probably be best
+answered by philosophers, rather than by computer scientist. We can however
+answer the quetsion of \textit{when}: when is the analogical inference
+principle sound? Said differently, what are the conditions on the function $f$
+so that the inference
+$$
+\infer{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c})
+: f(\mathbf{d})}{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}
+$$
+is sound? The current chapter will be devoted to this question, in a Boolean
+setting. In this regard,
+the problem we address here is related to the contribution of Davies and Russel
+that we described in Section \ref{SEC:Davies_and_Russel} the authors gave a
+necessary condition for the following inference principle to hold:
+$$\infer{Q(T)}{P(S) \wedge Q(S) & P(T)}.$$
+The links and differences between this inference principle and ours will be
+discussed in the conclusion of this document.
 
-Take for example the problem of Figure \ref{FIG:classif_in_R2}. We have
-a set $S$ of points (on the left) that belong to two classes that are linearly
-separable: an instance is a square if it is on the left side of the space, else
-it is a circle. A naive application of the analogical inference principle would
-lead us to believe that for any element that is in proportion with a $3$-tuple
-in $S^3$ (i.e. the element is the fourth vertex of a parallelogram that we can
-build with three elements in $S$), then the classes of the four vertices are in
+It is actually pretty easy to build up simple problems where the application of
+our analogical inference principle leads to disastrous results.  Take for
+example the problem of Figure \ref{FIG:classif_in_R2}. We have a set $S$ of
+points (on the left) that belong to two classes that are linearly separable: an
+instance is a square if it is on the left side of the space, else it is a
+circle. A naive application of the analogical inference principle would lead us
+to believe that for any element that is in proportion with a $3$-tuple in $S^3$
+(i.e. the element is the fourth vertex of a parallelogram that we can build
+with three elements in $S$), then the classes of the four vertices are in
 proportion. In the right figure, we show all these elements, along with their
-estimated classes. The result is absolutely terrible, because the whole space is
-covered with instances belonging to both of the classes.
+estimated classes. The result is absolutely terrible, because the whole space
+is covered with instances belonging to both of the classes. In this example,
+an analogical classifier would lead to ridiculous accuracy results.
 
 \begin{figure}
 \centering
@@ -53,13 +71,13 @@ covered with instances belonging to both of the classes.
 \label{FIG:classif_in_R2}
 \end{figure}
 
-But if it is so easy for analogical inference to fail, then why does it still
+But if it is so easy for our analogical inference principle to fail, then why does it still
 work in some cases? Back to Figure \ref{FIG:nan_vs_nn} on page
 \pageref{FIG:nan_vs_nn}, the accuracies of the NAN algorithm were definitely
 not as bad as that of the problem we have just seen, and some of them were
 actually really good. A first obvious difference between the two experiments is
 that the one we just described deals with the arithmetic proportion with
-real-valued instances, while the other one deal with Boolean attributes. Does
+real-valued instances, while the other one deals with Boolean attributes. Does
 it mean that the analogical inference principle is bound to fail with the
 arithmetic proportion? We will probably not be able to completely answer this
 question, even though we will provide some insights.  We will instead focus on
@@ -83,19 +101,26 @@ will say that these functions are \textbf{analogy preserving}.
 
 We will tackle this problem by adopting the general point of view of training
 set extension. In Section \ref{TODO}, we first define the problem of training
-set extension, described some previous works and explain how this problem will
-motivate the research of analogy preserving functions.
+set extension, describe some previous works and explain how this problem can
+motivate the research of analogy preserving functions. In Section \ref{TODO},
+we give a complete and accurate depiction of analogy preserving functions by
+showing that the class of analogy preserving functions is the class of
+(Boolean) affine functions. This strong theoretical result is extended in
+Section \ref{TODO}, where we address the identificatio of AP functions in a
+nominally valued setting and in a real setting. We also provide some future
+tracks of research by studying the functions that derive from AP in various
+ways.
 
 \section{Extending a training set}
 
 We have proved in Chapter \ref{CHAP:functional_definition} that the analogical
 classification process can be formalized via two conceptual steps:
 \begin{enumerate}
-  \item First, the analogical extension of the training set is computed. This
+  \item First, the analogical extension $\esf$ of the training set is computed. This
     extension is the set of all elements in the instance space that are in
     analogy with one $3$-tuple in the training set, provided that the
     associated class equation is solvable. Each element of the extension is
-    associated with an estimated label: the analogical label.
+    associated with an estimated label: the analogical label denoted $\albl{x}$.
   \item Then, a $k$-NN algorithm is run, considering that the training set is
     actually the analogical extension. This $k$-NN classifier allows to
     classify all the elements of the universe that are not in the analogical
@@ -727,11 +752,17 @@ We have seen that every affine function is AP, i.e. if $d(f)\leq 1$, then $f\in
   then $f$ is not AP, so the class of AP functions is $L$.
 \end{proof}
 
-We can finally give a definite answer to our initial problem: {\bf the class of
-functions that ensure a sound analogical extension of any sample set $S \subseteq
-\mathbb{B}^m$ is the class of affine functions $L$}. If the function is not
-affine, then there exist a sample set $S \subseteq \mathbb{B}^m$ for which
-$\mathbf{E}_S(f)$ is unsound.
+In the end, we proved that {\bf the class of functions that ensure a sound
+analogical extension of any sample set $S \subseteq \mathbb{B}^m$ is the class
+of affine functions $L$}. If the function is not affine, then there exist a
+sample set $S \subseteq \mathbb{B}^m$ for which $\mathbf{E}_S(f)$ is unsound.
+We can now finally give a definite answer to our initial problem: \textbf{a
+function $f$ is \textit{compatible} with the analogical inference principle if
+and only if $f$ is affine.}
+
+In the next subsection, we will focus on some AP functions that
+still \textit{compatible} with the analogical inference principle, but in a
+stronger sens.
 
 \subsection{The class of Strongly Analogy Preserving functions.}
 
