@@ -1,18 +1,20 @@
 \chapter{Background on recommender systems}
 
 \initial{I}n a world of information overload, automatic filtering tools are
-essential to extract relevant information from basic noise. In the field of
-e-commerce, recommender systems play the role of search engines when surfing
-the entire web: they filter available items to provide relevant suggestions to
-customers.
+essential to extract relevant information from basic noise
+\cite{RecoSystemHandbook,AdoTuzIEEE2005}. In the field of e-commerce,
+recommender systems play the role of search engines when surfing the entire
+web: they filter available items to provide relevant suggestions to customers.
+They help to answer questions as diverse as ``what movie to rent?", ``what car
+to buy?" or ``which restaurant to try?". They do so by providing the user with
+a list of recommendations. We have seen in the previous chapter that analogical
+learners exhibit promising results when compared to the $k$-NN algorithms in a
+Boolean settting. In chapter \ref{CHAP:analogical_recommendation}, we will try
+to apply analogical learning to a recommendation task to see if analogical
+learners can prove useful in more challenging contexts.
 
-With the huge development of online businesses, recommender systems have become
-more and more popular \cite{RecoSystemHandbook,AdoTuzIEEE2005}. They help to
-answer questions as diverse as ``what movie to rent?", ``what car to buy?" or
-``which restaurant to try?".  They do so by providing the user with a list of
-recommendations.
-
-In this chapter, we will provide some background on recommender systems. We
+In this chapter, we will provide some necessary background on recommender
+systems, before diving into Chapter \ref{CHAP:analogical_recommendation}. We
 first provide a taxonomy of current research in the recommender systems area in
 Section \ref{SEC:taxonomy_rec_sys}, and set ourselves withing the collaborative filtering
 framework. In Section \ref{SEC:recommendation_rating_prediction}, we formally
@@ -1028,3 +1030,7 @@ as constants and solve the associated linear problem. Then, the $p_u$ are
 considered constant and the associated problem is solved. Repeating these steps
 an arbitrary number of time will also converge to a local solution, and this
 methods is known as Alternating Least Squares \cite{BelKor07}.
+
+We now have enough background on the recommender systems field to apply
+analogical learning to a recommendation task. This is the purpose of the next
+chapter.

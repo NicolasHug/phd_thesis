@@ -1,4 +1,5 @@
 \chapter{Analogy-preserving functions}
+\label{CHAP:analogy_preserving_functions}
 
 \initial{W}e first introduced the analogical inference principle in Chapter
 \ref{CHAP:formal_analogical_proportions}. This principle states that if four
@@ -12,8 +13,8 @@ classifiers.  Both in \cite{BayMicDelIJCAI07} and in our experiments in Section
 showed promising results, but were still only used in artificial Boolean
 classification problems. Analogical classifiers still had to prove their worth
 in real-world applications, and this was precisely the purpose of the last
-chapter, where we designed various techniques to apply the analogical inference
-on a recommendation task.
+chapter, where we designed various techniques to apply analogical inference on
+a recommendation task.
 
 Unfortunately, the results of a direct application of the analogical inference
 principle did not quite live up to our expectations. The conclusion of the last
@@ -24,7 +25,7 @@ the very questioning of the analogical inference principle. We say that if
 four elements are in proportion then so are their classes... But why should it
 even be true? Actually, this question of \textit{why} will probably be best
 answered by philosophers, rather than by computer scientist. We can however
-answer the quetsion of \textit{when}: when is the analogical inference
+answer the question of \textit{when}: when is the analogical inference
 principle sound? Said differently, what are the conditions on the function $f$
 so that the inference
 $$
@@ -99,22 +100,25 @@ lead to a valid conclusion, i.e. the functions such that $\mathbf{a}:
 f(\mathbf{c}): f(\mathbf{d})$ (with some minimal and natural requirements). We
 will say that these functions are \textbf{analogy preserving}.
 
-We will tackle this problem by adopting the general point of view of training
-set extension. In Section \ref{TODO}, we first define the problem of training
-set extension, describe some previous works and explain how this problem can
-motivate the research of analogy preserving functions. In Section \ref{TODO},
-we give a complete and accurate depiction of analogy preserving functions by
+We will tackle this problem by adopting the general point of view of  the
+training set extension. In Section \ref{SEC:extending_a_training_set}, we first
+define the problem of training set extension, describe some previous works and
+explain how this problem can motivate the research of analogy preserving
+functions. In Section \ref{SEC:a_complete_characterization_of_AP_functions}, we
+give a complete and accurate depiction of analogy preserving functions by
 showing that the class of analogy preserving functions is the class of
-(Boolean) affine functions. This strong theoretical result is extended in
-Section \ref{TODO}, where we address the identificatio of AP functions in a
-nominally valued setting and in a real setting. We also provide some future
-tracks of research by studying the functions that derive from AP in various
-ways.
+(Boolean) affine functions. This strong theoretical result is complemented in
+Section \ref{SEC:beyond_boolean_AP_functions}, study the some functions that
+derive from AP in various ways. We also address the identificatio of AP
+functions in a nominally valued setting and in a real setting, where we will
+once again witness the close links between the Boolean proportion and the
+arithmetic proportion.
 
 \section{Extending a training set}
+\label{SEC:extending_a_training_set}
 
 We have proved in Chapter \ref{CHAP:functional_definition} that the analogical
-classification process can be formalized via two conceptual steps:
+classification process can be formalized via two new conceptual steps:
 \begin{enumerate}
   \item First, the analogical extension $\esf$ of the training set is computed. This
     extension is the set of all elements in the instance space that are in
@@ -122,7 +126,7 @@ classification process can be formalized via two conceptual steps:
     associated class equation is solvable. Each element of the extension is
     associated with an estimated label: the analogical label denoted $\albl{x}$.
   \item Then, a $k$-NN algorithm is run, considering that the training set is
-    actually the analogical extension. This $k$-NN classifier allows to
+    now the analogical extension. This $k$-NN classifier allows to
     classify all the elements of the universe that are not in the analogical
     extension.
 \end{enumerate}
@@ -140,12 +144,12 @@ the analogical extension, and then you are free to do how you please and use
 this extension as a bigger training set with any classifier.
 
 In the next subsection, we will formally describe the problem of training set
-extension, and present some previous works. Then in subsection
+extension, and present some previous works one this subject. Then in subsection
 \ref{SEC:analogy_preserving_presentation}, we will introduce the class of
 analogy preserving functions, which lead to a perfectly sound training set
 extension in all cases.
 
-\subsection{Previous works}
+\subsection{Previous works on training set extension}
 
 Machine learning algorithms usually require training on sufficiently large
 datasets. The problem of learning from few examples is not new and is
@@ -154,20 +158,20 @@ known classes to unknown classes: see  for example \cite{LiFerPerPAMI06} in a
 pattern recognition context.  But other options are available when the number
 of training instances is small, and training set extension naturally comes in
 as a handy tool. Indeed, the extension of the training set is a simple idea to
-improve generalization power of the learner.  The more examples you have, the
+improve the generalization power of the learner.  The more examples you have, the
 better you learn! The point is here to add to the training set $S$ some new
 examples, and to try do that in a way that preserves the \textit{quality} of
 $S$.
 
-Formally, we start with a set $S= \{\mathbf{x}^{(i)} \in \mathcal{X}| i \in
+Formally, we start with a set $S= \{\mathbf{x}^{(i)} \in X^m| i \in
 [1,n]\}$ of examples ($n$ is supposed to be small), where $\mathbf{x}^{(i)}$ is
-an element of a Cartesian product $\mathcal{X} = X_1 \times \ldots \times X_m$.
+an element of a Cartesian product $X^m = X_1 \times \ldots \times X_m$.
 For each element  $\mathbf{x}^{(i)} \in S$, we associate a target
 $f(\mathbf{x}^{(i)})=y^{(i)} \in Y$.  In the case of regression, $y^{(i)} \in
 \mathbb{R}$, and in the case of classification $y^{(i)}$ belongs to a finite
 set.
 
-Actually, only a few methods have been proposed for extending a sample set with
+Actually, only a few methods have been proposed for extending a training set with
 new examples, and most of them are specific to a particular application. For
 example in \cite{CanPerArlLlo06}, some techniques are proposed but they are
 only relevant for character recognition tasks. Intuitively, we may build a new
@@ -186,10 +190,11 @@ example starting from 1, 2 or 3 known examples.
     different option is the Feature Knockout procedure \cite{WolMar04}, which
     amounts to build a third example obtained by modifying a randomly chosen
     feature of the first example with that of the second one.  This way to
-    proceed enjoys nice properties and appears to be equivalent to a popular
-    regularization (Tikhonov) technique in the case of linear regression.  A
+    proceed enjoys nice properties and appears to be equivalent to the popular
+    Tikhonov regularization  technique in the case of linear regression (also
+    known  as Ridge regression).  A
     related idea is used in a recent proposal \cite{BouPraRicECAI16} which
-    introduces a measure of oddness w.r.t. a class that is computed on the
+    introduces a measure of oddness with regard to a class that is computed on the
     basis of pairs made of two nearest neighbors in the same class; this is
     equivalent to replace the two neighbors by a fictitious representative of
     the class.
@@ -199,7 +204,7 @@ example starting from 1, 2 or 3 known examples.
     remain available and lead to build a fourth example which is somehow
     in-between the three other ones: we still have some kind of interpolation.
     A quite different idea is to extrapolate the fourth item on the basis of
-    analogical proportion.  In this perspective, this fourth element is not
+    analogical proportions.  In this perspective, this fourth element is not
     necessarily in the neighborhood of the three others. In fact, this idea has
     been addressed in \cite{BayMouMicAnqECML07}, where the authors generated
     new examples that had the least analogical dissimilarity with some
@@ -212,43 +217,44 @@ example starting from 1, 2 or 3 known examples.
     that the classifiers had better results when they were trained with the
     analogically-extended training set than when they were trained with an
     extended training set using other generation techniques (such as those of
-    \cite{CanPerArlLlo06}).
+    \cite{CanPerArlLlo06}).  Note though that just like the algorithmic
+    description of the extended classifier using analogical dissimilarity, we
+    here only have an algorithmic description of this training set extension
+    procedure. The authors in \cite{BayMouMicAnqECML07} never explicitly refer
+    to the analogical extension set $\esf$, and this is normal because the
+    unifying framework between the works in \cite{BayMicDelIJCAI07} and the
+    works in \cite{StrYvoCNLL05} where only made later in
+    \cite{HugPraRicSerECAI16}, as described in Chapter
+    \ref{CHAP:functional_definition}.
 \end{enumerate}
 
-Note though that just like the algorithmic description of the extended
-classifier using analogical dissimilarity, we here only have an algorithmic
-description of this training set extension procedure. The authors in
-\cite{BayMouMicAnqECML07} never explicitly refer to the analogical extension
-set $\esf$, and this is normal because the unifying framework between the works
-in \cite{BayMicDelIJCAI07} and the works in \cite{StrYvoCNLL05} where only made
-later in \cite{HugPraRicSerECAI16}, as described in Chapter
-\ref{CHAP:functional_definition}.
 
 As far as we know, the problem of generation of new examples has never been
 addressed from a theoretical point of view (except for the Knockout procedure,
 which is only relevant in some particular settings), and this is actually quite
-understandable. So that they can be used in an extended training set, the new
+understandable. Before they can be used in an extended training set, the new
 generated examples have to be assigned an estimated label... But how do we
 estimate these labels? Well there is a name for such problems: it is called
 classification, and classification was the actual reason why we wanted to
 extend the training set in the first place, so we have a vicious circle here.
-In this some sense, extending a training set with potentially noisy data
+In some sense, extending a training set with potentially noisy data
 amounts to nothing but performing classification on a specific set of
 instances.
 
 However, training set extension can still be extremely useful if we are
 perfectly sure that the new added examples are sound, i.e. that their estimated
 labels are the correct ones. In the next subsection, we will formally define
-this problem in the context of analogical learning. Section \ref{TODO} will
-then be devoted to the identification of the cases where such a perfect
-extension is feasible.
+this problem in the context of analogical learning. Section
+\ref{SEC:a_complete_characterization_of_AP_functions} will then be devoted to
+the identification of the cases where such a perfect extension is feasible.
 
 \subsection {Analogy preserving functions: a safe way to extend a training set}
 \label{SEC:analogy_preserving_presentation}
 
 In the rest of this chapter, we will address the problem of extending a
-training set using analogical proportions. Instead of using using an analogical
-dissimilarity like in  \cite{BayMouMicAnqECML07}, we will use our equivalent
+training set using analogical proportions in a Boolean setting. Instead of
+using an analogical dissimilarity like in  \cite{BayMouMicAnqECML07}, we will
+use our equivalent
 functional framework described in Chapter \ref{CHAP:functional_definition},
 i.e. we will consider that the extension of the training set $S$ is the
 analogical extension $\esf$, where $f$ is the function underlying the ground
@@ -260,17 +266,21 @@ the analogical labels goes as follows:
     f(\mathbf{b}) :: f(\mathbf{c}) : y$ is solvable and such that there is
     $\mathbf{x} \in \mathbb{B}^m \setminus S$ with $\mathbf{a} : \mathbf{b} ::
     \mathbf{c} : \mathbf{x}$, add $\mathbf{x}$ to $\esf$ and save
-    $y$ as a candidate for $\albl{\mathbf{x}}$.
-\item Then for every $\mathbf{x} \in \esfs$, run a
+    the solution $\sol(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))$ as a candidate
+    for $\albl{\mathbf{x}}$.
+\item Then for every $\mathbf{x} \in \esfs \eqdef \esf \setminus S$, run a
   \textbf{majority-vote procedure}: set $\albl{\mathbf{x}}$ as the most
-    common candidate among all solutions $y$ (in case of a tie, then randomly
-    pick one of the values). For elements in $S$, $\albl{\mathbf{x}}$ is
-    simply set to $f(\mathbf{x})$.
+    common candidate among all solutions $\sol(f(\mathbf{a}), f(\mathbf{b}),
+    f(\mathbf{c}))$ where $(\mathbf{a}, \mathbf{b}, \mathbf{c})$ is in the
+    analogical root of $\mathbf{x}$. In case of a tie between two labels, then
+    one of the values is chosen at random.  For elements in $S$,
+    $\albl{\mathbf{x}}$ is simply set to $f(\mathbf{x})$.
 \end{enumerate}
 
 \noindent
 The extension $\esf$ is then considered to be an extended training set, where
-the labels are the analogical labels, which are not necessarily correct. Indeed
+the labels are the analogical labels, \textbf{which are not necessarily
+correct}. Indeed
 for some elements $\mathbf{x} \in \esfs$, it may happen that
 $\albl{\mathbf{x}} \neq f(\mathbf{x})$, simply because the analogical inference
 principle may not be \textit{suitable} for the function $f$. In this chapter,
@@ -281,14 +291,14 @@ $f(\mathbf{x})$. These functions will be called \textbf{Analogy preserving}
 functions:
 
 \begin{definition}
-  We say that $\mathbf{E}_S(f)$ is {\bf sound} if
-  $\albl{\mathbf{x}}_f=f(\mathbf{x})$, for every $\mathbf{x} \in
-  \mathbf{E}^*_S(f)$. In other words, $\mathbf{E}_S(f)$ is sound if $\omegasf
+  We say that $\esf$ is {\bf sound} if
+  $\albl{\mathbf{x}}=f(\mathbf{x})$ for every $\mathbf{x} \in
+  \esfs$. In other words, $\esf$ is sound if $\omegasf
   \eqdef P\left(\albl{\mathbf{x}} = f(\mathbf{x}) \given[\big] \mathbf{x} \in
   \esfs\right) = 1$.
 
   \noindent
-  Also, if $\mathbf{E}_S(f)$ is sound for all $S \subseteq
+  Also, if $\esf$ is sound for all $S \subseteq
   \mathbb{B}^m$, we say that $f$ is {\bf Analogy Preserving} (AP).
 \end{definition}
 
@@ -327,8 +337,15 @@ If $f$ does not suit this requirement, then there exist $\mathbf{a},
 \end{proof}
 
 \noindent
+It should be clear from Proposition \ref{PROPOS:equivalent_def_AP} that looking
+for the functions that lead to a perfect extension (i.e. the AP functions) is
+equivalent to looking for the functions that are compatible with the analogical
+inference principle, which was the first purpose of this chapter. Indeed,
+saying that $\emph{sol}\left(f(\mathbf{a}),  f(\mathbf{b}),
+f(\mathbf{c})\right) =f(\mathbf{d})$ is equivalent to saying that
+$f(\mathbf{a}) : f(\mathbf{b}) ::  f(\mathbf{c}) :  f(\mathbf{d})$.
 
-First, note that many natural functions are not AP. Consider for example the
+Let us note that many natural functions are not AP. Consider for example the
 binary function $f(x_1,x_2)= x_1 \wedge x_2$, along with $\mathbf{a},
 \mathbf{b}, \mathbf{c}, \mathbf{d} \in \mathbb{B}^2$ in Table
 \ref{exampleNotAP}.  We have $\mathbf{a} : \mathbf{b} :: \mathbf{c} :
@@ -356,14 +373,16 @@ $\bigskip
 \label{exampleNotAP}
 \end{table}
 
-The rest of this TODO will be devoted to a complete characterization of AP
-functions.
+The following section will be devoted to a complete characterization of AP
+functions in a Boolean setting.
 
 \section{A complete characterization of analogy preserving functions}
+\label{SEC:a_complete_characterization_of_AP_functions}
 
 We will show in this section that the class of AP functions is the class of
-affine functions (affine functions will be defined later). To complete our
-proofs, we will first need to recall some background.
+affine functions, which will be defined later. To complete our proofs, we will
+first need to recall some background knowledge on Boolean algebra and Boolean
+functions, which is the purpose of the next subsection.
 
 \subsection{Preliminary background on Boolean functions}
 
@@ -379,16 +398,17 @@ $\mathbf{x}_I$. Simply put, a monomial is a conjunction of variables. We take
 the convention that $1$ is the empty monomial $\mathbf{x}_\emptyset $. A
 \textbf{ polynomial} is a sum of monomials and its degree is the largest degree
 of its monomials.  It is well-known \cite{StoneAlgebra36,ZhegalkinAlgebra27}
-that any function $f:\mathbb{B}^m\rightarrow \mathbb{B}$ is \textbf{uniquely
+that \textbf{any function $f:\mathbb{B}^m\rightarrow \mathbb{B}$ is uniquely
 represented by a polynomial}, also called the \textbf{Algebraic Normal Form}
-(ANF): $$f(x_1,\ldots,x_m)=\sum_{I\subseteq \{1,\ldots,m\}}a_I\cdot
-\mathbf{x}_I,$$ where each $a_I$ belongs to $\mathbb{B}$. Note that the
+(ANF) of $f$:
+$$f(x_1,\ldots,x_m)=\sum_{I\subseteq \{1,\ldots,m\}}a_I\cdot \mathbf{x}_I,$$
+where each $a_I$ belongs to $\mathbb{B}$. Note that the
 constant function $0$ is represented by $a_\emptyset\cdot \mathbf{x}_\emptyset$
 with $a_\emptyset =0$. The degree of a function $f:\mathbb{B}^m\rightarrow
 \mathbb{B}$, denoted $d(f)$, is defined as the degree of the unique polynomial
 representing $f$. In the following, we will often will refer to $f$ as both a
-function object and as the associated ANF. Here are the ANF of some common
-Boolean functions in $\mathbb{B}^2$ or $\mathbb{B}$:
+function object and as the associated ANF. To illustrate this concept, here are
+the ANF of some common Boolean functions in $\mathbb{B}^2$ or $\mathbb{B}$:
 
 \begin{itemize}
   \item $\text{AND}(x_1, x_2) = x_1 \cdot x_2$ ;
@@ -430,7 +450,6 @@ renaming of variables. For example, $f(x_1, x_2, x_3) = x_1
 that two equivalent functions necessarily have the same number of essential
 variables. For further background in the theory of essential variables of
 functions, see \cite{CouceiroTCS08, CouceiroDM09, SalomaaAASF63, WillardDM96}.
-
 In our demonstrations, we will use the following property:
 
 \begin{property}\label{equivalent_functions}
@@ -439,7 +458,7 @@ Let $f\colon \mathbb{B}^m\to \mathbb{B}$ and $g\colon \mathbb{B}^n\to
 \end{property}
 
 This can be verified by noting that as the analogy in $\mathbb{B}^m$ is defined
-component-wise, the permutation of variables has no effect on the equation and
+in a component-wise fashion, the permutation of variables has no effect on the equation and
 its solution. Also, manipulation of inessential variables do not change the
 value of the function $f$, and thus the AP property still holds.
 
@@ -459,23 +478,23 @@ $$
   is the index of } i \mbox{ in } I.
 \end{cases}
 $$
-$\mathbf{x}^{\boldsymbol{\alpha}}_I$ is nothing but the vector $\mathbf{x}$
-where the components at the  indices in $I$ have been replaces by the
+Concretely, Concretely, $\mathbf{x}^{\boldsymbol{\alpha}}_I$ is nothing but the vector $\mathbf{x}$
+where the components at the  indices in $I$ have been replaced by the
 successive components of $\boldsymbol{\alpha}$. For instance, with $m=5,
-\mathbf{x}=(0,1,1,0,0), I=\{1,3,4\}$ and $\boldsymbol{\alpha}=(1,0,0)$ then
-$(\mathbf{x}^{\boldsymbol{\alpha}}_I)=(1,1,0,0,0)$.  The $I$-section
-$f^{\boldsymbol{\alpha}}_I$ is a function from $\mathbb{B}^{\mid J \mid} \to
+\mathbf{x}=(0,1,1,0,0), I=\{1,3,4\}$ and $\boldsymbol{\alpha}=(1,0,0)$, we
+have $(\mathbf{x}^{\boldsymbol{\alpha}}_I)=(1,1,0,0,0)$.  The $I$-section
+$f^{\boldsymbol{\alpha}}_I$ is the function from $\mathbb{B}^{\mid J \mid} \to
 \mathbb{B}$ defined as:
-$$\forall \mathbf{y} \in \mathbb{B}^{|J|},
+$$\forall \mathbf{y} \in \mathbb{B}^{|J|},~~
 f^{\boldsymbol{\alpha}}_I(\mathbf{y}) \eqdef
 f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{y}_J).$$
-Note that the arity of $f^{\boldsymbol{\alpha}}_I$ is $|J|$, and that
+Note that the arity of $f^{\boldsymbol{\alpha}}_I$ is $|J|$ and is always less
+than the arity of $f$, and that
 $\ess(f^{\boldsymbol{\alpha}}_I) \leq \ess(f)$.  As an example, let us consider
 the function $f\colon \mathbb{B}^3 \to \mathbb{B}$ such as
 $$f(x_1,x_2, x_3) = x_1 \cdot x_2 \cdot x_3 + x_1 \cdot x_2 + x_3.$$
 The section $f^{(1, 0)}_{\{1, 3\}}$ is a function from $\mathbb{B}$ to
 $\mathbb{B}$ and is defined by $f^{(1, 0)}_{\{1, 3\}}(x_2) = x_2$.
-
 A main result about sections that will be used in other proofs is stated in
 Property \ref{section_preserve_wap}:
 
@@ -500,7 +519,9 @@ If $f\colon \mathbb{B}^m\to \mathbb{B}$ is AP, then every section of $f$ is
   $$
   We want to prove that this implies that
   $\sol(f^{\boldsymbol{\alpha}}_I(\mathbf{a}),
-  f^{\boldsymbol{\alpha}}_I(\mathbf{b}) =
+  f^{\boldsymbol{\alpha}}_I(\mathbf{b}), 
+  f^{\boldsymbol{\alpha}}_I(\mathbf{c}))
+  =
   f^{\boldsymbol{\alpha}}_I(\mathbf{d})$.
   First, let us note that the following property holds:
 $$\forall \mathbf{a},\mathbf{b},\mathbf{c}, \mathbf{d} \in \mathbb{B}^{|J|},~J
@@ -509,7 +530,7 @@ $$\forall \mathbf{a},\mathbf{b},\mathbf{c}, \mathbf{d} \in \mathbb{B}^{|J|},~J
   \mathbf{x}^{\mathbf{b}}_J:: \mathbf{x}^{\mathbf{c}}_J :
   \mathbf{x}^{\mathbf{d}}_J,$$
   simply due to the fact that $\mathbf{x}:\mathbf{x}::\mathbf{x}:\mathbf{x}$
-  always holds for any $\mathbf{x} \in \mathbb{B}^m$.
+  always holds.
 
 Regarding the first condition $\mathbf{a}:\mathbf{b}::\mathbf{c}:\mathbf{d}$,
 since $\forall \mathbf{x} \in \mathbb{B}^m,$ we have that $
@@ -525,18 +546,18 @@ By definition $f^{\boldsymbol{\boldsymbol{\alpha}}}_I(\mathbf{y}) =
   $$\solvable(f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{a}_J),
   f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{b}_J),
   f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{c}_J)).$$
-  Since $f$ is AP, we have that:
+  Since $f$ is AP, we have that
   $\sol(f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{a}_J),
   f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{b}_J),
   f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{c}_J))=
-  f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{d}_J)=
+  f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{d}_J) \eqdef
   f^{\boldsymbol{\alpha}}_I(\mathbf{d})$,
-  which is the condition for  $f^{\boldsymbol{\boldsymbol{\alpha}}}_I$ to be
-  AP.
+  which is precisely the condition for
+  $f^{\boldsymbol{\boldsymbol{\alpha}}}_I$ to be AP.
 \end{proof}
 
 
-This section was quite dense so let us recap what we have seen. We will
+This section was quite dense so let us recap what we have seen. We
 describe functions by their ANF, which is a polynomial representation. This ANF
 allowed us to define the degree of a function, which has a similar meaning to
 the notion of degree for real valued polynomials. We also defined the notion of
@@ -550,8 +571,9 @@ show that any affine function is AP, and we will then prove that these
 functions are actually the only AP functions.
 
 \subsection{The class of Analogy Preserving functions}
+\label{SEC:the_class_of_AP_functions}
 
-Let us first define how we define affine functions:
+Let us first define the class of affine functions:
 \begin{definition}
   The class $L$ of \textbf{affine} functions is the set of functions $f$ of the
   form:
@@ -560,19 +582,19 @@ Let us first define how we define affine functions:
   where $\alpha_0,\ldots, \alpha_m$ are elements of $\mathbb{B}$. We also write
   $$f(\mathbf{x}) = \boldsymbol{\alpha} \cdot \mathbf{x} + \alpha_0,$$
   where $\boldsymbol{\alpha} \in \mathbb{B}^m$ and $\cdot$ is here a scalar
-  product.  If $\alpha_0= 0$ we say that $f$ in \textbf{linear}.
+  product.  If $\alpha_0= 0$ we say that $f$ is \textbf{linear}.
 \end{definition}
 
 Note that we used the polynomial representation of the function $f$, and that
 $L$ is precisely the set of functions whose degree is less than or equal to
 $1$. Informally, a linear function is a function that computes the exclusive OR
-between any subset of variables. The class $L$ is then the set of all linear
+between any subset of variables. The class $L$ of affine functions is then the set of all linear
 functions along with their negations (because $f + 1$ = $\neg f$). A particular
 case of affine functions are the \textbf{projections} or \textbf{dictator}
-functions, defined by $f(\mathbf{x}) = x_i + \alpha_0$. We will use these
-functions later.
+functions, defined by $f(\mathbf{x}) = x_i + \alpha_0$. These functions will be
+of interest in the next subsection.
 
-Now, we will prove that every linear function is AP:
+Now, we will prove that every affine function is AP:
 \begin{proposition}
   \label{PROPOS:affine_functions_are_ap}
   Any affine function $f$ is AP.
@@ -597,9 +619,9 @@ Now, we will prove that every linear function is AP:
   that:
   $$\forall \mathbf{x}, \mathbf{x}' \in \mathbb{B}^n, g(\mathbf{x}) =
   g(\mathbf{x}') \iff H(\mathbf{x}, \mathbf{x}') \text{ is even},$$
-  where $h$ is the Hamming distance function.
+  where $H$ is the Hamming distance function.
 
-  Let $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in \mathbb{B}^m$  such
+  Let $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in \mathbb{B}^n$  such
   that the two hypothesis in the definition of AP are satisfied, i.e.
   $$
   \mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}\quad \text{and}\quad
@@ -610,11 +632,10 @@ Now, we will prove that every linear function is AP:
   g(\mathbf{b})$, or $g(\mathbf{a}) = g(\mathbf{c})$. This can be verified in
   Table \ref{TAB:six_valid_patterns} on page \pageref{TAB:six_valid_patterns},
   or by referring to Proposition \ref{PROPOS:equation_solving}.
-  Also, we know from Property \ref{PROPER:hamming_distance_boolean_proportion},
-  then if $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}$ then we have
-  that $H(\mathbf{a}, \mathbf{b}) = H(\mathbf{c}, \mathbf{d})$ and
-  $H(\mathbf{a}, \mathbf{c}) = H(\mathbf{b}, \mathbf{d})$.
-
+  Also, we know from Property \ref{PROPER:hamming_distance_boolean_proportion}
+  that as $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}$, we have
+  $H(\mathbf{a}, \mathbf{b}) = H(\mathbf{c}, \mathbf{d})$ and $H(\mathbf{a},
+  \mathbf{c}) = H(\mathbf{b}, \mathbf{d})$.
   Therefore, we either are in one of the two following cases:
   \begin{enumerate}
     \item $g(\mathbf{a}) = g(\mathbf{b})$, and in this case the solution is
@@ -703,20 +724,20 @@ the case where $d(f) = 2$:
   \label{TAB:counter_examples}
   \end{table}
   It is clear that the counter-example $(\mathbf{a},\mathbf{b}, \mathbf{c},
-  \mathbf{d})$  shows that $f_1$  is note AP because we have $\mathbf{a} :
+  \mathbf{d})$  shows that $f_1$  is not AP because we have $\mathbf{a} :
   \mathbf{b} :: \mathbf{c} : \mathbf{d}$ and the equation $f_1(\mathbf{a}) :
   f_1(\mathbf{b}) :: f(\mathbf{c}) : y$ is solvable, but the solution is $0$
   while $f(\mathbf{d})$ is $1$. Similarly, $(\mathbf{a},\mathbf{b}, \mathbf{c},
   \mathbf{d})$ is also a counter-example for $f_2$ and $(\mathbf{d},\mathbf{c},
   \mathbf{b}, \mathbf{a})$ is a counter-example for $f_3$.
 
-  As $f_1, f_2, f_3$ are not AP, $f^{\mathbf{0}}_J$ can't be AP either because
+  As $f_1, f_2, f_3$ are not AP, $f^{\mathbf{0}}_J$ cannot be AP either because
   it is equivalent to one of the $f_i$. As $f^{\mathbf{0}}_J$ is a section of
   $f$, $f$ cannot be AP.
 \end{proof}
 
 All we need now is a property that could allow us to decrease the degree of a
-function without changing its AP property. This is the purpose of
+function without changing the fact that it is AP. This is the purpose of
 Property \ref{section_degree_k_minus_1}.
 
 \begin{property}\label{section_degree_k_minus_1}
@@ -753,18 +774,19 @@ We have seen that every affine function is AP, i.e. if $d(f)\leq 1$, then $f\in
 \end{proof}
 
 In the end, we proved that {\bf the class of functions that ensure a sound
-analogical extension of any sample set $S \subseteq \mathbb{B}^m$ is the class
+analogical extension of any training set $S \subseteq \mathbb{B}^m$ is the class
 of affine functions $L$}. If the function is not affine, then there exist a
-sample set $S \subseteq \mathbb{B}^m$ for which $\mathbf{E}_S(f)$ is unsound.
+training set $S \subseteq \mathbb{B}^m$ for which $\mathbf{E}_S(f)$ is unsound.
 We can now finally give a definite answer to our initial problem: \textbf{a
 function $f$ is \textit{compatible} with the analogical inference principle if
 and only if $f$ is affine.}
 
-In the next subsection, we will focus on some AP functions that
-still \textit{compatible} with the analogical inference principle, but in a
-stronger sens.
+In the next subsection, we will focus on some AP functions that are still
+\textit{compatible} with the analogical inference principle, but in a stronger
+sense.
 
 \subsection{The class of Strongly Analogy Preserving functions.}
+\label{SEC:the_class_of_SAP_functions}
 
 Let us come back to the analogical inference principle for a moment, which
 states that if we have  $\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$, then
@@ -790,13 +812,14 @@ $$
 
 Yet, in the end, the ultimate use of this principle is to infer the value of
 $f(\mathbf{d})$, and we can only do that by the actual solving of the equation
-$f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : y$: remember that when we
-build the analogical extension ste, we always require the class equation to be
-solvable. This was also the case when we where dealing with the algorithmic
-description of the conservative classifier.  So if the equation is not
+$f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : y$ (remember that when we
+build the analogical extension, we always require the class equation to be
+solvable). This was also the case when we where dealing with the algorithmic
+description of the conservative classifier (see e.g. Algorithm
+\ref{ALGO:conservative_classifier}).  So if the equation is not
 solvable, we are unable to infer anything about $f(\mathbf{d})$. This is why
 the AP functions are defined as the functions such that we have $f(\mathbf{a})
-:f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})$ provided that we have that
+:f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})$ provided that
 $\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$ stands \textbf{and that}
 $f(\mathbf{a}) :f(\mathbf{b}) :: f(\mathbf{c}) : y$ is solvable. With regard to
 this, we can say the class of AP functions are the class of functions that
@@ -805,7 +828,8 @@ allow the following inference principle to be sound: $$
 f(\mathbf{d})}{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}, ~~
 \solvable(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))} $$
 
-This one is the inference principle that is actually useful in practice: if the
+\textbf{This one is the inference principle that is actually useful in
+practice}: if the
 equation is not solvable then we simply try another $4$-tuple. The first one is
 too restrictive on the function $f$ because it requires that $\mathbf{a} :
 \mathbf{b} :: \mathbf{c} : \mathbf{d} \implies  \solvable(f(\mathbf{a}),
@@ -875,8 +899,8 @@ We now show that the dictator functions are the only SAP functions:
 
   The four-tuple is summarized in Table \ref{TAB:SAP}, where we clearly see
   that we have $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}$, but the
-  equation $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c} : y$ is not solvable
-  or $f$ is not SAP, QED.
+  equation $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : y$ is not solvable
+  so $f$ is not SAP, QED.
 
 \begin{table}[ht]
   \center
@@ -892,33 +916,227 @@ $\begin{array}{cccc}
 \end{array}
 $\bigskip
 \caption{$f$ is not SAP because $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c})
-  : y$ is not solvable (plus, $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c} :
-  f(\mathbf{d})$ does not stand.}
+  : y$ is not solvable (plus, $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) :
+  f(\mathbf{d})$ does not stand).}
 \label{TAB:SAP}
 \end{table}
 
 \end{proof}
 
+This section was quite dense, so let us recap a bit what we have seen so far.
+We have given two different definitions for the analogical inference principle:
+$$
+\infer[\text{~~ Inference Principle A}]{\solvable(f(\mathbf{a}), f(\mathbf{b}),
+f(\mathbf{c})), ~~f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) :
+f(\mathbf{d}) }{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}
+$$
+and
+$$
+\infer[\text{~~ Inference principle B}]{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) :
+f(\mathbf{d})}{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}, ~~
+\solvable(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))}
+$$
+
+It is obvious that the second version (B) is less restrictive on the function
+$f$, and it is the one that is useful in practice. In subsection
+\ref{SEC:the_class_of_AP_functions}, we showed that the inference principle B
+is sound if and only if $f$ is an affine Boolean function. We also showed in
+subsection \ref{SEC:the_class_of_SAP_functions} that the inference principle A
+was sound for dictator functions (a particular case of affine functions).
+
+These are strong theoretical results, but obviously real-world problem are not
+limited to the Boolean case, and the function $f$ underlying the labels of a
+classification problem is almost never completely affine. We will address these
+issues in the next section.
 
 \section{Beyond Boolean Analogy Preserving functions}
+\label{SEC:beyond_boolean_AP_functions}
+
+The aim of this section will be to complement the theoretical results of
+Section \ref{SEC:a_complete_characterization_of_AP_functions}. We will first
+stay in the Boolean setting in subsection \ref{SEC:approximate_ap_functions}
+and empirically study the behaviour of functions that  are \textit{close} from
+being AP. In subsections \ref{SEC:extension_to_nominal_attributes} and
+\ref{SEC:extension_to_real_valued_functions}, we will derive some more
+theoretical results about AP functions when dealing with nominal values and
+with real values.
+
+\subsection{Approximately AP functions and experiments}
+\label{SEC:approximate_ap_functions}
+
+While the theoretical result of Proposition \ref{PROPOS:AP_is_L} is interesting
+on its own, it is obvious that purely affine functions are not representative
+of what would be encountered in a real-world Boolean environment.  This leads to the
+following question: what remains of the quality of the analogical extension
+$\mathbf{E}_S(f)$ when $f$ deviates from being AP in different ways? We will
+here investigate this question.
+
+Recall that for a given a training $S$, we defined $\omegasf$ as the quality of the
+extension $\esf$ with $\omegasf \eqdef P\left(\albl{\mathbf{x}} = f(\mathbf{x})
+\given[\big] \mathbf{x} \in \esfs\right).$ By definition, $\omegasf=1$ for all
+$S$ iff $f$ is AP. What we want to know now is how $\omegasf$ is affected when
+$f$ is not a purely affine function. What we
+mean by \textit{not purely affine} is that $f$ is at a distance at most
+$\epsilon$ from the set
+of affine functions. We define these notions now.
+
+Given two Boolean functions $f$ and $g$, we define their distance
+$\text{dist}(f, g) \eqdef P\left(f(\mathbf{x}) \neq
+g(\mathbf{x})\right)$, where $P$ is the uniform distribution over
+$\mathbb{B}^m$. Here, $\mathbf{x} \in \mathbb{B}^m$ is also considered as a
+random variable
+
+\begin{definition}
+We say that $f$ is $\epsilon$-close to $g$ if $\text{dist}(f, g) \leq
+  \epsilon$, and that $f$ is $\epsilon$-close to a set of functions $\Sigma$ if
+  $\exists g \in \Sigma$ such that $f$ is $\epsilon$-close to $g$.
+\end{definition}
+
+We want here to study the value of $\omegasf$ when $f$ is $\epsilon$-close from
+$L$, the set of affine functions. Note however that thanks to the
+code-independency property of the Boolean proportion ($1$ and $0$ play
+symmetric roles), we have that for any $S$ and any $f$, $\omegasf =
+\omega_S^{\neg f}$. As the set of affine functions is the set of linear
+functions and their negations, \textbf{it is enough to study the value of
+$\omegasf$ when $f$ is $\epsilon$-close to $L'$, the set of linear functions}.
+
+This question is clearly of interest, because in practice there exist some
+statistical test allowing the practitioner to query a partially-known function
+$f$ to find out if it is $\epsilon$-close to $L'$. This test is the BLR test
+\cite{BluLubRub93}, whose steps are as follows:
+
+\begin{itemize}
+\item Choose randomly and independently $\mathbf{x}$ and $\mathbf{y}$ in
+  $\mathbb{B}^m$.
+\item Compute $f(\mathbf{x}+\mathbf{y})$ and $f(\mathbf{x}) + f(\mathbf{y})$.
+\item If $f(\mathbf{x}+\mathbf{y}) = f(\mathbf{x}) + f(\mathbf{y})$, return
+  \textit{Accept}.
+\end{itemize}
+
+The main useful result is given in Property \ref{PROPER:BLR_test}:
+\begin{property}
+  \label{PROPER:BLR_test}
+  If $BLR$ accepts $f$ with a probability at least $1-\epsilon$, then $f$ is
+  $\epsilon$-close to the set of linear functions $L'$.
+\end{property}
+
+So if we can exhibit a clear probabilistic dependence between $\omegasf$
+and $\epsilon$, this would allow the practitioner to have guarantees about
+$\omegasf$ because we can know $\epsilon$ from the BLR test.
+
+Let us first consider the following experiment. Starting from a linear function $g
+\colon \mathbb{B}^8 \to \mathbb{B}$ defined as  $g(\mathbf{x}) = x_1 + \cdots +
+x_8$, we introduce some noise by negating its output $g(\mathbf{x})$ with
+probability $\epsilon$. We thus obtain some functions $f_{\epsilon}$ that are
+$\epsilon$-close to $L'$, and report the value of $\omega_S^{f_\epsilon}$ averaged over $50$
+experiments.  Figure \ref{omega_vs_eps} gives an
+illustration of the variation of $\omega_S^{f_\epsilon}$ (simply denoted
+$\omega$) against  $\epsilon$ for different
+sizes of $S$ (as a percentage of $|\mathbb{B}^m|$).  Other experiments have
+been carried out with other affine functions (i.e.  with less essential
+variables or different arity), leading to very similar results.  Note that
+$\epsilon$ only needs to be taken in $[0, \frac{1}{2}]$, because $f_\epsilon =
+\neg f_{1 - \epsilon}$ and for any $f$, we have that $\omegasf = \omega_S^{\neg
+f}$.
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.6]{figures/omega_vs_eps_dim8_nexp50_std_nEss8.pdf}
+  \caption{$\omega$ for $\epsilon$-close functions to $L$.}
+\label{omega_vs_eps}
+\end{center}
+\end{figure}
+
+When $\epsilon = 0$ i.e. when $f_\epsilon$ is AP, we get $\omega = 1$ as expected from
+Proposition \ref{PROPOS:AP_is_L}. We observe an almost linear decrease in $\omega$ as
+$\epsilon$ grows to $0.3$ then leading to a plateau where $\omega =
+\frac{1}{2}$, indicating that the analogical labels $\albl{\mathbf{x}}$ are
+more or less random. Moreover, $\omega$ appears to decrease faster for small
+training set $S$. This is due to the fact that the analogical labels
+$\albl{\mathbf{x}}$ are the result of a majority-vote procedure among the
+candidate solutions that one can build from $S$, and the number of candidates
+becomes smaller as $\mid S\mid$ decreases, thus altering the quality of the
+prediction.
+
+We only have an empirical study here. Ultimately, it would be very interesting
+to prove a result like
+$$P(\omegasf \geq \eta) > 1 - \delta,$$
+where $\eta \in [0, 1]$ and $\delta \in [0, \frac{1}{2}]$ is a function
+$\epsilon$ and $\mid S \mid$. Such a result would be strongly linked to the PAC
+learning theory \cite{Val72}, and is the object of current research.
+
+
+
+Now, we have studied so far the variation of $\omegasf$ when $f$ deviates from
+the set of affine functions. We now focus on another point: the variation of
+$\omegasf$ when $f$ deviates from being AP in a different way.
+Let us note the following point: even if a function $f$ is far from being
+AP, the quality $\omegasf$ of the extension $\esf$ may still be very
+high. To illustrate this, let us define the value $\beta$ which is an indicator
+of how far is $f$ from being completely AP.  For each $\mathbf{x} \in
+\esfs$, we define $\beta_\mathbf{x}$ as the proportion of
+candidates $\sol(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))$ (with
+$(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in \rsfx$) that led to the the correct
+label, i.e. the proportion of candidate solutions that are equal to
+$f(\mathbf{x})$. $\beta$ is defined as the average of all the
+$\beta_\mathbf{x}$.  Obviously, a function $f$ is AP iff $\beta = 1$ for all
+$S$, i.e. if $\beta_\mathbf{x} = 1$ for all $\mathbf{x} \in \esfs$
+and for all $S$.
+
+Table \ref{table_monks} reports the values of $\omega$ and $\beta$ over three
+datasets from the UCI repository, namely the three Monk's problems\footnote{As
+these datasets are nominally-valued, they are binarized.} \cite{UCIrepo}.
+Results are averaged over 100 experiments, where the training set $S$ is each
+time randomly sampled with a size of $30$\% of the universe of possible
+instances.
+
+\begin{table}
+\centering
+\begin{tabular}{ c  c  c }
+\toprule
+  & $\omega$  & $\beta_S$ \\
+\midrule
+Monk 1 & .96 & .73 \\
+Monk 2 & .96 & .69 \\
+Monk 3 & .98 & .87 \\
+\bottomrule
+\end{tabular}
+\caption{$\omega$ and $\beta$ over the Monk's problems.}
+\label{table_monks}
+\end{table}
+
+We observe that for each dataset, $\beta$ is significantly lower than $1$.
+This suggests that the Boolean functions underlying these datasets are highly
+not AP, because on average, there is a high proportion (around $20$\%) of
+candidates that predicted the wrong label. However, $\omega$ is no lower than
+$96$\%, implying extensions of very high quality.  \textbf{This is where the
+majority-vote comes into play}: in some cases, it may be able to compensate for
+the predictors that were wrong.  This is what happens here in $96$\%, $96$\%
+and $98$\% of the cases respectively. Here again, obtaining theoretical
+guarantees about the majority vote procedure is currently investigated.
+
+In the next subsection, we will extend our theoretical results about Boolean AP
+functions to the a more general setting where instances are nominally valuated.
 
 \subsection{Extension to nominal attributes}
+\label{SEC:extension_to_nominal_attributes}
 
 When it comes to real life applications, it is quite rare to get a purely
 Boolean dataset.  It is generally the case that the dataset  is  a mix between
 Boolean attributes and nominal attributes taking their values in finite sets.
 For instance, an attribute \textit{color} typically takes its values in, let us
-say, $\Set{red, green,blue}$. Obviously, on this set of values for attribute
+say, $\Set{red, green,blue}$. Unfortunately, on this set of values for attribute
 \textit{color}, there is no structure, no order and no known operator.
 Nevertheless, there is still a way to deal with such attributes within the
-analogical framework. This is what we investigate in this subsection.
+analogical framework, and to characterize AP functions in such settings. This
+is what we investigate in this subsection.
  
 
 We have already seen in Chapter \ref{CHAP:formal_analogical_proportions} that we
 can define an analogical proportion on a set $X$ by restricting the accepted
 analogical patterns to $a:b::a:b$ and $a:a::b:b$.  Formally, an analogy $A$
 over $X$ is a subset of $X^4$ defined as:
-$$A \triangleq  \{ (a,a,b,b)  | a, b \in X\} \cup \{ (a,b,a,b) | a, b \in X\}$$
+$$A \eqdef \Set{ (a,a,b,b)  | a, b \in X} \cup \Set{ (a,b,a,b) | a, b \in X}$$
 
 Back to the \textit{color} attribute, it means that we consider
 $red:blue::red:blue$ as a valid analogical proportion but $red:blue::red:green$
@@ -927,7 +1145,8 @@ product $X^m=\prod_{i=1}^m X_i$ which is now equipped with an analogical
 relation. In classification, this allows to deal with any kind of nominal
 attributes.  In this setting, a binary classification function $f$ is a
 function from $X^m=\prod_{i=1}^m X_i$ to $\mathbb{B}$. The question we want to
-address here is the same as that of Section \ref{}: we want to characterize all
+address here is the same as that of Section
+\ref{SEC:a_complete_characterization_of_AP_functions}: we want to characterize all
 the functions $f$ that lead to a perfectly sound analogical extension.
 Unfortunately, we cannot turn to the previous framework because the Cartesian
 product $X^m$ is made of distinct sets and is not anymore a power of
@@ -943,7 +1162,7 @@ Nonetheless, we will still find close links between the AP Boolean functions
 and the AP functions of our current setting, and these links are based on the
 \textit{binarization} of the nominal attribute. Indeed, any nominal attribute
 with $k$ values can be binarized into $k$ Boolean attributes. We can also choose
-$k- 1$ attributes, or some other fancy binarization procedures, but we will
+$k- 1$ attributes, or some other fancy binarization procedure, but we will
 stick to the simplest one:
 binarizing the \textit{color} attribute leads to three binary attributes
 $(is\_red, is\_green, is\_blue)$ so that $red$ value is coded as $(1, 0, 0)$,
@@ -983,20 +1202,20 @@ $$
 
 As the initial nominal universe  $\prod_{i=1}^m X_i$  has been compiled into a
 Boolean universe, it is tempting to consider the framework that has been
-developed in Section \ref{TODO}. Unfortunately, the whole set $\prod_{i=1}^m
-\mathbb{B}^{\mid X_i\mid}$ is not the exact image of $\prod_{i=1}^m X_i$: it is
-bigger, and some elements in $\prod_{i=1}^m  \mathbb{B}^{\mid X_i\mid}$ are not
-the image of an element of $\prod_{i=1}^m X_i$ using $\bin$.  Ultimately, the
-domain of $f^b$ is just $\bin(\prod_{i=1}^m X_i)$, which is included in
-$\prod_{i=1}^m \mathbb{B}^{|X_i|}$. This is why $f^b$ is considered to be a
-partial function.
+developed in Section \ref{SEC:a_complete_characterization_of_AP_functions}.
+Unfortunately, the whole set $\prod_{i=1}^m \mathbb{B}^{\mid X_i\mid}$ is not
+the exact image of $\prod_{i=1}^m X_i$: it is bigger, and some elements in
+$\prod_{i=1}^m  \mathbb{B}^{\mid X_i\mid}$ are not the image of an element of
+$\prod_{i=1}^m X_i$ using $\bin$.  Ultimately, the domain of $f^b$ is just
+$\bin(\prod_{i=1}^m X_i)$, which is included in $\prod_{i=1}^m
+\mathbb{B}^{|X_i|}$. This is why $f^b$ is considered to be a partial function.
 
 Nevertheless, the AP property is still relevant for functions that are only
 partially defined: a partially defined function that always lead to a perfectly
 sound analogical extension for any training set $S$ will also be said to be
 Analogy Preserving, and will be called PAP for Partial AP. Just like in Section
-\ref{TODO}, a natural way to characterize PAP functions is given in Definition
-\ref{DEF:PAP_functions}:
+\ref{SEC:a_complete_characterization_of_AP_functions}, a natural way to
+characterize PAP functions is given in Definition \ref{DEF:PAP_functions}:
 
 \begin{definition}
   \label{DEF:PAP_functions}
@@ -1070,10 +1289,15 @@ been binarized, then we can safely extend our training set. Sadly, as there are
 no common operators on the set  $\prod_{i=1}^n X_i$, we are not able to give a
 more accurate characterization of AP functions in such settings.
 
-\subsection{Extension to real-valued functions}
+In the next subsection, however, we will see that in a real setting the AP
+functions are also precesily the affine (real) functions.
 
-Section \ref{TODO} was devoted to the identification of Boolean functions that
-where fully compatible with the analogical inference principle, and we saw that
+\subsection{Extension to real-valued functions}
+\label{SEC:extension_to_real_valued_functions}
+
+Section \ref{SEC:a_complete_characterization_of_AP_functions} was devoted to the
+identification of Boolean functions that where fully compatible with the
+analogical inference principle, and we saw that
 these functions are the Boolean affine functions. One may wonder what would
 these functions be in a real setting, i.e. using functions  from $\mathbb{R}^m$
 to $\mathbb{R}$ with the arithmetic proportion?
@@ -1081,10 +1305,8 @@ to $\mathbb{R}$ with the arithmetic proportion?
 Well, we already know that the Boolean proportion and the arithmetic proportion
 are really close. Once again, we will witness this close bond: in a real
 setting, the class of AP functions is also the class of real linear functions.
-Luckily, the proof is a lot easier to derive.
-
-
-Let us first (re)define the arithmetic proportion:
+Luckily, the proof is a lot easier to derive.  Let us first (re)define the
+arithmetic proportion:
 \begin{property}
   \label{PROPER:sol_arithm_prop}
   Four elements $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in
@@ -1092,7 +1314,7 @@ Let us first (re)define the arithmetic proportion:
   \mathbf{a} + \mathbf{b}$.
 
   Also, for any $a, b, c \in \mathbb{R}$, the equation $a : b :: c:y$ is always
-  solvable and the solution is $\sol(a, b, c) = c - a + b$.
+  solvable and the solution is $\emph{sol}(a, b, c) = c - a + b$.
 \end{property}
 
 Please note that here, the $+$ is the regular addition operator (not the modulo
@@ -1141,6 +1363,8 @@ affine functions:
   which makes $f$ affine.
 \end{proof}
 
+We now prove that the real AP functions are the real affine functions, just
+like the Boolean AP functions are the Boolean affine functions.
 
 \begin{proposition}
   \label{PROPOS:arithm_AP_func_affine_func}
@@ -1152,11 +1376,11 @@ affine functions:
   \mathbf{d} \in \mathbb{R}^m$,
 
   $$\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d} \implies
-  \sol(f(\mathbf{a}), \mathbf{b}, \mathbf{c}) = f(\mathbf{d}).$$
+  \sol(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})) = f(\mathbf{d}).$$
 
   Equivalently, thanks to property \ref{PROPER:sol_arithm_prop},  $f$ is AP
   iff: $$\mathbf{d} = \mathbf{c} - \mathbf{a} + \mathbf{b} \implies
-  f(\mathbf{c}) - f(\mathbf{a} +  f(\mathbf{b}) = f( \mathbf{c} - \mathbf{a} +
+  f(\mathbf{c}) - f(\mathbf{a}) +  f(\mathbf{b}) = f( \mathbf{c} - \mathbf{a} +
   \mathbf{b}).$$
 
   From Property \ref{PROPRE:f_affine_real}, this is true iff $f$ is affine.
@@ -1168,172 +1392,21 @@ Proposition \ref{PROPOS:arithm_AP_func_affine_func} is illustrated in Figure
 \centering
   \includegraphics[width=3.5in]{figures/real_AP_fuction.pdf}
   \caption{When $f$ is affine, $\sol(f(\mathbf{a}), f(\mathbf{b}),
-  f(\mathbf{c}) = f(\mathbf{d})$.}
+  f(\mathbf{c})) = f(\mathbf{d})$.}
 \label{FIG:real_AP_func}
 \end{figure}
 
-
 In fact, Proposition \ref{PROPOS:AP_is_L} for Boolean functions can be
-proved in a much simpler way than what was used in Section \ref{TODO}, using
+proved in a much simpler way than what was used in Section
+\ref{SEC:a_complete_characterization_of_AP_functions}, using
 the same outline as Proposition \ref{PROPOS:arithm_AP_func_affine_func}. The
 first step is to see that a Boolean function is affine iff $f(\mathbf{a} +
 \mathbf{b} + \mathbf{c}) = f(\mathbf{a}) + f(\mathbf{b}) + f(\mathbf{c})$,
 where $+$ is now the module 2 addition. Also, noting that $\mathbf{a} :
 \mathbf{b} :: \mathbf{c} : \mathbf{d} \implies \mathbf{d} = \mathbf{a} +
 \mathbf{b} + \mathbf{c}$ and that for any $a, b, c \in \mathbb{B}$ we have
-$\sol(a, b, c) = a + b + c$, the proof can be derived easily.
+$\sol(a, b, c) = a + b + c$, the proof can be derived easily. We chose to give
+the longest one in Section \ref{SEC:a_complete_characterization_of_AP_functions} because this is the one that was
+originally derived.\todo{And it was in IJCAI paper?}
 
 
-\subsection{Approximately AP functions and experiments}
-\label{SEC:approximate_ap_functions}
-
-While the theoretical result of Proposition \ref{PROPOS:AP_is_L} is interesting
-on its own, it is obvious that purely affine functions are not representative
-of what would be encountered in a real-world environment.  This leads to the
-following question: what remains of the quality of the analogical extension
-$\mathbf{E}_S(f)$ when $f$ deviates from being AP in different ways? We will
-here investigate this question.
-
-Recall that for a given a sample $S$, we defined $\omega$ as the quality of the
-extension $\mathbf{E}_S(f)$ with $\omegasf = P_{\mathbf{x}\in
-\mathbf{E}^*_S(f)}\left[\albl{\mathbf{x}} = f(\mathbf{x})\right]$.  By
-definition, $\omegasf=1$ for all $S$ iff $f$ is AP. What we want to know now is
-how $\omegasf$ is affected when $f$ is not a purely affine function. What we
-mean by \textit{not purely affine} is that $f$ is $\epsilon$-close to the set
-of affine functions, which we will define now.
-
-
-Given two Boolean functions $f$ and $g$, we define their distance
-$\text{dist}(f, g) \eqdef P_\mathbf{x}\left[f(\mathbf{x}) \neq
-g(\mathbf{x})\right]$, where $P_\mathbf{x}$ is the uniform distribution over
-$\mathbb{B}^m$. Here, $\mathbf{x} \in \mathbb{B}^m$ is also considered as a
-random variable
-
-\begin{definition}
-We say that $f$ is $\epsilon$-close to $g$ if $\text{dist}(f, g) \leq
-  \epsilon$, and that $f$ is $\epsilon$-close to a set of functions $\Sigma$ if
-  $\exists g \in \Sigma$ such that $f$ is $\epsilon$-close to $g$.
-\end{definition}
-
-We want here to study the value of $\omegasf$ when $f$ is $\epsilon$-close from
-$L$, the set of affine functions. Note however that thanks to the
-code-independency property of the Boolean proportion ($1$ and $0$ play
-symmetric roles), we have that for any $S$ and any $f$, $\omegasf =
-\omega_S^{\neg f}$. As the set of affine functions is the set of linear
-functions and their negations, it is enough to study the value of $\omega$ when
-$f$ is $\epsilon$-close to $L'$, the set of linear functions.
-
-This question is clearly of interest, because in practice there exist some
-statistical tests allowing the practitioner to query a partially-known function
-$f$ to find out if it is $\epsilon$-close to $L'$. This test is the BLR test
-\cite{BluLubRub93}, that we describe now:
-
-\begin{itemize}
-\item Choose randomly and independently $\mathbf{x}$ and $\mathbf{y}$ in
-  $\mathbb{B}^m$.
-\item Compute $f(\mathbf{x}+\mathbf{y})$ and $f(\mathbf{x}) + f(\mathbf{y})$.
-\item If $f(\mathbf{x}+\mathbf{y}) = f(\mathbf{x}) + f(\mathbf{y})$, return
-  \textit{Accept}.
-\end{itemize}
-
-The main useful result is given in Property \ref{PROPER:BLR_test}:
-\begin{property}
-  \label{PROPRE:BLR_test}
-  If $BLR$ accepts $f$ with a probability at least $1-\epsilon$, then $f$ is
-  $\epsilon$-close to the set of linear functions.
-\end{property}
-
-So if we can exhibit a clear dependence (maybe probabilistic) between $\omega$
-and $\epsilon$, this would allow the practitioner to have guarantees about
-$\omegasf$ because we can know $\epsilon$ from the BLR test.
-
-Let us first consider a first experiment. Starting from a linear function $g
-\colon \mathbb{B}^8 \to \mathbb{B}$ defined as  $g(\mathbf{x}) = x_1 + \cdots +
-x_8$, we introduce some noise by negating its output $g(\mathbf{x})$ with
-probability $\epsilon$. We thus obtain functions $f_{\epsilon}$ that are
-$\epsilon$-close to $L'$, and report the value of $\omega$ averaged over $50$
-experiments.  Figure \ref{omega_vs_eps} gives an
-illustration of the variation of $\omega$ w.r.t.  $\epsilon$ for different
-sizes of $S$ (as a percentage of $|\mathbb{B}^m|$).  Other experiments have
-been carried out with other affine functions (i.e.  with less essential
-variables or different arity), leading to very similar results.  Note that
-$\epsilon$ only needs to be taken in $[0, \frac{1}{2}]$, because $f_\epsilon =
-\neg f_{1 - \epsilon}$ and for any $f$, $\omegasf = \omega_S^{\neg f}$.
-
-\begin{figure}
-\begin{center}
-\includegraphics[scale=0.6]{figures/omega_vs_eps_dim8_nexp50_std_nEss8.pdf}
-  \caption{$\omega$ for $\epsilon$-close functions to $L$.}
-\label{omega_vs_eps}
-\end{center}
-\end{figure}
-
-When $\epsilon = 0$ we get $\omega = 1$, as expected from
-Proposition \ref{PROPOS:AP_is_L}. We observe an almost linear decrease in $\omega$ as
-$\epsilon$ grows to $0.3$ then leading to a plateau where $\omega =
-\frac{1}{2}$, indicating that the analogical labels $\albl{\mathbf{x}}$ are
-more or less random. Moreover, $\omega$ appears to decrease faster for small
-samples $S$. This is due to the fact that the analogical labels
-$\albl{\mathbf{x}}$ are the result of a majority-vote procedure among the
-candidate solutions that one can build from $S$, and the number of candidates
-becomes smaller as $|S|$ decreases, thus altering the quality of the
-prediction.
-
-We only have an empirical study here.  The determination of a functional or
-probabilistic dependence between $\omega$, $\epsilon$ and $|S|$ is currently
-being investigated. Ultimately, it would be very interesting to prove a result
-like
-$$P(\omegasf \geq \eta) > 1 - \delta,$$
-where $\eta \in [0, 1]$ and $\delta \in [0, \frac{1}{2}]$ is a function
-$\epsilon$ and $\mid S \mid$. Such a result would be strongly linked to the PAC
-learning theory \cite{Val72}.
-
-
-
-Now, we have studied so far the variation of $\omegasf$ when $f$ deviates from
-the set of affine functions. We now focus on another point: the variation of
-$\omegasf$ when $f$ deviates from being AP in another way.
-Let us first note the following point: even if a function $f$ is far from being
-AP, the quality $\omega$ of the extension $\mathbf{E}_S(f)$ may still be very
-high. To illustrate this, let us define the value $\beta$ which is an indicator
-of how far is $f$ from being completely AP.  For each $\mathbf{x} \in
-\mathbf{E}^*_S(f)$, we define $\beta_\mathbf{x}$ as the proportion of
-candidates $y$ that led to the the correct label, i.e. the proportion of $y$
-such that $y = f(\mathbf{x})$. $\beta$ is defined as the average of all the
-$\beta_\mathbf{x}$.  Obviously, a function $f$ is AP iff $\beta = 1$ for all
-$S$, i.e. if $\beta_\mathbf{x} = 1$ for all $\mathbf{x} \in \mathbf{E}^*_S(f)$
-and for all $S$.
-
-Table \ref{table_monks} reports the values of $\omega$ and $\beta$ for the
-Standard and the Klein modelings of analogy (respectively $\omega_S$,
-$\omega_K$, $\beta_S$ and $\beta_K$) over three datasets from the UCI
-repository, namely the three Monk's problems\footnote{As these datasets are
-nominally-valued, they are binarized.} \cite{UCIrepo}. Results are averaged
-over 100 experiments, where the sample set $S$ is each time randomly sampled
-with a size of $30$\% of the universe of possible instances.
-
-\begin{table}
-\centering
-\begin{tabular}{| c | c | c | c | c |}
-\toprule
-  & $\omega_S$  & $\omega_K$ & $\beta_S$  &  $\beta_K$ \\
-\midrule
-Monk 1 & .96 & .96 & .73 & .62 \\
-Monk 2 & .96 & .84 & .69 & .60 \\
-Monk 3 & .98 & .95 & .87 & .77 \\
-\bottomrule
-\end{tabular}
-\caption{$\omega$ and $\beta$ for the Standard and Klein modelings over the
-  Monk's problems.}
-\label{table_monks}
-\end{table}
-
-We observe that for each dataset, $\beta_S$ is significantly lower than $1$.
-This suggests that the Boolean functions underlying these datasets are highly
-not AP, because on average, there is a high proportion (around $20$\%) of
-candidates $y$ that predicted the wrong label. However, $\omega_S$ is no lower
-than $96$\%, implying extensions of very high quality.  This is where the
-majority-vote comes into play: in some cases, it may be able to compensate for
-the predictors $y$ that were wrong.  This is what happens here in $96$\%,
-$96$\% and $98$\% of the cases respectively. Here again, obtaining theoretical
-guarantees about the majority vote procedure is currently investigated.

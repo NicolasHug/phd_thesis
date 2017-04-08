@@ -26,17 +26,34 @@ unifying framework will allow us to give a general and \textbf{functional}
 definition of analogical classifiers, opening the door to some theoretically
 grounded research.
 
-\section{Analogical classification}
+This chapter is structured as follows. In Section
+\ref{SEC:analogical_classification}, we will review and detail the two previous
+approaches to analogical classification, that we will name here the
+conservative and the extended classifiers. We will se that these two approaches
+can be factorize into a single functional description. Thanks to this
+functional definition of analogical learners, we will be able in Section
+\ref{SEC:theoretical_properties_of_analogical_classifiers} to derive some
+theoretical properties about analogical learners. We will indeed show that
+their VC-dimension is infinite, and that their accuracy is closely related to
+that of the $k$-NN classifier. Finally in Section
+\ref{SEC:experiments_and_empirical_validation}, we will empirically verify our
+results and provide some insights that will motivate the topic of Chapter
+\ref{CHAP:analogy_preserving_functions}.
 
-Let us first define the problem of classification, one of the main subfields of
-machine learning. The aim is simple: a classifier has to estimate the class of
-any element given as input on the basis of some other elements for which the
-class is known. Formally, we denote $X^m$ our universe which is usually a
-Cartesian product: $X^m = X_1 \times X_2 \times \ldots \times
-X_m$. We have at our disposal a subset $S \subsetneq X^m \times Y$ of $n$ pairs
-$\left(\mathbf{x}, f(\mathbf{x})\right)$, called the \textbf{training set}.
-$$S= \Set{\left(\mathbf{x}^{(i)}, f(\mathbf{x}^{(i)})\right) \in X^m \times Y |
-i \in [1,n]}.$$
+\section{Analogical classification}
+\label{SEC:analogical_classification}
+
+This first section will be devoted to the unification of two seemingly
+different analogical approaches to classification.  Let us first define the
+problem of classification, one of the main subfields of machine learning. The
+aim is simple: a classifier has to estimate the class of any element given as
+input on the basis of some other elements for which the class is known.
+Formally, we denote $X^m$ our universe which is usually a Cartesian product:
+$X^m = X_1 \times X_2 \times \ldots \times X_m$. We have at our disposal a
+subset $S \subsetneq X^m \times Y$ of $n$ pairs $\left(\mathbf{x},
+f(\mathbf{x})\right)$, called the \textbf{training set}.  $$S=
+\Set{\left(\mathbf{x}^{(i)}, f(\mathbf{x}^{(i)})\right) \in X^m \times Y | i
+\in [1,n]}.$$
 
 For any $\mathbf{x} \in X^m$, the value $f(\mathbf{x})$ is called its
 \textbf{class} or \textbf{label}.
@@ -94,7 +111,7 @@ The fix here is to consider that the prediction $\hat{f}(\mathbf{x})$ will be
 the most common candidate solution among all the predictors. This definition of
 analogical classification comes from the work of Stroppa and Yvon
 \cite{StrYvoCNLL05, StrYvoREPORT05}, and to our knowledge it is the first
-instance of analogical learner that has every been proposed. We note however
+instance of analogical learner that has ever been proposed. We note however
 that the authors did not explicitly state that the class equations must be
 solvable to be useful.
 
@@ -1330,9 +1347,10 @@ provided that the training set is big enough.
 
 \section{Conclusion}
 
-In this Section, we have provided a functional definition of analogical
-learners. Starting from this definition, we were in a position to prove an
-analytic convergence result, similar to that of the nearest neighbour
+In this Section, we have provided a functional and unifying definition of
+analogical learners, which turned out to be closely related to the $k$-NN
+classifiers. Starting from this definition, we were in a position to
+prove an analytic convergence result, similar to that of the nearest neighbour
 algorithm. Obviously, this is not enough to conclude regarding the predictive
 ability of analogy-based classifiers. We have also shown that their
 VC-dimension is infinite. It should not come as a surprise, as a very
@@ -1347,17 +1365,18 @@ alone is not a perfect marker of the quality of a machine learning algorithm,
 especially when it comes to practical implementation.
 
 In terms of accuracy in a Boolean setting, we have found a strong link between
-the accuracy of the NAN algorithm and that of the NN algorithm. At a
-first glance, we can consider the NAN algorithm as a NN strategy on an
-extended and noisy training set: the analogical extension $\esf$. In the end, we
-have seen that this extended training set covers the entire universe provided
-that $S$ is big enough, simplifying and bringing back the accuracy of the
-classifier to the value $\omega$ which corresponds to the  quality of the
-analogical extension.
-%We have also provided a method to accurately estimate the
-%value of $\omega$ that only relies on elements of the $S$, thus allowing
-%beforehand to have a precise idea of the accuracy of any analogical classifier
-%in a Boolean setting.
+the accuracy of the NAN algorithm and that of the NN algorithm. Our functional
+definition tells us that we can consider the NAN algorithm as a NN strategy on an
+extended and noisy training set: the analogical extension $\esf$. This leads us
+to consider analogical classification as a two-steps process:
+\begin{itemize}
+  \item First, the training set is extended to the analogical extension
+  \item Then, a $k$-NN algorithm is used on this extended training set.
+\end{itemize}
+Obviously, the accuracy of the NAN algorithm depends on the quality of the
+analogical extension. In Chapter \ref{CHAP:analogy_preserving_functions}, we
+will entirely describe the conditions needed for this extension to be perfectly
+sound.
 
 We have to remember that analogical reasoning brings its whole power in the
 case where few data are available. If a lot of data are available, it is very
@@ -1365,7 +1384,6 @@ likely that we have elements similar to the one at hand and, in that case, a
 $k$-NN style reasoning is natural. In the opposite case, when we only have a
 few relevant cases at hand, applying analogical proportion-based predictions
 appears to be a meaningful option.
-
 
 This concludes for now our investigations with analogical classifiers. We have
 seen that they have so far mostly been used for natural language processing
