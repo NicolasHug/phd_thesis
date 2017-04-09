@@ -72,8 +72,8 @@ an analogical classifier would lead to ridiculous accuracy results.
 \label{FIG:classif_in_R2}
 \end{figure}
 
-But if it is so easy for our analogical inference principle to fail, then why does it still
-work in some cases? Back to Figure \ref{FIG:nan_vs_nn} on page
+But if it is so easy for our analogical inference principle to fail, then why
+does it still work in some cases? Back to Figure \ref{FIG:nan_vs_nn} on page
 \pageref{FIG:nan_vs_nn}, the accuracies of the NAN algorithm were definitely
 not as bad as that of the problem we have just seen, and some of them were
 actually really good. A first obvious difference between the two experiments is
@@ -1067,7 +1067,7 @@ learning theory \cite{Val72}, and is the object of current research.
 
 
 
-Now, we have studied so far the variation of $\omegasf$ when $f$ deviates from
+We have studied so far the variation of $\omegasf$ when $f$ deviates from
 the set of affine functions. We now focus on another point: the variation of
 $\omegasf$ when $f$ deviates from being AP in a different way.
 Let us note the following point: even if a function $f$ is far from being
@@ -1409,4 +1409,65 @@ $\sol(a, b, c) = a + b + c$, the proof can be derived easily. We chose to give
 the longest one in Section \ref{SEC:a_complete_characterization_of_AP_functions} because this is the one that was
 originally derived.\todo{And it was in IJCAI paper?}
 
+\section{Conclusion}
 
+The main contribution of this chapter was to provide a complete
+characterization of Boolean functions that are fully compatible with the
+analogical inference principle that we have used so far in all the previous
+chapters of this document. Using an appropriate representation for Boolean
+functions (namely their algebraic normal form), we have been able to prove that
+the class of AP functions is the class of affine functions, i.e. functions
+whose degree is less than $1$.
+
+We chose to tackle the problem of finding the class of AP functions from the
+angle of training set extension. It became clear that the class of AP functions
+can be seen as the class of functions that allow  a perfectly sound extension,
+or equivalently as the class that allow the analogical inference principle to
+be sound.
+
+We also provided a more explicit version of the analogical inference principle
+which is in fact less restrictive than the one we have claimed so far. The
+distinction between the strict version and the relaxed version is that the
+class equation $f(\mathbf{a}) : f(\mathbf{b}) ::f(\mathbf{c}) :y$ is not always
+solvable, and the relaxed version takes this fact into account. The class of AP
+functions is fully compatible with the relaxed version, but we have also
+identified the functions that are compatible with the strict version, which
+turned out to be the class of projections (or dictators) functions.
+
+In real-world application though, purely affine functions are extremely rare.
+This means that using the analogical inference principle will necessarily
+produce errors in the label predictions. We have empirically investigated the
+quality of the analogical extension (which measures in some sense how
+\textit{adequate} was the use of the analogical inference principle) when a
+function deviates from the class of purely affine functions. We have observed
+that the quality of the extension linearly decreases, but a strong statistical
+result still needs to be derived. We also noted that in some particular cases,
+a function that is strongly not AP can still lead to a high extension quality.
+Indeed, as the analogical labels are the result of a majority-vote procedure,
+it may happen that the most common candidate label actually corresponds to the
+ground truth label $f(\mathbf{x})$. In this case, the majority-vote procedure
+is able to compensate of the candidates that were wrong in their predictions,
+because it will choose the most common predictor which happens to be the
+correct label.  Ultimately, even if only $50\% + \epsilon$ ($\epsilon > 0$) of
+the candidates are correct, it is still enough to have a perfectly sound
+extension. The class of AP functions ensure that exactly $100\%$ of the
+candidates are correct, but it is clear that such a requirement is too strong
+to be really useful in practice. The derivation of a theoretical result
+involving the role  of the majority-vote procedure is still a topic of current
+reasearch.
+
+Our main goal was to identify the class of AP functions in a Boolean setting.
+We have extended our results to two other domains. It is often the case that
+the classification problem does not involve purely Boolean attribute, but
+rather a more general domain where instances are multi-valuated. Sadly in these
+domains, there are no know structure or operators, so it was not possible to
+give a clear identification of AP functions such as that of Boolean AP
+functions. We were however able to provide a clear link between these AP
+functions and the Boolean AP functions by embedding the multi-valuated space
+into a partially defined Boolean space. We also provided a clear identification
+of AP functions in a real setting, i.e. for functions from $\mathbb{R}^m$ to
+$\mathbb{R}$. It turns out that the class of real AP functions is the class of
+real affine functions, just like the class of Boolean AP functions is the class
+of Boolean affine functions. The result for real functions was much easier to
+prove and in the end quite trivial, and seems to strongly limit use of the
+analogical inference principle in a real setting.
