@@ -1,23 +1,40 @@
 \chapter{Computational models of analogical reasoning}
-\label{CHAP:chapter_1}
+\label{CHAP:computational_models_of_analogical_reasoning}
 
 
-\initial{I}n this first chapter, we provide an overview of various attempt to
-formalize and theorize analogical reasoning, with a strong emphasis on
-computational models. We will be led at the end of this chapter to the so
-called Boolean analogical proportions and their use in machine learning, which
-were the starting points of our research.
+\initial{R}oughly speaking, analogy is a matter of establishing parallels
+between two different situations, and allows to infer properties about one of
+the two situations based on our knowledge of the other. Closely related to
+analogical reasoning is the idea of analogical proportion, which is a statement
+of the form \textit{a is to b as c is to d}, often written $a:b::c:d$. Here
+also, one of the four elements may sometimes be inferred if the three other are
+known: this is called the \textit{solving} of the analogical equation
+$a:b::c:~?$. The first two chapters of this document will be devoted to provide
+the necessary background on formal analogical models and especially analogical
+proportions. In this first chapter, we provide an overview of various attempts
+to formalize analogical reasoning, with a strong emphasis on computational
+models. In the next chapter we will describe in more details the modeling of
+analogical proportions, especially in the Boolean and real settings and their
+application to machine learning tasks.
 
-\section{Models without proportions}
-\label{sec:models_without_proportions}
+Section \ref{SEC:models_without_proportions} will be devoted to the description
+of past models that do not make explicit use of analogical proportions, and
+Section \ref{SEC:models_with_analogical_proportions} will describe models that
+may be applied to solving analogical equations.
+
+\section{Models without analogical proportions}
+\label{SEC:models_without_proportions}
+
+\subsection{First attempts by P\'olya and Hesse}
 
 In his famous book \textit{How to Solve It} \cite{Pol45}, the mathematician
-George P\'olya suggests to his readers different ways of reaching the solution
-of (mostly) mathematical problems. Among the different heuristics that are
-proposed, the analogy has a prominent place. Considering the problem of finding
+George P\'olya suggests to his readers various ways of reaching the solution
+of mathematical problems. Among the different heuristics that are
+proposed, analogy has a prominent place. Considering the problem of finding
 the center of gravity of a homogeneous tetrahedron, P\'olya suggests to observe
 that the tetrahedron and the triangle have many similar features, and to first
-find the center of gravity of the triangle: a somewhat simpler problem.
+find the center of gravity of the triangle: a somewhat simpler problem. He
+writes:
 
 \begin{quote}
 Knowing that the triangle and the tetrahedron are alike in many respects, we
@@ -27,17 +44,21 @@ Knowing that the triangle and the tetrahedron are alike in many respects, we
 \end{quote}
 
 As the center of gravity of a triangle is the meeting point of the three
-medians, the analogical argument suggest that the center of gravity of the
+medians, the analogical argument suggests that the center of gravity of the
 tetrahedron is the meeting point of the six median planes. The work of P\'olya
-is probably the first occurrence of analogical reasoning mentioned as a tool for
-problem solving in the modern era.
-
+is probably the most elaborated analysis of analogical reasoning as a tool for
+problem solving in the modern era. Later in \cite{Pol54}, P\'olya formalizes
+this idea in what he calls a \textit{pattern of plausible inference}:
+$$
+\inferrule{a \text{ is analogous to } $b$ \\\\ a \text{ is true}}{ $b$ \text{
+  is more credible} }
+$$
 \subsection{Analogy as a structural mapping}
 
 The role of a structural mapping between a source domain and a target domain
 has been recognized for a long time as a key component of analogical reasoning
-\todo{ref Polya Vol II}. As such, this principle has led to numerous theories
-and computational models that we briefly (and non-exhaustively) recall here.
+\cite{Pol54}. As such, this principle has led to numerous theories and
+computational models that we briefly (and non-exhaustively) recall here.
 
 \paragraph{Gentner's Structure Mapping Theory\\}
 
@@ -103,7 +124,7 @@ can be conceptually summarized as follows:
       and the target domain.
     \item Try to group matches into maximally consistent collections of
       matches.
-    \item From each collections, infer some relations that might stand in the
+    \item From each collection, infer some relations that might stand in the
       target domain.
 \end{enumerate}
 In its most simple form, the SME algorithm can be viewed as the finding of a
@@ -178,27 +199,29 @@ new facts and laws, provided that they are in accordance with the already known
 formulas.  This process of generalization followed by a transfer phase is what
 is called a \textbf{theory projection}.
 
-\subsection{Something}
+\subsection{Logical view of analogical reasoning}
 
 \paragraph{A determination rule for analogical inference\\}
 \label{SEC:Davies_and_Russel}
 
 We have seen so far many models of analogical reasoning that mostly rely on
 some heuristic, intangible principles. In contrast with this tendency, Davies
-and Russel proposed first order description of the analogical inference
+and Russel \cite{DavRus87} proposed first order description of the analogical inference
 process, and most importantly a set of conditions required for this inference
 process to be sound.  Concretely, they provide some sufficient conditions that
 must hold on two properties $P$ and $Q$ for the
-following inference to be sound
-$$\infer{Q(T)}{P(S) \wedge Q(S) & P(T)},$$
+following inference rule to be sound:
+$$\inferrule{P(S) \wedge Q(S) \\\\ P(T)}{Q(T)},$$
 where $S$ and $T$ are the source and target objects. Naturally, this framework
-can perfectly be generalized with many properties $P_1, P_2, \cdots P_n$.
+can perfectly be generalized with many properties $P_1, P_2, \cdots P_n$. It is
+clear that for now, this inference rule is not sound and the problem is now to
+add a premise such that the conclusion can be logicall deduced.
 
 A first obvious option would be to add as a premise the following implication:
 $$\forall x, P(x) \implies Q(x).$$
 But this is unsatisfactory, because in this case the inference simply reduces
 to
-$$\infer{Q(T)}{P(T) & \forall x, P(x) \implies Q(x)},$$ where no use of the
+$$\inferrule{P(T) \\\\ \forall x, P(x) \implies Q(x)}{Q(T)},$$ where no use of the
 source $S$ is made. It is clear that this inference can not be reasonably
 considered as an analogy: the additional premise must not lead to a conclusion
 by only involving the target $T$. Some knowledge about the source $S$ must be
@@ -214,26 +237,78 @@ generally, this relation can be considered as being a functional dependency
 between $P$ and $Q$, i.e. $Q = f(P)$. This determination rule has the two
 required properties: it allows a sound deduction of $Q(T)$, and forces to
 inspect the source $S$ to rule out one of the two parts of the
-conjunction.\textcolor{red}{HOW??? PAS COMPRIS NEED HELP}.
+disjunction. In the end, the complete analogical inference principle of Davies
+and Russel can be described as:
+
+$$\inferrule{P(S) \wedge Q(S) \\\\ P(T) \\\\  \left(\forall x ~ P(x) \implies
+Q(x)\right) \vee \left(\forall x ~ P(x) \implies \neg Q(x)\right)}{Q(T)}.$$
 
 
 
-\section{Models with proportions}
+\section{Models with analogical proportions}
+\label{SEC:models_with_analogical_proportions}
+
+\paragraph{Evans' program to solve geometric problems\\}
+
+The ANALOGY program of Thomas Evans \cite{Eva64} is one of the pioneer work in
+the design of programs capable of analogical reasoning. ANALOGY, written in
+LISP\footnote{And according to its author, the largest LISP program at the
+time!}, is able to solve analogical equations in the form of geometrical
+problems, such as that of Figure \ref{FIG:evans}: given three geometrical
+patterns, choose the fourth among a list of candidates that leads to the best
+proportion.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=3in]{figures/evans.pdf}
+\caption{A geometrical analogy problem}
+\label{FIG:evans}
+\end{figure}
+
+The inputs to the program are rough, hand-built low-level descriptions of the
+figures. For example, simple geometric shape such as circles, rectangles or
+triangles are all described with one single primitive:
+\textit{SIMPLE\_CLOSED\_CURVE(\dots)}, where the arguments are the start and
+end of of the (multiple) lines, and their curvatures. The program is then
+divided into two distinct parts.
+
+The role of the first part is to build high level representations of the
+figures from these raw descriptions. After identifying coherent shapes (such as
+triangle, square, etc) as independent objects, the program tries to find
+relations of the kind \textit{INSIDE(Obj1, Obj2)} or \textit{ABOVE(Obj1, Obj3)}
+between figures. Finally, similarities between every pair of objects are
+computed. The similarity measure is based on the transformability of the first
+object into the second one, using traditional geometrical transformations
+(rotation, scale, reflections, etc.). All the information computed by the first
+part are given as input (on punched cards!) to the second part.
+
+The second part relates to the analogical solving process per se. Using the
+output of the first part, ANALOGY will try to find a set of rules that
+transform figure $A$ into figure $B$. A rule would for example state
+\textit{REMOVE(Obj1), ROTATE(Obj2, 45\degree), etc.}. Then, by generalizing
+each rule, it tries to establish a correspondence between these rules and those
+transforming $C$ into one of the candidate solutions. The chosen solution is
+the one that maximizes the resemblance between the two sets of rules.
+
+An interesting fact is that ANALOGY analyses the way to go from $A$ to $B$ and
+applies to go from $C$ to $D$, but it does not make use of \textit{central
+permutation}: it may just as well analyze the way to go from $A$ to $C$ and
+transpose it to go from $B$ to $D$. Note also that in ANALOGY the semantics
+behind the relations and the geometrical objects are not taken into account. In
+this respect, ANALOGY is close to Gentner's Structure Mapping Theory (and
+preexisting by far).
+
 
 \paragraph{The model of Rumelhart and Abrahamsen\\}
 \label{SEC:rumelhart_Abrahamsen}
 
 At a time where most models of analogy take the form of complex computer
-programs (such as that of Evans detailed in Section \todo{La ref}), the two
-cognitive scientists David Rumelhart and Adele Abrahamsen proposed a simple
-theoretical model of analogical reasoning \cite{RumAbr73}. Their model is of
-great interest for us because as it will become clear, their view of analogy is
-in total accordance with our use of analogy in machine learning (or should we
-say more humbly that our use of analogy is fully compliant with their earlier
-model).
-
-\textcolor{red}{On va parler de proportions et de resolution, est ce que ca a
-deja ete mentione avant?}
+programs (such as that of Evans), the two cognitive scientists David Rumelhart
+and Adele Abrahamsen proposed a simple theoretical model of analogical
+reasoning \cite{RumAbr73}. Their model is of great interest for us because as
+it will become clear, their view of analogy is in total accordance with our use
+of analogy in machine learning (or should we say more humbly that our use of
+analogy is fully compliant with their earlier model).
 
 For Rumelhart and Abrahamsen, a human reasoning process can be defined by two
 components: a memory structure in which the remembered objects are stored, and
@@ -255,8 +330,10 @@ is the best candidate for $A:B::C:D_i$? Their assumption is the following:
 \textbf{ for a human agent, the best solution is the closest $D_i$ to the
 (potentially hypothetical) \textit{perfect} solution $I$, defined as $I = C - A
 + B$}. This principle is illustrated in figure \ref{FIG:rumelhart_model}.
-Diverse social experiments are led by the authors to assess the soundness of
-this hypothesis.
+To assess the soundness of this hypothesis, diverse social experiments are led
+by the authors. For example, students are asked to choose the best candidates
+for various randomly generated analogies, e.g. rat is to pig as goat is to $[$
+chimpanzee, cow, rabbit, sheep$]$.
 
 \begin{figure}[!h]
 \centering
@@ -266,9 +343,19 @@ this hypothesis.
 \label{FIG:rumelhart_model}
 \end{figure}
 
-It is clear that this view of the analogical reasoning process is exactly what
-is practically implemented in the experiments of \cite{BayMicDelIJCAI07}, and
-all the more so in ours.\todo{ref avant après?}
+As it will become clear, this idea that an analogy $A:B::C:D$ is better when
+$D$ is \textbf{close} (as measured by a distance on a metric space) to the true
+solution $I$ is entirely compatible with the notion of \textit{analogical
+dissimilarity} that will be defined in Chapter \ref{CHAP:functional_definition}.
+
+More recently, various techniques have been proposed to generate a vector-space
+embedding for words from a large corpus of text documents, for example
+Word2Vect \cite{MikCheCorDea13}. In these continuous spaces also, some
+interesting analogies between words can be found that give even more power to
+the works of Rumelhart and Abrahamsen. For example, the vector
+\textit{queen} was found to be the one that is the closest to the vector
+\textit{king - man + woman}, which is in accordance with the proportion man is
+to woman as king is to queen.
 
 \paragraph{The Copycat program\\}
 
@@ -423,55 +510,5 @@ set as those minimizing the above criteria. The empirical results show that
 this model, in addition to its theoretical appeal due to the proximity with
 MDLP, is at the very least an interesting option to further investigate. In a
 recent work , this model of analogy has been applied to a task of transfer
-learning \cite{CorMur16}.\todo{Faire lien entre ça et AD de Miclet}
-
-\paragraph{Evans' program to solve geometric problems\\}
-
-The ANALOGY program of Thomas Evans \cite{Eva64} is one of the pioneer work in
-the design of programs capable of analogical reasoning. ANALOGY, written in
-LISP\footnote{And according to its author, the largest LISP program at the
-time!}, is able to solve analogical equations in the form of geometrical
-problems, such as that of Figure \ref{FIG:evans}: given three geometrical
-patterns, choose the fourth among a list of candidates that leads to the best
-proportion.
-
-\begin{figure}[!h]
-\centering
-\includegraphics[width=3in]{figures/evans.pdf}
-\caption{A geometrical analogy problem}
-\label{FIG:evans}
-\end{figure}
-
-The inputs to the program are rough, hand-built low-level descriptions of the
-figures. For example, simple geometric shape such as circles, rectangles or
-triangles are all described with one single primitive:
-\textit{SIMPLE\_CLOSED\_CURVE(\dots)}, where the arguments are the start and
-end of of the (multiple) lines, and their curvatures. The program is then
-divided into two distinct parts.
-
-The role of the first part is to build high level representations of the
-figures from these raw descriptions. After identifying coherent shapes (such as
-triangle, square, etc) as independent objects, the program tries to find
-relations of the kind \textit{INSIDE(Obj1, Obj2)} or \textit{ABOVE(Obj1, Obj3)}
-between figures. Finally, similarities between every pair of objects are
-computed. The similarity measure is based on the transformability of the first
-object into the second one, using traditional geometrical transformations
-(rotation, scale, reflections, etc.). All the information computed by the first
-part are given as input (on punched cards!) to the second part.
-
-The second part relates to the analogical solving process per se. Using the
-output of the first part, ANALOGY will try to find a set of rules that
-transform figure $A$ into figure $B$. A rule would for example state
-\textit{REMOVE(Obj1), ROTATE(Obj2, 45\degree), etc.}. Then, by generalizing
-each rule, it tries to establish a correspondence between these rules and those
-transforming $C$ into one of the candidate solutions. The chosen solution is
-the one that maximizes the resemblance between the two sets of rules.
-
-An interesting fact is that ANALOGY analyses the way to go from $A$ to $B$ and
-applies to go from $C$ to $D$, but it does not make use of \textit{central
-permutation}: it may just as well analyze the way to go from $A$ to $C$ and
-transpose it to go from $B$ to $D$. Note also that in ANALOGY the semantics
-behind the relations and the geometrical objects are not taken into account. In
-this respect, ANALOGY is close to Gentner's Structure Mapping Theory (and
-preexisting by far).
+learning \cite{CorMur16}.
 

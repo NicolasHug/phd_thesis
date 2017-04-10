@@ -29,15 +29,15 @@ answer the question of \textit{when}: when is the analogical inference
 principle sound? Said differently, what are the conditions on the function $f$
 so that the inference
 $$
-\infer{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c})
-: f(\mathbf{d})}{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}
+\inferrule{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}{ f(\mathbf{a}) :
+f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})}
 $$
 is sound? The current chapter will be devoted to this question, in a Boolean
 setting. In this regard,
 the problem we address here is related to the contribution of Davies and Russel
 that we described in Section \ref{SEC:Davies_and_Russel} the authors gave a
 necessary condition for the following inference principle to hold:
-$$\infer{Q(T)}{P(S) \wedge Q(S) & P(T)}.$$
+$$\inferrule{P(S) \wedge Q(S) \\ P(T)}{Q(T)}.$$
 The links and differences between this inference principle and ours will be
 discussed in the conclusion of this document.
 
@@ -793,8 +793,8 @@ states that if we have  $\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$, then
 we should also have $f(\mathbf{a}) :f(\mathbf{b}) :: f(\mathbf{c}) :
 f(\mathbf{d})$:
 $$
-\infer{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c})
-: f(\mathbf{d})}{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}
+\inferrule{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}{ f(\mathbf{a}) :
+f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d}) }
 $$
 Something we have overlooked so far but that is of importance, is that
 implicitly this inference principle requires that the class equation
@@ -803,10 +803,12 @@ have $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}$. Indeed if the
 equation is not solvable, then we simply cannot have $f(\mathbf{a}) :
 f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})$.
 Therefore, a more explicit writing of the analogical inference principle is as
-follows: $$
-\infer[\text{~~ Inference Principle A}]{\solvable(f(\mathbf{a}), f(\mathbf{b}),
-f(\mathbf{c})), ~~f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) :
-f(\mathbf{d}) }{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}
+follows:
+$$
+\inferrule[\text{~~ Inference Principle A}]{\mathbf{a} : \mathbf{b} :: \mathbf{c} :
+\mathbf{d}}{\solvable(f(\mathbf{a}), f(\mathbf{b}),
+f(\mathbf{c})) \\\\f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) :
+f(\mathbf{d}) }
 $$
 
 
@@ -824,9 +826,10 @@ $\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$ stands \textbf{and that}
 $f(\mathbf{a}) :f(\mathbf{b}) :: f(\mathbf{c}) : y$ is solvable. With regard to
 this, we can say the class of AP functions are the class of functions that
 allow the following inference principle to be sound: $$
-\infer[\text{~~ Inference principle B}]{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) :
-f(\mathbf{d})}{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}, ~~
-\solvable(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))} $$
+\inferrule[\text{~~ Inference principle B}]{\mathbf{a} : \mathbf{b} ::
+\mathbf{c} : \mathbf{d} \\\\ \solvable(f(\mathbf{a}), f(\mathbf{b}),
+f(\mathbf{c}))}{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})}
+$$
 
 \textbf{This one is the inference principle that is actually useful in
 practice}: if the
@@ -926,15 +929,15 @@ $\bigskip
 This section was quite dense, so let us recap a bit what we have seen so far.
 We have given two different definitions for the analogical inference principle:
 $$
-\infer[\text{~~ Inference Principle A}]{\solvable(f(\mathbf{a}), f(\mathbf{b}),
-f(\mathbf{c})), ~~f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) :
-f(\mathbf{d}) }{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}
-$$
+\inferrule[\text{~~ Inference Principle A}]{\mathbf{a} : \mathbf{b} ::
+\mathbf{c} : \mathbf{d}}{\solvable(f(\mathbf{a}), f(\mathbf{b}),
+f(\mathbf{c}))\\\\ f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) :
+f(\mathbf{d}) } $$
 and
 $$
-\infer[\text{~~ Inference principle B}]{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) :
-f(\mathbf{d})}{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}, ~~
-\solvable(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))}
+\inferrule[\text{~~ Inference principle B}]{\mathbf{a} : \mathbf{b} ::
+\mathbf{c} : \mathbf{d} \\\\ \solvable(f(\mathbf{a}), f(\mathbf{b}),
+f(\mathbf{c}))}{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})}
 $$
 
 It is obvious that the second version (B) is less restrictive on the function
