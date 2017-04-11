@@ -53,12 +53,62 @@ $$
 \inferrule{a \text{ is analogous to } $b$ \\\\ a \text{ is true}}{ $b$ \text{
   is more credible} }
 $$
+
+
+Another early attempt at formalizing analogical reasoning is due to the
+philosopher of science Mary Hesse. In \cite{Hes66}, Hesse proposes to represent
+an analogy in a tabular form, as illustrated in Table \ref{TAB:Hesse_analogy}
+\begin{table}[t]
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    Bovine & Equid\\
+    \midrule
+    Is mammal & Is mammal\\
+    Has hoofs & Has hoofs\\
+    Eats grass & Eats grass\\
+    $\sim$ 1.6 meters high & $\sim$ 1.6 meters high\\
+    Harmless & Harmless\\
+    Domesticated & \textit{Domesticable}?\\
+    \bottomrule
+  \end{tabular}
+  \caption{The tabular representation of an analogy between cows and horses.}
+  \label{TAB:Hesse_analogy}
+\end{table}
+We already acknwoledge here a mapping between two domains: a source domain (the
+bovine domain) and a target domain (the equid domain). In Hesse's theory, an
+analogy should follow three general principles to be considered seriously. The
+first (questionable) requirement is the \textbf{requirement of material
+analogy}: for Hesse, material similarities (i.e. \textit{observable}
+similarities) between the two domains are more important than formal
+similarities, which emerge when the two domains can be seen as two different
+interpretations of a unifying model. In that sense, Hesse rejects the deep
+underlying similarities that may bond the two domains. The second requirement
+is that when it comes to inferring a property $Q$ (e.g. \textit{is a horse
+domesticable?}), there should be a \textbf{causal relationship} between the
+known properties $P$ and the one we need to infer. For example in our example
+of Table \ref{TAB:Hesse_analogy}, the fact that the animals are harmless
+and that they eat grass probably helps us to domesticate them. Whether they
+have hoofs is however fairly irrelevent for the matter. Finally, the \textbf{no
+essential difference condition} states that if a property $P$ is causally
+related to the hypothetical property $Q$ in the source domain, then it should
+also be the case in the target domain. For example if the horse was not
+harmless, or if it had a very special dietary regime, then we should probably
+not infer that it is easily domesticable.
+
+Let us also briefly mention that in \cite{Hes59}, Mary Hesse outlined a formal
+framework allowing to define analogical proportions in a modular lattice,
+anticipating quite remarkably other future works that will be reviewed in
+Chapter \ref{CHAP:formal_analogical_proportions}.
+
 \subsection{Analogy as a structural mapping}
 
-The role of a structural mapping between a source domain and a target domain
-has been recognized for a long time as a key component of analogical reasoning
-\cite{Pol54}. As such, this principle has led to numerous theories and
-computational models that we briefly (and non-exhaustively) recall here.
+We have seen that the role of a structural mapping between a source domain and
+a target domain has been recognized for a long time as a key component of
+analogical reasoning: see for example P\'olya in \cite{Pol54}, or Hesse's
+theory that we have just described. As such, this principle has led to numerous
+theories and computational models that we briefly (and non-exhaustively) recall
+here.
 
 \paragraph{Gentner's Structure Mapping Theory\\}
 
@@ -68,7 +118,7 @@ Gentner in \cite{Gen83}. The main feature of SMT is to consider that good
 analogies are those that result from strong, deep, relations and dependencies
 between the source and the target domains, rather than on some superficial
 characteristics. In this regard, SMT departs from Hesse's theory in a
-significant way. \todo{mettre ça dans Hesse si Hesse après}
+significant way.
 
 The point of Gentner is that superficial similarities are often irrelevant,
 while what matters in an analogy are the underlying \textbf{structural}, high
@@ -116,9 +166,11 @@ relationship).
 
 While SMT is a purely theoretical framework for analogy, these ideas have been
 practically implemented in a software called the Structure Mapping Engine (SME)
-\cite{FalForKenGen89} written in LISP, leading to numerous
-applications.\todo{Lovett?} The SME algorithm, in complete accordance with SMT,
-can be conceptually summarized as follows:
+\cite{FalForKenGen89} written in LISP, leading to numerous applications. A
+recent example is e.g. a program that is able to solve Raven's Progressive
+Matrices \cite{LovForUsh10}, a typical kind of visual geometric
+puzzles. The SME algorithm, in complete accordance with SMT, can be
+conceptually summarized as follows:
 \begin{enumerate}
     \item Look for all potential matches between relations in the source domain
       and the target domain.
@@ -164,11 +216,11 @@ the meaning that human agents associate with these objects, are taken into
 account. In this theory, the two relations \textit{ARE\_FRIENDS} and
 \textit{ARE\_ENEMIES} are not the same. This clearly stands in contrast with
 SMT, where all object attributes are simply discarded (along with their
-meanings)\todo{Et va dans le sens de Hesse}. Second, this theory also involves
-the pragmatic considerations of the human agent: the goal and purpose of the
-analogist should somehow guide the mapping process in some direction or
-another. Mappings that serve the purpose of the agent are therefore given
-higher priority than others.
+meanings), and seems to be in accordance with Hesse's requirement of material
+analogy. Second, this theory also involves the pragmatic considerations of the
+human agent: the goal and purpose of the analogist should somehow guide the
+mapping process in some direction or another. Mappings that serve the purpose
+of the agent are therefore given higher priority than others.
 
 Another main difference with SMT, where the systematicity principle is a fixed,
 inflexible rule, is that here the three dimensions (systematicity, semantic
@@ -177,8 +229,9 @@ rigid directions. These constraints are only here to guide the mapping process.
 
 Holyoak and Thagard's theory has been implemented in a LISP software called
 ACME (Analogical Constraint Mapping Engine), in a similar fashion as the
-COPYCAT program in that they are both cooperative algorithms.\todo{ref a
-copycat}. Much like SME, ACME is part of the connectionist approaches.
+Copycat program (detailed later in Section \ref{SEC:copycat}) in that they are
+both cooperative algorithms. Much like SME, ACME is part of the connectionist
+approaches.
 
 \paragraph{Heuristic-Driven Theory Projection\\}
 
@@ -243,6 +296,11 @@ and Russel can be described as:
 $$\inferrule{P(S) \wedge Q(S) \\\\ P(T) \\\\  \left(\forall x ~ P(x) \implies
 Q(x)\right) \vee \left(\forall x ~ P(x) \implies \neg Q(x)\right)}{Q(T)}.$$
 
+It is clear that when we have $P(S) \wedge Q(S)$, the right disjunct $\forall x
+~ P(x) \implies \neg Q(x)$ cannot be true so the inference principle is still
+reduced to the simpler form mentioned above. The determination rule still has
+the merit of requiering to inspect the source $S$, at least in the first step
+of the process.
 
 
 \section{Models with analogical proportions}
@@ -352,12 +410,25 @@ More recently, various techniques have been proposed to generate a vector-space
 embedding for words from a large corpus of text documents, for example
 Word2Vect \cite{MikCheCorDea13}. In these continuous spaces also, some
 interesting analogies between words can be found that give even more power to
-the works of Rumelhart and Abrahamsen. For example, the vector
+the works of Rumelhart and Abrahamsen. The most classical example of
+word-analogy in such a space is given by \textit{man} is to \textit{woman} as
+\textit{king} is to \textit{queen}, where the vector
 \textit{queen} was found to be the one that is the closest to the vector
-\textit{king - man + woman}, which is in accordance with the proportion man is
-to woman as king is to queen.
+\textit{king - man + woman}, which is in perfect accordance to the idea of
+Rumelhart and Abrahamsen. Other meaningful analogies can be found, and some of
+them are illustrated in Figure \ref{FIG:word_analogies}. See \cite{MikYihZwe13}
+for more details on finding linguistic regularities in word space embeddings.
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=5in]{figures/word_analogies.png}
+\caption{Analogies between words in the Word2Vect model. Image source:
+  \url{https://www.tensorflow.org/versions/master/tutorials/word2vec}.}
+  \label{FIG:word_analogies}
+\end{figure}
+
 
 \paragraph{The Copycat program\\}
+\label{SEC:copycat}
 
 Copycat \cite{Mit93} (see also \cite{HofMit94}) is another famous program that
 performs analogical reasoning tasks, introduced by Melanie Mitchell and Douglas
@@ -512,3 +583,18 @@ MDLP, is at the very least an interesting option to further investigate. In a
 recent work , this model of analogy has been applied to a task of transfer
 learning \cite{CorMur16}.
 
+Adopting a different (but close) approach, the association between Kolmogorov
+complexity and the evaluation of the quality of an analogy has also been
+recently advocated in \cite{BayPraRic12}. In this work, the authors propose
+that if four objects $a, b, c, d$ are in proportion, then it should be as
+\textit{complicated} to go from $a$ to $b$ as to go from $c$ to $d$, and it
+should also be as \textit{complicated} to go from $b$ to $a$ as to go from $d$
+to $c$. More formally:
+$$a:b::c:d \implies K(b \given a) = K(d \given c) \text{ and } K(a \given b) =
+K(c \given d).$$
+This criteria was used to automatically discriminating \textit{good} analogies
+from \textit{bad} analogies, where objects were concepts represented as words
+of the natural language, and where their Kolmogorov complexity was roughly
+approximated using online search-engine queries. The experiments showed that
+the system was able to differentiate credible analogies from fishy ones in
+about 75\% of the time.
