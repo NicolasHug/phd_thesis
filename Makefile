@@ -17,4 +17,4 @@ spellcheck:
 
 clean:
 	latexmk -CA
-	rm -rf phd.bbl phd.glg phd.glo phd.gls phd.ist phd.brf
+	rm -rf phd.bbl phd.glg phd.glo phd.gls phd.ist phd.brf *.fls
