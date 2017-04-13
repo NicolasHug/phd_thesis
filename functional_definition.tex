@@ -143,8 +143,8 @@ with some minor differences with our definitions.
   $$
   \esf \eqdef \Set{ \mathbf{x} \in X^m |  \exists
   (\mathbf{a},\mathbf{b},\mathbf{c}) \in S^3, ~ \mathbf{a} : \mathbf{b} ::
-  \mathbf{c} : \mathbf{x} \emph{ and } f(\mathbf{a}) : f(\mathbf{b}) ::
-  f(\mathbf{c}) : y \emph{ is solvable}}.
+  \mathbf{c} : \mathbf{x} \text{ and } f(\mathbf{a}) : f(\mathbf{b}) ::
+  f(\mathbf{c}) : y \text{ is solvable}}.
   $$
 \end{definition}
 
@@ -172,15 +172,9 @@ equation is also solvable, we can show that the size of $\esfs$ is exactly
 $\frac{1}{2} n^2(n - 1)$. This value is thus a loose upper bound for $\mid
 \esfs\mid$, because in practice equations are not always solvable.
 
+\begin{testexample}
 To polish our understanding of the analogical extension, let us consider Figure
 \ref{FIG:ae_example}.
-\begin{figure}[!h]
-\centering
-  \includegraphics[width=3in]{figures/ae_example.pdf}
-  \caption{With $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{d},
-  \mathbf{e}}$, we have $\esfs\Set{\mathbf{c}, \mathbf{f}}$.}
-\label{FIG:ae_example}
-\end{figure}
 The training set $S$ is $\Set{\mathbf{a}, \mathbf{b}, \mathbf{d},\mathbf{e}}$.
 Taking $(\mathbf{b}, \mathbf{d}, \mathbf{a}) \in S^3$, we notice that
 $\mathbf{b} : \mathbf{d} :: \mathbf{a} : \mathbf{c}$, and the associated class
@@ -193,28 +187,15 @@ last, vertex $\mathbf{h}$ will suffer the same fate because the class equation
 $f(\mathbf{a}) : f(\mathbf{e}) :: f(\mathbf{d}) : y$ is not solvable either. In
 the end, $\esf = \set{\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d},
 \mathbf{e}, \mathbf{f}}$.
+\end{testexample}
 
-%To polish our understanding of the analogical extension, let us consider Figure
-%\ref{FIG:ae_example}.
-%\begin{figure}[!h]
-%\centering
-%  \includegraphics[width=3in]{figures/ae_example.pdf}
-%  \caption{With $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{e},
-%  \mathbf{g}}$, we have $\esfs\Set{\mathbf{f}, \mathbf{h}}$.}
-%\label{FIG:ae_example}
-%\end{figure}
-%The training set $S$ is $\Set{\mathbf{a}, \mathbf{b}, \mathbf{e},\mathbf{g}}$.
-%Taking $(\mathbf{a}, \mathbf{g}, \mathbf{b}) \in S^3$, we notice that
-%$\mathbf{a} : \mathbf{g} :: \mathbf{b} : \mathbf{h}$, and the associated class
-%equation $0:0::0:y$ is solvable. So $\mathbf{h} \in \esf$. The same goes for
-%$\mathbf{f}$ with the 3-tuple $(\mathbf{a}, \mathbf{e}, \mathbf{b}) \in S^3$.
-%However, even if we can find $(\mathbf{e}, \mathbf{g}, \mathbf{a}) \in S^3$
-%such that $\mathbf{e} : \mathbf{g} :: \mathbf{a} : \mathbf{c}$, the associated
-%class equation $1:0::0:y$ is not solvable, so $\mathbf{c} \notin \esf$. At
-%last, vertice $\mathbf{d}$ will suffer the same fate because the class equation
-%$f(\mathbf{e}) : f(\mathbf{b}) :: f(\mathbf{g}) : y$ is not solvable either. In
-%the end, $\esf = \set{\mathbf{a}, \mathbf{b}, \mathbf{e}, \mathbf{f},
-%\mathbf{g}, \mathbf{h}}$.
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=3in]{figures/ae_example.pdf}
+  \caption{With $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{d},
+  \mathbf{e}}$, we have $\esfs\Set{\mathbf{c}, \mathbf{f}}$.}
+\label{FIG:ae_example}
+\end{figure}
 
 The dual concept of the analogical extension is what we call the
 \textbf{analogical root} of a given element $\mathbf{x} \in X^m$:
@@ -225,47 +206,36 @@ The dual concept of the analogical extension is what we call the
   the \textbf{analogical root} of an element $\mathbf{x} \in X^m$ is:
   $$
   \rsfx \eqdef \Set{(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in S^3 |
-  \mathbf{a}:\mathbf{b}::\mathbf{c}:\mathbf{x} \emph{ and }
-  f(\mathbf{a}):f(\mathbf{b})::f(\mathbf{c}):y \emph{ is solvable}}.
+  \mathbf{a}:\mathbf{b}::\mathbf{c}:\mathbf{x} \text{ and }
+  f(\mathbf{a}):f(\mathbf{b})::f(\mathbf{c}):y \text{ is solvable}}.
   $$
 \end{definition}
 
+\noindent
 $\rsfx$ is simply the set of 3-tuples in $S$ which are analogically linked to
-$\mathbf{x}$. Considering again the example of Figure \ref{FIG:ae_example}, we have that
+$\mathbf{x}$.
+
+\begin{testexample}
+Considering again the example of Figure \ref{FIG:ae_example}, we have that
 $\aroot{S}{f}{\mathbf{c}} = \Set{(\mathbf{b}, \mathbf{d},\mathbf{a}),
-(\mathbf{b}, \mathbf{a},\mathbf{d})}$. However, the two corresponding proportions
-$\mathbf{b}: \mathbf{d}::\mathbf{a}:\mathbf{c}$ and $\mathbf{b}:
+(\mathbf{b}, \mathbf{a},\mathbf{d})}$. However, the two corresponding
+proportions $\mathbf{b}: \mathbf{d}::\mathbf{a}:\mathbf{c}$ and $\mathbf{b}:
 \mathbf{a}::\mathbf{d}:\mathbf{c}$ are equivalent, and we will follow the
 convention that the analogical root should only contain non-equivalent
-3-tuples, so technically $\aroot{S}{f}{\mathbf{c}}$ is entirely described by $\Set{(\mathbf{b},
-\mathbf{d},\mathbf{a})}$.
-We also have that $\aroot{S}{f}{\mathbf{f}} = \Set{(\mathbf{a}, \mathbf{b},
+3-tuples, so technically $\aroot{S}{f}{\mathbf{c}}$ is entirely described by
+$\Set{(\mathbf{b}, \mathbf{d},\mathbf{a})}$.  We also have that
+$\aroot{S}{f}{\mathbf{f}} = \Set{(\mathbf{a}, \mathbf{b},
 \mathbf{e})}$, $\aroot{S}{f}{\mathbf{a}} = \Set{(\mathbf{a}, \mathbf{a},
 \mathbf{a}), (\mathbf{b}, \mathbf{b}, \mathbf{a}), (\mathbf{d}, \mathbf{d},
 \mathbf{a}), (\mathbf{e}, \mathbf{e}, \mathbf{a})}$, and
-$\aroot{S}{f}{\mathbf{h}} = \varnothing$. It is clear that in general,
-$$\rsfx = \varnothing\iff \mathbf{x} \notin \esf.$$
-%$\rsfx$ is simply the set of 3-tuples in $S$ which are analogically linked to
-%$\mathbf{x}$. Considering again the example of Figure \ref{FIG:ae_example}, we have that
-%$\aroot{S}{f}{\mathbf{h}} = \Set{(\mathbf{a}, \mathbf{g},\mathbf{b}),
-%(\mathbf{a}, \mathbf{b},\mathbf{g})}$. However, the two related proportions
-%$\mathbf{a}: \mathbf{g}::\mathbf{b}:\mathbf{h}$ and $\mathbf{a}:
-%\mathbf{b}::\mathbf{g}:\mathbf{h}$ are equivalent, and we will follow the
-%convention that the analogical root should only contain non-equivalent
-%3-tuples, so technically $\aroot{S}{f}{\mathbf{h}}$ is entirely described by $\Set{(\mathbf{a},
-%\mathbf{g},\mathbf{b})}$.
-%We also have that $\aroot{S}{f}{\mathbf{f}} = \Set{(\mathbf{a}, \mathbf{e},
-%\mathbf{b})}$, $\aroot{S}{f}{\mathbf{a}} = \Set{(\mathbf{a}, \mathbf{a},
-%\mathbf{a})}$, and $\aroot{S}{f}{\mathbf{c}} = \varnothing$. It is clear that
-%in general,
-%$$\rsfx = \varnothing\iff \mathbf{x} \notin \esf.$$
-\noindent
-It should also be clear that even if we only consider unique 3-tuples (up to
-equivalence) in the
-analogical root, $\rsfx$ may contain more than one 3-tuple: for example in
-$\mathbb{R}^m$ or $\mathbb{B}^m$ with the arithmetic (or Boolean) proportion,
-$\mathbf{x}$ may be the involved in more than one parallelogram, as illustrated
-in Figure \ref{FIG:multiple_parallelograms}.
+$\aroot{S}{f}{\mathbf{h}} = \varnothing$. \end{testexample}
+
+It is clear that in general, $$\rsfx = \varnothing\iff \mathbf{x} \notin
+\esf.$$ It should also be clear that even if we only consider unique 3-tuples
+(up to equivalence) in the analogical root, $\rsfx$ may contain more than one
+3-tuple: for example in $\mathbb{R}^m$ or $\mathbb{B}^m$ with the arithmetic
+(or Boolean) proportion, $\mathbf{x}$ may be the involved in more than one
+parallelogram, as illustrated in Figure \ref{FIG:multiple_parallelograms}.
 
 \begin{figure}[!h]
 \centering
@@ -285,13 +255,13 @@ functional view of conservative classifiers:
   For any element $\mathbf{x}$ of $\esf$, we denote $\mathbf{C}(\mathbf{x})$
   the set of the class equations solutions associated with $\mathbf{x}$:
   $$\mathbf{C}(\mathbf{x}) \eqdef \Set{y | f(\mathbf{a}) : f(\mathbf{b}) ::
-  f(\mathbf{c}) :y, \quad \emph{with }(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in \rsfx}$$
+  f(\mathbf{c}) :y, \quad \text{with }(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in \rsfx}$$
   We then define the \textbf{analogical
   label} of $\mathbf{x}$, denoted $\albl{\mathbf{x}}$, as:
   $$\albl{\mathbf{x}} \eqdef
   \begin{cases}
-    f(\mathbf{x}) \emph{ if } \mathbf{x} \in S\\
-    \text{Mode} \left(\mathbf{C}(\mathbf{x})\right) \emph{ if
+    f(\mathbf{x}) \text{ if } \mathbf{x} \in S\\
+    \text{Mode} \left(\mathbf{C}(\mathbf{x})\right) \text{ if
     } x \notin S
   \end{cases}
   $$
@@ -309,8 +279,8 @@ classifier:
   a conservative classifier sets the prediction of an element $\mathbf{x}$ as
   follows:
 
-  $$\emph{If } \mathbf{x} \in \esf, ~ \hat{f}(\mathbf{x}) \eqdef \albl{\mathbf{x}}.
-  \emph{ Else, } \hat{f}(\mathbf{x}) \emph{ is undefined.}$$
+  $$\text{If } \mathbf{x} \in \esf, ~ \hat{f}(\mathbf{x}) \eqdef \albl{\mathbf{x}}.
+  \text{ Else, } \hat{f}(\mathbf{x}) \text{ is undefined.}$$
 \end{definition}
 
 As previously mentioned, a conservative classifier is not able to output a
@@ -320,7 +290,10 @@ already made this observation when describing Algorithm
 candidate solutions $\mathbf{C}(\mathbf{x})$ is empty if and only if
 $\mathbf{x} \notin \esf$.  Also, we now understand why $\albl{\mathbf{x}}$ is
 simply set to $f(\mathbf{x})$ when the $\mathbf{x} \in S$: for such an
-$\mathbf{x}$ it is natural to want $\hat{f}(\mathbf{x}) = f(\mathbf{x})$! Going
+$\mathbf{x}$ it is natural to want $\hat{f}(\mathbf{x}) = f(\mathbf{x})$!
+
+\begin{testexample}
+Going
 back to our example with Figure \ref{FIG:ae_example}, we will have
 $\hat{f}(\mathbf{c}) \eqdef \albl{\mathbf{c}} = 1$, because
 $\aroot{S}{f}{\mathbf{c}} = \Set{(\mathbf{b}, \mathbf{d},\mathbf{a})}$ and
@@ -331,6 +304,7 @@ $\mathbf{C}(\mathbf{c}) = \Set{1}$. Also, $\hat{f}(\mathbf{f}) \eqdef
 only one candidate solution for each prediction. As $\mathbf{g}$ and
 $\mathbf{h}$ do not belong to $\esf$, both $\albl{\mathbf{g}}$ and
 $\albl{\mathbf{h}}$ stay undefined.
+\end{testexample}
 
 Let us note that in Algorithm \ref{ALGO:conservative_classifier}, the
 analogical extension $\esf$ is never explicitly computed. Instead, for a given
@@ -384,10 +358,6 @@ prediction is as expected $\hat{f}(\mathbf{x})=\text{eating}$, which is the
 solution of the equations $\text{read}:\text{reading}::\text{eat}:y$ and
 $\text{view}:\text{viewing}::\text{eat}:y$. There is
 no solution for $\mathbf{x}=(absurd,G,y)$, just because $\rsfx= \varnothing$.
-Note that in this case, the analogical extension is infinite and cannot be
-explicitly computed, because of the definition of the proportion that is used,
-so our alternative view of conservative classifiers does not hold and we have
-to stick to that of Algorithm \ref{ALGO:conservative_classifier}.
 
 The fact that conservative learners cannot output a prediction for any
 $\mathbf{x}$ can here be considered a good thing: it would not be natural to
@@ -461,7 +431,7 @@ parallelogram. This can be achieved using the following definition:
   Given four vectors $\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}$ of
   $\mathbb{R}^m$ equipped with the standard $p$-norm $\norm{p}{\cdot}$, the
   analogical dissimilarity related to the arithmetic proportion is defined as:
-  $$\emph{AD}(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) =
+  $$\text{AD}(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) =
   \norm{p}{(\mathbf{a} - \mathbf{b}) - (\mathbf{c} - \mathbf{d})}.$$
 \end{definition}
 
@@ -470,7 +440,7 @@ will start small and consider $\mathbb{B}$ first:
 \begin{definition}
   \label{DEF:AD_boolean_proportion}
   Given four elements $a, b, c, d$ of $\mathbb{B}$, the analogical
-  dissimilarity $\emph{AD}(a, b, c, d)$ is defined as the number of values that
+  dissimilarity $\text{AD}(a, b, c, d)$ is defined as the number of values that
   have to be switched to get a proper analogy.
 \end{definition}
 \noindent
@@ -495,7 +465,7 @@ their negated versions and have thus been ignored.
     \bottomrule
   \end{array}
   $$
-  \caption{The values of $\emph{AD}(a, b, c,d)$ for eight patterns of $a, b, c,
+  \caption{The values of $\text{AD}(a, b, c,d)$ for eight patterns of $a, b, c,
   d$ in $\mathbb{B}$.}
   \label{TAB:analogical_dissimilarity}
 \end{table}
@@ -519,11 +489,9 @@ $(\mathbf{a} - \mathbf{b}), (\mathbf{c} - \mathbf{d})$, or their difference are
 not in $\mathbb{B}^m$ but in $\mathbb{R}^m$.}.
 Actually, we could use any $p$-norm in $\mathbb{B}^m$, so
 Definition \ref{DEF:AD_arithmetic_proportion} could also be use to give a more
-general definition of the analogical dissimilarity in $\mathbb{B}^m$.\todo{Est
-ce que c'est vrai?? Il me semble que oui}
-Here again, we are
-witnessing the close bond that links the Boolean proportion and and the
-arithmetic proportion.
+general definition of the analogical dissimilarity in $\mathbb{B}^m$. Here
+again, we are witnessing the close bond that links the Boolean proportion and
+and the arithmetic proportion.
 
 As a measure of \textit{how poorly an analogical proportion holds}, the
 analogical dissimilarity will help us to define more flexible classifiers.  The
@@ -585,6 +553,7 @@ they will consider all other $3$-tuples $(\mathbf{a}',
 \mathbf{x}$, which is consistent with the conservative approach. Clearly, the
 extended classifier is a generalization of the conservative one.
 
+\begin{testexample}
 To better grasp the behaviour of the extended classifier, we will consider
 again Figure \ref{FIG:ae_example} on page \pageref{FIG:ae_example}, and go
 through the classification process of $\mathbf{c}, \mathbf{f}, \mathbf{g}$ and
@@ -618,6 +587,7 @@ $\mathbf{C}(\mathbf{h}) = \Set{1, 1}$: one solution comes from $f(\mathbf{a)}
 :f(\mathbf{d}):: f(\mathbf{d}) : y$, and we end up with $\hat{f}(\mathbf{h}) =
 1$. This completes our process overview for Algorithm
 \ref{ALGO:extended_classifier}!
+\end{testexample}
 
 \begin{table}[t]
   \centering
@@ -677,6 +647,7 @@ when the associated class equation is solvable, we naturally have $\mathbf{d}'
 \label{FIG:analogical_dissimilarity}
 \end{figure}
 
+\begin{testexample}
 Let us consider (again!) Figure \ref{FIG:ae_example} on page
 \pageref{FIG:ae_example}. We have already seen that $\AD(\mathbf{b},
 \mathbf{d}, \mathbf{a}, \mathbf{g}) = 1$, as proved by Table \ref{TAB:AD_bdag}.
@@ -690,6 +661,7 @@ $H(\mathbf{c}, \mathbf{g}) =  \AD(\mathbf{b}, \mathbf{d}, \mathbf{a},
 for $\mathbf{h}$: $\AD(\mathbf{a}, \mathbf{b}, \mathbf{e}, \mathbf{h}) =
 H(\mathbf{h}, \mathbf{f})$, where $\mathbf{f} = \sol(\mathbf{a}, \mathbf{b},
 \mathbf{e})$.
+\end{testexample}
 
 We are now finally ready for our unifying functional definition of analogical
 classifiers. As we have seen, for a given $\mathbf{x} \in X^m$, Algorithm
@@ -707,16 +679,16 @@ elements the $k$ \textbf{nearest analogical neighbors} of $\mathbf{x}$:
   \label{DEF:knan}
   For any $\mathbf{x} \in X^m$, and any training set $S \subset X$, we define
   the $k$ nearest analogical neighbors of $\mathbf{x}$ as the set:
-  $$k\emph{-nan}\left(\mathbf{x}, S\right) \eqdef \Set{\argmin_{\mathbf{d}' \in
+  $$k\text{-nan}\left(\mathbf{x}, S\right) \eqdef \Set{\argmin_{\mathbf{d}' \in
   A_E^Y(S)}^k
   \delta(\mathbf{x},\mathbf{d}')},
   $$
   where $\argmin_{\Sigma}^k \delta(\mathbf{x}, \cdot)$ returns the $k$ elements in $\Sigma$
   with the least value of $\delta$.
-  Another equivalent way of defining $k\emph{-nan}$ is:
-  $$k\emph{-nan}\left(\mathbf{x}, S\right) \eqdef k\emph{-nn}\left(\mathbf{x},
+  Another equivalent way of defining $k\text{-nan}$ is:
+  $$k\text{-nan}\left(\mathbf{x}, S\right) \eqdef k\text{-nn}\left(\mathbf{x},
   \esf\right),$$
-  where $k\emph{-nn}\left(\mathbf{x},\Sigma\right)$ is the set of $k$ nearest
+  where $k\text{-nn}\left(\mathbf{x},\Sigma\right)$ is the set of $k$ nearest
   neighbors of $\mathbf{x}$ in the set $\Sigma$. Ties are broken at random.
 \end{definition}
 
@@ -731,8 +703,8 @@ frequent analogical label:
   an extended classifier with parameter $k$ sets the prediction of an element
   $\mathbf{x} \in X^m$ as follows:
 
-  $$\hat{f}(\mathbf{x}) \eqdef \emph{Mode}\Set{\albl{\mathbf{d}'} | \mathbf{d}'
-  \in k\emph{-nan}\left(\mathbf{x}, S\right)}.
+  $$\hat{f}(\mathbf{x}) \eqdef \text{Mode}\Set{\albl{\mathbf{d}'} | \mathbf{d}'
+  \in k\text{-nan}\left(\mathbf{x}, S\right)}.
   $$
 \end{definition}
 
@@ -1345,7 +1317,7 @@ provided that the training set is big enough.
 %is difficult to find a lot a 3-tuples such that an analogical proportion holds
 %for every element.
 
-\section{Conclusion}
+\section*{Conclusion}
 
 In this Section, we have provided a functional and unifying definition of
 analogical learners, which turned out to be closely related to the $k$-NN
@@ -1391,4 +1363,4 @@ tasks, or classification in Boolean settings. One of the main goal of this
 thesis was to apply analogical proportion-based reasoning to concrete,
 real-world applications. We have chosen to investigate the suitability of
 analogical proportion in the design of recommender systems. This is the object
-of the next chapter.
+of the next two chapters.

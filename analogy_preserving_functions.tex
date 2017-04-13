@@ -341,7 +341,7 @@ It should be clear from Proposition \ref{PROPOS:equivalent_def_AP} that looking
 for the functions that lead to a perfect extension (i.e. the AP functions) is
 equivalent to looking for the functions that are compatible with the analogical
 inference principle, which was the first purpose of this chapter. Indeed,
-saying that $\emph{sol}\left(f(\mathbf{a}),  f(\mathbf{b}),
+saying that $\sol\left(f(\mathbf{a}),  f(\mathbf{b}),
 f(\mathbf{c})\right) =f(\mathbf{d})$ is equivalent to saying that
 $f(\mathbf{a}) : f(\mathbf{b}) ::  f(\mathbf{c}) :  f(\mathbf{d})$.
 
@@ -407,7 +407,10 @@ constant function $0$ is represented by $a_\emptyset\cdot \mathbf{x}_\emptyset$
 with $a_\emptyset =0$. The degree of a function $f:\mathbb{B}^m\rightarrow
 \mathbb{B}$, denoted $d(f)$, is defined as the degree of the unique polynomial
 representing $f$. In the following, we will often will refer to $f$ as both a
-function object and as the associated ANF. To illustrate this concept, here are
+function object and as the associated ANF.
+
+\begin{testexample}
+To illustrate this concept, here are
 the ANF of some common Boolean functions in $\mathbb{B}^2$ or $\mathbb{B}$:
 
 \begin{itemize}
@@ -416,6 +419,7 @@ the ANF of some common Boolean functions in $\mathbb{B}^2$ or $\mathbb{B}$:
   \item $\text{XOR}(x_1, x_2) = x_1 + x_2$ ;
   \item $\text{NEG}(x_1) = x_1 + 1$.
 \end{itemize}
+\end{testexample}
 
 Another key concept of our proof is the notion of essential and inessential
 variables.  For $k\in [1,m]$, $\boldsymbol{\alpha}\in \mathbb{B}^m$, and $c \in
@@ -849,7 +853,7 @@ functions will be called Strongly Analogy Preserving functions (SAP):
   $$\forall \mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in \mathbb{B}^m, ~~
   \mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d} \implies
   \begin{cases}
-    \emph{solvable}(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))\\
+    \text{solvable}(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c}))\\
      f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d}).
   \end{cases}$$
 \end{definition}
@@ -1188,8 +1192,8 @@ obvious property:
   For any $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in X^m =
   \prod_{i=1}^m X_i$,
 $$\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d} \iff
- \binemph(\mathbf{a}): \binemph(\mathbf{b}):: \binemph(\mathbf{c}):
-  \binemph(\mathbf{d}).$$
+ \bin(\mathbf{a}): \bin(\mathbf{b}):: \bin(\mathbf{c}):
+  \bin(\mathbf{d}).$$
  \end{property}
  \noindent
  Note that the proportion $\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$
@@ -1224,13 +1228,13 @@ characterize PAP functions is given in Definition \ref{DEF:PAP_functions}:
   \label{DEF:PAP_functions}
   A partial function $f^b$ is {\bf Analogy Preserving} (PAP)
   if for all $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in
-  \emph{dom}(f^b)$,:
+  \text{dom}(f^b)$,:
   $$
   \begin{cases}
-    \mathbf{a} :  \mathbf{b} ::  \mathbf{c} :  \mathbf{d} \emph{ and }\\
+    \mathbf{a} :  \mathbf{b} ::  \mathbf{c} :  \mathbf{d} \text{ and }\\
     solvable(f^b(\mathbf{a}),f^b(\mathbf{b}),f^b(\mathbf{c}))
   \end{cases}
-  \implies \emph{sol}(f^b(\mathbf{a}),f^b(\mathbf{b}),f^b(\mathbf{c})) =
+  \implies \text{sol}(f^b(\mathbf{a}),f^b(\mathbf{b}),f^b(\mathbf{c})) =
   f^b(\mathbf{d}).
   $$
 \end{definition}
@@ -1412,7 +1416,7 @@ $\sol(a, b, c) = a + b + c$, the proof can be derived easily. We chose to give
 the longest one in Section \ref{SEC:a_complete_characterization_of_AP_functions} because this is the one that was
 originally derived.\todo{And it was in IJCAI paper?}
 
-\section{Conclusion}
+\section*{Conclusion}
 
 The main contribution of this chapter was to provide a complete
 characterization of Boolean functions that are fully compatible with the

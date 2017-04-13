@@ -14,14 +14,15 @@ to apply analogical learning to a recommendation task to see if analogical
 learners can prove useful in more challenging contexts.
 
 In this chapter, we will provide some necessary background on recommender
-systems, before diving into Chapter \ref{CHAP:analogical_recommendation}. We
-first provide a taxonomy of current research in the recommender systems area in
-Section \ref{SEC:taxonomy_rec_sys}, and set ourselves withing the collaborative filtering
-framework. In Section \ref{SEC:recommendation_rating_prediction}, we formally
-define the recommendation problem that we will address in this document, and
-explain how to assess the quality of a recommender system. In Section
-\ref{SEC:neighborhood_and_matrix_facto_review}, we extensively describe two
-collaborative filtering methods: neighborhood-based algorithms, and matrix
+systems, before diving into Chapter \ref{CHAP:analogical_recommendation} where
+we will describe our contributions and experiments. We first provide a taxonomy
+of current research in the recommender systems area in Section
+\ref{SEC:taxonomy_rec_sys}, and set ourselves withing the collaborative
+filtering framework. In Section \ref{SEC:recommendation_rating_prediction}, we
+formally define the recommendation problem that we will address in this
+document, and explain how to assess the quality of a recommender system. In
+Section \ref{SEC:neighborhood_and_matrix_facto_review}, we extensively describe
+two collaborative filtering methods: neighborhood-based algorithms, and matrix
 factorization-based techniques. These two families of algorithm will serve as
 baselines to which we will compare our own prediction algorithms in Chapter
 \ref{CHAP:analogical_recommendation}.
@@ -529,12 +530,12 @@ weighted by the similarity between $u$ and $v$:
 \begin{definition}
   The estimation of a rating $\rui$ using the neighborhood approach (also
   denoted $k$-NN here) is:
-  $$\predrui = \frac{\sum\limits_{v \in N_i^k(u)} r_{vi} \cdot \emph{sim}(u, v)}
-  {\sum\limits_{v \in N_i^k(u)}\emph{sim}(u, v)},$$
+  $$\predrui = \frac{\sum\limits_{v \in N_i^k(u)} r_{vi} \cdot \text{sim}(u, v)}
+  {\sum\limits_{v \in N_i^k(u)}\text{sim}(u, v)},$$
   where $N_i^k(u)$ is the set of users having rated $i$ with the highest $k$
   values of sim with $u$:
   $$N_i^k(u) \eqdef \Set{v \in U | \rvi \in R,~v\in \argmax_{u' \in
-  U}^k\left[\emph{sim}(u, u')\right]}$$
+  U}^k\left[\text{sim}(u, u')\right]}$$
 \end{definition}
 
 The estimation process of the neighborhood approach is described in Algorithm
@@ -603,7 +604,7 @@ Probably the most common one is the cosine similarity.
 \begin{definition}
   The cosine similarity between two users $u$ and $v$ is defined as:
 $$
-\emph{cosine sim}(u, v) \eqdef \frac{ \sum\limits_{i \in \Iuv} \rui \cdot \rvi}
+\text{cosine sim}(u, v) \eqdef \frac{ \sum\limits_{i \in \Iuv} \rui \cdot \rvi}
 {\sqrt{\sum\limits_{i \in \Iuv} \rui^2} \cdot \sqrt{\sum\limits_{i \in \Iuv}
 \rvi^2}}.
 $$
@@ -624,7 +625,7 @@ a mean-centered version of the cosine similarity.
 \begin{definition}
   The Pearson similarity between two users $u$ and $v$ is defined as:
 $$
-\emph{Pearson sim}(u, v) \eqdef \frac{ \sum\limits_{i \in \Iuv}
+\text{Pearson sim}(u, v) \eqdef \frac{ \sum\limits_{i \in \Iuv}
 (\rui -  \mu_u) \cdot (\rvi - \mu_{v})} {\sqrt{\sum\limits_{i
 \in \Iuv} (\rui -  \mu_u)^2} \cdot \sqrt{\sum\limits_{i \in
 \Iuv} (\rvi -  \mu_{v})^2}},
@@ -638,7 +639,7 @@ One last similarity metric that we will use is the Mean Squared Difference
 similarity metric, so taking its inverse would do the job.}:
 \begin{definition}
   The mean squared difference between two users $u$ and $v$ is defined as:
-$$\emph{MSD}(u, v) \eqdef \frac{1}{|\Iuv|} \cdot \sum\limits_{i \in \Iuv} (\rui
+$$\text{MSD}(u, v) \eqdef \frac{1}{|\Iuv|} \cdot \sum\limits_{i \in \Iuv} (\rui
 - \rvi)^2$$
 \end{definition}
 
@@ -786,12 +787,14 @@ written $R = UI^t$, where $\Sigma$ has been merged into either $U$ or $I$. In
 practice, we know how to compute the the two matrices $U$ and $I$: their
 columns are are the
 eigenvectors\footnote{For this reason, SVD and Principal Component Analysis are
-strongly related.} of the two matrices $A^tA$ and $AA^t$, and their associated
+strongly related.} of the two matrices $R^tR$ and $RR^t$, and their associated
 eigenvalues are the squared entries of $\Sigma$, called the singular values
 (hence the name of the factorization).
 
-The key point is that the columns of $U$ are actually an orthonormal basis for
-the column space of $R$, and the columns of $I$ are an orthonormal basis for the
+The key point is that the columns of $U$ are actually an \textbf{orthonormal
+basis} for
+the column space of $R$, and the columns of $I$ are an \textbf{orthonormal
+basis} for the
 row space of $R$. Maybe this statement is worth some explanation. The column
 space of $R$ is the vector space that is spanned by the $n$ columns or $R$,
 i.e. the set of vectors that are a linear combination of the columns of $R$. As
@@ -873,6 +876,7 @@ user $u$. We can now understand that \textbf{$p_u$ represents how well $u$
 agrees with each of the $r$ prototype movies, and $q_i$ represents how well $i$
 suits the tastes of the $r$ prototype users}.
 
+\begin{testexample}
 As an example, let us consider the rating of Charlie for Titanic. We will
 assume that the rank $r$ is $3$ and that the three movies types are
 \textit{Action}, \textit{Romance}, and \textit{Science fiction}. Charlie is a
@@ -882,6 +886,7 @@ science fiction at all. The two vectors $p_u$ and $q_i$ are described in Table
 has all the attributes (or factors) that Charlie likes\footnote{These values
 are completely arbitrary and obviously are not necessarily those that would
 appear in the true SVD of $R$.}.
+\end{testexample}
 
 \begin{table}[h!] \centering \begin{tabular}{ l   c  c  c }
 \toprule
@@ -917,7 +922,9 @@ matrix $R$ is dense (i.e. when  there is no unknown entry), there exists an anal
 solution for computing the two matrices $U$ and $I$. An equivalent solution is
 to solve the following minimization problem\footnote{From then on we will abuse
 notation and use $R$ either as a matrix (sparse or dense) and as a rating
-dataset as defined in Section \ref{SEC:recommendation_rating_prediction}.}:
+dataset as defined in Section \ref{SEC:recommendation_rating_prediction}.},
+with the constraint that the vectors $q_i$ must be orthogonal, as well as the
+vectors $p_u$:
 $$
 \sum_{\rui \in R} \left(\rui - {q_i}^t \cdot p_u \right)^2.
 $$
@@ -925,30 +932,32 @@ $$
 But what happens in a recommendation setting, where the matrix $R$ is extremely
 sparse? The SVD of $R$ is not even properly defined! One of the main
 contribution during the Netflix competition was made by Simon Funk in a blog
-post\footnote{http://sifter.org/~simon/journal/20061211.html}, who
-empirically showed that we should actually just not care that the matrix $R$ is
+post\footnote{http://sifter.org/~simon/journal/20061211.html}, who empirically
+showed that \textbf{we should actually just not care} that the matrix $R$ is
 sparse, and still solve the same optimization problem only using the known
 ratings.  When $R$ is sparse, the problem is not convex in both $p_u$ and $q_i$
-so this optimization will only lead to a local minimum,
-but this method turned out very efficient in practice. Before that,
-techniques usually involved  a preliminary step where the matrix $R$ was filled
-using some heuristic, in order to have a fully defined problem
-\cite{SarKarKonRie00}. Funk's
-contribution led him to the top 10 competitors of the Netflix competition at
-the time, and was heavily used by other competing teams, including the BelKor
-team who ended up winning the contest \cite{Kor09}.
+so this optimization will only lead to a local minimum, but this method turned
+out very efficient in practice. Before that, techniques usually involved  a
+preliminary step where the matrix $R$ was filled using some heuristic, in order
+to have a fully defined problem \cite{SarKarKonRie00}. Funk's contribution led
+him to the top 10 competitors of the Netflix competition at the time, and was
+heavily used by other competing teams, including the BelKor team who ended up
+winning the contest \cite{Kor09}. It also turns out that the orthogonality
+constraint is useful for interpretation purposes, but in practice it usually
+leads to a lower generalization power, so we will simply not bother and allow
+the factor vectors to be non-orthogonal.
 
 The appeal of this basic approach does not only rest upon its link to SVD, but
 also because it is easily extendable. It was later improved and theoretically
 studied in many ways, for example by incorporating user and items biases
 \cite{KorACM2010} (which we will further detail later in Section
 \ref{SEC:current_advances_neighborhood_techniques}), by adding the ability to
-incorporate implicit ratings along with explicit ones \cite{Pat07, KorACM2010}, or by
-adding some time-dependent features, taking into account items popularity over
-time \cite{Kor09}. Still in \cite{KorACM2010}, a model combining matrix
+incorporate implicit ratings along with explicit ones \cite{Pat07, KorACM2010},
+or by adding some time-dependent features, taking into account items popularity
+over time \cite{Kor09}. Still in \cite{KorACM2010}, a model combining matrix
 factorization techniques and neighborhood approaches was proposed. For a
-complete overview mixing all previously mentioned methods, see
-\cite{KorBel11} or \cite{KorBelVol09}.
+complete overview mixing all previously mentioned methods, see \cite{KorBel11}
+or \cite{KorBelVol09}.
 
 In \cite{SalMni07}, the matrix factorization we just saw was studied from a Bayesian
 perspective, and was named Probabilistic Matrix Factorization (PMF), leading to
@@ -958,10 +967,7 @@ $$
 \sum_{\rui \in R} \left(\rui - {q_i}^t \cdot p_u \right)^2 +
 \lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right),
 $$
-where $\lambda$ is a regularization term. When
-$R$ is a dense matrix with no unknown entry (and when $\lambda$ is zero), the
-solution of this optimization problem exactly corresponds that of the SVD,
-provided that $f=r$. Not
+where $\lambda$ is a regularization term. Not
 surprisingly, stochastic gradient descent (SGD) tend to perform really well
 when it comes to the solving of this problem, and is quite simple to implement.
 We have already talked too much about matrix factorization, but a few lines
@@ -1024,12 +1030,44 @@ solved by following Algorithm \ref{ALGO:matrix_facto_sgd}.
 \end{algorithm}
 
 Another optimization technique can be used, by noting that if either $p_u$ or
-$q_i$ is fixed, we obtain a convex problem that can be solved using
-classical least squares methods. The idea is then to first consider all $q_i$
-as constants and solve the associated linear problem. Then, the $p_u$ are
+$q_i$ is fixed, we obtain a convex problem that can be solved using classical
+least squares methods. The idea is then to first consider all $q_i$ as
+constants and solve the associated linear problem. Then, the $p_u$ are
 considered constant and the associated problem is solved. Repeating these steps
 an arbitrary number of time will also converge to a local solution, and this
 methods is known as Alternating Least Squares \cite{BelKor07}.
+
+\section*{Conclusion}
+
+The purpose of this chapter was to provide the necessary background and tools,
+in preparation of the next chapter where we will describe our contributions on
+analogical recommendation.
+
+We have seen that the three main families of recommender systems are the
+content-based, collborative and knowledge-based techniques. Collaborative
+filtering is by far the most popular family of techniques today, so we will try
+to address this problem in our contributions. In particular, we will try to
+build algorithms that are capable of predicting the rating $\rui$ that a user
+$u$ has given to an item $i$, on the basis of some past rating history.
+
+We thoroughly detailed two popular collaborative filtering techniques. The
+first one is the neighborhood-based method, which is a direct implementation of
+the general $k$-NN strategy. The neighborhood of each user is computed using a
+similarity metric that is based  on the ratings: two users are considered close
+if they like the same items and dislike the same items. Then, the prediction
+$\predrui$ is set as an aggregate (usually a weighted mean) of the ratings of
+the neighbors of $u$ for the item $i$. These neighborhood-based methods tend to
+model local relationship in the data. In constrast, the matrix
+factorization-based techniques, whose popularity has grown during the Netflix
+Prize, tend to model global effects in the data. These techniques define ratings
+in terms of user and item factors. Each user $u$ is modeled as a vector of
+factors which indicate how strong are is taste of $u$ for the given factors.
+Each item $i$ is also modeled as a vector of factors which indicate how well
+$i$ corresponds to the given factors. The prediction $\rui$ is then set as the
+scalar product between these two vectors, while the vectors are estimated using
+a global estimation procedure (usually) based on stochastic gradient descent.
+These two techniques (neighborhood and matrix factorization) will serve as
+baselines in the next chapter to compare our algorithms performances.
 
 We now have enough background on the recommender systems field to apply
 analogical learning to a recommendation task. This is the purpose of the next

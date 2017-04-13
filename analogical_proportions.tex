@@ -164,9 +164,9 @@ it appears that the Boolean proportion can be defined in the following way:
   Four elements $a, b, c, d$ in $\mathbb{B}$ are in proportion if:
   $$
   \begin{cases}
-    a = b \emph{ and } c = d\\
-    \emph{or}\\
-    a = c \emph{ and } b = d.
+    a = b \text{ and } c = d\\
+    \text{or}\\
+    a = c \text{ and } b = d.
   \end{cases}
   $$
 \end{definition}
@@ -238,8 +238,8 @@ any analogy over a set $X$:
   \label{DEF:analogy_for_vectors}
   Let $A$ be an analogy over a set $X$. We can define an analogy $A^m$ over
   $X^m$ in a component-wise fashion by:
-  $$A^m(\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}) ~ \emph{  if  } ~
-  A(a_i, b_i, c_i, d_i) \emph{ for all } i \in [1, m],$$
+  $$A^m(\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}) ~ \text{  if  } ~
+  A(a_i, b_i, c_i, d_i) \text{ for all } i \in [1, m],$$
   where $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}$ are vectors in $X^m$.
 \end{definition}
 \noindent
@@ -748,14 +748,18 @@ Let $(U, \oplus)$ be a semigroup, i.e. $U$ is a set and $\oplus$ is an
   such that for all $i \in [1, n]$, 
   $$
   \begin{cases}
-    a_i = b_i \emph{ and } c_i = d_i\\
-    \emph{or}\\
-    a_i = c_i \emph{ and } b_i = d_i.
+    a_i = b_i \text{ and } c_i = d_i\\
+    \text{or}\\
+    a_i = c_i \text{ and } b_i = d_i.
   \end{cases}
   $$
 \end{definition}
 
-We can clearly foresee here the features of the Boolean proportion. It will be
+\noindent
+We can clearly foresee here the features of the Boolean proportion.
+
+\begin{testexample}
+It will be
 insightful to instantiate $U$ as the set of natural number $\mathbb{N}$ and
 $\oplus$ as the usual multiplication $\times$. In this setting, let's consider
 the prime factorization of:
@@ -770,11 +774,18 @@ the prime factorization of:
 For each $i$, we either have $a_i = b_i$ and $c_i = d_i$ ($i = 2, 3, 4$) or
 $a_i = c_i$ and $b_i = d_i$ ($i = 1, 4$). We can then say that $a, b, c, d$ are
 in proportion, i.e. $30: 60 :: 25:50$. Naturally, the reader will recognize
-here the geometric proportion: $\frac{30}{60} = \frac{25}{50}$.  In
-\cite{StrYvoREPORT05}, the authors use this definition to define an analogy
-between words of a finite alphabet using the concatenation operator, which
-allows to build proportions such as: $$\text{eat} : \text{eating} ::
-\text{look} : \text{looking}.$$
+here the geometric proportion: $\frac{30}{60} = \frac{25}{50}$.
+\end{testexample}
+
+\begin{testexample}
+  Another use of this Definition can be found in \cite{StrYvoREPORT05}, where
+  the authors define an analogy between words of a finite alphabet using the
+  concatenation operator, which allows to build proportions such as:
+  $$\text{eat} : \text{eating} :: \text{look} : \text{looking}.$$ This analogy
+  was used in an automatic verb conjugation task that will be briefly descibed
+  in Section \ref{SEC:conservative_classifier}.
+\end{testexample}
+
 
 Starting from the general lines of Definition \ref{DEF:proportion_semi_group},
 other proportions have been defined in various domains, namely analogies
@@ -811,7 +822,7 @@ equivalent definition has been given in \cite{MicPra09}:
   \label{DEF:analogy_set_miclet_henri}
   Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if:
   $$
-  A \setminus B = C \setminus D \emph{ and } B \setminus A = D \setminus A
+  A \setminus B = C \setminus D \text{ and } B \setminus A = D \setminus A
   $$
 \end{definition}
 
@@ -828,6 +839,7 @@ be given as follows (not without using various ingenious tweaks):
   $$A \cup D = B \cup C \text{ and } A \cap D = B \cap C.$$
 \end{definition}
 
+\noindent
 These three equivalent definitions are illustrated in Figure
 \ref{FIG:equiv_analogies_sets}.
 
@@ -837,9 +849,17 @@ These three equivalent definitions are illustrated in Figure
   \caption{The four sets $A, B, C, D$ are in proportion.}
 \label{FIG:equiv_analogies_sets}
 \end{figure}
+
+\begin{testexample}
 For a more concrete example, let us consider $A = \{a, b, c, g\}, B = \{a, b,
 d, e, g\}, C = \{c, f, g\}$ and $D = \{d, e, f, g\}$, as summed-up in Table
 \ref{TAB:analogy_sets}.
+Setting $U = \{a, b, g\}, V = \{c\}, W = \{d, e\}$ and $Z = \{f, g\}$, the
+conditions of Definition  \ref{DEF:analogy_set_facto}  are clearly satisfied.
+Also, $A \setminus B = C \setminus D = \{c\} = V$, and $B\setminus A = D
+\setminus C = \{d, e\} = W$. Finally, $A \cup D = B \cup C = \{a, b, c, d, e,
+f, g\}$ and $A\cap D = B\cap C = \{g\}$.
+\end{testexample}
 \begin{table}[h!]
 \centering
 $$
@@ -857,11 +877,6 @@ $$
 \caption{Four sets $A, B, C, D$ in analogical proportion.}
 \label{TAB:analogy_sets}
 \end{table}
-Setting $U = \{a, b, g\}, V = \{c\}, W = \{d, e\}$ and $Z = \{f, g\}$, the
-conditions of Definition  \ref{DEF:analogy_set_facto}  are clearly satisfied.
-Also, $A \setminus B = C \setminus D = \{c\} = V$, and $B\setminus A = D
-\setminus C = \{d, e\} = W$. Finally, $A \cup D = B \cup C = \{a, b, c, d, e,
-f, g\}$ and $A\cap D = B\cap C = \{g\}$.
 
 \paragraph{Formal definition of the Boolean proportion\\}
 
@@ -875,7 +890,7 @@ which can be directly derived from Definition
   Four elements $a, b, c, d$ in $\mathbb{B} = \{0, 1\}$ are in proportion if
   \begin{alignat*}{2}
     &(a \leftrightarrow b \wedge c \leftrightarrow d) && \vee (a
-    \leftrightarrow c \wedge b \leftrightarrow d), \emph{ or equivalently}\\
+    \leftrightarrow c \wedge b \leftrightarrow d), \text{ or equivalently}\\
      & (a \wedge d \leftrightarrow b \wedge c) &&\wedge (a \vee  d
     \leftrightarrow b \vee c),
   \end{alignat*}
@@ -921,3 +936,5 @@ analogy in this work.
 The notion of Boolean analogical proportion has recently been extended to the
 concept of \textbf{logical proportion} (see e.g. \cite{PraRic14}), but their
 details are out of the scope of this document.
+
+\section*{Conclusion}
