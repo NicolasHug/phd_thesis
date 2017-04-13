@@ -99,7 +99,7 @@ describes such classifiers.
 
 It should be easy to see that the process of Algorithm
 \ref{ALGO:conservative_classifier} is extremely similar to the one we followed
-on our gentle introduction to classification with Boolean proportions in
+on our first introduction to classification with Boolean proportions in
 Section \ref{SEC:machine_learning_with_boolean_proportions}. Here again the key
 underlying process is the analogical inference principle, which states that if
 four elements are in proportion, then their classes should also be in
@@ -157,20 +157,14 @@ $f$, $\esf$ satisfies some interesting properties: \begin{enumerate}
 \item $\aext{\varnothing}{f} = \varnothing$, and $\aext{X^m}{f}=X^m$;
 \item $S_1 \subseteq S_2 \implies \aext{S_1}{f} \subseteq \aext{S_2}{f}$.
 \end{enumerate}
-
-\begin{definition}
-  \label{DEF:ae_star}
 We will denote by $\esfs$ the set of elements in $\esf$ that are not in $S$:
-$$\esfs \eqdef \esf \setminus S.$$
-\end{definition}
-
-\noindent
-In a setting where for any $\mathbf{a},\mathbf{b}, \mathbf{c}$ the equation
-$\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{x}$ is always solvable (as is
-the case for the arithmetic proportion) and such that the associated class
-equation is also solvable, we can show that the size of $\esfs$ is exactly
-$\frac{1}{2} n^2(n - 1)$. This value is thus a loose upper bound for $\mid
-\esfs\mid$, because in practice equations are not always solvable.
+$$\esfs \eqdef \esf \setminus S.$$ In a setting where for any
+$\mathbf{a},\mathbf{b}, \mathbf{c}$ the equation $\mathbf{a} : \mathbf{b} ::
+\mathbf{c} : \mathbf{x}$ is always solvable (as is the case for the arithmetic
+proportion) and such that the associated class equation is also solvable, we
+can show that the size of $\esfs$ is exactly $\frac{1}{2} n^2(n - 1)$. This
+value is thus a loose upper bound for $\mid \esfs\mid$, because in practice
+equations are not always solvable.
 
 \begin{testexample}
 To polish our understanding of the analogical extension, let us consider Figure
@@ -186,14 +180,14 @@ class equation $0:1::1:y$ is not solvable, so $\mathbf{g} \notin \esf$. At
 last, vertex $\mathbf{h}$ will suffer the same fate because the class equation
 $f(\mathbf{a}) : f(\mathbf{e}) :: f(\mathbf{d}) : y$ is not solvable either. In
 the end, $\esf = \set{\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d},
-\mathbf{e}, \mathbf{f}}$.
+\mathbf{e}, \mathbf{f}}$ and $\esfs = \Set{\mathbf{c}, \mathbf{f}}$.
 \end{testexample}
 
 \begin{figure}[!h]
 \centering
   \includegraphics[width=3in]{figures/ae_example.pdf}
   \caption{With $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{d},
-  \mathbf{e}}$, we have $\esfs\Set{\mathbf{c}, \mathbf{f}}$.}
+  \mathbf{e}}$, we have $\esfs = \Set{\mathbf{c}, \mathbf{f}}$.}
 \label{FIG:ae_example}
 \end{figure}
 
@@ -566,7 +560,7 @@ $3$-tuple is $(\mathbf{a}, \mathbf{b}, \mathbf{e})$ and leads to the prediction
 $\hat{f}(\mathbf{f}) = 1$. For these two elements in $\esf$, the extended
 classifier outputs the same predictions as the conservative one, and most
 importantly, the underlying process is the same\footnote{To some extent, this
-is due to the fact that we (innocently?) chose $k = 1$.}.
+is due to the fact that we have chosen $k = 1$.}.
 
 Consider now $\mathbf{g} \notin \esf$. We know that we won't find any $3$-tuple
 in perfect proportion with $\mathbf{g}$ (else the conservative classifier would
@@ -961,7 +955,7 @@ classifiers.
 \label{SEC:accuracy_analysis}
 
 In this section, we study the accuracy of an analogical classifier, and more
-particularly that of the $\NAN$. As explained in Section
+particularly that of the $\NAN$ classifier. As explained in Section
 \ref{SEC:functional_definition}, for a given $\mathbf{x} \in X^m$ and a
 training set $S \subset X^m$, the prediction $\hat{f}(\mathbf{x})$ is set as:
 $$
@@ -976,11 +970,33 @@ algorithm trained on the set $\Sigma$.} over all the elements of $X^m$ is
 defined as:
 $$\acc(\NAN_S, X^m)\eqdef P\left(\hat{f}(\mathbf{x})=f(\mathbf{x}) \given[\big]
 \mathbf{x} \in X^m\right).$$
+Our main result is given by Proposition \ref{PROPOS:accuracy_nan}:
+\begin{proposition}
+  \label{PROPOS:accuracy_nan}
+  The accuracy of $\NAN_S$ over $X^m$ can be seen as the weighted sum of the
+  accuracy of $\NN$ over $A$ and $B$, using a different training set each time
+  (respectively $S$ and $\esfs$):
+  \begin{align*}
+    \acc(\NAN_S, X^m) = ~&\acc(\NN_S, A) \cdot \alpha ~ + \\
+                        &\acc(\NN_{\esfs}, B) \cdot (1 - \alpha),
+  \end{align*}
+  where:
+  \begin{itemize}
+  \item $A \eqdef \set{\mathbf{x} \in X^m | \nan(\mathbf{x}, S) \in S}$: the
+    elements that have their nan in $S$.
+  \item $B \eqdef \set{\mathbf{x} \in X^m | \nan(\mathbf{x}, S) \in \esfs}$: the
+    elements that have their nan in $\esfs$.
+  \item $\alpha \eqdef P(\mathbf{x} \in A)$ and $1 - \alpha = P(\mathbf{x} \in
+    B)$. 
+  \end{itemize}
+  Naturally, $A \cup B = X^m$ and $A \cap B = \varnothing$.
+\end{proposition}
+\begin{proof}
 By observing that for any $\mathbf{x}$, its $\nan$ either belongs to $S$ or to
-$\esfs$, the above equation can be split into two distinct parts as follows:
+$\esfs$, the accuracy $\acc(\NAN_S, X^m)$ can be split into two distinct parts as follows:
 
 \begin{align*}
-  &P\left(\hat{f}(\mathbf{x})=f(\mathbf{x}) \given[\big] \mathbf{x} \in
+  &\acc(\NAN_S, X^m) \eqdef P\left(\hat{f}(\mathbf{x})=f(\mathbf{x}) \given[\big] \mathbf{x} \in
   X^m\right) = P\left(\albl{\nan(\mathbf{x}, S)} = f(\mathbf{x})\right)\\
   =~&P\left([\albl{\nan(\mathbf{x}, S)} = f(\mathbf{x}) ]\wedge
   [\nan(\mathbf{x}, S) \in S ] \right)~ +
@@ -1039,29 +1055,9 @@ $[\nn(\mathbf{x}, \esf) = \nn(\mathbf{x}, \esfs)]$. This leads to
 This second term is then the accuracy of the $\NN_{\esfs}$ algorithm over the
 elements that have their nearest analogical neighbour in $\esfs$.
 
-In the light of these interpretations, one can rewrite the accuracy formula in
-a  concise form, using a few more definitions:
-\begin{itemize}
-\item $A \eqdef \set{\mathbf{x} \in X^m | \nan(\mathbf{x}, S) \in S}$: the
-  elements that have their nan in $S$.
-\item $B \eqdef \set{\mathbf{x} \in X^m | \nan(\mathbf{x}, S) \in \esfs}$: the
-  elements that have their nan in $\esfs$.
-\end{itemize}
-
-Naturally, $A \cup B = X^m$ and $A \cap B = \varnothing$. Also, $\alpha =
-P(\mathbf{x} \in A)$ and $1 - \alpha = P(\mathbf{x} \in B)$. We can now clearly
-define the accuracy of $\NAN$ algorithm:
-
-\begin{proposition}
-  \label{PROPOS:accuracy_nan}
-  The accuracy of $\NAN_S$ over $X^m$ can be seen as the weighted sum of the
-  accuracy of $\NN$ over $A$ and $B$, using a different training set each time
-  (respectively $S$ and $\esfs$):
-  \begin{align*}
-    \acc(\NAN_S, X^m) = ~&\acc(\NN_S, A) \cdot \alpha ~ + \\
-                        &\acc(\NN_{\esfs}, B) \cdot (1 - \alpha).
-  \end{align*}
-\end{proposition}
+In the light of these interpretations, we can directly rewrite the accuracy
+formula in a the concise form given in Proposition \ref{PROPOS:accuracy_nan}.
+\end{proof}
 
 The value $\acc(\NN_S, A)$ is the accuracy of $\NN_S$ over all the elements in
 $A$. A theoretical study of this accuracy has been done in \cite{LanIbaIJCAI93}
@@ -1196,7 +1192,7 @@ interesting conclusions about the behaviour of the 1-NAN algorithm.
 
 \begin{figure}[!h]
 \centering
-  \includegraphics[scale=.55]{figures/nan_vs_nn_SUMMARY_dim8_nexp15.pdf}
+  \includegraphics[scale=.50]{figures/nan_vs_nn_SUMMARY_dim8_nexp15.pdf}
   \caption{Accuracies (left) of the 1-NAN and 1-NN algorithms over different
   Boolean functions ($m = 8$) and training set sizes, with corresponding values
   of $\omega$, $\gamma$, and theoretical accuracy (right). The $x$ axis
@@ -1251,10 +1247,11 @@ would have done better!). This is one of the distinguishing features of the XOR
 functions: the nearest neighbor of an element is almost always in a different
 class, as can be seen on Figure \ref{FIG:classification_problem} (page
 \ref{FIG:classification_problem}). So sadly, the 1-NN algorithm can do nothing
-but wrong on these kind of functions. In chapter \ref{TODO}, we will prove a
-strong result showing that both the projections (like $f_1$) and the XOR
-functions (like $f_2$) \textbf{always} lead to perfectly sound extensions, for
-any training set of any size.
+but wrong on these kind of functions. In Chapter
+\ref{CHAP:analogy_preserving_functions}, we will prove a strong result showing
+that both the projections (like $f_1$) and the XOR functions (like $f_2$)
+\textbf{always} lead to perfectly sound extensions, for any training set of any
+size.
 
 Table \ref{TAB:monks} shows the same metrics for the Monk datasets and also
 reports the results of the Analogical Proportion Classifier (\textit{APC}) from
@@ -1322,7 +1319,7 @@ provided that the training set is big enough.
 In this Section, we have provided a functional and unifying definition of
 analogical learners, which turned out to be closely related to the $k$-NN
 classifiers. Starting from this definition, we were in a position to
-prove an analytic convergence result, similar to that of the nearest neighbour
+prove an analytical convergence result, similar to that of the nearest neighbour
 algorithm. Obviously, this is not enough to conclude regarding the predictive
 ability of analogy-based classifiers. We have also shown that their
 VC-dimension is infinite. It should not come as a surprise, as a very
