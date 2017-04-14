@@ -26,10 +26,10 @@ Let us first start by diving into the realm of Boolean proportions.
 In this first section, we will introduce the formal analogical proportions in a
 Boolean setting, also mentioning the arithmetic and geometric proportions that
 are used when dealing with real numbers. We will still make generic statements
-about analogical proportions in general, regardless of the setting, and we will
+about analogical proportions regardless of the setting, and we will
 use the term \textit{analogical proportion} for such general statements. The
-terms \textit{Boolean proportion } or \textit{Arithmetic proportion} will be
-used only to refer to their respective particular settings.
+terms \textit{Boolean proportion } or \textit{arithmetic proportion} will be
+used only to refer to these respective particular cases.
 
 \paragraph{The three axioms of an analogical proportion\\}
 
@@ -77,7 +77,7 @@ our initial proportion $A(a,b,c,d)$: we say that these $8$ proportions
 constitute an \textbf{equivalence class}. There are exactly $4! = 24$ ways to
 order the four elements $a, b, c, d$, and we have just seen that $8$ of these
 orderings form an equivalence class. In fact, the $16$ remaining orderings are
-also part of two other equivalence classes, each of $8$ proportions. If we had
+also part of two other equivalence classes, each of $8$ proportions. Indeed, if we had
 started with the proportion $A(a,b,d,c)$, by successive applications of the
 central permutation and symmetry axiom, we would have ended up again with $8$
 equivalent forms that are all different from those that are \textit{generated}
@@ -88,7 +88,7 @@ correspond to the $24 = 4!$ possible orderings of $a, b, c, d$.
 \begin{testexample}
   The point here that if we say that a calf $(a)$ is to a cow $(b)$ as a foal
   $(c)$ is to a mare $(d)$, then we can actually say it in $7$ other equivalent
-  ways. Also, we cannot say that a calf $(a)$ is to a cow $(b)$ as a mare $(d)$
+  ways. Also, we \textbf{cannot} say that a calf $(a)$ is to a cow $(b)$ as a mare $(d)$
   is to a foal $(c)$ (second equivalence class), nor can we say that a calf
   $(a)$ is to a foal $(c)$ as a  mare $(d)$  is to a cow $(b)$ (third
   equivalence class).
@@ -175,7 +175,7 @@ Table \ref{TAB:six_valid_patterns}) all lead to incorrect proportions.
 Table \ref{TAB:six_valid_patterns} provides us with valuable insights.  First,
 it appears that the Boolean proportion can be defined in the following way:
 
-\begin{definition}
+\begin{definition}[Boolean proportion]
   \label{DEF:boolean_proportion_informal}
   Four elements $a, b, c, d$ in $\mathbb{B}$ are in proportion if:
   $$
@@ -206,7 +206,7 @@ and only if $a - b = c - d$.
 
 In fact, in general, a relation $a - b = c - d$ between four real numbers $a,
 b, c, d$ is called an \textbf{arithmetic proportion}:
-\begin{definition}
+\begin{definition}[Arithmetic proportion]
   Four elements $a, b, c, d$ in $\mathbb{R}$ are in \textbf{arithmetic
   proportion} if:
   $$a - b = c - d.$$
@@ -220,7 +220,7 @@ document.
 The arithmetic proportion, which states an equality of differences, is not the
 only proportion that deals with numbers. The \textbf{geometric proportion} is
 another instance of analogical proportion, which states an equality of ratios:
-\begin{definition}
+\begin{definition}[Geometric proportion]
   Four elements $a, b, c, d$ in $\mathbb{R}$ are in \textbf{geometric
   proportion} if
   $$\frac{a}{b} = \frac{c}{d},$$
@@ -250,7 +250,7 @@ $\mathbb{B}^m$ is to require that each of the $m$ dimensions make up valid
 proportions in $\mathbb{B}$. This requirement can naturally be generalized to
 any analogy over a set $X$:
 
-\begin{definition}
+\begin{definition}[Proportion for vectors]
   \label{DEF:analogy_for_vectors}
   Let $A$ be an analogy over a set $X$. We can define an analogy $A^m$ over
   $X^m$ in a component-wise fashion by:
@@ -621,8 +621,9 @@ we will be thoroughly addressed in this document:
     two techniques.
   \item How \textit{safe} is the analogical inference principle? What are some
     theoretical guarantees that could allow us to use it on a sound basis? This
-    question stays, to this day, unanswered. In Chapter \ref{TODO} however, we
-    will provide a complete characterization of the Boolean functions $f$ that
+    question stays, to this day, unanswered. In Chapter
+    \ref{CHAP:analogy_preserving_functions} however, we will provide a complete
+    characterization of the Boolean functions $f$ that
     allow to derive sound conclusions.
 \end{enumerate}
 
@@ -649,7 +650,7 @@ proportions in $\mathbb{B}^m$.
 But let's now ask a more relevant and challenging question: \textbf{how many
 \textit{useful} proportions can we build in $\mathbb{B}^m$?} By
 \textit{useful}, we mean proportions that could be used for classification
-purposes.  We have seen in Section \ref{TODO} that the only proportions
+purposes.  We have seen in this section that the only proportions
 $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}$ that are useful for
 classification purposes are those where all elements $\mathbf{a}, \mathbf{b},
 \mathbf{c}, \mathbf{d}$ are distinct, i.e. the non-flat proportions. We thus
@@ -743,7 +744,7 @@ classification will be more detailed in Chapter
 \section{Formal definitions}
 \label{SEC:formal_definitions_proportions}
 
-The Boolean proportion was introduced in the previous section in an informal
+The Boolean proportion was introduced in the previous sections in an informal
 way, along with many key concepts such as the solving on an analogical
 equation, and the analogical inference principle. In this section, we will
 provide the definition of the Boolean proportion (and others) in a more formal
@@ -759,7 +760,7 @@ Stroppa and Yvon (see \cite{StrYvoCNLL05} and \cite{StrYvoREPORT05}), who
 provided an algebraic factorization-based definition of analogical proportions
 in semigroups:
 
-\begin{definition}
+\begin{definition}[Proportion in semigroups]
 \label{DEF:proportion_semi_group}
 Let $(U, \oplus)$ be a semigroup, i.e. $U$ is a set and $\oplus$ is an
   associative binary operation. Four elements $a, b, c, d \in U$, are in proportion if
@@ -826,7 +827,7 @@ $A, B, C, D$ of a universal set $X$ are in proportion if $A$ can be transformed
 into $B$ by adding and deleting the same elements as to transform $C$ into $D$.
 A more formal definition has been given in \cite{StrYvoREPORT05}:
 
-\begin{definition}
+\begin{definition}[Proportion between sets]
   \label{DEF:analogy_set_facto}
   Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if there exists
   four subsets $U, V, W$ and $Z$ (not necessarily disjoint) such that:
@@ -844,7 +845,7 @@ To go from $A$ to $B$, one needs to add $W$ and remove $V$. To go from $C$ to
 $D$, one needs to do the exact same thing: add $W$ and remove $V$. An
 equivalent definition has been given in \cite{MicPra09}:
 
-\begin{definition}
+\begin{definition}[Proportion between sets]
   \label{DEF:analogy_set_miclet_henri}
   Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if:
   $$
@@ -859,7 +860,7 @@ which is naturally equivalent to the statement of Definition
 \setminus A = D \setminus A  = W$.  Finally, a last equivalent definition can
 be given as follows (not without using various ingenious tweaks):
 
-\begin{definition}
+\begin{definition}[Proportion between sets]
   \label{DEF:yet_other_equiv_def}
   Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if:
   $$ A \cap D = B \cap C \text{ and } A \cup D = B \cup C.$$
@@ -911,7 +912,7 @@ which can be directly derived from Definitions
 \ref{DEF:analogy_set_miclet_henri} or \ref{DEF:yet_other_equiv_def} by
 considering the set $\mathbb{B} = \{0, 1\}$:
 
-\begin{definition}
+\begin{definition}[Boolean proportion]
   \label{DEF:boolean_proportion}
   Four elements $a, b, c, d$ in $\mathbb{B} = \{0, 1\}$ are in proportion if
   \begin{alignat*}{2}
@@ -1011,9 +1012,16 @@ A(a, b, c, d) =
 The conditions may seem complicated but they actually express simple facts: the
 first one states that $a$ differs from $b$ in the same direction as $c$ differs
 from $d$, and the second one states the reverse. It is clear that this
-definition is quite closely linked to that of the arithmetic proportion. we
-will make use of this graded view of analogy in chapter.
-\ref{chap:analogical_recommendation}.
+definition is quite closely linked to that of the arithmetic proportion.
+
+In practice, there are actually many other ways to transform the Boolean
+operators into multiple-valued logic operators. If we had started from a
+different expression of the Boolean proportion, or if we had used alternative
+choices of operators, we would have ended up with a different definition of
+this analogical proportion (see \cite{PraRic13}) for a discussion).  We here
+chose to describe this definition because of its links to the arithmetic
+proportion, and because  we will make use of this graded view of analogy in
+Chapter \ref{CHAP:analogical_recommendation}.
 
 \section*{Conclusion}
 
@@ -1022,14 +1030,17 @@ proportions, mostly focusing on Boolean proportions. We have seen that an
 analogical proportion $A$ is a quaternary relation following three axioms that
 were already known in Aristotle times. By solving an analogical equation, we
 are able to infer some information about any of the four elements at play in
-the analogy, provided that the three others are known. Using this tool and
-applying the analogical inference principle, we were able to go trough a simple
-classification problem in a Boolean setting. We then formally defined various
-analogical proportions in different settings, starting from the most general
-definitions until we reached the Boolean proportion. We also presented an
-extension of the Boolean proportion to multiple-valued logics, which we will
+the analogy, provided that the three others are known. This process can be seen
+as a simple generalization of the rule of three that we have been using since
+our childhood: $\frac{4}{2} = \frac{6}{x} \implies x = 3$. Using this powerful
+tool and applying the analogical inference principle, we were able to go trough
+a simple classification problem in a Boolean setting. We then formally defined
+various analogical proportions in different settings, starting from the most
+general definitions until we reached the Boolean proportion. We also presented
+an extension of the Boolean proportion to multiple-valued logics, which we will
 use much lated in Chapter \ref{CHAP:analogical_recommendation}.
 
-In the next chapter, we will apply our knowledge on analogical proportions to
-the task of classification, present some past work as well as our
-contributions.
+The aim of these first two chapters was to provide an overview of past works in
+analogical reasoning, and to provide the necessary background to understand the
+contributions made in this thesis. In the next chapter, we will finally
+describe our contirbutions to the task of classification.

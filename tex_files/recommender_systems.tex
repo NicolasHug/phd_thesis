@@ -7,11 +7,13 @@ recommender systems play the role of search engines when surfing the entire
 web: they filter available items to provide relevant suggestions to customers.
 They help to answer questions as diverse as ``what movie to rent?", ``what car
 to buy?" or ``which restaurant to try?". They do so by providing the user with
-a list of recommendations. We have seen in the previous chapter that analogical
-learners exhibit promising results when compared to the $k$-NN algorithms in a
-Boolean setting. In chapter \ref{CHAP:analogical_recommendation}, we will try
-to apply analogical learning to a recommendation task to see if analogical
-learners can prove useful in more challenging contexts.
+a list of recommendations.
+
+We have seen in the previous chapter that analogical learners exhibit promising
+results when compared to the $k$-NN algorithms in a Boolean setting. In chapter
+\ref{CHAP:analogical_recommendation}, we will try to apply analogical learning
+to a recommendation task to see if analogical learners can prove useful in
+these more challenging contexts.
 
 In this chapter, we will provide some necessary background on recommender
 systems, before diving into Chapter \ref{CHAP:analogical_recommendation} where
@@ -508,7 +510,8 @@ neighborhood approach based on the well known $k$-NN algorithm, and the matrix
 factorization techniques whose groundings come from linear algebra and that
 lead to elegant and accurate models. These two families of algorithms will
 serve as baselines against which we will compare the performances of our own
-algorithms in the next chapter.
+algorithms in the next chapter, so it is important that we understand their
+functioning in detail.
 
 \subsection{The neighborhood approach}
 \label{SEC:neighborhood_approach}
@@ -527,7 +530,7 @@ computed as an aggregate of the ratings $\rvi$, where $v$ is one of the
 neighbors of $u$ in $N_i^k(u)$. Usually, the aggregation is simply a mean
 weighted by the similarity between $u$ and $v$:
 
-\begin{definition}
+\begin{definition}[Neighborhood approach]
   The estimation of a rating $\rui$ using the neighborhood approach (also
   denoted $k$-NN here) is:
   $$\predrui = \frac{\sum\limits_{v \in N_i^k(u)} r_{vi} \cdot \text{sim}(u, v)}
@@ -601,7 +604,7 @@ There are many, many ways to define the similarity metric between two users (or
 items).
 Probably the most common one is the cosine similarity.
 
-\begin{definition}
+\begin{definition}[Cosine similarity]
   The cosine similarity between two users $u$ and $v$ is defined as:
 $$
 \text{cosine sim}(u, v) \eqdef \frac{ \sum\limits_{i \in \Iuv} \rui \cdot \rvi}
@@ -622,7 +625,7 @@ $v$ to be quite different w.r.t. their tastes.
 Such a flaw can be overcame using the Pearson similarity, which can be viewed as
 a mean-centered version of the cosine similarity.
 
-\begin{definition}
+\begin{definition}[Pearson similarity]
   The Pearson similarity between two users $u$ and $v$ is defined as:
 $$
 \text{Pearson sim}(u, v) \eqdef \frac{ \sum\limits_{i \in \Iuv}
@@ -637,7 +640,7 @@ respectively.
 One last similarity metric that we will use is the Mean Squared Difference
 (MSD)\footnote{Strictly speaking MSD is actually a distance rather than a
 similarity metric, so taking its inverse would do the job.}:
-\begin{definition}
+\begin{definition}[Mean squared difference]
   The mean squared difference between two users $u$ and $v$ is defined as:
 $$\text{MSD}(u, v) \eqdef \frac{1}{|\Iuv|} \cdot \sum\limits_{i \in \Iuv} (\rui
 - \rvi)^2$$

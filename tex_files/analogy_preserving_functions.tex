@@ -290,7 +290,7 @@ labels $\albl{\mathbf{x}}$ are always equal to the ground truth values
 $f(\mathbf{x})$. These functions will be called \textbf{Analogy preserving}
 functions:
 
-\begin{definition}
+\begin{definition}[Analogy preserving functions]
   We say that $\esf$ is {\bf sound} if
   $\albl{\mathbf{x}}=f(\mathbf{x})$ for every $\mathbf{x} \in
   \esfs$. In other words, $\esf$ is sound if $\omegasf
@@ -578,7 +578,7 @@ functions are actually the only AP functions.
 \label{SEC:the_class_of_AP_functions}
 
 Let us first define the class of affine functions:
-\begin{definition}
+\begin{definition}[Affine functions]
   The class $L$ of \textbf{affine} functions is the set of functions $f$ of the
   form:
   $$f(x_1,\ldots , x_m)=\alpha_1\cdot x_1+\ldots +\alpha_m\cdot
@@ -848,7 +848,7 @@ principle B to be sound.  For the sake of completeness however, we will also
 identify the functions that lead the inference principle A to be sound. These
 functions will be called Strongly Analogy Preserving functions (SAP):
 
-\begin{definition}
+\begin{definition}[Strongly analogy preserving functions]
   A function $f$ is Strongly Analogy Preserving (SAP) if:
   $$\forall \mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in \mathbb{B}^m, ~~
   \mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d} \implies
@@ -993,7 +993,7 @@ g(\mathbf{x})\right)$, where $P$ is the uniform distribution over
 $\mathbb{B}^m$. Here, $\mathbf{x} \in \mathbb{B}^m$ is also considered as a
 random variable
 
-\begin{definition}
+\begin{definition}[$\epsilon$-close functions]
 We say that $f$ is $\epsilon$-close to $g$ if $\text{dist}(f, g) \leq
   \epsilon$, and that $f$ is $\epsilon$-close to a set of functions $\Sigma$ if
   $\exists g \in \Sigma$ such that $f$ is $\epsilon$-close to $g$.
@@ -1224,7 +1224,7 @@ Analogy Preserving, and will be called PAP for Partial AP. Just like in Section
 \ref{SEC:a_complete_characterization_of_AP_functions}, a natural way to
 characterize PAP functions is given in Definition \ref{DEF:PAP_functions}:
 
-\begin{definition}
+\begin{definition}[Partial analogy preserving functions]
   \label{DEF:PAP_functions}
   A partial function $f^b$ is {\bf Analogy Preserving} (PAP)
   if for all $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in

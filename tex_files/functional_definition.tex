@@ -6,7 +6,8 @@ briefly described a basic process of analogical classification in an informal
 way, making sure that everything went smoothly. In practice, bad things happen,
 always. In this chapter, we will clearly and formally define analogical
 classification, which will help us clarify some of the grey areas of Section
-\ref{SEC:machine_learning_with_boolean_proportions}.
+\ref{SEC:machine_learning_with_boolean_proportions}. Also (and most
+importantly), we will describe our contributions to this problem.
 
 A first form of analogical classifiers has been defined in the works of Stroppa
 and Yvon \cite{StrYvoCNLL05}, which we will refer to as \textbf{conservative
@@ -30,7 +31,7 @@ This chapter is structured as follows. In Section
 \ref{SEC:analogical_classification}, we will review and detail the two previous
 approaches to analogical classification, that we will name here the
 conservative and the extended classifiers. We will se that these two approaches
-can be factorize into a single functional description. Thanks to this
+can be factorized into a single functional description. Thanks to this
 functional definition of analogical learners, we will be able in Section
 \ref{SEC:theoretical_properties_of_analogical_classifiers} to derive some
 theoretical properties about analogical learners. We will indeed show that
@@ -136,7 +137,7 @@ the \textbf{analogical root} of an element $\mathbf{x}$. Both the analogical
 extension and the analogical root were first defined in \cite{StrYvoREPORT05},
 with some minor differences with our definitions.
 
-\begin{definition}
+\begin{definition}[Analogical extension]
   \label{DEF:analogical_extension}
   Denoting $S$ a training set and $f$ the ground truth function of the labels,
   the \textbf{analogical extension} of $S$ using $f$ is:
@@ -194,7 +195,7 @@ the end, $\esf = \set{\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d},
 The dual concept of the analogical extension is what we call the
 \textbf{analogical root} of a given element $\mathbf{x} \in X^m$:
 
-\begin{definition}
+\begin{definition}[Analogical root]
   \label{DEF:analogical_root}
   Denoting $S$ a training set and $f$ the ground truth function of the labels,
   the \textbf{analogical root} of an element $\mathbf{x} \in X^m$ is:
@@ -244,7 +245,7 @@ parallelogram, as illustrated in Figure \ref{FIG:multiple_parallelograms}.
 We need to introduce one last definition before we can go on with the
 functional view of conservative classifiers:
 
-\begin{definition}
+\begin{definition}[Analogical label]
   \label{DEF:analogical_label}
   For any element $\mathbf{x}$ of $\esf$, we denote $\mathbf{C}(\mathbf{x})$
   the set of the class equations solutions associated with $\mathbf{x}$:
@@ -267,7 +268,7 @@ the most frequent elements.
 We are now in position to give a functional definition of the conservative
 classifier:
 
-\begin{definition}
+\begin{definition}[Conservative classifier]
   \label{DEF:conservative_classifier}
   Given a training set $S$ with an underlying ground truth function $f$,
   a conservative classifier sets the prediction of an element $\mathbf{x}$ as
@@ -420,7 +421,7 @@ are $\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}$ from making up a perfect
 parallelogram. This can be achieved using the following definition:
 
 % Note: leave \emph{AD} here else it will be in italics.
-\begin{definition}
+\begin{definition}[Analogical dissimilarity for real vectors]
   \label{DEF:AD_arithmetic_proportion}
   Given four vectors $\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}$ of
   $\mathbb{R}^m$ equipped with the standard $p$-norm $\norm{p}{\cdot}$, the
@@ -431,7 +432,7 @@ parallelogram. This can be achieved using the following definition:
 
 Of course, we will need an analogical dissimilarity in $\mathbb{B}^m$, but we
 will start small and consider $\mathbb{B}$ first:
-\begin{definition}
+\begin{definition}[Analogical dissimilarity for Boolean vectors]
   \label{DEF:AD_boolean_proportion}
   Given four elements $a, b, c, d$ of $\mathbb{B}$, the analogical
   dissimilarity $\text{AD}(a, b, c, d)$ is defined as the number of values that
@@ -549,7 +550,8 @@ extended classifier is a generalization of the conservative one.
 
 \begin{testexample}
 To better grasp the behaviour of the extended classifier, we will consider
-again Figure \ref{FIG:ae_example} on page \pageref{FIG:ae_example}, and go
+again Figure \ref{FIG:ae_example} that we repeat here for the sake of
+  convenience on page \pageref{FIG:ae_example2}. Let us and go
 through the classification process of $\mathbf{c}, \mathbf{f}, \mathbf{g}$ and
 $\mathbf{h}$. We will set consider $k$ to be equal to $1$. For $\mathbf{c}$,
 the $3$-tuple in $S^3$ with the least value of $\AD$ is $(\mathbf{b},
@@ -559,8 +561,8 @@ to the prediction $\hat{f}(\mathbf{c}) = 1$. For $\mathbf{f}$, the best
 $3$-tuple is $(\mathbf{a}, \mathbf{b}, \mathbf{e})$ and leads to the prediction
 $\hat{f}(\mathbf{f}) = 1$. For these two elements in $\esf$, the extended
 classifier outputs the same predictions as the conservative one, and most
-importantly, the underlying process is the same\footnote{To some extent, this
-is due to the fact that we have chosen $k = 1$.}.
+  importantly, the underlying process is the same (to some extent, this
+  is due to the fact that we have chosen $k = 1$).
 
 Consider now $\mathbf{g} \notin \esf$. We know that we won't find any $3$-tuple
 in perfect proportion with $\mathbf{g}$ (else the conservative classifier would
@@ -583,6 +585,14 @@ $\mathbf{C}(\mathbf{h}) = \Set{1, 1}$: one solution comes from $f(\mathbf{a)}
 \ref{ALGO:extended_classifier}!
 \end{testexample}
 
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=3in]{figures/ae_example.pdf}
+  \repeatcaption{FIG:ae_example}{With $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{d},
+  \mathbf{e}}$, we have $\esfs = \Set{\mathbf{c}, \mathbf{f}}$.}
+  \label{FIG:ae_example2}
+\end{figure}
+
 \begin{table}[t]
   \centering
   $$
@@ -599,6 +609,8 @@ $\mathbf{C}(\mathbf{h}) = \Set{1, 1}$: one solution comes from $f(\mathbf{a)}
   \caption{$\AD(\mathbf{b}, \mathbf{d}, \mathbf{a}, \mathbf{g}) = 1$.}
   \label{TAB:AD_bdag}
 \end{table}
+
+
 
 In \cite{BayMicDelIJCAI07}, the authors evaluated this classifier on a Boolean
 setting $\mathbb{B}^m$ over 8 benchmarks from the UCI repository.  This
@@ -642,9 +654,10 @@ when the associated class equation is solvable, we naturally have $\mathbf{d}'
 \end{figure}
 
 \begin{testexample}
-Let us consider (again!) Figure \ref{FIG:ae_example} on page
-\pageref{FIG:ae_example}. We have already seen that $\AD(\mathbf{b},
-\mathbf{d}, \mathbf{a}, \mathbf{g}) = 1$, as proved by Table \ref{TAB:AD_bdag}.
+Let us consider (again) Figure \ref{FIG:ae_example} on page
+\pageref{FIG:ae_example2}. We have already seen that $\AD(\mathbf{b},
+\mathbf{d}, \mathbf{a}, \mathbf{g}) = 1$, as proved by Table \ref{TAB:AD_bdag}
+  on page \pageref{TAB:AD_bdag}.
 We now can reinterpret this statement: $\AD(\mathbf{b}, \mathbf{d}, \mathbf{a},
 \mathbf{g})$ should be equal to the distance between $\mathbf{g}$ and another
 vector that make up a perfect parallelogram with the $3$-tuple
@@ -669,7 +682,7 @@ $S^3$ that have the smallest value of $\AD$ with $\mathbf{x}$ amounts to
 finding the $k$ closest elements to $\mathbf{x}$ in $\esf$}. We will call these
 elements the $k$ \textbf{nearest analogical neighbors} of $\mathbf{x}$:
 
-\begin{definition}
+\begin{definition}[The $k$ nearest analogical neighbors]
   \label{DEF:knan}
   For any $\mathbf{x} \in X^m$, and any training set $S \subset X$, we define
   the $k$ nearest analogical neighbors of $\mathbf{x}$ as the set:
@@ -691,7 +704,7 @@ to $\esf$, so they all have an analogical label. The prediction
 $\hat{f}(\mathbf{x})$ of an extended classifier is thus nothing but the most
 frequent analogical label:
 
-\begin{definition}
+\begin{definition}[Extended classifier]
   \label{DEF:extended_classifier}
   Given a training set $S$ with an underlying ground truth function $f$,
   an extended classifier with parameter $k$ sets the prediction of an element
@@ -738,7 +751,8 @@ is not representative of a real case: even if we always have $S \subseteq \esf
 another as shown in the drawing. Actually, elements of $S$ (and thus of $\esf$)
 are usually scattered over the whole universe.
 
-Going back (for the last time, I promise) to Figure \ref{FIG:ae_example}, our
+\begin{testexample}
+Going back (for the last time!) to Figure \ref{FIG:ae_example}, our
 new functional view allows us to consider the following steps:
 \begin{enumerate}
   \item First extend $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{d}, \mathbf{e}}$
@@ -752,6 +766,7 @@ new functional view allows us to consider the following steps:
     $\mathbf{d}$ and $\mathbf{f}$, which also leads to $\hat{f}(\mathbf{h}) =
     1$.
 \end{enumerate}
+\end{testexample}
 
 As far as we know, this is the first time a functional definition of
 analogy-based classifiers is given. This definition clearly fits with the known
@@ -771,7 +786,7 @@ Since we now have a clear functional definition of analogical classifiers, we
 are in position to examine some general theoretical properties of analogical
 learners. This is the purpose of the next section.
 \section{Theoretical properties of analogical classifiers}
-\label{sec:theoretical_properties_of_analogical_classifiers}
+\label{SEC:theoretical_properties_of_analogical_classifiers}
 
 The functional definition of analogical learners opens the door the study of
 various theoretical properties of analogical classifiers, which had only been
@@ -829,7 +844,7 @@ Let us note the following points:
     probability of error, and therefore less than twice the probability of error of
     any other classifier. We have not been able to prove such a strong result
     for the $1$-\NAN~classifier, but its probability of error will be thoroughly
-    investigated in Section \ref{TODO}.
+    investigated in Subsection \ref{SEC:accuracy_analysis}.
   \item We have to be careful about the interpretation of Property
     \ref{PROPER:convergence_nan} in terms of machine learning. Indeed, another
     key property is proved in \cite{CovHarTIT67}: for an integrable
@@ -849,13 +864,13 @@ Let us note the following points:
     acknowledgement that analogical reasoning is mostly useful when very few
     data are available.  In this later case extending a small training set with
     its analogical extension may be particularly beneficial, as we will see in
-    Chapter \ref{TODO}.
+    Chapter \ref{CHAP:analogy_preserving_functions}.
 
 \end{enumerate}
 To conclude this discussion, even if the convergence result is interesting in
 itself, it does not say a lot in terms of machine learning. A much more
 interesting and powerful theoretical result of analogical classifiers will be
-proved in Chapter \ref{TODO}.
+proved in Chapter \ref{CHAP:analogy_preserving_functions}.
 
 \subsection{Vapnik Chervonenkis (VC) dimension}
 \label{SEC:VCdim}
@@ -882,7 +897,7 @@ This theoretical upper bound on the true risk $R$ is what makes the
 VC-dimension of a class of learners an essential element of their theoretical
 study. The VC-dimension is defined as follows:
 
-\begin{definition}
+\begin{definition}[VC-dimension]
   \label{DEF:VCdim}
   We consider a class of learners $\mathcal{C}$ and a set $S_n$ of $n$ labeled
   elements in $X^m$. There are exactly $2^n$ ways to label each of the $n$
@@ -1074,7 +1089,7 @@ to the consistent facts:
   is close to $X^m$ and the accuracy of $\NAN_S$ greatly depends on the quality
   of $\esf$:  \end{enumerate}
 
-\begin{definition}
+\begin{definition}[Quality of the analogical extension $\omegasf$]
   \label{DEF:omega}
   Given a training set $S\subset X^m$ and a ground truth function $f$, the
   \textbf{quality} of the analogical extension $\esf$ is defined as:
@@ -1084,6 +1099,10 @@ to the consistent facts:
   Note that the value $1 - \omegasf$ corresponds to the class noise of $\esfs$.
 \end{definition}
 
+This closes our contributions to the theoretical propreties of analogical
+classifiers. In the next section, we empirically investigate and illustrate the
+soundness of our results.
+
 \section{Experiments and empirical validation}
 \label{SEC:experiments_and_empirical_validation}
 In order to get an empirical validation of our formulas, we have developed a
@@ -1091,13 +1110,13 @@ set of experiments that we now describe.
 
 \subsection{Evaluation protocol}
 
-Working with Boolean vectors, we have
-computed the accuracies of the 1-\NAN~and 1-$\NN$~ algorithms over
-$X=\mathbb{B}^m$ for different values of $m$ (namely $8$ and $10$). The ground
-truth label of elements of $X$ is defined by different Boolean functions $f$:
+Working with Boolean vectors, we have computed the accuracies of the 1-\NAN~and
+1-$\NN$~ algorithms over $X=\mathbb{B}^m$ for $m = 8$. Other values of $m$ have
+been investigated, leading to very similar results.  The ground truth label of
+the elements of $X^m$ is defined by different Boolean functions $f$:
 \begin{itemize}
 \item $f_1(\mathbf{x})=x_i$ for some $i$. These functions are called
-  projections, or dictators.  These functions lead to perfectly linearly
+  projections, or dictators.  They lead to perfectly linearly
     separable problems, i.e.  there exist an hyperplane that can perfectly
     discriminate both classes. As such, they are expected to be fairly easy to
     learn.
@@ -1151,7 +1170,7 @@ theoretical results:
     course the same but this time $\hat{f}$ is the output of the 1NN
     classifier.
   \item The \textbf{theoretical} accuracy of 1NAN, as defined in Proposition
-    \ref{PROP:accuracy_nan}. The probability $\alpha \eqdef P(\mathbf{x} \in
+    \ref{PROPOS:accuracy_nan}. The probability $\alpha \eqdef P(\mathbf{x} \in
     A$) has been estimated by the frequency $\frac{\mid A \mid}{\mid X^m
     \mid}$. Both sets $A$ and $B$ are easy to determine.
   \item The quality of $\esf$, measured by $\omegasf$ as previously defined in

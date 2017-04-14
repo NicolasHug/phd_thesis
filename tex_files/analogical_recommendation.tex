@@ -1119,11 +1119,12 @@ of the rating scale.
     parallelogram $abcd$ holds. Clearly, this can also be used as a measure of
     quality of the proportion.
   \item Another option for the gradual rating scale is to use the definitions
-    of fuzzy analogy of section \ref{TODO}. As the quality
-    each proportion is evaluated in a component-wise fashion, we can choose
-    various aggregation functions to assess the overall quality: mean, max,
-    min, or also compare two proportion by lexicographic order. We will give
-    further details in the experiments section.
+    of the fuzzy analogy evaluation described at the end of Section
+    \ref{SEC:formal_definitions_proportions}. As the quality each proportion is
+    evaluated in a component-wise fashion, we can choose various aggregation
+    functions to assess the overall quality: mean, max, min, or also compare
+    two proportion by lexicographic order. We will give further details in the
+    experiments section.
   \item Finally, by adopting a statistical point of view, we can try to
     evaluate the probability of observing the proportion $a:b::c:d$, and
     consider it as a meaningful proportion if it is unlikely that we could have
@@ -1191,20 +1192,38 @@ we will binarize them.
 
 For our purpose, we actually do not need to set a quality threshold $\beta$,
 which would by the way be quite arbitrary. Instead, we will only be interested
-in \textbf{comparing} the quality of the  proportions. We have chosen to compare two proportions by first
-computing the truth value of each of their component-wise proportions using
-$A$, and then by comparing these truth values in lexicographic order. Consider
-for example the two $4$-itemsets of Table \ref{TAB:lexicographic_order}, where
-ratings $[1, 2, 3, 4, 5]$ have been mapped to $[0, .25, .5, .75, 1]$. We
-will consider that the first $4$-tuple $i_1, i_2, i_3, i_4$ (on the right) is a better proportion
-than the second one because once their truth values are sorted, the one of the
-right comes first. Had we chosen to compare them with the mean of the truth
-values, the best proportion would have been the second one. In the remaining of
-this discussion, a \textbf{component-proportion} will denote a proportion
-between ratings (for example the proportion $0:1::0:1$ is the first
-component-proportion of $i_1:i_2::i3:i4$), and in general a proportion  will
-refer to an analogy between items (i.e. it is an aggregation of
-component-proportions).
+in \textbf{comparing} the quality of the  proportions. We have chosen to
+compare two proportions by first computing the truth value of each of their
+component-wise proportions using the graded-view of analogical proportions
+described in Section \ref{SEC:formal_definitions_proportions}, and then by
+comparing these truth values in lexicographic order.
+
+This fuzzy view of analogical proportion is recalled here: for four real
+elements $a, b, c, d \in [0, 1]$, the quality of the analogical proportion
+$a:b::c:d$ is evaluated by:
+\begin{align*}
+A(a, b, c, d) =
+\begin{cases}
+  1 - |(a - b) - (c - d)| &\text{ if } a \geq b \text { and } c \geq d, \text{
+    or } a \leq b \text{ and } c \leq d\\
+  1 - \max(|a - b|, |c - d|) &\text{ if } a \geq b \text { and } c \leq d, \text{
+    or } a \leq b \text{ and } c \geq d.
+\end{cases}
+\end{align*}
+
+\begin{testexample}
+Consider for example the two $4$-itemsets of Table
+\ref{TAB:lexicographic_order}, where ratings $[1, 2, 3, 4, 5]$ have been mapped
+to $[0, .25, .5, .75, 1]$. We will consider that the first $4$-tuple $i_1, i_2,
+i_3, i_4$ (on the right) is a better proportion than the second one because
+once their truth values are sorted, the one of the right comes first. Had we
+chosen to compare them with the mean of the truth values, the best proportion
+would have been the second one. In the remaining of this discussion, a
+\textbf{component-proportion} will denote a proportion between ratings (for
+example the proportion $0:1::0:1$ is the first component-proportion of
+$i_1:i_2::i3:i4$), and in general a proportion  will refer to an analogy
+between items (i.e. it is an aggregation of component-proportions).
+\end{testexample}
 
 \begin{table}[h!]
 \centering
