@@ -620,3 +620,66 @@ that some authors, starting from the pioneering investifation in \cite{Lep04},
 have provided a formal framework to deal with analogical proportions in general
 algebraic settings, opening the door to many computational applications. These
 formal analogical proportions are the subject of the next chapter.
+
+
+
+\newpage
+\paragraph{Case-Based Reasoning\\}
+
+Case-Based Reasoning (CBR) is a very general paradigm for problem solving,
+where a new problem is solved using the knowledge of some similar past
+experiences. This model can be motivated by its psychological appeal: it is
+indeed well acknowledged that, when confronted with an unknown situation,
+humans tend to make use of their past knowledge about some other similar
+situation to solve the problem at hand. As an example, the recipe of a
+strawberry pie could be easily inferred using the past knowledge on the recipe
+of other fruit-pies (e.g. apple pie, pear pie, etc.).
+
+In its most general form, CBR is a way of reaching the unkown solution $S$ of a
+problem $P$ using the known solutions $S_i$ of problems $P_i$ that are similar
+to $P$. Each couple $(S_i, P_i)$ is called a \textit{case}. The term
+\textit{problem} is here used in its most general sense.  In \cite{AamPla94}, a
+CBR process is described by the succession of the following four steps:
+\begin{enumerate}
+  \item \textbf{Retrieve}: this first step is to retrieve all cases $(S_i,
+    P_i)$ where $P_i$ is similar to the initial problem $P$. The way these
+    cases are chosen is entirely dependent of the current setting, and greatly
+    differ depending on the application. Sometimes, only a single case  is
+    selected.
+  \item \textbf{Reuse}: the solutions $S_i$ associated to the most relevant
+    $P_i$ are aggregated in some way, and adapted if needed to build up the
+    final solution $S$.
+  \item \textbf{Revise}: the relevance and the adequacy of the chosen solution
+    $S$ is evaluated, and $S$ is modified if needed.
+  \item \textbf{Retain}: if the revised solution $S$ ended up being a good
+    choice, then the solution is retained and the couple $(P, S)$ is bound to
+    be used in the solving of some futur problems.
+\end{enumerate}
+
+Quite amusingly, the CBR community tends to see analogical reasoning as a
+subfield of CBR, while the analogical reasoning community seems to believe that
+CBR is a particular instance of analogy-based reasoning. Indeed in
+\cite{AamPla94}, the authors (that are CBR oriented) define analogical
+reasoning as a particular CBR instance that is focused on solving cross-domain
+problems, i.e. where a problem in a source domain has to be mapped into a
+problem in a target domain. While this description of analogical reasoning is
+fairly reasonable, one may object that what defines the source and target
+domains is completely arbitrary, thus reducing CBR to a particular instance of
+analogical reasoning where the source and target domains are forced to be the
+same.
+
+We will not further discuss this point here but we would wtill like to point out a
+significant difference between the CBR approach and the one we will address in
+this document. In a way, the CBR process can be view as building the following
+analogical proportions:
+$$P_i:P :: S_i : S, $$
+where $S$ is unkown and infered from all the $S_i$. Each of these analogical
+proportions is built on the basis that $P_i$ and $P$ are \textbf{similar}. But
+an analogical proportion $a:b::c:d$ is not restricted to having $a$ close to
+$b$ and $c$ close to $d$! It is quite the contrary actually: all elements are
+allowed to be extremely distinct. Acknowledging this fact, our approach to
+analogical learning will rather follow the following conceptual scheme: first,
+proportions of the form $P_{i_1} : P_{i_2} :: P_{i_3} : P$ are retrieved, and
+the solution $S$ is infered by the solving of the associated solution
+equations: $S_{i_1} : S_{i_2} :: S_{i_3} : S$. This allows us to consider both
+similar problems as well as different problems, which may still be useful.
