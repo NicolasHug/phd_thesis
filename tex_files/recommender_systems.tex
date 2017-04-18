@@ -1,4 +1,7 @@
 \chapter{Background on recommender systems}
+\label{CHAP:background_reco_systems}
+\localtableofcontents*
+\vspace*{\baselineskip}
 
 \initial{I}n a world of information overload, automatic filtering tools are
 essential to extract relevant information from basic noise
@@ -935,7 +938,7 @@ $$
 But what happens in a recommendation setting, where the matrix $R$ is extremely
 sparse? The SVD of $R$ is not even properly defined! One of the main
 contribution during the Netflix competition was made by Simon Funk in a blog
-post\footnote{http://sifter.org/~simon/journal/20061211.html}, who empirically
+post\footnote{\url{http://sifter.org/~simon/journal/20061211.html}}, who empirically
 showed that \textbf{we should actually just not care} that the matrix $R$ is
 sparse, and still solve the same optimization problem only using the known
 ratings.  When $R$ is sparse, the problem is not convex in both $p_u$ and $q_i$

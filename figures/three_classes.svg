@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:ns0="http://www.iki.fi/pav/software/textext/"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="121.40172mm"
+   height="117.8689mm"
+   viewBox="0 0 430.1636 417.64571"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="three_classes.svg">
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="360.7187"
+     inkscape:cy="129.09118"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1918"
+     inkscape:window-height="1179"
+     inkscape:window-x="0"
+     inkscape:window-y="19"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4142"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="Arrow1Lend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         inkscape:connector-curvature="0"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4145" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="Arrow1Lend-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4145-0"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="Arrow1Lend-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4145-9"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="Arrow1Lend-8-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4145-9-6"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="Arrow1Lend-87"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         inkscape:connector-curvature="0"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4145-1" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart-2"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4142-7"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-117.56857,-81.552726)"
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Calque 1">
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path11218-7-6"
+       sodipodi:type="arc"
+       sodipodi:cx="388.90875"
+       sodipodi:cy="174.53964"
+       sodipodi:rx="5.0507627"
+       sodipodi:ry="5.0507627"
+       sodipodi:start="2.5175502"
+       sodipodi:end="2.5169219"
+       sodipodi:open="true"
+       d="m 384.80994,177.49091 a 5.0507627,5.0507627 0 0 1 1.1469,-7.04961 5.0507627,5.0507627 0 0 1 7.0498,1.14579 5.0507627,5.0507627 0 0 1 -1.14469,7.04997 5.0507627,5.0507627 0 0 1 -7.05015,-1.14358" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path11218-7-3"
+       sodipodi:type="arc"
+       sodipodi:cx="492.41071"
+       sodipodi:cy="216.20149"
+       sodipodi:rx="5.0507627"
+       sodipodi:ry="5.0507627"
+       sodipodi:start="2.5175502"
+       sodipodi:end="2.5169219"
+       sodipodi:open="true"
+       d="m 488.3119,219.15276 a 5.0507627,5.0507627 0 0 1 1.1469,-7.04961 5.0507627,5.0507627 0 0 1 7.04979,1.14579 5.0507627,5.0507627 0 0 1 -1.14469,7.04997 5.0507627,5.0507627 0 0 1 -7.05015,-1.14358" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path11218-7-1"
+       sodipodi:type="arc"
+       sodipodi:cx="326.84747"
+       sodipodi:cy="334.77509"
+       sodipodi:rx="5.0507627"
+       sodipodi:ry="5.0507627"
+       sodipodi:start="2.5175502"
+       sodipodi:end="2.5169219"
+       sodipodi:open="true"
+       d="m 322.74866,337.72635 a 5.0507627,5.0507627 0 0 1 1.14691,-7.04961 5.0507627,5.0507627 0 0 1 7.04979,1.14579 5.0507627,5.0507627 0 0 1 -1.14469,7.04997 5.0507627,5.0507627 0 0 1 -7.05015,-1.14358" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path11218-7-7"
+       sodipodi:type="arc"
+       sodipodi:cx="225.76909"
+       sodipodi:cy="291.71735"
+       sodipodi:rx="5.0507627"
+       sodipodi:ry="5.0507627"
+       sodipodi:start="2.5175502"
+       sodipodi:end="2.5169219"
+       sodipodi:open="true"
+       d="m 221.67028,294.66861 a 5.0507627,5.0507627 0 0 1 1.1469,-7.04961 5.0507627,5.0507627 0 0 1 7.04979,1.14579 5.0507627,5.0507627 0 0 1 -1.14469,7.04998 5.0507627,5.0507627 0 0 1 -7.05015,-1.14359" />
+    <g
+       ns0:text="$\\mathbf{b}$\n"
+       ns0:preamble=""
+       transform="matrix(4.6781047,0,0,4.6781047,-662.0268,-469.16079)"
+       id="g367">
+      <defs
+         id="defs360">
+        <g
+           id="g358">
+          <symbol
+             style="overflow:visible"
+             overflow="visible"
+             id="textext-722b0e9d-0">
+            <path
+               inkscape:connector-curvature="0"
+               style="stroke:none"
+               d=""
+               id="path352" />
+          </symbol>
+          <symbol
+             style="overflow:visible"
+             overflow="visible"
+             id="textext-722b0e9d-1">
+            <path
+               inkscape:connector-curvature="0"
+               style="stroke:none"
+               d="m 2.140625,-4 0,-2.921875 -1.765625,0.078125 0,0.46875 c 0.609375,0 0.6875,0 0.6875,0.390625 L 1.0625,0 1.53125,0 2.015625,-0.5625 c 0.078125,0.078125 0.5625,0.625 1.453125,0.625 1.484375,0 2.515625,-0.90625 2.515625,-2.28125 0,-1.328125 -0.9375,-2.265625 -2.390625,-2.265625 C 2.875,-4.484375 2.375,-4.203125 2.140625,-4 Z m 0.046875,3.015625 0,-2.5 C 2.46875,-3.84375 2.9375,-4.125 3.484375,-4.125 c 1.21875,0 1.21875,1.203125 1.21875,1.90625 0,0.46875 0,1.015625 -0.25,1.40625 -0.296875,0.40625 -0.75,0.515625 -1.078125,0.515625 -0.6875,0 -1.078125,-0.546875 -1.1875,-0.6875 z m 0,0"
+               id="path355" />
+          </symbol>
+        </g>
+      </defs>
+      <g
+         id="textext-722b0e9d-2">
+        <g
+           style="fill:#000000;fill-opacity:1"
+           id="g364">
+          <use
+             height="100%"
+             width="100%"
+             xlink:href="#textext-722b0e9d-1"
+             x="223.43201"
+             y="134.765"
+             id="use362" />
+        </g>
+      </g>
+    </g>
+    <g
+       id="g504"
+       transform="matrix(4.6781047,0,0,4.6781047,-858.22663,-328.36061)"
+       ns0:preamble=""
+       ns0:text="$\\mathbf{a}$\n">
+      <defs
+         id="defs497">
+        <g
+           id="g495">
+          <symbol
+             style="overflow:visible"
+             id="textext-7724378f-0"
+             overflow="visible">
+            <path
+               inkscape:connector-curvature="0"
+               id="path489"
+               d=""
+               style="stroke:none" />
+          </symbol>
+          <symbol
+             style="overflow:visible"
+             id="textext-7724378f-1"
+             overflow="visible">
+            <path
+               inkscape:connector-curvature="0"
+               id="path492"
+               d="m 3.734375,-0.765625 c 0,0.3125 0,0.765625 1.03125,0.765625 L 5.25,0 C 5.4375,0 5.5625,0 5.5625,-0.234375 5.5625,-0.46875 5.4375,-0.46875 5.296875,-0.46875 4.6875,-0.484375 4.6875,-0.609375 4.6875,-0.84375 l 0,-2.140625 c 0,-0.890625 -0.703125,-1.53125 -2.1875,-1.53125 -0.5625,0 -1.78125,0.046875 -1.78125,0.921875 0,0.4375 0.34375,0.625 0.609375,0.625 0.3125,0 0.640625,-0.21875 0.640625,-0.625 0,-0.296875 -0.1875,-0.46875 -0.21875,-0.5 0.28125,-0.046875 0.59375,-0.0625 0.71875,-0.0625 0.734375,0 1.09375,0.421875 1.09375,1.171875 l 0,0.34375 c -0.71875,0.03125 -3.25,0.125 -3.25,1.5625 0,0.953125 1.25,1.140625 1.9375,1.140625 0.796875,0 1.265625,-0.40625 1.484375,-0.828125 z m -0.171875,-1.5625 0,0.9375 c 0,0.96875 -0.921875,1.09375 -1.171875,1.09375 -0.5,0 -0.90625,-0.34375 -0.90625,-0.796875 0,-1.0625 1.578125,-1.203125 2.078125,-1.234375 z m 0,0"
+               style="stroke:none" />
+          </symbol>
+        </g>
+      </defs>
+      <g
+         id="textext-7724378f-2">
+        <g
+           id="g501"
+           style="fill:#000000;fill-opacity:1">
+          <use
+             height="100%"
+             width="100%"
+             id="use499"
+             y="134.765"
+             x="223.43201"
+             xlink:href="#textext-7724378f-1" />
+        </g>
+      </g>
+    </g>
+    <g
+       ns0:text="$\\mathbf{c}$\n"
+       ns0:preamble=""
+       transform="matrix(4.6781047,0,0,4.6781047,-720.4126,-260.40583)"
+       id="g641">
+      <defs
+         id="defs634">
+        <g
+           id="g632">
+          <symbol
+             style="overflow:visible"
+             overflow="visible"
+             id="textext-b3302d2b-0">
+            <path
+               inkscape:connector-curvature="0"
+               style="stroke:none"
+               d=""
+               id="path626" />
+          </symbol>
+          <symbol
+             style="overflow:visible"
+             overflow="visible"
+             id="textext-b3302d2b-1">
+            <path
+               inkscape:connector-curvature="0"
+               style="stroke:none"
+               d="m 3.59375,-4.0625 c -0.1875,0.171875 -0.203125,0.375 -0.203125,0.46875 0,0.4375 0.34375,0.625 0.609375,0.625 0.3125,0 0.640625,-0.21875 0.640625,-0.625 0,-0.859375 -1.15625,-0.921875 -1.734375,-0.921875 -1.796875,0 -2.53125,1.140625 -2.53125,2.296875 0,1.328125 0.9375,2.28125 2.46875,2.28125 1.625,0 1.921875,-1.15625 1.921875,-1.234375 C 4.765625,-1.3125 4.625,-1.3125 4.53125,-1.3125 c -0.1875,0 -0.1875,0.03125 -0.25,0.15625 -0.25,0.625 -0.734375,0.8125 -1.234375,0.8125 -1.390625,0 -1.390625,-1.453125 -1.390625,-1.921875 0,-0.5625 0,-1.84375 1.28125,-1.84375 0.359375,0 0.515625,0.015625 0.65625,0.046875 z m 0,0"
+               id="path629" />
+          </symbol>
+        </g>
+      </defs>
+      <g
+         id="textext-b3302d2b-2">
+        <g
+           style="fill:#000000;fill-opacity:1"
+           id="g638">
+          <use
+             height="100%"
+             width="100%"
+             xlink:href="#textext-b3302d2b-1"
+             x="223.43201"
+             y="134.765"
+             id="use636" />
+        </g>
+      </g>
+    </g>
+    <path
+       inkscape:connector-curvature="0"
+       id="path5278"
+       d="M 390.08533,175.65535 288.8146,132.35627"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path11218-7-3-3"
+       sodipodi:type="arc"
+       sodipodi:cx="163.96657"
+       sodipodi:cy="450.62274"
+       sodipodi:rx="5.0507631"
+       sodipodi:ry="5.0507627"
+       sodipodi:start="2.5175502"
+       sodipodi:end="2.5169219"
+       sodipodi:open="true"
+       d="m 159.86776,453.57401 a 5.0507631,5.0507627 0 0 1 1.1469,-7.04961 5.0507631,5.0507627 0 0 1 7.04979,1.14579 5.0507631,5.0507627 0 0 1 -1.14469,7.04997 5.0507631,5.0507627 0 0 1 -7.05015,-1.14358" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path11218-7-3-7"
+       sodipodi:type="arc"
+       sodipodi:cx="287.91309"
+       sodipodi:cy="131.66879"
+       sodipodi:rx="5.0507631"
+       sodipodi:ry="5.0507627"
+       sodipodi:start="2.5175502"
+       sodipodi:end="2.5169219"
+       sodipodi:open="true"
+       d="m 283.81428,134.62006 a 5.0507631,5.0507627 0 0 1 1.1469,-7.04961 5.0507631,5.0507627 0 0 1 7.04979,1.14579 5.0507631,5.0507627 0 0 1 -1.14469,7.04997 5.0507631,5.0507627 0 0 1 -7.05015,-1.14358" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path5278-9"
+       d="M 328.55748,335.83682 227.28674,292.53774"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path5391"
+       d="M 287.70036,131.86659 225.64679,292.04517"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path5391-2"
+       d="M 388.72715,174.81302 326.67358,334.9916"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path5408"
+       d="M 225.73607,291.68802 388.77179,174.54516"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path5408-0"
+       d="M 328.32537,334.54516 491.3611,217.4023"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path5278-9-2"
+       d="M 491.19289,218.33756 389.92214,175.03848"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path5408-0-3"
+       d="M 161.1825,453.83089 324.21824,336.68803"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path5391-2-7"
+       d="M 225.86384,290.66653 163.81027,450.84511"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <g
+       id="g5554"
+       transform="matrix(4.6781047,0,0,4.6781047,-542.70538,-418.80109)"
+       ns0:preamble=""
+       ns0:text="$\\mathbf{d}_1$\n">
+      <defs
+         id="defs5556">
+        <g
+           id="g5558">
+          <symbol
+             id="textext-ac6e7600-0"
+             overflow="visible"
+             style="overflow:visible">
+            <path
+               id="path5561"
+               d=""
+               style="stroke:none"
+               inkscape:connector-curvature="0" />
+          </symbol>
+          <symbol
+             id="textext-ac6e7600-1"
+             overflow="visible"
+             style="overflow:visible">
+            <path
+               id="path5564"
+               d="m 4.171875,-0.421875 0,0.484375 1.8125,-0.0625 0,-0.46875 c -0.609375,0 -0.6875,0 -0.6875,-0.390625 l 0,-6.0625 -1.765625,0.078125 0,0.46875 c 0.625,0 0.703125,0 0.703125,0.390625 l 0,1.953125 c -0.5,-0.390625 -1.03125,-0.453125 -1.359375,-0.453125 -1.453125,0 -2.5,0.875 -2.5,2.28125 0,1.3125 0.921875,2.265625 2.390625,2.265625 0.609375,0 1.09375,-0.234375 1.40625,-0.484375 z m 0,-3.09375 0,2.484375 C 4.03125,-0.84375 3.625,-0.296875 2.875,-0.296875 c -1.21875,0 -1.21875,-1.203125 -1.21875,-1.90625 0,-0.484375 0,-1.015625 0.25,-1.40625 C 2.203125,-4.03125 2.671875,-4.125 2.984375,-4.125 c 0.5625,0 0.96875,0.3125 1.1875,0.609375 z m 0,0"
+               style="stroke:none"
+               inkscape:connector-curvature="0" />
+          </symbol>
+          <symbol
+             id="textext-ac6e7600-2"
+             overflow="visible"
+             style="overflow:visible">
+            <path
+               id="path5567"
+               d=""
+               style="stroke:none"
+               inkscape:connector-curvature="0" />
+          </symbol>
+          <symbol
+             id="textext-ac6e7600-3"
+             overflow="visible"
+             style="overflow:visible">
+            <path
+               id="path5570"
+               d="m 2.328125,-4.4375 c 0,-0.1875 0,-0.1875 -0.203125,-0.1875 -0.453125,0.4375 -1.078125,0.4375 -1.359375,0.4375 l 0,0.25 c 0.15625,0 0.625,0 1,-0.1875 l 0,3.546875 c 0,0.234375 0,0.328125 -0.6875,0.328125 l -0.265625,0 0,0.25 c 0.125,0 0.984375,-0.03125 1.234375,-0.03125 0.21875,0 1.09375,0.03125 1.25,0.03125 l 0,-0.25 -0.265625,0 c -0.703125,0 -0.703125,-0.09375 -0.703125,-0.328125 z m 0,0"
+               style="stroke:none"
+               inkscape:connector-curvature="0" />
+          </symbol>
+        </g>
+      </defs>
+      <g
+         id="textext-ac6e7600-4">
+        <g
+           id="g5573"
+           style="fill:#000000;fill-opacity:1">
+          <use
+             id="use5575"
+             y="134.765"
+             x="223.43201"
+             xlink:href="#textext-ac6e7600-1"
+             width="100%"
+             height="100%" />
+        </g>
+        <g
+           id="g5577"
+           style="fill:#000000;fill-opacity:1">
+          <use
+             id="use5579"
+             y="136.259"
+             x="229.797"
+             xlink:href="#textext-ac6e7600-3"
+             width="100%"
+             height="100%" />
+        </g>
+      </g>
+    </g>
+    <g
+       ns0:text="$\\mathbf{d}_2$\n"
+       ns0:preamble=""
+       transform="matrix(4.6781047,0,0,4.6781047,-929.42404,-138.23545)"
+       id="g5769">
+      <defs
+         id="defs5771">
+        <g
+           id="g5773">
+          <symbol
+             style="overflow:visible"
+             overflow="visible"
+             id="textext-90ccf1c0-0">
+            <path
+               inkscape:connector-curvature="0"
+               style="stroke:none"
+               d=""
+               id="path5776" />
+          </symbol>
+          <symbol
+             style="overflow:visible"
+             overflow="visible"
+             id="textext-90ccf1c0-1">
+            <path
+               inkscape:connector-curvature="0"
+               style="stroke:none"
+               d="m 4.171875,-0.421875 0,0.484375 1.8125,-0.0625 0,-0.46875 c -0.609375,0 -0.6875,0 -0.6875,-0.390625 l 0,-6.0625 -1.765625,0.078125 0,0.46875 c 0.625,0 0.703125,0 0.703125,0.390625 l 0,1.953125 c -0.5,-0.390625 -1.03125,-0.453125 -1.359375,-0.453125 -1.453125,0 -2.5,0.875 -2.5,2.28125 0,1.3125 0.921875,2.265625 2.390625,2.265625 0.609375,0 1.09375,-0.234375 1.40625,-0.484375 z m 0,-3.09375 0,2.484375 C 4.03125,-0.84375 3.625,-0.296875 2.875,-0.296875 c -1.21875,0 -1.21875,-1.203125 -1.21875,-1.90625 0,-0.484375 0,-1.015625 0.25,-1.40625 C 2.203125,-4.03125 2.671875,-4.125 2.984375,-4.125 c 0.5625,0 0.96875,0.3125 1.1875,0.609375 z m 0,0"
+               id="path5779" />
+          </symbol>
+          <symbol
+             style="overflow:visible"
+             overflow="visible"
+             id="textext-90ccf1c0-2">
+            <path
+               inkscape:connector-curvature="0"
+               style="stroke:none"
+               d=""
+               id="path5782" />
+          </symbol>
+          <symbol
+             style="overflow:visible"
+             overflow="visible"
+             id="textext-90ccf1c0-3">
+            <path
+               inkscape:connector-curvature="0"
+               style="stroke:none"
+               d="m 3.515625,-1.265625 -0.234375,0 c -0.015625,0.15625 -0.09375,0.5625 -0.1875,0.625 -0.046875,0.046875 -0.578125,0.046875 -0.6875,0.046875 l -1.28125,0 c 0.734375,-0.640625 0.984375,-0.84375 1.390625,-1.171875 0.515625,-0.40625 1,-0.84375 1,-1.5 0,-0.84375 -0.734375,-1.359375 -1.625,-1.359375 -0.859375,0 -1.453125,0.609375 -1.453125,1.25 0,0.34375 0.296875,0.390625 0.375,0.390625 0.15625,0 0.359375,-0.125 0.359375,-0.375 0,-0.125 -0.046875,-0.375 -0.40625,-0.375 C 0.984375,-4.21875 1.453125,-4.375 1.78125,-4.375 c 0.703125,0 1.0625,0.546875 1.0625,1.109375 0,0.609375 -0.4375,1.078125 -0.65625,1.328125 L 0.515625,-0.265625 C 0.4375,-0.203125 0.4375,-0.1875 0.4375,0 l 2.875,0 z m 0,0"
+               id="path5785" />
+          </symbol>
+        </g>
+      </defs>
+      <g
+         id="textext-90ccf1c0-4">
+        <g
+           style="fill:#000000;fill-opacity:1"
+           id="g5788">
+          <use
+             height="100%"
+             width="100%"
+             xlink:href="#textext-90ccf1c0-1"
+             x="223.43201"
+             y="134.765"
+             id="use5790" />
+        </g>
+        <g
+           style="fill:#000000;fill-opacity:1"
+           id="g5792">
+          <use
+             height="100%"
+             width="100%"
+             xlink:href="#textext-90ccf1c0-3"
+             x="229.797"
+             y="136.259"
+             id="use5794" />
+        </g>
+      </g>
+    </g>
+    <g
+       id="g5996"
+       transform="matrix(4.6781047,0,0,4.6781047,-788.89131,-516.51081)"
+       ns0:preamble=""
+       ns0:text="$\\mathbf{d}_3$\n">
+      <defs
+         id="defs5998">
+        <g
+           id="g6000">
+          <symbol
+             id="textext-e5ec515b-0"
+             overflow="visible"
+             style="overflow:visible">
+            <path
+               id="path6003"
+               d=""
+               style="stroke:none"
+               inkscape:connector-curvature="0" />
+          </symbol>
+          <symbol
+             id="textext-e5ec515b-1"
+             overflow="visible"
+             style="overflow:visible">
+            <path
+               id="path6006"
+               d="m 4.171875,-0.421875 0,0.484375 1.8125,-0.0625 0,-0.46875 c -0.609375,0 -0.6875,0 -0.6875,-0.390625 l 0,-6.0625 -1.765625,0.078125 0,0.46875 c 0.625,0 0.703125,0 0.703125,0.390625 l 0,1.953125 c -0.5,-0.390625 -1.03125,-0.453125 -1.359375,-0.453125 -1.453125,0 -2.5,0.875 -2.5,2.28125 0,1.3125 0.921875,2.265625 2.390625,2.265625 0.609375,0 1.09375,-0.234375 1.40625,-0.484375 z m 0,-3.09375 0,2.484375 C 4.03125,-0.84375 3.625,-0.296875 2.875,-0.296875 c -1.21875,0 -1.21875,-1.203125 -1.21875,-1.90625 0,-0.484375 0,-1.015625 0.25,-1.40625 C 2.203125,-4.03125 2.671875,-4.125 2.984375,-4.125 c 0.5625,0 0.96875,0.3125 1.1875,0.609375 z m 0,0"
+               style="stroke:none"
+               inkscape:connector-curvature="0" />
+          </symbol>
+          <symbol
+             id="textext-e5ec515b-2"
+             overflow="visible"
+             style="overflow:visible">
+            <path
+               id="path6009"
+               d=""
+               style="stroke:none"
+               inkscape:connector-curvature="0" />
+          </symbol>
+          <symbol
+             id="textext-e5ec515b-3"
+             overflow="visible"
+             style="overflow:visible">
+            <path
+               id="path6012"
+               d="m 1.90625,-2.328125 c 0.546875,0 0.9375,0.375 0.9375,1.125 0,0.859375 -0.515625,1.125 -0.90625,1.125 -0.28125,0 -0.90625,-0.078125 -1.1875,-0.5 0.328125,0 0.40625,-0.234375 0.40625,-0.390625 0,-0.21875 -0.171875,-0.375 -0.390625,-0.375 -0.1875,0 -0.390625,0.125 -0.390625,0.40625 0,0.65625 0.71875,1.078125 1.5625,1.078125 0.96875,0 1.640625,-0.65625 1.640625,-1.34375 0,-0.546875 -0.4375,-1.09375 -1.203125,-1.25 0.71875,-0.265625 0.984375,-0.78125 0.984375,-1.21875 0,-0.546875 -0.625,-0.953125 -1.40625,-0.953125 -0.765625,0 -1.359375,0.375 -1.359375,0.9375 0,0.234375 0.15625,0.359375 0.359375,0.359375 0.21875,0 0.359375,-0.15625 0.359375,-0.34375 0,-0.203125 -0.140625,-0.359375 -0.359375,-0.375 0.25,-0.296875 0.71875,-0.375 0.984375,-0.375 0.3125,0 0.75,0.15625 0.75,0.75 0,0.296875 -0.09375,0.625 -0.28125,0.828125 -0.21875,0.265625 -0.421875,0.28125 -0.765625,0.3125 -0.171875,0.015625 -0.1875,0.015625 -0.21875,0.015625 -0.015625,0 -0.078125,0.015625 -0.078125,0.09375 0,0.09375 0.0625,0.09375 0.1875,0.09375 z m 0,0"
+               style="stroke:none"
+               inkscape:connector-curvature="0" />
+          </symbol>
+        </g>
+      </defs>
+      <g
+         id="textext-e5ec515b-4">
+        <g
+           id="g6015"
+           style="fill:#000000;fill-opacity:1">
+          <use
+             id="use6017"
+             y="134.765"
+             x="223.43201"
+             xlink:href="#textext-e5ec515b-1"
+             width="100%"
+             height="100%" />
+        </g>
+        <g
+           id="g6019"
+           style="fill:#000000;fill-opacity:1">
+          <use
+             id="use6021"
+             y="136.259"
+             x="229.797"
+             xlink:href="#textext-e5ec515b-3"
+             width="100%"
+             height="100%" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
