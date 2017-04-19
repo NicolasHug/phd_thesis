@@ -11,8 +11,8 @@ view:
 	zathura phd.pdf
 
 spellcheck:
-	for file in `ls tex_files/*.tex`; do \
-		aspell --lang=en --mode=tex check $$file --extra-dicts=./aspell_dict_en.pws ;\
+	for file in abstract acknowledgements introduction computational_models analogical_proportions functional_definition recommender_systems analogical_recommendation analogy_preserving_functions conclusion; do \
+		aspell --lang=en --mode=tex check tex_files/$$file.tex --extra-dicts=./aspell_dict_en.pws ;\
 	done
 
 clean:
