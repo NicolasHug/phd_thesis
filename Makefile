@@ -16,5 +16,8 @@ spellcheck:
 	done
 
 clean:
-	latexmk -CA
+	latexmk -c
 	rm -rf phd.bbl phd.glg phd.glo phd.gls phd.ist phd.brf *.fls phd.mtc* phd.maf phd.loe
+
+clean_all: clean
+	rm -rf phd.pdf

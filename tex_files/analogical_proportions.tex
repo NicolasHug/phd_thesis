@@ -16,8 +16,8 @@ agree, such as  ``a calf is to a cow as a foal is to a mare'', or ``Paris is to
 France as Berlin is to Germany''.
 
 It has been agreed since Aristotle time that an analogical proportion $A$ is a
-quaternary relation satisfying the three following axioms, for any $a, b, c,
-d$:
+quaternary relation satisfying the \textbf{three following axioms}, for any $a,
+b, c, d$:
 
 \begin{enumerate}
 \item $A(a,b,a,b)$ always holds (Reflexivity)
@@ -39,13 +39,17 @@ arithmetic and Boolean proportions, which will turn out to be very close. We
 will further investigate this bond in the second section, which will be devoted
 to describe these two proportions from a geometrical perspective. In the last
 section, we will consider a toy classification problem, which will help us
-introduce two other key concepts: the analogical inference
-principle, and the process of analogical equation solving. This last section
-will also serve as a transition towards the next chapter, which will be devoted
-to describe our contributions to analogical classification.
+introduce two other key concepts: the \textbf{analogical inference
+principle}, and the process of \textbf{analogical equation solving}. This last
+section will also serve as a transition towards the next chapter, which will be
+devoted to describe our contributions to analogical classification.
 
 \section{Formal definitions}
 \label{SEC:formal_definitions_proportions}
+
+The goal of this first section is to provide the definitions of analogical
+proportions in various settings. We will particularly focus on the arithmetic
+proportion that deals with real numbers, and on the Boolean proportion.
 
 \subsection{The geometric and arithmetic proportions}
 
@@ -86,8 +90,8 @@ Let $(U, \oplus)$ be a semigroup, i.e. $U$ is a set and $\oplus$ is an
   the authors define an analogy between words of a finite alphabet using the
   concatenation operator, which allows to build proportions such as:
   $$\text{eat} : \text{eating} :: \text{look} : \text{looking}.$$ This analogy
-  was used in an automatic verb conjugation task that will be briefly described
-  in Section \ref{SEC:conservative_classifier}.
+  was used in an automatic verb conjugation task that we will briefly describe
+  in the next chapter.
 \end{testexample}
 
 \paragraph{Analogical proportions between real numbers\\}
@@ -128,8 +132,8 @@ geometric proportion.
 In fact, when $\mathbb{R}$ is equipped with the multiplication $\times$, the
 couple $(\mathbb{R}, \times)$ is a group (i.e. a set equipped with an operation
 that satisfies  closure, associativity, identity and invertibility). When
-dealing with a group, Definition \ref{DEF:proportion_semi_group} can be greatly
-simplified:
+dealing with a group (instead of a semigroup), Definition
+\ref{DEF:proportion_semi_group} can be greatly simplified:
 
 \begin{definition}[Proportion in groups]
   \label{DEF:proportion_group}
@@ -195,15 +199,16 @@ Figure \ref{FIG:arithmetic_proportion}.
 Let us note that even if they did not explicitly mentioned the parallelogram
 view of analogy, Rumelhart and Abrahamsen (Section
 \ref{SEC:rumelhart_Abrahamsen}) clearly used the arithmetic proportion for
-their model of analogical reasoning.
+their psychological model of analogical reasoning.
 
 Starting from the general lines of Definition \ref{DEF:proportion_semi_group},
 other proportions have been defined in various domains, e.g. analogies
 between trees, lattices, or matrices \cite{MicDel04, StrYvoREPORT05,
 MicBayDelJAIR08}. However, we will not detail them further here and rather
 focus on other domains of interest, namely analogies between sets. Defining
-analogies between sets Will indeed allow us to derive the definition of an
-analogical proportion for Boolean values.
+analogies between sets will indeed allow us to derive the definition of an
+analogical proportion for Boolean values, which is the main subject of this
+document.
 
 \subsection{Analogical proportions between sets}
 
@@ -226,9 +231,10 @@ A more formal definition has been given in \cite{StrYvoREPORT05}:
   $$
 \end{definition}
 
-To go from $A$ to $B$, one needs to add $W$ and remove $V$. To go from $C$ to
-$D$, one needs to do the exact same thing: add $W$ and remove $V$. An
-equivalent definition has been given in \cite{MicPra09}:
+The requirements of Lepage are clearly respected here: to go from $A$ to $B$,
+one needs to add $W$ and remove $V$. To go from $C$ to $D$, one needs to do the
+exact same thing: add $W$ and remove $V$. An equivalent definition has been
+given in \cite{MicPra09}:
 
 \begin{definition}[Proportion between sets (ii)]
   \label{DEF:analogy_set_miclet_henri}
@@ -290,8 +296,9 @@ $$
 \label{TAB:analogy_sets}
 \end{table}
 
-Analogies between sets allow us to derive the definition of the Boolean
-proportion, which is the object of the next subsection.
+Analogies between sets are important because they allow us to derive the
+definition of the Boolean proportion, which is the object of the next
+subsection.
 
 \subsection{The Boolean proportion}
 
@@ -368,19 +375,25 @@ and $1$ play symmetric roles:
   $$a : b :: c : d \iff \neg a :  \neg b ::  \neg c :  \neg d,$$
   where $\neg x$ is the negation of $x$.
 \end{property}
+This code independence property is actually extremely important for
+computational purposes, because it means that we do not have to care about the
+coding convention of the Boolean vectors that we use.
 
-Also, note that in fact the $6$ valid patterns of Table
-\ref{TAB:six_valid_patterns} could have been derived directly from the $3$
-axioms of an analogical proportion: the first axiom tells us that the
-proportion $a:b::a:b$ holds for any value of $a$ and $b$ in $\mathbb{B}$. This
-means that the four following proportions are valid:
+We gave the definition of the Boolean proportion as a consequence of the
+definition of proportions between sets, but let us note that in fact, the $6$
+valid patterns of Table \ref{TAB:six_valid_patterns} could have been derived
+directly from the $3$ axioms of an analogical proportion: the first axiom tells
+us that the proportion $a:b::a:b$ holds for any value of $a$ and $b$ in
+$\mathbb{B}$. This means that the four following proportions are valid:
 \begin{itemize}
   \item $0 : 1 :: 0 :1$ ;
   \item $1 : 0 :: 1 :0$ ;
   \item $0 : 0 :: 0 :0$ ;
   \item $1 : 1 :: 1 :1$.
 \end{itemize}
-Using the central permutation axiom, we can derive two additional proportions:
+Using the central permutation axiom, we can then derive two additional
+proportions, which makes a total of $6$ proportions that are indeed those of
+Table \ref{TAB:six_valid_patterns}:
 \begin{itemize}
   \item $1 : 1 :: 0 : 0$ ;
   \item $0 : 0 :: 1 : 1$.
@@ -389,8 +402,8 @@ Using the central permutation axiom, we can derive two additional proportions:
 \paragraph{The Boolean proportion as a particular case of the arithmetic
 proportion\\}
 
-Another remark is that the Boolean proportion can actually be defined in the
-following simpler way:
+By paying attention to Table \ref{TAB:six_valid_patterns}, we notice that the
+Boolean proportion can actually be defined in a simpler way:
 \begin{definition}[Boolean proportion (ii)]
   \label{DEF:boolean_proportion_informal}
   Four elements $a, b, c, d$ in $\mathbb{B}$ are in proportion if:
@@ -415,7 +428,7 @@ proportions will be more and more obvious as we go through this document.
 
 Note that in $\mathbb{B}$ the geometric proportion offers a necessary condition
 to define the Boolean proportion, but not a sufficient one: $a \times d =
-b\times c$ is satisfied by all of the patterns in Table
+b\times c$ is satisfied by all of the valid patterns in Table
 \ref{TAB:six_valid_patterns}, but also for the pattern $0: 0: 0: 1$ which is
 not a valid analogy. In that sense, the Boolean proportion is closer to the
 arithmetic proportion than to the geometric proportion.
@@ -446,9 +459,9 @@ learners than using the standard modeling.
 In fact, Klein's definition of the Boolean proportion $a:b::c:d \iff a
 \oplus b = c \oplus d$ is equivalent to $a \oplus d = b \oplus c$, due to the
 singular properties of the XOR operator. This definition is actually a direct
-instance of Definition \ref{DEF:proportion_group}, which is natural because of
-the fact that when the set $B = \Set{0, 1}$ is equipped with the XOR operator,
-we obtain a group.
+instance of Definition \ref{DEF:proportion_group} (analogies in groups), which
+is natural because of the fact that when the set $B = \Set{0, 1}$ is equipped
+with the XOR operator, we obtain a group.
 
 \paragraph{The logical proportions of Jean Piaget\\}
 Another remarkable precursor work is that of Jean Piaget who, in the annex of a
@@ -456,12 +469,12 @@ French book from 1952 \cite{Pia52}, defined what he called a \textit{logical
 proportion} as follows: four propositions $a, b, c,d$ are in proportion if $(a
 \wedge d \leftrightarrow b \wedge c) \wedge (a \vee  d \leftrightarrow b \vee
 c)$. This definition is clearly equivalent to what we refer to now as the
-Boolean proportion, and was derived by Piaget when he was trying to give a
-Boolean counterpart to the geometric proportion, where the exchange of extreme
-and means plays a key role. In fact, it turns out that Piaget never made any
-reference to analogy in this work.
+Boolean \textbf{analogical} proportion, and was derived by Piaget when he was
+trying to give a Boolean counterpart to the geometric proportion, where the
+exchange of extreme and means plays a key role. In fact, it turns out that
+Piaget never made any reference to analogy in this work.
 
-this concept of \textit{logical proportion} has been generalized in recent
+This concept of \textit{logical proportion} has been generalized in recent
 works (see e.g. \cite{PraRic14}). A logical proportion is here defined as a
 couple of equivalences of the form:
 $$\alpha \wedge \beta \leftrightarrow  \gamma \wedge \delta \text{ and }
@@ -475,11 +488,13 @@ $(\alpha', \beta')$ and $(\gamma', \delta')$, in terms of similarities and/or
 dissimilarities.
 
 Out of the $120$ possible logical proportions (see \cite{PraRic12} for a
-derivation), four proportions exhibit interesting cognitive properties, namely
-the analogical proportion, the paralogy, the reverse analogy and the inverse
-paralogy. We will not however make use of these logical proportions in this
-document (except the analogical proportion of course!), so we will not detail
-them further.
+derivation), only $8$ of them support the code independency property (Property
+\ref{PROPER:code_indep}) which makes the remaining $112$ proportion unsuitable
+for computational purposes. Out of the $8$ remaining proportions, $4$
+proportions exhibit interesting cognitive properties, namely the analogical
+proportion, the paralogy, the reverse analogy and the inverse paralogy. We will
+however not make use of these logical proportions in this document (except the
+analogical proportion of course!), so we will not detail them further.
 
 \paragraph{Extension to multiple-valued logics\\}
 
@@ -520,8 +535,8 @@ Chapter \ref{CHAP:analogical_recommendation}.
 
 \paragraph{Conclusion\\}
 This first section was devoted to the description of various definitions of
-analogical proportions in different settings: we have review analogies between
-real numbers, between sets, between Boolean numbers and an extension to
+analogical proportions in different settings: we have reviewed analogies between
+real numbers, between sets, between Boolean numbers, and an extension to
 multiple-valued logics. In this document, the two kinds of proportions that we
 will deal with are the Boolean proportion and the arithmetic proportion, which
 we have shown to be extremely close. As having a deep understanding of how
@@ -540,11 +555,12 @@ elements that build up the vertices of a parallelogram.  In this section, we
 will show that this parallelogram-based view of analogical proportions can be
 extended to the Boolean setting.
 
-Before detailing further to the geometric insights, we will first make a quick
+Before moving on to the geometric insights, we will first make a quick
 detour in the first subsection, and describe what we call the
 \textbf{equivalence classes} of analogical proportions. We chose to introduce
 these general concepts here, because they are best illustrated by examples from
-the arithmetic and Boolean proportions.
+the arithmetic and Boolean proportions, and because they are paramount to
+properly understand the geometrical properties of these proportions.
 
 \subsection{Equivalence classes of analogical proportions}
 
@@ -556,7 +572,7 @@ axioms, we arrive to the following $8$ equivalent proportions:
        &A(a, b, c, d)\\
   \iff &A(c, d, a, b) \text{~~ Symmetry}\\
   \iff &A(c, a, d, b) \text{~~ Central permutation}\\
-  \iff &A(d, b, c, a) \text{~~\dots}\\
+  \iff &A(d, b, c, a) \text{~~ \dots}\\
   \iff &A(d, c, b, a)\\
   \iff &A(b, a, d, c)\\
   \iff &A(b, d, a, c)\\
@@ -572,7 +588,7 @@ also part of two other equivalence classes, each of $8$ proportions. Indeed, if 
 started with the proportion $A(a,b,d,c)$, by successive applications of the
 central permutation and symmetry axiom, we would have ended up again with $8$
 equivalent forms that are all different from those that are \textit{generated}
-by $A(a, b, c, d)$. The third equivalent class is generated by $A(a, c, d, b)$.
+by $A(a, b, c, d)$. The third equivalence class is generated by $A(a, c, d, b)$.
 In total, we end up with $24 = 3 \times 8$ distinct proportions, which
 correspond to the $24 = 4!$ possible orderings of $a, b, c, d$.
 
@@ -596,10 +612,10 @@ correspond to the $24 = 4!$ possible orderings of $a, b, c, d$.
 \label{FIG:3_classes}
 \end{figure}
 
-Note however that if $a, b, c, d$ are not all distinct, the equivalent classes
+Note however that if $a, b, c, d$ are not all distinct, the equivalence classes
 contain less than $8$ proportions (which is natural, because there are no
 longer $24$ different orderings of $a, b, c, d$). For example if $a = c$ and
-considering the first equivalence class with $A(a, b, c, d)$, then
+considering the first equivalence class represented by $A(a, b, c, d)$, then
 by the reflexivity axiom ($\forall x, y, A(x, y, x, y)$) we must have that $b =
 d$. Hence, the equivalence class that is generated by $A(a, b, c, d)$ is only
 made of four proportions:
@@ -617,13 +633,17 @@ we know from Definition \ref{DEF:analogy_for_vectors} that four Boolean vectors
 $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}$ are in proportion if each
 component build up a valid proportion, i.e. that each of the $(a_i, b_i, c_i,
 d_i)$ follow one of the $6$ valid patterns of Table
-\ref{TAB:six_valid_patterns}.
+\ref{TAB:six_valid_patterns} on page \pageref{TAB:six_valid_patterns}.
 \begin{testexample}
 For example in $\mathbb{B}^2$, the four vectors $\mathbf{a} = (0, 0),~
   \mathbf{b} = (1, 0),~ \mathbf{c} = (0, 1)$ and $\mathbf{d} = (1, 1)$ are in
   proportion because the two component-wise proportions $a_1 : b_2 :: c_1 :
   d_1$ and $a_2 : b_2 :: c_2:d_2$ are valid: we have $0: 1 :: 0: 1$ and
   $0:0::1:1$.
+
+  The four vectors $\mathbf{a} = (0, 0),~ \mathbf{b} = (1, 0),~ \mathbf{c} =
+  (0, 1)$ and $\mathbf{d} = (1, 0)$ are \textbf{not} in proportion because $a_2
+  : b_2 :: c_2 : d_2$ is not a valid pattern.
 \end{testexample}
 
 We have also seen that in $\mathbb{B}$, the Boolean
@@ -632,7 +652,7 @@ the case in $\mathbb{B}^m$! This means that a proportion in $\mathbb{B}^m$ can
 also be represented as a (potentially \textit{flat}) parallelogram. By
 \textit{flat} parallelogram we mean that the four vertices are not all
 distinct: this will all become clear by looking at the two following
-illustrations.
+illustrations, in $\mathbb{B}^2$ and in $\mathbb{B}^3$.
 
 \paragraph{The $36$ proportions of $\mathbb{B}^2$\\}
 
@@ -642,7 +662,8 @@ one can build in $\mathbb{B}^2$:
   \item The proportion $\mathbf{a}: \mathbf{b} :: \mathbf{c} : \mathbf{d}$ and
     its 7 other equivalent forms, making up the parallelogram
     $\mathbf{a}\mathbf{b}\mathbf{c}\mathbf{d}$ (remember that when all elements
-    are distinct, the equivalence class is composed of $8$ elements).
+    are distinct, the equivalence class represented by $A(\mathbf{a},
+    \mathbf{b}, \mathbf{c}, \mathbf{d})$ is composed of $8$ elements).
   \item The proportions that we can build using any pair of vertices, for
     example $\mathbf{a} : \mathbf{d} :: \mathbf{a} : \mathbf{d}$. Each of these
     proportions has $3$ other equivalent forms: in our case $\mathbf{a} :
@@ -650,10 +671,10 @@ one can build in $\mathbb{B}^2$:
     \mathbf{d} : \mathbf{a}$ and $\mathbf{d} : \mathbf{d} :: \mathbf{a} :
     \mathbf{a}$. As there are $\binom{4}{2} = 6$ pairs of vertices in
     $\mathbb{B}^2$, there are exactly $6 \times 4$ proportions of this kind,
-    all of which are flat\footnote{\textit{flat} proportion are those that make
+    all of which are flat\footnote{The \textit{flat} proportion are those that make
     up flat parallelograms. This naming convention is actually fortunate,
     because these proportions are in practice absolutely useless, as it will
-    soon become clear.}.
+    soon become clear in the next section.}.
   \item The $4$ proportions involving each vertex independently, for example
     $\mathbf{b}:\mathbf{b}::\mathbf{b}:\mathbf{b}$. These proportions are also
     flat, naturally.
@@ -677,9 +698,9 @@ concatenation of two proportions in $\mathbb{B}$, the number of valid
 proportions in $\mathbb{B}^2$ necessarily is $6 \times 6 = 36$.
 
 Note though that only $1 + 6 + 4 = 11$ of them can be considered
-\textit{unique} (up to equivalence) and only one is non-flat. In section
-\ref{SEC:number_of_parallelograms_in_Bm}, we will further investigate the
-number of unique proportions that can be built in $\mathbb{B}^m$.
+\textit{unique} (up to equivalence) and only one is non-flat. In the next
+section, we will further investigate the number of unique proportions that can
+be built in $\mathbb{B}^m$.
 
 \paragraph{The proportions of $\mathbb{B}^3$\\}
 
@@ -692,7 +713,7 @@ cube.  The flat proportions are not shown for the sake of clarity.
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\linewidth]{figures/cubes_in_B3.pdf}
-  \caption{The twelve \textit{non-flat} parallelograms in $\mathbb{B}^3$: the
+  \caption{The $12$ \textit{non-flat} parallelograms in $\mathbb{B}^3$: the
   six faces of the cube, and $3 \times 2$ \textit{diagonal} parallelograms,
   e.g. $(000) : (010) :: (101) : (111)$.}
 \label{FIG:cubes_in_B3}
@@ -736,7 +757,7 @@ rectangles.
 This closes our discussion on the geometric interpretation of Boolean
 proportions. In the next section, we will apply our knowledge to a task of
 classification which will help us introduce new concepts, and also to make a
-smooth transition to the next chapter.
+smooth transition towards the next chapter.
 
 \section{Analogical inference principle and equation solving}
 \label{SEC:machine_learning_with_boolean_proportions}
@@ -785,7 +806,7 @@ consider that the label of $\mathbf{h}$ is the same as  that of its
 \textit{neighbors}, i.e. the elements that are close to $\mathbf{h}$ with
 respect to a given distance function. Using the Hamming distance, we would
 assign to $\mathbf{h}$ the label $0$, because the $3$ closest neighbors of
-$\mathbf{h}$, namely $\mathbf{d}, \mathbf{f}, \mathbf{g}$ all are labeled with
+$\mathbf{h}$, namely $\mathbf{d}, \mathbf{f}, \mathbf{g}$, are all labeled with
 $0$.
 
 \paragraph{The analogical inference principle\\}
@@ -807,8 +828,8 @@ still be useful.
 
 The key point here is that if the value of $f(\mathbf{t})$ is unknown, it can
 be \textbf{recovered} from the values of $f(\mathbf{x}), f(\mathbf{y}),
-f(\mathbf{z})$ by the process of analogical equation solving that we explain
-now.
+f(\mathbf{z})$ by the process of \textbf{analogical equation solving} that we
+explain now.
 
 We here want to guess the
 value of $f(\mathbf{h})$. The analogical inference principle leads us to look
@@ -832,7 +853,8 @@ proportions are:
 Applying the analogical inference principle to the first proportion $\mathbf{a}
 : \mathbf{b} :: \mathbf{g} : \mathbf{h}$ leads to $f(\mathbf{a}) :
 f(\mathbf{b}) :: f(\mathbf{g}) : f(\mathbf{h})$, which is equivalent to:
-$$0:1::0:f(\mathbf{h}).$$ By referring to Table \ref{TAB:six_valid_patterns}, we
+$$0:1::0:f(\mathbf{h}).$$ By referring to Table \ref{TAB:six_valid_patterns} on
+page \pageref{TAB:six_valid_patterns}, we
 notice that $f(\mathbf{h})$ should be equal to $1$ for the proportion
 $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{g}) : f(\mathbf{h})$ to be a valid
 one, because $0:1::0:1$. So we keep $1$ in the back of our head as a possible
@@ -840,22 +862,28 @@ candidate for $f(\mathbf{h})$: we say that $1$ is a \textbf{candidate
 solution} for $f(\mathbf{h})$.  What we have just done is the \textbf{solving
 of an analogical equation}.
 
-\paragraph{Analogical equation solving\\}
+\paragraph{Analogical equation solving in general\\}
 
 Generally speaking, an analogical equation is a proportion $a:b::c:x$ in a
 context where $x$ is unknown. Determining the value of $x$ is then called the
 \textit{solving} of this equation. Depending on the nature and values of $a, b$,
-and $c$, there may or may not exist a solution, and it might not be unique. In a
-Boolean setting, an equation is solvable for 6 patterns of $a, b, c$ (the 6
-patterns of Table \ref{TAB:six_valid_patterns}, naturally). As we can see, the
-solution is always unique:
+and $c$, there may or may not exist a solution, and it might not be unique.
 
+In fact, we have all been solving analogical equations since our childhood,
+because in the case of the geometric proportion it reduces to the well known
+rule of three: $\frac{5}{2} = \frac{10}{x} \implies x = \frac{2 \times 10}{5} =
+4$, and generally $a:b::c:x \implies x = \frac{b \times c}{a}$ ($a \neq 0$).
+The solution of the arithmetic proportion $a - b = c -x$ is also extremely
+simple and is given by $x = c - a + b$.
+
+In a Boolean setting, an equation is solvable for 6 patterns of $a, b, c$ (the
+6 patterns of Table \ref{TAB:six_valid_patterns}, naturally):
 \begin{proposition}
   \label{PROPOS:equation_solving}
   Let $a, b, c$ in $\mathbb{B}$. The analogical equation
   $a :b::c:x$
   is solvable if and only if $a = b$ or $a = c$. The solution denoted
-  $\emph{sol}(a, b, c)$ is then given by:
+  $\emph{sol}(a, b, c)$ is always unique and is given by:
   $$
   \begin{cases}
     \emph{sol}(a, b, c) \eqdef c \emph{~~ if } a = b,\\
@@ -866,7 +894,7 @@ solution is always unique:
   $$\emph{sol}(a, b, c) \eqdef c - a + b,$$
   because the Boolean proportion is a particular case of the arithmetic
   proportion. The values of $\emph{sol}(a, b, c)$ for all the Boolean $3$-tuples $(a,
-  b c)$ are given in Table \ref{TAB:solutions}.
+  b, c)$ are given in Table \ref{TAB:solutions}.
 \end{proposition}
 
 \begin{table}[t]
@@ -886,11 +914,12 @@ solution is always unique:
     \bottomrule
   \end{tabular}
   \caption{The solutions $\sol(a, b, c)$ for every Boolean $3$-tuple $(a, b,
-  c)$.}
+  c)$. The question mark $?$ means that $\sol(a, b, c)$ is undefined. We can
+  verify that $\sol(a, b, c) = c - a + b$ when the solution is defined.}
   \label{TAB:solutions}
 \end{table}
 
-\paragraph{Estimation of $f(\mathbf{h})$\\}
+\paragraph{Back to the estimation of $f(\mathbf{h})$\\}
 
 Let's get back to the estimation of $f(\mathbf{h})$. Applying the analogical
 inference principle to the second proportion $\mathbf{a} : \mathbf{d} ::
@@ -912,11 +941,7 @@ equations.
 All in all, we are left with three candidates coming from the first three
 proportions, all of which are equal to $1$. Our guess will thus be that
 $f(\mathbf{h})$ should be equal to $1$, so we will set the \textbf{estimation} of
-$f(\mathbf{h}$ as $\hat{f}(\mathbf{h}) = 1$. Is this correct? Well in real-world
-settings, there is no way to know for sure, because the ground truth function
-$f$ is unknown (otherwise, there is no point in trying to classify $\mathbf{h}$
-in the first place).
-
+$f(\mathbf{h})$ as $\hat{f}(\mathbf{h}) = 1$.
 Notice that we have so far lightheartedly ignored  all the flat proportions,
 i.e. proportions where the four elements are not all distinct.
 This is because none of these proportions allow us to derive a solvable
@@ -979,7 +1004,7 @@ we will be thoroughly addressed in this document:
     the works of Stroppa and Yvon (\cite{StrYvoCNLL05}), such an $\mathbf{h}$
     cannot be classified. The notion of \textbf{analogical dissimilarity} as
     used in \cite{BayMicDelIJCAI07} will allow to bypass this issue. In the
-    next chapter, we will detail these two version of analogical learning, and
+    next chapter, we will detail these two versions of analogical learning, and
     one of the contribution of our work is to provide a unifying view of the
     two techniques.
   \item How \textit{safe} is the analogical inference principle? What are some
@@ -992,7 +1017,7 @@ we will be thoroughly addressed in this document:
 
 Before moving further to the next section, let us  consider a seemingly trivial
 question: how many proportions can we build in $\mathbb{B}^m$? As we will see,
-this question will provide us some further insight about Boolean proportions.
+this question will provide us some further insight about the Boolean proportion.
 This last discussion is, however, not as important as the previous ones and can
 safely be ignored by the impatient reader.
 
@@ -1002,13 +1027,12 @@ safely be ignored by the impatient reader.
 Exactly $6^m$! And it is fairly easy to derive: there are $6$ proportions in
 $\mathbb{B}$. As a proportion in $\mathbb{B}^2$ is the concatenation of any two
 proportions in $\mathbb{B}$, there are exactly $6^2 = 36$ proportions in
-$\mathbb{B}^2$, as seen in Section
-\ref{SEC:shortcut_from_aristotle_to_boolean_proportions}. Analogical
-proportions in $\mathbb{B}^m$ are defined component-wise, i.e. they are the
-concatenation of $m$ proportions in $\mathbb{B}$. Equivalently, a proportion in
-$\mathbb{B}^m$ is the concatenation of a proportion in $\mathbb{B}^{m - 1}$ and
-a proportion in $\mathbb{B}$. By trivial induction, we can build $6^m$
-proportions in $\mathbb{B}^m$.
+$\mathbb{B}^2$, as seen in the previous section. Analogical proportions in
+$\mathbb{B}^m$ are defined component-wise, i.e. they are the concatenation of
+$m$ proportions in $\mathbb{B}$. Equivalently, a proportion in $\mathbb{B}^m$
+is the concatenation of a proportion in $\mathbb{B}^{m - 1}$ and a proportion
+in $\mathbb{B}$. By trivial induction, we can build $6^m$ proportions in
+$\mathbb{B}^m$.
 
 But let's now ask a more relevant and challenging question: \textbf{how many
 \textit{useful} proportions can we build in $\mathbb{B}^m$?} By
@@ -1021,25 +1045,25 @@ want to exclude from the $6^m$ proportions those that comply with one of the
 following patterns:
 
 \begin{itemize}
-  \item $\mathbf{a}: \mathbf{a} :: \mathbf{a} : \mathbf{a}$
+  \item $\mathbf{a}: \mathbf{a} :: \mathbf{a} : \mathbf{a}$ ;
   \item $\mathbf{a}: \mathbf{b} :: \mathbf{a} : \mathbf{b}$, and its three
     equivalent forms $\mathbf{a}: \mathbf{a} :: \mathbf{b} : \mathbf{b}$,~
     $\mathbf{b}: \mathbf{a} :: \mathbf{b} : \mathbf{a}$, and $\mathbf{b}:
-    \mathbf{b} :: \mathbf{a} : \mathbf{a}$
+    \mathbf{b} :: \mathbf{a} : \mathbf{a}$.
 \end{itemize}
 
 Now, let's count them.
 
 \begin{itemize}
-  \item Each of the $2^m$ vertex $\mathbf{a}$ will generate a proportion of the
+  \item Each of the $2^m$ vertices $\mathbf{a}$ will generate a proportion of the
     form $\mathbf{a}: \mathbf{a} :: \mathbf{a} : \mathbf{a}$, so there are
     exactly $2^m$ proportions of this kind.
   \item Every pair $(\mathbf{a}, \mathbf{b})$ of vertices will generate four
     proportions:
     \begin{itemize}
-      \item $\mathbf{a}: \mathbf{b} :: \mathbf{a} : \mathbf{b}$,
-      \item $\mathbf{a}: \mathbf{a} :: \mathbf{b} : \mathbf{b}$,
-      \item $\mathbf{b}: \mathbf{a} :: \mathbf{b} : \mathbf{a}$,
+      \item $\mathbf{a}: \mathbf{b} :: \mathbf{a} : \mathbf{b}$ ;
+      \item $\mathbf{a}: \mathbf{a} :: \mathbf{b} : \mathbf{b}$ ;
+      \item $\mathbf{b}: \mathbf{a} :: \mathbf{b} : \mathbf{a}$ ;
       \item $\mathbf{b}: \mathbf{b} :: \mathbf{a} : \mathbf{a}$.
     \end{itemize}
     There are $\binom{2^m}{2}$ distinct pairs of vertices, so in total this
@@ -1083,7 +1107,7 @@ $\mathbb{B}$, which is perfectly normal: in $\mathbb{B}$, all proportions are
 flat (i.e. the pattern is always $a:b::a:b$ or $a:a::b:b$).
 
 In fact, it turns out that this sequence of numbers $0, 1, 12, 100\dots$ is
-already known as the sequence named A016283 from the OEIS\footnote{The On-line
+already known as the A016283 sequence from the OEIS\footnote{The On-line
 Encyclopedia of Integer Sequences (\url{http://oeis.org/A016283})}.
 This sequence actually describes \textit{the number of rectangles that can be
 formed from the vertices of an $m$-dimensional cube}, which is exactly
@@ -1100,8 +1124,8 @@ OEIS was derived, but we firmly believe that ours is the most entertaining one!
 
 In this chapter, we have given the necessary background on formal analogical
 proportions, mostly focusing on Boolean proportions. We have seen that an
-analogical proportion $A$ is a quaternary relation following three axioms that
-were already known in Aristotle times.
+analogical proportion $A$ is a quaternary relation following three simple
+axioms that were already known in Aristotle times.
 
 In the first section, we formally defined various analogical proportions in different settings,
 starting from the most general definitions for semigroups and groups, until we
@@ -1109,19 +1133,20 @@ reached the Boolean proportion. We also presented an extension of the Boolean
 proportion to multiple-valued logics, which we will use much later in Chapter
 \ref{CHAP:analogical_recommendation}.
 
-In the second section, we extended our knowledge and understanding of Boolean
-proportions by exhibit the close bonds that exist between the Boolean
+In the second section, we extended our knowledge and understanding of the Boolean
+proportion. We illustrated the close bonds that exist between the Boolean
 proportion and the arithmetic proportion, and we showed that both can be seen
 as a relation between the four vertices of a parallelogram in $\mathbb{B}^m$ or
 in $\mathbb{R}^m$.
 
-By solving an analogical equation, we are able to infer some information about
-any of the four elements at play in the analogy, provided that the three others
-are known. This process can be seen as a simple generalization of the rule of
-three that we have been using since our childhood: $\frac{4}{2} = \frac{6}{x}
-\implies x = 3$. Using this powerful tool and applying the analogical inference
-principle, we were able to go trough a simple classification problem in a
-Boolean setting.
+The third section was devoted to the description of the analogical inference
+principle and of the analogical equation solving process. By solving an
+analogical equation, we are able to infer some information about any of the
+four elements at play in the analogy, provided that the three others are known.
+This process can be seen as a simple generalization of the rule of three that
+we have been using since our childhood: $\frac{4}{2} = \frac{6}{x} \implies x =
+3$. Using this powerful tool and applying the analogical inference principle,
+we were able to go trough a simple classification problem in a Boolean setting.
 
 The aim of these first two chapters was to provide an overview of past works in
 analogical reasoning, and to provide the necessary background to understand the
