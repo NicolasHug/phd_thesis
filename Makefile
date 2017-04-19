@@ -11,10 +11,10 @@ view:
 	zathura phd.pdf
 
 spellcheck:
-	for file in `ls *.tex`; do \
+	for file in `ls tex_files/*.tex`; do \
 		aspell --lang=en --mode=tex check $$file --extra-dicts=./aspell_dict_en.pws ;\
 	done
 
 clean:
 	latexmk -CA
-	rm -rf phd.bbl phd.glg phd.glo phd.gls phd.ist phd.brf *.fls phd.mtc* phd.maf
+	rm -rf phd.bbl phd.glg phd.glo phd.gls phd.ist phd.brf *.fls phd.mtc* phd.maf phd.loe

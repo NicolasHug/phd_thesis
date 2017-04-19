@@ -75,7 +75,7 @@ Let $(U, \oplus)$ be a semigroup, i.e. $U$ is a set and $\oplus$ is an
   the authors define an analogy between words of a finite alphabet using the
   concatenation operator, which allows to build proportions such as:
   $$\text{eat} : \text{eating} :: \text{look} : \text{looking}.$$ This analogy
-  was used in an automatic verb conjugation task that will be briefly descibed
+  was used in an automatic verb conjugation task that will be briefly described
   in Section \ref{SEC:conservative_classifier}.
 \end{testexample}
 
@@ -114,8 +114,8 @@ the well-known numerical geometric proportion to more complex structures.
 Actually, Aristotle stated the three aforementioned axioms on the basis of the
 geometric proportion.
 
-In fact, when $\mathbb{R}$ is equiped with the multiplication $\times$, the
-couple $(\mathbb{R}, \times)$ is a group (i.e. a set equiped with an operation
+In fact, when $\mathbb{R}$ is equipped with the multiplication $\times$, the
+couple $(\mathbb{R}, \times)$ is a group (i.e. a set equipped with an operation
 that satisfies  closure, associativity, identity and invertibility). When
 dealing with a group, Definition \ref{DEF:proportion_semi_group} can be greatly
 simplified:
@@ -191,7 +191,7 @@ other proportions have been defined in various domains, e.g. analogies
 between trees, lattices, or matrices \cite{MicDel04, StrYvoREPORT05,
 MicBayDelJAIR08}. However, we will not detail them further here and rather
 focus on other domains of interest, namely analogies between sets. Defining
-analogies between sets wlil indeed allow us to derive the definition of an
+analogies between sets Will indeed allow us to derive the definition of an
 analogical proportion for Boolean values.
 
 \subsection{Analogical proportions between sets}
@@ -395,7 +395,7 @@ following simpler way:
 \end{definition}
 
 Naturally, the values $a - b$ and $c -d$ do not necessarily belong to
-$\mathbb{B}$, but it does not really matter: we just have to temporarly
+$\mathbb{B}$, but it does not really matter: we just have to temporarily
 consider that $a, b, c, d$ are in $\mathbb{R}$. We are here witnessing a close
 bond that links the Boolean proportion and the arithmetic proportion:
 \textbf{when restricted to $\mathbb{B}$, the arithmetic proportion and the
@@ -429,14 +429,14 @@ it seems unnatural to say that a cow $(b)$ is to a calf $(a)$ as a foal $(c)$
 is to a horse $(d)$. This notion will become clear in the next section when we
 will present the equivalence classes of analogical proportion (here, $(a, b, c,
 d)$ and $(b, a, c, d)$ are not in the same equivalence class).  In practice, it
-is often observed that using the modeling of Klein leads to less accuracte
+is often observed that using the modeling of Klein leads to less accurate
 learners than using the standard modeling.
 
 In fact, Klein's definition of the Boolean proportion $a:b::c:d \iff a
 \oplus b = c \oplus d$ is equivalent to $a \oplus d = b \oplus c$, due to the
 singular properties of the XOR operator. This definition is actually a direct
 instance of Definition \ref{DEF:proportion_group}, which is natural because of
-the fact that when the set $B = \Set{0, 1}$ is equiped with the XOR operator,
+the fact that when the set $B = \Set{0, 1}$ is equipped with the XOR operator,
 we obtain a group.
 
 \paragraph{The logical proportions of Jean Piaget\\}
@@ -458,7 +458,7 @@ $$\alpha \wedge \beta \leftrightarrow  \gamma \wedge \delta \text{ and }
 where $\alpha, \alpha' \in \set{a, \neg a}, ~~ \beta, \beta' \in \set{b, \neg
 b}, ~~ \gamma, \gamma' \in \set{c, \neg c}, ~~\delta, \delta' \in \set{d, \neg
 d}$, and $a, b, c, d$ are all Boolean variables. As such, a logical proportion
-expresses a semantical equivalence between the two pairs of propositions
+expresses a semantic equivalence between the two pairs of propositions
 $(\alpha, \beta)$ and $(\gamma, \delta)$ as well as between the two pairs
 $(\alpha', \beta')$ and $(\gamma', \delta')$, in terms of similarities and/or
 dissimilarities.
@@ -529,7 +529,7 @@ elements that build up the vertices of a parallelogram.  In this section, we
 will show that this parallelogram-based view of analogical proportions can be
 extended to the Boolean setting.
 
-Before detailing futher to the geometric insights, we will first make a quick
+Before detailing further to the geometric insights, we will first make a quick
 detour in the first subsection, and describe what we call the
 \textbf{equivalence classes} of analogical proportions. We chose to introduce
 these general concepts here, because they are best illustrated by examples from
@@ -537,7 +537,7 @@ the arithmetic and Boolean proportions.
 
 \subsection{Equivalence classes of analogical proportions}
 
-We place ourself here in a very general setting, and consider four elements of
+We place ourselves here in a very general setting, and consider four elements of
 a given set $X$ that are in proportion.  Starting from the assertion $A(a, b,
 c, d)$ and by successive application of the symmetry and central permutation
 axioms, we arrive to the following $8$ equivalent proportions:
@@ -631,7 +631,7 @@ one can build in $\mathbb{B}^2$:
   \item The proportion $\mathbf{a}: \mathbf{b} :: \mathbf{c} : \mathbf{d}$ and
     its 7 other equivalent forms, making up the parallelogram
     $\mathbf{a}\mathbf{b}\mathbf{c}\mathbf{d}$ (remember that when all elements
-    are distinc, the equivalence class is composed of $8$ elements).
+    are distinct, the equivalence class is composed of $8$ elements).
   \item The proportions that we can build using any pair of vertices, for
     example $\mathbf{a} : \mathbf{d} :: \mathbf{a} : \mathbf{d}$. Each of these
     proportions has $3$ other equivalent forms: in our case $\mathbf{a} :
@@ -732,10 +732,17 @@ smooth transition to the next chapter.
 
 The goal of this last section is to introduce two other fundamental notions
 that will be used in our investigations: the \textbf{analogical inference
-principle}, and the process of \textbf{analogical equation solving}.
+principle}, and the process of \textbf{analogical equation solving}. Once
+combined, these two concepts allow us to perform inference, and to apply
+analogical reasoning to machine learning tasks such as classification.
 
-To this end, we will concentrate on a toy classification problem, in a Boolean
-setting. dire que classif important car c'est tout ce qu'on va faire
+We will here consider a toy classification problem in a Boolean
+setting, which will help up introduce these two fundamental notions. Our toy
+problem will also serve as an introduction to the next chapter, where we will
+study the theoretical properties of analogical learners. Because of the nature
+of the problem, this section will be a mix of particular and general
+considerations. The notions introduced here are fairly simple, but it is crucial
+that they are well understood, for the rest of this document.
 
 \paragraph{Problem setting\\}
 
@@ -792,8 +799,6 @@ be \textbf{recovered} from the values of $f(\mathbf{x}), f(\mathbf{y}),
 f(\mathbf{z})$ by the process of analogical equation solving that we explain
 now.
 
-\paragraph{Analogical equation solving\\}
-
 We here want to guess the
 value of $f(\mathbf{h})$. The analogical inference principle leads us to look
 for all 3-tuples $(\mathbf{x}, \mathbf{y}, \mathbf{z}) \in S^3$ such that
@@ -821,9 +826,11 @@ notice that $f(\mathbf{h})$ should be equal to $1$ for the proportion
 $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{g}) : f(\mathbf{h})$ to be a valid
 one, because $0:1::0:1$. So we keep $1$ in the back of our head as a possible
 candidate for $f(\mathbf{h})$: we say that $1$ is a \textbf{candidate
-solution} for $f(\mathbf{h})$.
+solution} for $f(\mathbf{h})$.  What we have just done is the \textbf{solving
+of an analogical equation}.
 
-What we have just done is the \textbf{solving of an analogical equation}.
+\paragraph{Analogical equation solving\\}
+
 Generally speaking, an analogical equation is a proportion $a:b::c:x$ in a
 context where $x$ is unknown. Determining the value of $x$ is then called the
 \textit{solving} of this equation. Depending on the nature and values of $a, b$,
@@ -840,15 +847,39 @@ solution is always unique:
   $\emph{sol}(a, b, c)$ is then given by:
   $$
   \begin{cases}
-    \emph{sol}(a, b, c) \eqdef c \emph{ if } a = b,\\
-    \emph{sol}(a, b, c) \eqdef b \emph{ if } a = c,
+    \emph{sol}(a, b, c) \eqdef c \emph{~~ if } a = b,\\
+    \emph{sol}(a, b, c) \eqdef b \emph{~~ if } a = c,
   \end{cases}
   $$
   or more generally:
   $$\emph{sol}(a, b, c) \eqdef c - a + b,$$
   because the Boolean proportion is a particular case of the arithmetic
-  proportion.
+  proportion. The values of $\emph{sol}(a, b, c)$ for all the Boolean $3$-tuples $(a,
+  b c)$ are given in Table \ref{TAB:solutions}.
 \end{proposition}
+
+\begin{table}[t]
+  \centering
+  \begin{tabular}[t]{cccc}
+    \toprule
+    $a$ & $b$ & $c$ & $\sol(a, b, c)$ \\
+    \midrule
+    0 & 0 & 0 & 0 \\
+    1 & 1 & 1 & 1 \\
+    0 & 0 & 1 & 1 \\
+    1 & 1 & 0 & 0 \\
+    0 & 1 & 0 & 1 \\
+    1 & 0 & 1 & 0 \\
+    1 & 0 & 0 &?\\
+    0 & 1 & 1 &?\\
+    \bottomrule
+  \end{tabular}
+  \caption{The solutions $\sol(a, b, c)$ for every Boolean $3$-tuple $(a, b,
+  c)$.}
+  \label{TAB:solutions}
+\end{table}
+
+\paragraph{Estimation of $f(\mathbf{h})$\\}
 
 Let's get back to the estimation of $f(\mathbf{h})$. Applying the analogical
 inference principle to the second proportion $\mathbf{a} : \mathbf{d} ::
@@ -866,8 +897,6 @@ simply discard the proportion $\mathbf{b} : \mathbf{d} :: \mathbf{f} :
 we are not in a position to apply the analogical inference principle. We can
 easily verify that the fifth and sixth proportions also lead to non-solvable
 equations.
-
-\paragraph{Estimation of $f(\mathbf{h})$\\}
 
 All in all, we are left with three candidates coming from the first three
 proportions, all of which are equal to $1$. Our guess will thus be that
@@ -1056,39 +1085,34 @@ can be shown that the two formulas $\frac{1}{8} \left[6^m - 2^m -
 fortunately, equivalent.  To be fair, we have no idea how the formula of the
 OEIS was derived, but we firmly believe that ours is the most entertaining one!
 
-\paragraph{Conclusion\\}
-
-This closes our informal introduction to analogical classification and
-analogical proportions. The next section will be devoted to more formal
-definition of analogical proportion in different settings, and analogical
-classification will be more detailed in Chapter
-\ref{CHAP:functional_definition}.
-
 \section*{Conclusion}
 
 In this chapter, we have given the necessary background on formal analogical
 proportions, mostly focusing on Boolean proportions. We have seen that an
 analogical proportion $A$ is a quaternary relation following three axioms that
-were already known in Aristotle times. By solving an analogical equation, we
-are able to infer some information about any of the four elements at play in
-the analogy, provided that the three others are known. This process can be seen
-as a simple generalization of the rule of three that we have been using since
-our childhood: $\frac{4}{2} = \frac{6}{x} \implies x = 3$. Using this powerful
-tool and applying the analogical inference principle, we were able to go trough
-a simple classification problem in a Boolean setting. We then formally defined
-various analogical proportions in different settings, starting from the most
-general definitions until we reached the Boolean proportion. We also presented
-an extension of the Boolean proportion to multiple-valued logics, which we will
-use much lated in Chapter \ref{CHAP:analogical_recommendation}.
+were already known in Aristotle times.
+
+In the first section, we formally defined various analogical proportions in different settings,
+starting from the most general definitions for semigroups and groups, until we
+reached the Boolean proportion. We also presented an extension of the Boolean
+proportion to multiple-valued logics, which we will use much later in Chapter
+\ref{CHAP:analogical_recommendation}.
+
+In the second section, we extended our knowledge and understanding of Boolean
+proportions by exhibit the close bonds that exist between the Boolean
+proportion and the arithmetic proportion, and we showed that both can be seen
+as a relation between the four vertices of a parallelogram in $\mathbb{B}^m$ or
+in $\mathbb{R}^m$.
+
+By solving an analogical equation, we are able to infer some information about
+any of the four elements at play in the analogy, provided that the three others
+are known. This process can be seen as a simple generalization of the rule of
+three that we have been using since our childhood: $\frac{4}{2} = \frac{6}{x}
+\implies x = 3$. Using this powerful tool and applying the analogical inference
+principle, we were able to go trough a simple classification problem in a
+Boolean setting.
 
 The aim of these first two chapters was to provide an overview of past works in
 analogical reasoning, and to provide the necessary background to understand the
 contributions made in this thesis. In the next chapter, we will finally
-describe our contirbutions to the task of classification.
-
-
-
-
-
-
-
+describe our contributions to the task of classification.
