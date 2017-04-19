@@ -33,10 +33,21 @@ $(b)$, which seems perfectly sound. The central permutation axiom leads to the
 natural consequence that a calf $(a)$ is to a foal $(c)$ as a cow $(b)$ is to a
 mare $(d)$.
 
+In the first section of this chapter, we will provide the definition of
+analogical proportions in various settings, with a strong emphasis on the
+arithmetic and Boolean proportions, which will turn out to be very close. We
+will further investigate this bond in the second section, which will be devoted
+to describe these two proportions from a geometrical perspective. In the last
+section, we will consider a toy classification problem, which will help us
+introduce two other key concepts: the analogical inference
+principle, and the process of analogical equation solving. This last section
+will also serve as a transition towards the next chapter, which will be devoted
+to describe our contributions to analogical classification.
+
 \section{Formal definitions}
 \label{SEC:formal_definitions_proportions}
 
-\subsection{The Geometric and Arithmetic proportions}
+\subsection{The geometric and arithmetic proportions}
 
 \paragraph{A factorization-based definition of analogical proportions\\}
 
@@ -60,7 +71,7 @@ Let $(U, \oplus)$ be a semigroup, i.e. $U$ is a set and $\oplus$ is an
     d &= d_1 \oplus d_2 \oplus \cdots \oplus d_n,
   \end{align*}
 
-  such that for all $i \in [1, n]$, 
+  such that for all $i \in [1, n]$,
   $$
   \begin{cases}
     a_i = b_i \text{ and } c_i = d_i\\
@@ -120,7 +131,7 @@ that satisfies  closure, associativity, identity and invertibility). When
 dealing with a group, Definition \ref{DEF:proportion_semi_group} can be greatly
 simplified:
 
-\begin{definition}
+\begin{definition}[Proportion in groups]
   \label{DEF:proportion_group}
 Let $(U, \oplus)$ be a group.  Four elements $a, b, c, d \in U$, are in
   proportion if:
@@ -201,7 +212,7 @@ $A, B, C, D$ of a universal set $X$ are in proportion if $A$ can be transformed
 into $B$ by adding and deleting the same elements as to transform $C$ into $D$.
 A more formal definition has been given in \cite{StrYvoREPORT05}:
 
-\begin{definition}[Proportion between sets]
+\begin{definition}[Proportion between sets (i)]
   \label{DEF:analogy_set_facto}
   Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if there exists
   four subsets $U, V, W$ and $Z$ (not necessarily disjoint) such that:
@@ -219,7 +230,7 @@ To go from $A$ to $B$, one needs to add $W$ and remove $V$. To go from $C$ to
 $D$, one needs to do the exact same thing: add $W$ and remove $V$. An
 equivalent definition has been given in \cite{MicPra09}:
 
-\begin{definition}[Proportion between sets]
+\begin{definition}[Proportion between sets (ii)]
   \label{DEF:analogy_set_miclet_henri}
   Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if:
   $$
@@ -234,7 +245,7 @@ which is naturally equivalent to the statement of Definition
 \setminus A = D \setminus A  = W$.  Finally, a last equivalent definition can
 be given as follows (not without using various ingenious tweaks):
 
-\begin{definition}[Proportion between sets]
+\begin{definition}[Proportion between sets (iii)]
   \label{DEF:yet_other_equiv_def}
   Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if:
   $$ A \cap D = B \cap C \text{ and } A \cup D = B \cup C.$$
@@ -291,7 +302,7 @@ which can be directly derived from Definitions
 \ref{DEF:analogy_set_miclet_henri} or \ref{DEF:yet_other_equiv_def} by
 considering the set $\mathbb{B} = \{0, 1\}$:
 
-\begin{definition}[Boolean proportion]
+\begin{definition}[Boolean proportion (i)]
   \label{DEF:boolean_proportion}
   Four elements $a, b, c, d$ in $\mathbb{B} = \{0, 1\}$ are in proportion if
   \begin{alignat*}{2}
@@ -380,7 +391,7 @@ proportion\\}
 
 Another remark is that the Boolean proportion can actually be defined in the
 following simpler way:
-\begin{definition}[Boolean proportion]
+\begin{definition}[Boolean proportion (ii)]
   \label{DEF:boolean_proportion_informal}
   Four elements $a, b, c, d$ in $\mathbb{B}$ are in proportion if:
   $$

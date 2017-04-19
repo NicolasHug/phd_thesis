@@ -14,28 +14,26 @@
 \clearemptydoublepage
 \input{tex_files/abstract.tex}
 
+% Add **page** to toc. Needs to be done here.
+\addtocontents{toc}{\par\nobreak \mbox{}\hfill{\bf Page}\par\nobreak}
 
 \clearemptydoublepage
+\addtocontents{lot}{\par\nobreak\textbf{{\scshape Table} \hfill Page}\par\nobreak}
 \listoftables
 
-\clearpage
+\addtocontents{lof}{\par\nobreak\textbf{{\scshape Figure} \hfill Page}\par\nobreak}
 \listoffigures
 
-% Gloassary entries (list of symbols)
-%\glsaddall % Add all glossary entries even if they're not refered to with \gls
-%\printglossary[title={List of Symbols}]
-
-
-\clearpage
 \renewcommand\thmtformatoptarg[1]{ #1}
 \renewcommand{\listtheoremname}{List of Definitions}
+\addtocontents{loe}{\par\nobreak\textbf{{\scshape Definition} \hfill Page}\par\nobreak}
 \listoftheorems[ignoreall,show={definition}]
+
 
 \clearemptydoublepage
 \renewcommand{\contentsname}{Table of Contents}
 \maxtocdepth{subsection}
 \tableofcontents*
-\addtocontents{toc}{\par\nobreak \mbox{}\hfill{\bf Page}\par\nobreak}
 
 \mainmatter % from now on, use arabic numbering for pages
 

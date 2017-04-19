@@ -623,37 +623,22 @@ approximated using online search-engine queries. The experiments showed that
 the system was able to differentiate credible analogies from fishy ones in
 about 75\% of the time.
 
-\section*{Conclusion}
+\subsection{Case-Based Reasoning}
 
-This first chapter was devoted to the description of past works on the modeling
-of analogical reasoning. We chose here to distinguish between two groups of
-models: those that make explicit use of analogical proportions (either as a key
-component of the model or as a simple use-case example), and those that do not.
-Beyond the models that use analogical proportions, we will see that the model
-of Rumelhart and Abrahamsen (derived from a psychological perspective) will be
-in perfect accordance to our view of analogical classification, and analogical
-learning in general.
+We will here describe the field of Case-Based Reasoning (CBR). First of all,
+let us note that CBR is \textbf{not} a computational model of analogy, but
+rather encompass a larger theory. We however choose to mention it now, because
+we need to clarify how our approach to problem solving will differ from that of
+CBR.
 
-It becomes fairly clear that these past works are, with a few exceptions,
-mostly motivated from cognitive and psychological aspects. It is only recently
-that some authors, starting from the pioneering investigation in \cite{Lep04},
-have provided a formal framework to deal with analogical proportions in general
-algebraic settings, opening the door to many computational applications. These
-formal analogical proportions are the subject of the next chapter.
-
-
-
-\newpage
-\paragraph{Case-Based Reasoning\\}
-
-Case-Based Reasoning (CBR) is a very general paradigm for problem solving,
-where a new problem is solved using the knowledge of some similar past
-experiences. This model can be motivated by its psychological appeal: it is
-indeed well acknowledged that, when confronted with an unknown situation,
-humans tend to make use of their past knowledge about some other similar
-situation to solve the problem at hand. As an example, the recipe of a
-strawberry pie could be easily inferred using the past knowledge on the recipe
-of other fruit-pies (e.g. apple pie, pear pie, etc.).
+CBR is a very general paradigm for problem solving, where a new problem is
+solved using the knowledge of some similar past experiences. This model can be
+motivated by its psychological appeal: it is indeed well acknowledged that,
+when confronted with an unknown situation, humans tend to make use of their
+past knowledge about some other similar situation to solve the problem at hand.
+As an example, the recipe of a strawberry pie could be easily inferred using
+the past knowledge on the recipe of other fruit-pies (e.g. apple pie, pear pie,
+etc.).
 
 In its most general form, CBR is a way of reaching the unknown solution $S$ of a
 problem $P$ using the known solutions $S_i$ of problems $P_i$ that are similar
@@ -703,3 +688,24 @@ proportions of the form $P_{i_1} : P_{i_2} :: P_{i_3} : P$ are retrieved, and
 the solution $S$ is inferred by the solving of the associated solution
 equations: $S_{i_1} : S_{i_2} :: S_{i_3} : S$. This allows us to consider both
 similar problems as well as different problems, which may still be useful.
+
+\section*{Conclusion}
+
+This first chapter was devoted to the description of past works on the modeling
+of analogical reasoning. We chose here to distinguish between two groups of
+models: those that make explicit use of analogical proportions (either as a key
+component of the model or as a simple use-case example), and those that do not.
+Beyond the models that use analogical proportions, we will see that the model
+of Rumelhart and Abrahamsen (derived from a psychological perspective) will be
+in perfect accordance to our view of analogical classification, and analogical
+learning in general.
+
+It becomes fairly clear that these past works are, with a few exceptions,
+mostly motivated from cognitive and psychological aspects. It is only recently
+that some authors, starting from the pioneering investigation in \cite{Lep04},
+have provided a formal framework to deal with analogical proportions in general
+algebraic settings, opening the door to many computational applications. These
+formal analogical proportions are the subject of the next chapter.
+
+
+
