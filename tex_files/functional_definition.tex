@@ -820,16 +820,22 @@ same result:
   1.$$
 \end{property}
 \begin{proof}
-  In \cite{CovHarTIT67}, Cover \& Hart showed that the nearest neighbor of
+  The proof can be easily derived from the results of Cover \& Hart in
+  \cite{CovHarTIT67}. Indeed, they have already showed that the nearest neighbor of
   $\mathbf{x}$ converges almost surely towards $\mathbf{x}$ as $n$ tends to
-  infinity, starting from the fact that $\delta(\mathbf{x}, \nn(\mathbf{x},
-  S_n))$ converges in probability towards $0$: $\forall epsilon > 0,
-  P\left(\delta(\mathbf{x}, \nn(\mathbf{x}, S_n)) > \epsilon\right)$. Using the
-  previous fact that $\delta(\mathbf{x}, \nan(\mathbf{x},S_n)) \leq
+  infinity:
+  $$P\left(\lim_{n \to \infty} \nn(\mathbf{x}, S_n) = \mathbf{x}\right) =
+  1.$$
+  To prove this result, they simply start from the fact that
+  $\delta(\mathbf{x}, \nn(\mathbf{x}, S_n))$ converges in probability towards
+  $0$:
+  $$\forall \epsilon > 0,~~P\Big(\delta(\mathbf{x}, \nn(\mathbf{x}, S_n)) >
+  \epsilon\Big) = 0.$$
+  Using the previous fact that $\delta(\mathbf{x}, \nan(\mathbf{x},S_n)) \leq
   \delta(\mathbf{x}, \nn(\mathbf{x},S_n))$, the convergence in probability of
-  $\delta(\mathbf{x}, \nan(\mathbf{x},S_n))$ towards $0$ is immediate. Hence,
-  it naturally follows that $\nan(\mathbf{x}, S_n)$ converges almost surely
-  towards $\mathbf{x}$, Q.E.D.
+  $\delta(\mathbf{x}, \nan(\mathbf{x},S_n))$ towards $0$ is immediate. Then, it
+  naturally follows that $\nan(\mathbf{x}, S_n)$ converges almost surely
+  towards $\mathbf{x}$, following the same steps as Cover \& Hart.
 \end{proof}
 
 Let us note the following points:
