@@ -931,7 +931,7 @@ $\bigskip
 \end{proof}
 
 This section was quite dense, so let us recap a bit what we have seen so far.
-We have given two different definitions for the analogical inference principle:
+We have given two different instances of the analogical inference principle:
 $$
 \inferrule[\text{~~ Inference Principle A}]{\mathbf{a} : \mathbf{b} ::
 \mathbf{c} : \mathbf{d}}{\solvable(f(\mathbf{a}), f(\mathbf{b}),
@@ -1159,11 +1159,11 @@ Unfortunately, we cannot turn to the previous framework because the Cartesian
 product $X^m$ is made of distinct sets and is not anymore a power of
 $\mathbb{B}$. So we will not be able to entirely identify these functions,
 simply because we do not even know how to \textit{write} them. When dealing
-with Boolean functions we used an algebraic point of view that helped us
-writing the functions with their ANF, and we identified the AP functions as
-those which have a particular ANF. But here this will not be possible because
-there are no algebraic structure on the Cartesian product that is the domain of
-our functions.
+with Boolean functions we used an algebraic point of view that allowed us
+to write the functions in their Algebraic Normal Form, and we identified the AP
+functions as those which have a particular ANF. But here this will not be
+possible because there are no algebraic structure on the Cartesian product that
+is the domain of our functions.
 
 Nonetheless, we will still find close links between the AP Boolean functions
 and the AP functions of our current setting, and these links are based on the
@@ -1198,9 +1198,9 @@ $$\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d} \iff
  \noindent
  Note that the proportion $\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$
  holds in $X^m$ while the proportion $\bin(\mathbf{a}): \bin(\mathbf{b})::
- \bin(\mathbf{c}): \bin(\mathbf{d})$ is a regular Boolean proportion that holds
+ \bin(\mathbf{c}): \bin(\mathbf{d})$ is a usual Boolean proportion that holds
  in $\prod_{i=1}^m\mathbb{B}^{\mid X_i \mid}$.  Now, every function $f$ from
- $\prod_{i=1}^n X_i$ to $\mathbb{B}$ can be considered as a \textbf{partial}
+ $\prod_{i=1}^n X_i$ to $\mathbb{B}$ can be associated to a \textbf{partial}
  Boolean function $f^b$ from $\prod_{i=1}^m \mathbb{B}^{|X_i|}$ to $\mathbb{B}$
  where $f^b$ is defined as follows:
 $$
@@ -1292,9 +1292,9 @@ of PAP function. This result is only purely theoretical, and sadly there are
 not much we can extract from it for practical use. Proposition
 \ref{PROPOS:PAP_eq_AP} tells us that when dealing with nominal attributes, if
 the function underlying the ground truth labels is affine once the dataset has
-been binarized, then we can safely extend our training set. Sadly, as there are
-no common operators on the set  $\prod_{i=1}^n X_i$, we are not able to give a
-more accurate characterization of AP functions in such settings.
+been binarized, then we can safely extend our training set. Unfortunately, as
+there are no common operators on the set  $\prod_{i=1}^n X_i$, we are not able
+to give a more accurate characterization of AP functions in such settings.
 
 In the next subsection, however, we will see that in a real setting the AP
 functions are also precisely the affine (real) functions.
