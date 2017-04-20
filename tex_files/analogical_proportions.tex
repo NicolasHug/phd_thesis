@@ -595,10 +595,18 @@ correspond to the $24 = 4!$ possible orderings of $a, b, c, d$.
 \begin{testexample}
   The point here that if we say that a calf $(a)$ is to a cow $(b)$ as a foal
   $(c)$ is to a mare $(d)$, then we can actually say it in $7$ other equivalent
-  ways. Also, we \textbf{cannot} say that a calf $(a)$ is to a cow $(b)$ as a mare $(d)$
-  is to a foal $(c)$ (second equivalence class), nor can we say that a calf
-  $(a)$ is to a foal $(c)$ as a  mare $(d)$  is to a cow $(b)$ (third
-  equivalence class).  Another illustration of the three classes of proportions
+  ways. Also, we \textbf{cannot} say that a calf $(a)$ is to a cow $(b)$ as a
+  mare $(d)$ is to a foal $(c)$ (second equivalence class), because such a
+  statement would implicitely express that \textit{a young is to an adult as an adult is to
+  a young}, which seems wrong: we cannot go from a \textit{young} to an
+  \textit{adult} as we go from an \textit{adult} to \textit{young}.  We
+  \textbf{cannot} say either that a calf $(a)$ is to a foal $(c)$ as a  mare
+  $(d)$  is to a cow $(b)$ (third equivalence class), because this would
+  suggest that \textit{a bovid is to an equid as an equid is to a bovid}: here
+  again, we cannot transform the concept \textit{bovid} into \textit{equid} as
+  we would transform the concept \textit{equid} into \textit{bovid}.
+
+  Another illustration of the three classes of proportions
   is illustrated in Figure \ref{FIG:3_classes}, using the arithmetic
   proportion.
 \end{testexample}
@@ -720,6 +728,8 @@ cube.  The flat proportions are not shown for the sake of clarity.
 
 Let us finally note the following remarkable property, which will be useful to
 us much later in Chapter \ref{CHAP:analogy_preserving_functions}:
+
+\cite{Surprise}
 
 \begin{property}
   \label{PROPER:hamming_distance_boolean_proportion}
@@ -991,7 +1001,7 @@ will be thoroughly addressed in the rest of this document:
     strategy would make the prediction impossible for most elements $\mathbf{x}
     \notin S$. A wiser option is to consider an aggregation of the candidate
     solutions: the most common one, for example. This is the option that has
-    been took on so far, as we will see in the next chapter.
+    been taken on so far, as we will see in the next chapter.
   \item Here, by chance, the set of candidate solutions for $f(\mathbf{h})$ was
     not empty: we found three candidate solutions. What happens if we can't
     find any candidate? This case arises when there are no 3-tuple
@@ -1114,9 +1124,9 @@ $$P_m = \frac{6^m}{8} - 4^{m - 1} + 2^{m - 3},$$
 and using the fact that $\binom{n}{k} = \frac{n}{k}\binom{n - 1}{k - 1}$, it
 can be shown that the two formulas $\frac{1}{8} \left[6^m - 2^m -
 4\cdot\binom{2^m}{2} \right]$ and $\frac{6^m}{8} - 4^{m - 1} + 2^{m- 3}$ are,
-fortunately, equivalent.  To be fair, we have no idea how the formula of the
-OEIS was derived, which is quite unfortunate as it may have given us further
-insights.
+fortunately, equivalent. It would be interesting to find out how the OEIS
+formula was derived, but in all fairness we have no idea of the process that
+was used.
 
 \section*{Conclusion}
 
@@ -1148,5 +1158,5 @@ we were able to go trough a simple classification problem in a Boolean setting.
 
 The aim of these first two chapters was to provide an overview of past works in
 analogical reasoning, and to provide the necessary background to understand the
-contributions made in this thesis. In the next chapter, we will finally
-describe our contributions to the task of classification.
+contributions made in this thesis. In the next chapter, we will describe our
+contributions to the task of classification.

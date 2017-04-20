@@ -2,7 +2,6 @@
 - Intro
 - Conclu
 - couleur cubes
-- enelver les Note that
 
 - Parler de regression linéaire à la fin au sujet des AP functions qui sont les
   fonctions linéaires - Répeter figure dans example filé section functional def

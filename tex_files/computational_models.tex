@@ -5,7 +5,7 @@
 \vspace*{\baselineskip}
 
 \initial{R}oughly speaking, analogy is a matter of establishing parallels
-between two different situations, and allows to infer properties about one of
+between two different situations. It allows to infer properties about one of
 the two situations based on our knowledge of the other. Closely related to
 analogical reasoning is the idea of analogical proportion, which is a statement
 of the form \textit{a is to b as c is to d}, often written $a:b::c:d$. Here
@@ -20,7 +20,7 @@ analogical proportions, especially in the Boolean and real settings and their
 application to machine learning tasks.
 
 Section \ref{SEC:models_without_proportions} will be devoted to the description
-of past models that do not make explicit use of analogical proportions, and
+of existing models that do not make explicit use of analogical proportions, and
 Section \ref{SEC:models_with_analogical_proportions} will describe models that
 make use of analogical proportion in one way or another.
 
@@ -172,7 +172,7 @@ relationship).
 While SMT is a purely theoretical framework for analogy, these ideas have been
 practically implemented in a software called the Structure Mapping Engine (SME)
 \cite{FalForKenGen89} written in LISP, leading to numerous applications. A
-recent example is e.g. a program that is able to solve Raven's Progressive
+recent example is that of a program that is able to solve Raven's Progressive
 Matrices \cite{LovForUsh10}, a typical kind of visual geometric
 puzzles. The SME algorithm, in complete accordance with SMT, can be
 conceptually summarized as follows:
@@ -384,7 +384,7 @@ preexisting by far).
 \subsection{Analogical reasoning as distance minimization on a vector space}
 \label{SEC:rumelhart_Abrahamsen}
 
-At a time where most models of analogy take the form of complex computer
+At a time where most models of analogy used to take the form of complex computer
 programs (such as that of Evans), the two cognitive scientists David Rumelhart
 and Adele Abrahamsen proposed a simple theoretical model of analogical
 reasoning \cite{RumAbr73}. Their model is of great interest for us because as
@@ -627,7 +627,7 @@ about 75\% of the time.
 
 We will here describe the field of Case-Based Reasoning (CBR). First of all,
 let us note that CBR is \textbf{not} a computational model of analogy, but
-rather encompass a larger theory. We however choose to mention it now, because
+rather encompasses a larger theory. We however choose to mention it now, because
 we need to clarify how our approach to problem solving will differ from that of
 CBR.
 
@@ -675,19 +675,20 @@ same.
 
 We will not further discuss this point here but we would still like to point out a
 significant difference between the CBR approach and the one we will address in
-this document. In a way, the CBR process can be view as building the following
-analogical proportions:
-$$P_i:P :: S_i : S, $$
+this document. In a way, the CBR process can be viewed as building the
+following analogical proportions:
+$$P_i:S_i :: P : S, $$
 where $S$ is unknown and inferred from all the $S_i$. Each of these analogical
 proportions is built on the basis that $P_i$ and $P$ are \textbf{similar}. But
-an analogical proportion $a:b::c:d$ is not restricted to having $a$ close to
-$b$ and $c$ close to $d$! It is quite the contrary actually: all elements are
-allowed to be extremely distinct. Acknowledging this fact, our approach to
-analogical learning will rather follow the following conceptual scheme: first,
-proportions of the form $P_{i_1} : P_{i_2} :: P_{i_3} : P$ are retrieved, and
-the solution $S$ is inferred by the solving of the associated solution
-equations: $S_{i_1} : S_{i_2} :: S_{i_3} : S$. This allows us to consider both
-similar problems as well as different problems, which may still be useful.
+as we will see in the next chapter, an analogical proportion $a:b::c:d$ is not
+restricted to having $a$ close to $c$ and $b$ close to $d$! It is quite the
+contrary actually: all elements are allowed to be extremely distinct.
+Acknowledging this fact, our approach to analogical learning will rather follow
+the following conceptual scheme: first, proportions of the form $P_{i_1} :
+P_{i_2} :: P_{i_3} : P$ are retrieved, and the solution $S$ is inferred by the
+solving of the associated solution equations: $S_{i_1} : S_{i_2} :: S_{i_3} :
+S$. This allows us to consider both similar problems as well as different
+problems, which may still be useful.
 
 \section*{Conclusion}
 
@@ -695,7 +696,7 @@ This first chapter was devoted to the description of past works on the modeling
 of analogical reasoning. We chose here to distinguish between two groups of
 models: those that make explicit use of analogical proportions (either as a key
 component of the model or as a simple use-case example), and those that do not.
-Beyond the models that use analogical proportions, we will see that the model
+Among the models that use analogical proportions, we will see that the model
 of Rumelhart and Abrahamsen (derived from a psychological perspective) will be
 in perfect accordance to our view of analogical classification, and analogical
 learning in general.

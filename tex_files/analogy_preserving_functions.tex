@@ -404,9 +404,7 @@ that \textbf{any function $f:\mathbb{B}^m\rightarrow \mathbb{B}$ is uniquely
 represented by a polynomial}, also called the \textbf{Algebraic Normal Form}
 (ANF) of $f$:
 $$f(x_1,\ldots,x_m)=\sum_{I\subseteq \{1,\ldots,m\}}a_I\cdot \mathbf{x}_I,$$
-where each $a_I$ belongs to $\mathbb{B}$. Note that the
-constant function $0$ is represented by $a_\emptyset\cdot \mathbf{x}_\emptyset$
-with $a_\emptyset =0$. The degree of a function $f:\mathbb{B}^m\rightarrow
+where each $a_I$ belongs to $\mathbb{B}$. The degree of a function $f:\mathbb{B}^m\rightarrow
 \mathbb{B}$, denoted $d(f)$, is defined as the degree of the unique polynomial
 representing $f$. In the following, we will often will refer to $f$ as both a
 function object and as the associated ANF.
@@ -419,7 +417,11 @@ the ANF of some common Boolean functions in $\mathbb{B}^2$ or $\mathbb{B}$:
   \item $\text{AND}(x_1, x_2) = x_1 \cdot x_2$ ;
   \item $\text{OR}(x_1, x_2) = x_1 + x_2 + x_1 \cdot x_2$ ;
   \item $\text{XOR}(x_1, x_2) = x_1 + x_2$ ;
-  \item $\text{NEG}(x_1) = x_1 + 1$.
+  \item $\text{NEG}(x_1) = x_1 + 1$ ;
+  \item The constant function $f(x_1, x_2) = 0$ is represented by
+    $a_\emptyset\cdot \mathbf{x}_\emptyset$ with $a_\emptyset =0$. The constant
+    function $f(x_1, x_2) = 1$ is also represented by $a_\emptyset\cdot
+    \mathbf{x}_\emptyset$, but this time $a_\emptyset =1$.
 \end{itemize}
 \end{testexample}
 
@@ -452,8 +454,8 @@ other by permutation of variables, addition of inessential variables, or
 identification of inessential variables. Another point of view is to consider
 that two functions are equivalent if their ANF is the same, up to the
 renaming of variables. For example, $f(x_1, x_2, x_3) = x_1
-\cdot x_3$ and $g(x_1, x_2)  = x_1 \cdot x_2$ are equivalent functions. Note
-that two equivalent functions necessarily have the same number of essential
+\cdot x_3$ and $g(x_1, x_2)  = x_1 \cdot x_2$ are equivalent functions.  Two
+equivalent functions necessarily have the same number of essential
 variables. For further background in the theory of essential variables of
 functions, see \cite{CouceiroTCS08, CouceiroDM09, SalomaaAASF63, WillardDM96}.
 In our demonstrations, we will use the following property:
@@ -494,7 +496,7 @@ $f^{\boldsymbol{\alpha}}_I$ is the function from $\mathbb{B}^{\mid J \mid} \to
 $$\forall \mathbf{y} \in \mathbb{B}^{|J|},~~
 f^{\boldsymbol{\alpha}}_I(\mathbf{y}) \eqdef
 f((\mathbf{x}^{\boldsymbol{\alpha}}_I)^\mathbf{y}_J).$$
-Note that the arity of $f^{\boldsymbol{\alpha}}_I$ is $|J|$ and is always less
+The arity of $f^{\boldsymbol{\alpha}}_I$ is $|J|$ and is always less
 than the arity of $f$, and that
 $\ess(f^{\boldsymbol{\alpha}}_I) \leq \ess(f)$.  As an example, let us consider
 the function $f\colon \mathbb{B}^3 \to \mathbb{B}$ such as
@@ -591,7 +593,7 @@ Let us first define the class of affine functions:
   product.  If $\alpha_0= 0$ we say that $f$ is \textbf{linear}.
 \end{definition}
 
-Note that we used the polynomial representation of the function $f$, and that
+We used the polynomial representation of the function $f$, and we can see that
 $L$ is precisely the set of functions whose degree is less than or equal to
 $1$. Informally, a linear function is a function that computes the exclusive OR
 between any subset of variables. The class $L$ of affine functions is then the set of all linear
@@ -667,7 +669,7 @@ Now, we will prove that every affine function is AP:
 \centering
   \includegraphics[width=2in]{figures/affine_functions_neighbors.pdf}
   \caption{The labels as determined by the affine function $g(x_1, x_2, x_3) =
-  x_1 + x_3 + x_3$. Note that each $1$ is surrounded by three $0$, and each $0$
+  x_1 + x_3 + x_3$. Each $1$ is surrounded by three $0$, and each $0$
   is surrounded by three $1$. Also, note that solving any (solvable) analogical
   equation leads to the correct solution: This is because $g$ is AP.}
   \label{FIG:affine_functions_neighbors}
@@ -1043,7 +1045,7 @@ illustration of the variation of $\omega_S^{f_\epsilon}$ (simply denoted
 $\omega$) against  $\epsilon$ for different
 sizes of $S$ (as a percentage of $|\mathbb{B}^m|$).  Other experiments have
 been carried out with other affine functions (i.e.  with less essential
-variables or different arity), leading to very similar results.  Note that
+variables or different arity), leading to very similar results. As a side note,
 $\epsilon$ only needs to be taken in $[0, \frac{1}{2}]$, because $f_\epsilon =
 \neg f_{1 - \epsilon}$ and for any $f$, we have that $\omegasf = \omega_S^{\neg
 f}$.
