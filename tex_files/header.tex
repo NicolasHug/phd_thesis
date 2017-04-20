@@ -14,13 +14,16 @@
 \makesomeone{referee}{1}{Antoine Cornuéjols}{}{}
 \makesomeone{referee}{2}{Jean Lieber}{}{}
 
-\njudge{5}
+\njudge{8}
 \makesomeone{judge}{1}{Antoine Cornuéjols}{Professeur}{Rapporteur}
 \makesomeone{judge}{2}{Hélène Fargier}{Directeur de recherche}{Membre du jury}
 \makesomeone{judge}{3}{Jean Lieber}{Ma\^itre de conférences}{Rapporteur}
 \makesomeone{judge}{4}{Henri Prade}{Directeur de recherche}{Membre du jury}
-\makesomeone{judge}{5}{Agn\`es Rico}{Ma\^itre de conférences}{Membre du jury}
-\makesomeone{judge}{6}{François Yvon}{Professeur}{Membre du jury}
+\makesomeone{judge}{5}{Gilles Richard}{Professeur}{Directeur de thèse}
+\makesomeone{judge}{6}{Agn\`es Rico}{Ma\^itre de conférences}{Membre du jury}
+\makesomeone{judge}{7}{Mathieu Serrurier}{Ma\^itre de conférences}{Directeur de
+thèse}
+\makesomeone{judge}{8}{François Yvon}{Professeur}{Membre du jury}
 
 
 \newcommand{\add}[1]{\textbf{\textcolor{blue}{#1}}}
@@ -114,6 +117,20 @@
 % Reduce space between enumerate and itemize
 \setlist[enumerate]{topsep=0pt,itemsep=-.5ex,partopsep=1ex,parsep=1ex}
 \setlist[itemize]{topsep=0pt,itemsep=-.5ex,partopsep=1ex,parsep=1ex}
+
+
+% remove prefix "Definition" in list of definitions
+\makeatletter
+\def\ll@definition{%
+  \protect\numberline{\csname the\thmt@envname\endcsname}%
+  \ifx\@empty\thmt@shortoptarg
+    \thmt@thmname
+  \else
+    \thmt@shortoptarg
+  \fi
+}
+\makeatother
+
 
 % Glossary entries
 \newglossaryentry{U_i}

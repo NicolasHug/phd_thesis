@@ -1,6 +1,8 @@
 \chapter{Computational models of analogical reasoning}
 \label{CHAP:computational_models_of_analogical_reasoning}
-
+\renewcommand{\contentsname}{Content}
+\localtableofcontents*
+\vspace*{\baselineskip}
 
 \initial{R}oughly speaking, analogy is a matter of establishing parallels
 between two different situations, and allows to infer properties about one of
@@ -9,7 +11,7 @@ analogical reasoning is the idea of analogical proportion, which is a statement
 of the form \textit{a is to b as c is to d}, often written $a:b::c:d$. Here
 also, one of the four elements may sometimes be inferred if the three other are
 known: this is called the \textit{solving} of the analogical equation
-$a:b::c:~?$. The first two chapters of this document will be devoted to provide
+$a:b::c:~?$. The first two chapters of this document will provide
 the necessary background on formal analogical models and especially analogical
 proportions. In this first chapter, we provide an overview of various attempts
 to formalize analogical reasoning, with a strong emphasis on computational
@@ -101,7 +103,7 @@ not infer that it is easily domesticable.
 
 Let us also briefly mention that in \cite{Hes59}, Mary Hesse outlined a formal
 framework allowing to define analogical proportions in a modular lattice,
-anticipating quite remarkably other futur works that will be reviewed in
+anticipating quite remarkably other future works that will be reviewed in
 Chapter \ref{CHAP:formal_analogical_proportions}.
 
 \subsection{Analogy as a structural mapping}
@@ -206,24 +208,42 @@ analogies, it should seem natural to challenge it in some other situations. It
 is indeed quite easy to find analogies were superficial features are the most
 decisive ones \cite{Bar10}.
 
+\paragraph{Prior to SMT: Winston's theory\\}
+
+We should mention that SMT and SME are not the first theory/engine couple that
+models analogical reasoning based on the mapping of two situations. Indeed in
+\cite{Win80}, Patrick H. Winston already presents a theory along with a
+program that also rely on this general view. Winston uses a propositional
+representation of the two situations that are extracted from natural language
+sentences.
+
+Contrary to SMT, Winston's view of analogy is fairly close to that of Hesse.
+For Winston, the matching between the two situations should not only involve
+high order relations, but also the attributes of the objects. Moreover, he
+acknowledges the importance of \textbf{causal} relations to guide the mapping
+process, which is compliant with Hesse's theory. Winston also considers that
+the mapping process is \textit{constraint-based}, which probably inspired the
+model of Holyoak and Thagard that we describe now.
+
 \paragraph{The Constraint Satisfaction Theory\\}
 
-As one of the most influential theories of analogical reasoning, SMT has opened
-the way to various other models such as that of Holyoak and Thagard
-\cite{HolTha89}. Here as well, an analogy is considered to be a mapping between
-two domains $S$ and $T$\footnote{with the exception that the mapping goes here
-from $T$ to $S$.}. Taking over Gentner's systematicity principle (in a relaxed
-form), Holyoak and Thagard exhibit two additional dimensions of importance in
-an analogical process. First, the semantics behind the objects at hand, i.e.
-the meaning that human agents associate with these objects, are taken into
-account. In this theory, the two relations \textit{ARE\_FRIENDS} and
-\textit{ARE\_ENEMIES} are not the same. This clearly stands in contrast with
-SMT, where all object attributes are simply discarded (along with their
-meanings), and seems to be in accordance with Hesse's requirement of material
-analogy. Second, this theory also involves the pragmatic considerations of the
-human agent: the goal and purpose of the analogist should somehow guide the
-mapping process in some direction or another. Mappings that serve the purpose
-of the agent are therefore given higher priority than others.
+As one of the most influential theories of analogical reasoning, SMT and
+Winston's model have opened the way to various other models such as that of
+Holyoak and Thagard \cite{HolTha89}. Here as well, an analogy is considered to
+be a mapping between two domains $S$ and $T$\footnote{with the exception that
+the mapping goes here from $T$ to $S$.}. Taking over Gentner's systematicity
+principle (in a relaxed form), Holyoak and Thagard exhibit two additional
+dimensions of importance in an analogical process. First, the semantics behind
+the objects at hand, i.e.  the meaning that human agents associate with these
+objects, are taken into account. In this theory, the two relations
+\textit{ARE\_FRIENDS} and \textit{ARE\_ENEMIES} are not the same. This clearly
+stands in contrast with SMT, where all object attributes are simply discarded
+(along with their meanings), and seems to be in accordance with Hesse's
+requirement of material analogy. Second, this theory also involves the
+pragmatic considerations of the human agent: the goal and purpose of the
+analogist should somehow guide the mapping process in some direction or
+another. Mappings that serve the purpose of the agent are therefore given
+higher priority than others.
 
 Another main difference with SMT, where the systematicity principle is a fixed,
 inflexible rule, is that here the three dimensions (systematicity, semantic
@@ -603,6 +623,72 @@ approximated using online search-engine queries. The experiments showed that
 the system was able to differentiate credible analogies from fishy ones in
 about 75\% of the time.
 
+\subsection{Case-Based Reasoning}
+
+We will here describe the field of Case-Based Reasoning (CBR). First of all,
+let us note that CBR is \textbf{not} a computational model of analogy, but
+rather encompass a larger theory. We however choose to mention it now, because
+we need to clarify how our approach to problem solving will differ from that of
+CBR.
+
+CBR is a very general paradigm for problem solving, where a new problem is
+solved using the knowledge of some similar past experiences. This model can be
+motivated by its psychological appeal: it is indeed well acknowledged that,
+when confronted with an unknown situation, humans tend to make use of their
+past knowledge about some other similar situation to solve the problem at hand.
+As an example, the recipe of a strawberry pie could be easily inferred using
+the past knowledge on the recipe of other fruit-pies (e.g. apple pie, pear pie,
+etc.).
+
+In its most general form, CBR is a way of reaching the unknown solution $S$ of a
+problem $P$ using the known solutions $S_i$ of problems $P_i$ that are similar
+to $P$. Each couple $(S_i, P_i)$ is called a \textit{case}. The term
+\textit{problem} is here used in its most general sense.  In \cite{AamPla94}, a
+CBR process is described by the succession of the following four steps:
+\begin{enumerate}
+  \item \textbf{Retrieve}: this first step is to retrieve all cases $(S_i,
+    P_i)$ where $P_i$ is similar to the initial problem $P$. The way these
+    cases are chosen is entirely dependent of the current setting, and greatly
+    differ depending on the application. Sometimes, only a single case  is
+    selected.
+  \item \textbf{Reuse}: the solutions $S_i$ associated to the most relevant
+    $P_i$ are aggregated in some way, and adapted if needed to build up the
+    final solution $S$.
+  \item \textbf{Revise}: the relevance and the adequacy of the chosen solution
+    $S$ is evaluated, and $S$ is modified if needed.
+  \item \textbf{Retain}: if the revised solution $S$ ended up being a good
+    choice, then the solution is retained and the couple $(P, S)$ is bound to
+    be used in the solving of some future problems.
+\end{enumerate}
+
+Quite amusingly, the CBR community tends to see analogical reasoning as a
+subfield of CBR, while the analogical reasoning community seems to believe that
+CBR is a particular instance of analogy-based reasoning. Indeed in
+\cite{AamPla94}, the authors (that are CBR oriented) define analogical
+reasoning as a particular CBR instance that is focused on solving cross-domain
+problems, i.e. where a problem in a source domain has to be mapped into a
+problem in a target domain. While this description of analogical reasoning is
+fairly reasonable, one may object that what defines the source and target
+domains is completely arbitrary, thus reducing CBR to a particular instance of
+analogical reasoning where the source and target domains are forced to be the
+same.
+
+We will not further discuss this point here but we would still like to point out a
+significant difference between the CBR approach and the one we will address in
+this document. In a way, the CBR process can be view as building the following
+analogical proportions:
+$$P_i:P :: S_i : S, $$
+where $S$ is unknown and inferred from all the $S_i$. Each of these analogical
+proportions is built on the basis that $P_i$ and $P$ are \textbf{similar}. But
+an analogical proportion $a:b::c:d$ is not restricted to having $a$ close to
+$b$ and $c$ close to $d$! It is quite the contrary actually: all elements are
+allowed to be extremely distinct. Acknowledging this fact, our approach to
+analogical learning will rather follow the following conceptual scheme: first,
+proportions of the form $P_{i_1} : P_{i_2} :: P_{i_3} : P$ are retrieved, and
+the solution $S$ is inferred by the solving of the associated solution
+equations: $S_{i_1} : S_{i_2} :: S_{i_3} : S$. This allows us to consider both
+similar problems as well as different problems, which may still be useful.
+
 \section*{Conclusion}
 
 This first chapter was devoted to the description of past works on the modeling
@@ -616,7 +702,10 @@ learning in general.
 
 It becomes fairly clear that these past works are, with a few exceptions,
 mostly motivated from cognitive and psychological aspects. It is only recently
-that some authors, starting from the pioneering investifation in \cite{Lep04},
+that some authors, starting from the pioneering investigation in \cite{Lep04},
 have provided a formal framework to deal with analogical proportions in general
 algebraic settings, opening the door to many computational applications. These
 formal analogical proportions are the subject of the next chapter.
+
+
+
