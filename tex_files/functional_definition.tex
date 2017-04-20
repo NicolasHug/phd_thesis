@@ -909,37 +909,16 @@ study. The VC-dimension is defined as follows:
   \label{DEF:VCdim}
   We consider a class of learners $\mathcal{C}$ and a set $S_n$ of $n$ labeled
   elements in $X^m$. There are exactly $2^n$ ways to label each of the $n$
-  elements. If for any labeling, there exist a learner in $\mathcal{C}$ that
+  elements. If for any labeling, there exists a learner in $\mathcal{C}$ that
   correctly labels all the elements in $S_n$, we say that $\mathcal{C}$
   \textbf{shatters} $S_n$.\\
 
-  The VC-dimension of $\mathcal{C}$ is the biggest $n$ such that there exist a
-  set of $n$ points $S_n$ that can be shattered by $\mathcal{C}$.
+  The VC-dimension of $\mathcal{C}$ is the biggest $n$ such that there exists a
+  set of $n$ points $S_n$ that can be shattered by $\mathcal{C}$.  When there
+  exists a set $S_n$ that can be shattered for any size $n$, we say that the
+  VC-dimension is infinite.
 \end{definition}
 
-%We consider a universe $X$ (usually a Cartesian product to represent the data)
-%and a family $\mathcal{H}=\{h_i \subseteq X|i \in I\}$ of subsets of $X$.  The
-%elements of $\mathcal{H}$ will be referred as hypothesis or models.  Given a
-%subset $A$ of $X$, we can consider the new family of subsets $tr(\mathcal{H},A)
-%= \{h_i \cap A \subseteq X|i \in I\}$: this family is called the {\it trace of
-%$\mathcal{H}$ over $A$}. This is obviously a subset of the power set of $A$,
-%$2^A$ i.e. $tr(\mathcal{H},A) \subseteq 2^A$.  We say that $\mathcal{H}$
-%shatters $A$ iff $tr(\mathcal{H},A)=2^A$.  $VC\mbox{-}dim(\mathcal{H})$ is then
-%the size of the largest finite subset which can be shattered by $\mathcal{H}$:
-%\begin{definition} $VC\mbox{-}dim(\mathcal{H}) = \bigsqcup \{|A| \given[\big]
-%  \mathcal{H} \mbox{ shatters } A \}$,
-%\end{definition}
-%where $\bigsqcup$ is the least upper bound operator.  In the case where
-%$\forall n \in\mathbb{N}, \exists  A \subset X, |A|=n \mbox{ such that }
-%\mathcal{H} \mbox{ shatters } A$, we simply say that:
-%$$VC\mbox{-}dim(\mathcal{H})=\infty.$$ \noindent
-%As a binary classifier $c$ over $X$ defines a subset of $X$ with $c^{-1}(1)=\{x
-%\in X | c(x)=1\}$, we can associate to a class $\mathcal{C}$ of classifiers a
-%family of subsets $\{c^{-1}(1) | c \in \mathcal{C}\}$ and then the
-%$VC\mbox{-}$dimension of a set of classifiers is as below:
-%\begin{definition}
-%$VC\mbox{-}dim(\mathcal{C})=VC\mbox{-}dim(\{c^{-1}(1) | c \in \mathcal{C}\})$
-%\end{definition}
 
 Let's first consider the class of nearest neighbors classifiers:
 $\mathcal{C}_{\text{NN}}=\{ k\text{-NN classifiers}, k \in \mathbb{N}^*\}$. It
@@ -1124,10 +1103,9 @@ been investigated, leading to very similar results.  The ground truth label of
 the elements of $X^m$ is defined by different Boolean functions $f$:
 \begin{itemize}
 \item $f_1(\mathbf{x})=x_i$ for some $i$. These functions are called
-  projections, or dictators.  They lead to perfectly linearly
-    separable problems, i.e.  there exist an hyperplane that can perfectly
-    discriminate both classes. As such, they are expected to be fairly easy to
-    learn.
+  projections, or dictators.  They lead to perfectly linearly separable
+    problems, i.e. there exists an hyperplane that can perfectly discriminate
+    both classes. As such, they are expected to be fairly easy to learn.
   \item $f_2(\mathbf{x})= \bigoplus_{i = 1}^k  x_i$ for some $k \in[1, m]$, where $\oplus$
     is the XOR operator (which is associative). These functions
     lead to highly non-linearly-separable problems: remember the example of
