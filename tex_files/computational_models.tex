@@ -626,10 +626,12 @@ about 75\% of the time.
 \subsection{Case-Based Reasoning}
 
 We will here describe the field of Case-Based Reasoning (CBR). First of all,
-let us note that CBR is \textbf{not} a computational model of analogy, but
-rather encompasses a larger theory. We however choose to mention it now, because
-we need to clarify how our approach to problem solving will differ from that of
-CBR.
+let us note that CBR is not literally a computational model of analogy, but is
+rather a general problem solving paradigm that makes use of some particular
+form of analogical reasoning. As discussed in \cite{AamPla94}, CBR and
+analogical reasoning are often mixed up in the litterature.  We choose to
+briefly describe CBR now, because we need to clarify how our approach to
+problem solving will differ from that of CBR.
 
 CBR is a very general paradigm for problem solving, where a new problem is
 solved using the knowledge of some similar past experiences. This model can be
@@ -640,11 +642,12 @@ As an example, the recipe of a strawberry pie could be easily inferred using
 the past knowledge on the recipe of other fruit-pies (e.g. apple pie, pear pie,
 etc.).
 
-In its most general form, CBR is a way of reaching the unknown solution $S$ of a
-problem $P$ using the known solutions $S_i$ of problems $P_i$ that are similar
-to $P$. Each couple $(S_i, P_i)$ is called a \textit{case}. The term
-\textit{problem} is here used in its most general sense.  In \cite{AamPla94}, a
-CBR process is described by the succession of the following four steps:
+In its most general form, CBR is a way of reaching the unknown solution $S$ to a
+problem $P$ using the known solutions $S_i$ to problems $P_i$ that are
+\textbf{similar} to $P$. Each couple $(S_i, P_i)$ is called a \textbf{case},
+hence the name of the paradigm.  The term \textit{problem} is here used in its
+most general sense.  In \cite{AamPla94}, a CBR process is described by the
+succession of the following four steps:
 \begin{enumerate}
   \item \textbf{Retrieve}: this first step is to retrieve all cases $(S_i,
     P_i)$ where $P_i$ is similar to the initial problem $P$. The way these
@@ -661,34 +664,45 @@ CBR process is described by the succession of the following four steps:
     be used in the solving of some future problems.
 \end{enumerate}
 
-Quite amusingly, the CBR community tends to see analogical reasoning as a
-subfield of CBR, while the analogical reasoning community seems to believe that
-CBR is a particular instance of analogy-based reasoning. Indeed in
-\cite{AamPla94}, the authors (that are CBR oriented) define analogical
-reasoning as a particular CBR instance that is focused on solving cross-domain
-problems, i.e. where a problem in a source domain has to be mapped into a
-problem in a target domain. While this description of analogical reasoning is
-fairly reasonable, one may object that what defines the source and target
-domains is completely arbitrary, thus reducing CBR to a particular instance of
-analogical reasoning where the source and target domains are forced to be the
-same.
+%%Quite amusingly, the CBR community tends to see analogical reasoning as a
+%%subfield of CBR, while the analogical reasoning community seems to believe that
+%%CBR is a particular instance of analogy-based reasoning. Indeed in
+%%\cite{AamPla94}, the authors (that are CBR oriented) define analogical
+%%reasoning as a particular CBR instance that is focused on solving cross-domain
+%%problems, i.e. where a problem in a source domain has to be mapped into a
+%%problem in a target domain. While this description of analogical reasoning is
+%%fairly reasonable, one may object that what defines the source and target
+%%domains is completely arbitrary, thus reducing CBR to a particular instance of
+%%analogical reasoning where the source and target domains are forced to be the
+%%same.
+%%
+%%We will not further discuss this point here but
 
-We will not further discuss this point here but we would still like to point out a
+Before moving further to the next chapter, we would like to point out a
 significant difference between the CBR approach and the one we will address in
 this document. In a way, the CBR process can be viewed as building the
 following analogical proportions:
 $$P_i:S_i :: P : S, $$
-where $S$ is unknown and inferred from all the $S_i$. Each of these analogical
-proportions is built on the basis that $P_i$ and $P$ are \textbf{similar}. But
-as we will see in the next chapter, an analogical proportion $a:b::c:d$ is not
-restricted to having $a$ close to $c$ and $b$ close to $d$! It is quite the
-contrary actually: all elements are allowed to be extremely distinct.
-Acknowledging this fact, our approach to analogical learning will rather follow
-the following conceptual scheme: first, proportions of the form $P_{i_1} :
-P_{i_2} :: P_{i_3} : P$ are retrieved, and the solution $S$ is inferred by the
-solving of the associated solution equations: $S_{i_1} : S_{i_2} :: S_{i_3} :
-S$. This allows us to consider both similar problems as well as different
-problems, which may still be useful.
+where $S$ is unknown and inferred from all the $S_i$. We can indeed consider
+that \textit{problem $P_i$ is to solution $S_i$ as problem $P$ is to solution
+$S$}. Each of these analogical proportions is built on the basis that $P_i$ and
+$P$ are \textbf{similar}, so $S$ should be similar to $S_i$.
+
+But as we will see in the next chapter, an analogical proportion $a:b::c:d$ is
+not restricted to having $a$ close to $c$ and $b$ close to $d$! It is quite the
+contrary actually: all elements are allowed to be extremely distinct. And
+indeed, if we are able to \textit{capture} how a given $P_i$ (that is not close
+to $P$) differs from $P$, then applying the same transformation to $S_i$ should
+give us a relevant potential solution $S$.  Acknowledging this fact, our
+approach to analogical learning will rather follow the following conceptual
+scheme: we will try to retrieve the proportions of the form $P_{i_1} : P_{i_2}
+:: P_{i_3} : P$, and the solution $S$ will be inferred by the
+\textit{extrapolating}\footnote{The way $S$ is \textit{extrapolated} will be
+described in the next chapter as the \textbf{solving} of the analogical
+equation.} $S$ from the associated equations: $S_{i_1} : S_{i_2} :: S_{i_3} :
+S$. This allows us to consider problems $P_i$ that are both similar
+\textbf{and} different from $P$, which may allow to find more interesting
+solutions $S$.
 
 \section*{Conclusion}
 
