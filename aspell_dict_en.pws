@@ -1,4 +1,4 @@
-personal_ws-1.1 en 220 
+personal_ws-1.1 en 224 
 semigroups
 jjj
 dataset
@@ -219,3 +219,7 @@ blabla
 subfield
 oughly
 num
+NMF
+natively
+hacky
+scikit

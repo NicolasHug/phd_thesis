@@ -9,11 +9,14 @@ provide all the necessary background on formal analogical proportions, the most
 important concept of this document.
 
 An \textbf{analogical proportion} is a statement of the form ``$a$ is to $b$ as
-$c$ is to $d$'' involving analogical relations between the two pairs $(a,b)$
-and $(c,d)$, as well as between the two pairs $(a,c)$ and $(b,d)$.  There are
-numerous examples of such statements, with which everybody will more or less
-agree, such as  ``a calf is to a cow as a foal is to a mare'', or ``Paris is to
-France as Berlin is to Germany''.
+$c$ is to $d$''. It is a relation between the two pairs $(a,b)$ and $(c,d)$,
+which expresses that what is common to $a$ and $b$ is also common to $c$ and
+$d$, and what is different between $a$ and $b$ is also different between $c$
+and $d$. There are numerous examples of such statements, with which everybody
+will more or less agree, such as  ``a calf is to a cow as a foal is to a
+mare'', or ``Paris is to France as Berlin is to Germany''.  As relation
+involving both similarities \textbf{and} dissimilarities between four objects,
+an analogical proportion is able to model complex associations.
 
 It has been agreed since Aristotle time that an analogical proportion $A$ is a
 quaternary relation satisfying the \textbf{three following axioms}, for any $a,
@@ -233,8 +236,15 @@ A more formal definition has been given in \cite{StrYvoREPORT05}:
 
 The requirements of Lepage are clearly respected here: to go from $A$ to $B$,
 one needs to add $W$ and remove $V$. To go from $C$ to $D$, one needs to do the
-exact same thing: add $W$ and remove $V$. An equivalent definition has been
-given in \cite{MicPra09}:
+exact same thing: add $W$ and remove $V$. This definition is completely
+compliant with our informal introduction at the beginning of this chapter,
+where we explained that an analogical proportion $a:b::c:d$ expresses that
+\textit{what is common to $a$ and $b$ is also common to $c$ and $d$, and what
+is different between $a$ and $b$ is also different between $c$ and $d$}.
+
+
+An equivalent definition of analogy between sets has been given in
+\cite{MicPra09}:
 
 \begin{definition}[Proportion between sets (ii)]
   \label{DEF:analogy_set_miclet_henri}
@@ -329,9 +339,21 @@ from $c$}.  The second expression directly comes from Definition
 
 In a Boolean setting, there are exactly $2^4 = 16$ different valuations of $a,
 b, c, d$. Definition \ref{DEF:boolean_proportion} tells us that exactly $6$ of
-these valuations (or \textbf{patterns}) lead to valid Boolean proportions. Table
-\ref{TAB:six_valid_patterns} illustrates the $6$ valid patterns and the $10$
-invalid ones.
+these valuations (or \textbf{patterns}) lead to valid Boolean proportions.
+Table \ref{TAB:six_valid_patterns} illustrates the $6$ valid patterns and the
+$10$ invalid ones. We recognize in Table \ref{TAB:six_valid_patterns} that all
+the valid patterns express that we need to perform the same operation to go
+from $a$ to $b$ as to go from $c$ to $d$, and that this is not the case for the
+invalid patterns. This is compliant with what we expect from an analogical
+proportion, as discussed earlier. With regards to this, the last two invalid
+patterns (namely $0:1::1:0$ and its counterpart $1:0:0:1$) have a particular
+status: we could indeed claim that they express the fact that $b$ is the
+negation of $a$ just like $c$ is the negation of $d$, so in some sense we
+\textbf{still} could say that $a$ differs from $b$ as $c$ differs from $d$. We
+will discuss this point further when we will mention the works of Sheldon
+Klein, who came up with a different definition of the Boolean analogical
+proportion.
+
 \begin{table}[t]
   \centering
   \begin{tabular}[t]{ccccc}
@@ -367,17 +389,19 @@ invalid ones.
   invalid patterns (right).}
   \label{TAB:six_valid_patterns}
 \end{table}
-A first observation coming from Table \ref{TAB:six_valid_patterns} is that some
+
+We observe from Table \ref{TAB:six_valid_patterns} that some
 sort of {\it code independence axiom} is satisfied, which guarantees that $0$
 and $1$ play symmetric roles:
 \begin{property}
+  \label{PROPER:code_indep}
   Let a, b, c, d in $\mathbb{B}$. Then
   $$a : b :: c : d \iff \neg a :  \neg b ::  \neg c :  \neg d,$$
   where $\neg x$ is the negation of $x$.
 \end{property}
 This code independence property is actually extremely important for
-reprensational purposes, because it means that we do not have to care about the
-coding convention of the Boolean vectors that we use.
+representational purposes, because it means that we do not have to care about
+the coding convention of the Boolean vectors that we use.
 
 We gave the definition of the Boolean proportion as a consequence of the
 definition of proportions between sets, but let us note that in fact, the $6$
@@ -463,38 +487,54 @@ instance of Definition \ref{DEF:proportion_group} (analogies in groups), which
 is natural because of the fact that when the set $B = \Set{0, 1}$ is equipped
 with the XOR operator, we obtain a group.
 
-\paragraph{The logical proportions of Jean Piaget\\}
+\paragraph{The logical proportion of Jean Piaget and its generalization\\}
 Another remarkable precursor work is that of Jean Piaget who, in the annex of a
 French book from 1952 \cite{Pia52}, defined what he called a \textit{logical
 proportion} as follows: four propositions $a, b, c,d$ are in proportion if $(a
 \wedge d \leftrightarrow b \wedge c) \wedge (a \vee  d \leftrightarrow b \vee
 c)$. This definition is clearly equivalent to what we refer to now as the
-Boolean \textbf{analogical} proportion, and was derived by Piaget when he was
-trying to give a Boolean counterpart to the geometric proportion, where the
-exchange of extreme and means plays a key role. In fact, it turns out that
+Boolean \textbf{analogical} proportion, and was likely derived by Piaget when
+he was trying to give a Boolean counterpart to the geometric proportion, where
+the exchange of extreme and means plays a key role. In fact, it turns out that
 Piaget never made any reference to analogy in this work.
 
-This concept of \textit{logical proportion} has been generalized in recent
-works (see e.g. \cite{PraRic14}). A logical proportion is here defined as a
+This concept of \textbf{logical proportion} has been generalized in recent
+works (see e.g. \cite{PraRic13LU}). A logical proportion is here defined as a
 couple of equivalences of the form:
-$$\alpha \wedge \beta \leftrightarrow  \gamma \wedge \delta \text{ and }
-\alpha' \wedge \beta' \leftrightarrow  \gamma' \wedge \delta',$$
-where $\alpha, \alpha' \in \set{a, \neg a}, ~~ \beta, \beta' \in \set{b, \neg
-b}, ~~ \gamma, \gamma' \in \set{c, \neg c}, ~~\delta, \delta' \in \set{d, \neg
-d}$, and $a, b, c, d$ are all Boolean variables. As such, a logical proportion
-expresses a semantic equivalence between the two pairs of propositions
-$(\alpha, \beta)$ and $(\gamma, \delta)$ as well as between the two pairs
-$(\alpha', \beta')$ and $(\gamma', \delta')$, in terms of similarities and/or
-dissimilarities.
 
-Out of the $120$ possible logical proportions (see \cite{PraRic12} for a
-derivation), only $8$ of them support the code independency property (Property
-\ref{PROPER:code_indep}) which makes the remaining $112$ proportion unsuitable
-for representational purposes. Out of the $8$ remaining proportions, $4$
-proportions exhibit interesting cognitive properties, namely the analogical
-proportion, the paralogy, the reverse analogy and the inverse paralogy. We will
-however not make use of these logical proportions in this document (except the
-analogical proportion of course!), so we will not detail them further.
+$$I_1(a, b) \leftrightarrow I_2(c, d) ~~ \wedge ~~ I_3(a, b) \leftrightarrow I_4(c,
+d),$$
+where $a, b, c, d$ are Boolean variables and each $I_i$ is either an
+\textbf{indicator of similarity} or an \textbf{indicator of dissimilarity}. An
+indicator of similarity $I(x, y)$ is either of the form $x \wedge y$  or
+of the form $\neg x \wedge \neg y$: it captures what is common to $x$ and $y$,
+or what is not both in $x$ and $y$. Conversely, a dissimilarity indicator $I(x,
+y)$ will be of the form $\neg x \wedge y$ or $x \wedge \neg y$,  and captures
+what is in $y$ and not in $x$, or what is in $x$ and not in $y$.  A logical
+proportion then expresses a semantic equivalence between the two pairs of
+variables $(a, b)$ and $(c, d)$, in terms of similarities and/or
+dissimilarities. The Boolean analogical proportion that we are studying here is
+a particular instance of logical proportion.
+
+There is a total $120$ possible logical proportions (see \cite{PraRic12} for a
+derivation), and quite interestingly each of these logical proportions are
+true for exactly $6$ valuations of $a, b, c, d$. This makes them quite rare,
+because there are in fact $\binom{16}{6} = 8008$ propositions that are true for
+$6$ valuations only, out of the $16$ possible valuations. Out of these $120$
+logical proportions, only $8$ of them support the code independency property
+(Property \ref{PROPER:code_indep}) which makes the remaining $112$ proportions
+unsuitable for representational purposes.
+
+Out of these $8$ code-independent proportions, $4$ proportions exhibit
+interesting cognitive properties, that we name the \textbf{homogeneous}
+proportions. These proportions are characterized by the fact that all the
+expressions $I_i(x, y)$ are different, and by the fact that $I_1$ and $I_2$ are
+of the same kind (i.e. they are both similarity indicators, or both
+dissimilarity indicators), and the same goes for $I_3$ and $I_4$. These four
+proportions are called the paralogy, the reverse analogy, the inverse paralogy,
+and naturally the \textbf{analogy}. We will however not make use of these
+logical proportions in this document (except the analogical proportion of
+course!), so we will not detail them further.
 
 \paragraph{Extension to multiple-valued logics\\}
 
@@ -570,7 +610,10 @@ properly understand the geometrical properties of these proportions.
 We place ourselves here in a very general setting, and consider four elements of
 a given set $X$ that are in proportion.  Starting from the assertion $A(a, b,
 c, d)$ and by successive application of the symmetry and central permutation
-axioms, we arrive to the following $8$ equivalent proportions:
+axioms\footnote{Recall that the symmetry axiom states that $A(a, b, c, d)
+\implies A(c, d, a, b)$, and the central permutation axiom states that $A(a, b,
+c, d) \implies A(a, c, b, d)$.}, we arrive to the following $8$ equivalent
+proportions:
 \begin{align*}
        &A(a, b, c, d)\\
   \iff &A(c, d, a, b) \text{~~ Symmetry}\\
@@ -597,18 +640,18 @@ correspond to the $24 = 4!$ possible orderings of $a, b, c, d$.
 
 \begin{testexample}
   The point here that if we say that a calf $(a)$ is to a cow $(b)$ as a foal
-  $(c)$ is to a mare $(d)$, then we can actually say it in $7$ other equivalent
-  ways. Also, we \textbf{cannot} say that a calf $(a)$ is to a cow $(b)$ as a
-  mare $(d)$ is to a foal $(c)$ (second equivalence class), because such a
-  statement would implicitely express that \textit{a young is to an adult as an adult is to
-  a young}, which seems wrong: we cannot go from a \textit{young} to an
-  \textit{adult} in the same way as we go from an \textit{adult} to
-  \textit{young}.  We \textbf{cannot} say either that a calf $(a)$ is to a foal
-  $(c)$ as a  mare $(d)$  is to a cow $(b)$ (third equivalence class), because
-  this would suggest that \textit{a bovid is to an equid as an equid is to a
-  bovid}: here again, we cannot transform the concept \textit{bovid} into
-  \textit{equid} in the same way as we would transform the concept
-  \textit{equid} into \textit{bovid}.
+  $(c)$ is to a mare $(d)$ ($A(a, b, c, d)$), then we can actually say it in
+  $7$ other equivalent ways. Also, we \textbf{cannot} say that a calf $(a)$ is
+  to a cow $(b)$ as a mare $(d)$ is to a foal $(c)$ (second equivalence class
+  $A(a, b, d, c)$), because such a statement would implicitly express that
+  \textit{a young is to an adult as an adult is to a young}, which seems wrong:
+  we cannot go from a \textit{young} to an \textit{adult} in the same way as we
+  go from an \textit{adult} to \textit{young}.  We \textbf{cannot} say either
+  that a calf $(a)$ is to a foal $(c)$ as a  mare $(d)$  is to a cow $(b)$
+  (third equivalence class $A(a, c, d, b)$), because this would suggest that
+  \textit{a bovine is to an equid as an equid is to a bovine}: here again, we
+  cannot transform the concept \textit{bovine} into \textit{equid} in the same
+  way as we would transform the concept \textit{equid} into \textit{bovine}.
 
   Another illustration of the three classes of proportions
   is illustrated in Figure \ref{FIG:3_classes}, using the arithmetic
@@ -624,17 +667,17 @@ correspond to the $24 = 4!$ possible orderings of $a, b, c, d$.
 \label{FIG:3_classes}
 \end{figure}
 
-Let us mention however that if $a, b, c, d$ are not all distinct, the equivalence
-classes contain less than $8$ proportions (which is natural, because there are
-no longer $24$ different orderings of $a, b, c, d$). For example if $a = c$ and
-considering the first equivalence class represented by $A(a, b, c, d)$, then by
-the reflexivity axiom ($\forall x, y, A(x, y, x, y)$) we must have that $b =
-d$. Hence, the equivalence class that is generated by $A(a, b, c, d)$ is only
-made of four proportions: $$A(a, b, c, d) \eqdef A(a, b, a, b) \iff A(a, a, b,
-b) \iff A(b, b, a, a) \iff (b, a, b, a).$$
+Let us mention an important point: if $a, b, c, d$ are not all distinct, the
+equivalence classes contain less than $8$ proportions. This is natural,
+because there are no longer $24$ different orderings of $a, b, c, d$. For
+example if $a = c$ and $b = d$, then the equivalence class that is generated by
+$A(a, b, c, d)$ is only made of $4$ proportions:
+$$A(a, b, c, d) \eqdef A(a, b, a, b) \iff A(a, a, b, b) \iff A(b, b, a, a) \iff
+(b, a, b, a).$$
 
 Although these notions may seem shallow at first sight, they will actually turn
-out to be paramount to grasp the geometrical view of Boolean proportions.
+out to be paramount to grasp the geometrical view of Boolean proportions that
+we now address.
 
 \subsection{The Boolean and arithmetic proportions as parallelograms}
 
@@ -784,7 +827,7 @@ analogical reasoning to machine learning tasks such as classification.
 We will here consider a toy classification problem in a Boolean setting, which
 will help up introduce these two fundamental notions. This toy problem will
 also serve as an introduction to the next chapter, where we will study the
-theoretical properties of analogical learners. Because of the nature of the
+theoretical properties of analogical classifiers. Because of the nature of the
 problem, this section will be a mix of particular and general considerations.
 
 \paragraph{Problem setting\\}

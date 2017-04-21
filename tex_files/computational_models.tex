@@ -227,7 +227,7 @@ model of Holyoak and Thagard that we describe now.
 
 \paragraph{The Constraint Satisfaction Theory\\}
 
-As one of the most influential theories of analogical reasoning, SMT and
+As some of the most influential theories of analogical reasoning, SMT and
 Winston's model have opened the way to various other models such as that of
 Holyoak and Thagard \cite{HolTha89}. Here as well, an analogy is considered to
 be a mapping between two domains $S$ and $T$\footnote{with the exception that
@@ -322,6 +322,23 @@ It is clear that when we have $P(S) \wedge Q(S)$, the right disjunct $\forall x
 reduced to the simpler form mentioned above. The determination rule still has
 the merit of requiring to inspect the source $S$, at least in the first step
 of the process.
+
+We have to mention here that the contribution of Davies and Russel is in fact a
+bit more sophisticated than the one we have described here for the sake of
+understanding. Indeed, the more complex determination rule that they propose is
+as follows:
+$$\forall (y, z), ~ \left[\exists x~ P(x, y) \wedge Q(x, z)\right] \implies
+\left[\forall x~ P(x, y) \implies Q(x, z)\right]
+$$
+
+If $P(x, y)$ expresses that the car $x$ has the color yellow and if $Q(x, z)$
+expresses that the car $x$ has the price \$10,000, then the expression
+$\left[\exists x~ P(x, y) \wedge Q(x, z)\right] \implies\left[\forall x~ P(x,
+y) \implies Q(x, z)\right]$ means that if we can find a yellow car that costs
+\$10,000, then \textbf{all} yellow cars cost \$10,000. Because of the
+universal quantifier $\forall(y, z)$, this determination rule should have to be checked for
+every possible color, and every possible price. Unfortunately, this quickly
+becomes impractical because of the computation complexity.
 
 
 \section{Models with analogical proportions}
@@ -629,7 +646,7 @@ We will here describe the field of Case-Based Reasoning (CBR). First of all,
 let us note that CBR is not literally a computational model of analogy, but is
 rather a general problem solving paradigm that makes use of some particular
 form of analogical reasoning. As discussed in \cite{AamPla94}, CBR and
-analogical reasoning are often mixed up in the litterature.  We choose to
+analogical reasoning are often mixed up in the literature.  We choose to
 briefly describe CBR now, because we need to clarify how our approach to
 problem solving will differ from that of CBR.
 
@@ -696,10 +713,10 @@ to $P$) differs from $P$, then applying the same transformation to $S_i$ should
 give us a relevant potential solution $S$.  Acknowledging this fact, our
 approach to analogical learning will rather follow the following conceptual
 scheme: we will try to retrieve the proportions of the form $P_{i_1} : P_{i_2}
-:: P_{i_3} : P$, and the solution $S$ will be inferred by the
-\textit{extrapolating}\footnote{The way $S$ is \textit{extrapolated} will be
+:: P_{i_3} : P$, and the solution $S$ will be inferred by
+\textit{extrapolation}\footnote{The way $S$ is \textit{extrapolated} will be
 described in the next chapter as the \textbf{solving} of the analogical
-equation.} $S$ from the associated equations: $S_{i_1} : S_{i_2} :: S_{i_3} :
+equation.} from the associated equations: $S_{i_1} : S_{i_2} :: S_{i_3} :
 S$. This allows us to consider problems $P_i$ that are both similar
 \textbf{and} different from $P$, which may allow to find more interesting
 solutions $S$.

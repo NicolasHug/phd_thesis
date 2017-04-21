@@ -202,15 +202,18 @@ dimension depend on the items that we actually choose to recommend, and as such
 rely on the the recommendation strategy $S$. Here, we have chosen to
 recommend $i$ to $u$ if $\hat{r}_{ui} \geq 4$.
 
-All reported results are averaged over a 5-folds cross-validation
-procedure. Obviously, the five folds are the same for all of the algorithms,
-to allow for meaningful comparisons.  The dataset that we used is the
-Movielens-100K dataset\footnote{http://grouplens.org/datasets/movielens/},
-composed of 100,000 ratings from 1000 users and 1700 movies. Each rating
-belongs to the interval $[1, 5]$, and the sparsity of this dataset is of about
-94\%, i.e. only 6\% of all possible ratings are actually known. We also
-report the computation time of each algorithm (roughly estimated), which is not
-an average but the total over the five folds.
+All reported results are averaged over a 5-folds cross-validation procedure.
+Obviously, the five folds are the same for all of the algorithms, to allow for
+meaningful comparisons.  The dataset that we used is the Movielens-100K
+dataset\footnote{http://grouplens.org/datasets/movielens/}, composed of 100,000
+ratings from 1000 users and 1700 movies. Each rating belongs to the interval
+$[1, 5]$, and the sparsity of this dataset is of about 94\%, i.e. only 6\% of
+all possible ratings are actually known. We also report the computation time of
+each algorithm (roughly estimated), which is not an average but the total over
+the five folds. All our experiments have been run using Surprise
+\cite{Surprise}, a Python recommendation library that we have developed
+specifically for the occasion. The Surprise package will be described more in
+depth in the conclusion of this chapter.
 
 \begin{table}[ht]
   \centering
@@ -347,7 +350,7 @@ recommendation. In the next section, we describe other algorithms that rely on
 the concept of \textbf{clones} and that generalize the classical neighborhood
 approach.
 
-\section{A clone-based view of analogical recommendation}
+\section{A ``clone''-based view of analogical recommendation}
 \label{SEC:clone_based_view}
 
 Considering analogies between four users has shown to be computationally
@@ -1577,6 +1580,39 @@ of all users is really not worth it. This is entirely dependent on the database
 that was used (in our case, the Movielens dataset), and we may still presume
 that there should exist a dataset were the use of analogical proportion is
 beneficial over a simple neighborhood approach.
+
+Even if our investigations on analogical recommendation did not completely live
+up to our expectations, there still is a contribution of ours that  is worth
+mentioning. As pointed out earlier in the first section, all of our experiments
+where carried out using Surprise\footnote{\url{http://surpriselib.com}}
+\cite{Surprise}, an open source Python recommendation engine that we have
+developed. Quite surprisingly, when we started our experiments a few years
+ago, there were no Python library that would allow to easily run
+cross-validation procedures, or that would make the implementation of a
+recommendation algorithm easy. But most importantly, it seemed that most of the
+implementation details of the available algorithms were never explicitly
+mentioned, so it made comparing performances of the algorithm difficult, if not
+meaningless. So we decided to write our own package. We started out by writing
+our own custom (and hacky) scripts, which grew up to become a much more
+complete and fairly popular recommendation engine. As of April 2017, the main
+features of Surprise are the following ones:
+\begin{itemize}
+  \item Users can have perfect control over their experiments, and to this end
+    a strong emphasis was laid on documentation, which we have tried to make as
+    clear and precise as possible by pointing out every detail of the
+    algorithms.
+  \item Dataset handling is made easy. Custom datasets can be used, and the
+    Movielens datasets are natively supported.
+  \item Various ready-to-use prediction algorithms are available, such as
+    baseline algorithms, neighborhood methods, matrix factorization-based (SVD,
+    PMF, SVD++, NMF), and many others. Also, various similarity measures
+    (cosine, MSD, Pearson \dots) are built-in.
+  \item The implementation of new algorithm ideas is made extremely simple.
+  \item Cross-validation procedures can be run very easily, as well as
+    exhaustive search over a set of parameters for optimization (much like the
+    Grid Search feature of the excellent machine learning library scikit-learn
+    \cite{scikit-learn}).
+\end{itemize}
 
 We now close our discussion on analogical recommendation and on practical
 applications of analogy. In the next chapter, we will go back to our original
