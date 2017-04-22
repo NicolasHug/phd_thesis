@@ -1,5 +1,6 @@
 - Intro
 - Conclu
+- citer les jap
 - couleur cubes
 
 - Parler de regression linéaire à la fin au sujet des AP functions qui sont les
