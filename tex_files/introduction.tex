@@ -33,7 +33,7 @@ classification problems in a Boolean setting. Our investigations completely
 fall within the scope of these two previous works, and the goal of this thesis
 is twofold. The first, topic is to \textbf{exhibit some theoretical properties
 of analogical classifiers}, and the second one is to \textbf{apply analogical
-reasoning to real-worl problems}.
+reasoning to real-world problems}.
 
 Our theoretical investigations are motivated from the fact that so far,
 analogical classifiers were only known from their algorithmic descriptions.
@@ -46,7 +46,7 @@ strengths and weaknesses.
 
 Also, the application of analogical reasoning to concrete tasks is motivated
 from the fact that the previous empirical investigations were only led in
-standard artificial settings. To our knowledge, the analogical leaners were yet
+standard artificial settings. To our knowledge, the analogical learners were yet
 to be used in real-world problems to assess their suitability in concrete
 applications, where the requirements for success are often significantly
 different. We chose here to apply analogical learning to the field of
@@ -75,18 +75,18 @@ become clear that the topic of analogical recommendation (Chapter
 \ref{CHAP:background_reco_systems}) is a lot easier to
 introduce and to understand once we have enough background on analogical
 classification (Chapter \ref{CHAP:functional_definition}), as our methods for
-analogical recommandation are strongly inspired by previous works on analogical
+analogical recommendation are strongly inspired by previous works on analogical
 classification. Moreover, the motivation for Chapter
 \ref{CHAP:analogy_preserving_functions} can be directly derived from the
 results of Chapter \ref{CHAP:functional_definition}, but it will be also
 interesting to account for \ref{CHAP:analogy_preserving_functions} in the light
 of the result of Chapter \ref{CHAP:functional_definition}.
-This document is structed as follows.\\
+This document is structured as follows.\\
 
 The first chapter will provide the necessary background on existing
 models of analogical reasoning, with a strong emphasis on models that allow to
 perform computational inference. These models are, for the most part, motivated
-by cognitive and psychological aspects, which is in constrast to our main
+by cognitive and psychological aspects, which is in contrast to our main
 computational tool: formal analogical proportions.\\
 
 Formal analogical proportions are the subject of the second chapter. We will
@@ -140,24 +140,24 @@ database of  user-item interactions taking the form of ratings, the goal is to
 predict all the ratings for the pairs (user, item) that are not in the
 database. The different measures allowing to assess the quality of the
 prediction will be presented. Finally, as our contributions will be of a
-collaborative nature, we will thoroughy detail two popular methods for
+collaborative nature, we will thoroughly detail two popular methods for
 collaborative filtering: the neighborhood-based techniques, and the
 matrix-factorization-based methods. These two families of algorithms will serve
 as benchmarks to compare the performance of our own algorithms.\\
 
 In Chapter \ref{CHAP:analogical_recommendation}, we will present our
 contributions to the topic of recommender systems. We will first describe our
-preliminarly investigations, which are a direct adaptation of the analogical
+preliminarily investigations, which are a direct adaptation of the analogical
 classifier described in the previous chapter. These first investigations were
 the object of a paper published at ISMIS \cite{HugPraRicISMIS15}. It will
 become clear that while offering similar accuracy to the traditional
 approaches, analogical recommender suffer from their cubic complexity.
-Acknowledging this fact, we developped another view of analogical
-recommandation, taking into account the fact that some users may have different
+Acknowledging this fact, we developed another view of analogical
+recommendation, taking into account the fact that some users may have different
 interpretation of the rating scale. These investigations where described in a
 Fuzz-IEEE paper \cite{HugPraRicSerFuzzIEEE16}. Finally, we will address the
 problem of mining analogical proportions between users (or items) in a rating
-database \cite{HugPraRicSerLFA16}. Our result will help us to restrospectively
+database \cite{HugPraRicSerLFA16}. Our result will help us to retrospectively
 interpret the modest performances of our analogical recommenders: as bland as
 it may seem, it turns out that there probably just was not enough decent
 analogies to be found in the databases that we used.\\
@@ -167,8 +167,8 @@ the analogical inference principle that had been underlying all of our
 investigations so far. In the last chapter, we will go back to our theoretical
 considerations, and provide a criteria that allows to apply this analogical
 inference in a sound way. We have briefly described that the analogical
-inference principle states that if four elements $a, b, c, d$ are in propotion,
-then their classes $f(a), f(b), f(c), f(d)$ should also be in proprtion. We
+inference principle states that if four elements $a, b, c, d$ are in proportion,
+then their classes $f(a), f(b), f(c), f(d)$ should also be in proportion. We
 will provide a complete characterization of the functions $f$ such that when
 four elements are in proportion, then their image by $f$ are also in
 proportion. It will be clear that these functions are also the ones that allow
