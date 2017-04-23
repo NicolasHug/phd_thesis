@@ -10,3 +10,12 @@
   en disant que leur truc est constructif contrairemetn à celui d'evans ou de
   lovett.
 - Titre ?
+
+
+New:
+- Winston
+- Surprise
+- CBR
+- Davies Russel complément
+- Logical proportion + extension to multiple-valued logics
+- Titre
