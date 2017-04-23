@@ -1,26 +1,48 @@
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction} % To add to TOC
-\initial{A}nalogical reasoning is widely recognized as a powerful ability of human
-intelligence.  It can lead to conclusions for new situations by establishing
-links between apparently unrelated domains. One well known example is the
-Bohr's model of atom where electrons circle around the kernel, which is
-analogically linked to the model of planets running around the sun. It is not
-surprising that this kind of reasoning has generated a lot of attention from
+\initial{A}nalogical reasoning is widely recognized as a powerful ability of
+human intelligence.  It can lead to conclusions for new situations by
+establishing links between apparently unrelated domains. One well known example
+is the Rutherford-Bohr model of atom where electrons circle around the kernel,
+which is analogically linked to the model of planets running around the sun.
+Unsurprisingly, this kind of reasoning has generated a lot of attention from
 the artificial intelligence community.
 
+In this document we will focus on a particular model of analogical reasoning,
+based on \textbf{analogical proportions}. An analogical proportion is a
+statement of the form \textit{a is to b as c is to d}, and expresses the fact
+$a$ differs from $b$ in the same manner as $c$ differs from $d$. For example,
+one could say that \textit{France is to Paris as Germany is to Berlin}, or that
+\textit{electrons are to the kernel as planets are to the sun}. In some cases,
+when the element $d$ of the proportion is not known\footnote{Or any other
+element, actually.}, it can be \textbf{inferred} from the first three elements
+$a, b, c$. It seems indeed natural that even a child with basic geographic
+knowledge could answer the question \textit{France is to Paris as Germany is to
+what?} with the correct answer: \textit{Berlin}. And even in the case where our
+subject does not know that the name of the correct answer is \textit{Berlin},
+they could still \textbf{imagine} a city  which is the capital of Germany, and
+suppose that this hypothetical city corresponds to the correct answer. We are
+here witnessing two key cognitive processes that are can triggered by the use
+of analogical proportions: inference, and creativity.
+
+Analogical proportion-based learning has been addressed in recent works: we can
+cite \cite{StrYvoCNLL05} for an application in linguistics (verb conjugation
+task), and \cite{BayMicDelIJCAI07} for classification problems in a Boolean
+setting.
 
 Nevertheless, all these theoretical investigations are not directed to provide
 an analytical view of analogy-based learners. In that sense, they are not
 really helpful if we want to characterize the behaviour of an analogical
-classifier for instance. One of the reasons could be that, unlike the $k$-NN
+classifier. One of the reasons could be that, unlike the $k$-NN
 rule, the analogical learning rule is not easily amenable to a functional
 definition. In fact, each implemented algorithm  provides a clean description
 of {\it how to compute} but we definitely miss a clean description of {\it what
-do we actually compute}.
-Since such a definition, even a simplified one, is paramount to investigate
-theoretical properties, we suggest here a concise functional definition and we
-prove that it fits with the main implementations of analogical classifiers.
+do we actually compute}.  Since such a definition, even a simplified one, is
+paramount to investigate theoretical properties, we suggest here a concise
+functional definition and we prove that it fits with the main implementations
+of analogical classifiers.
 
 \paragraph{Road map\\}
 
+Chronologically, we first focused on the applicative side. Our first
 
