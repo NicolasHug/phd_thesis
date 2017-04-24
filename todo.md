@@ -9,7 +9,6 @@
 - Parler du caractère créatif de l'analogie et mentioner le papier avec william
   en disant que leur truc est constructif contrairemetn à celui d'evans ou de
   lovett.
-- Titre ?
 
 
 New:
@@ -19,3 +18,5 @@ New:
 - Davies Russel complément
 - Logical proportion + extension to multiple-valued logics
 - Titre
+- Statut de Miclet sur la couverture ? normalement, peut pas faire partie du
+  jury.

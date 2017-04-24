@@ -1,3 +1,102 @@
 \chapter*{Conclusion}
 \addcontentsline{toc}{chapter}{Conclusion} % To add to TOC
-Blabla
+
+\initial{I}t is now time to conclude this document, whose purpose was twofold:
+exhibit clear theoretical properties of analogical classifiers, and apply
+analogical inference to the field of recommender systems. Let us first recap
+our main results and contributions (we will not necessarily follow the order of
+the chapters here).
+
+\paragraph{Contributions\\}
+
+The first chapter was dedicated to give the necessary background on existing
+models of analogical reasoning,  with a strong emphasis on models that allowed
+to build computable programs. In the second chapter, we thoroughly described
+various definitions of analogical proportions in different settings, with a
+particular focus on the arithmetic and Boolean proportions. We have tried to
+provide the reader with different geometrical insights on these proportions,
+which where hopefully useful to gain a better intuition of these proportions.
+Finally, we considered a toy classification problem in a Boolean setting that
+allowed us to introduce the analogical equation solving process and most
+importantly, our analogical inference principle. This principle states that if
+we have $a:b::c:d$, then we should also have $f(a) : f(b) :: f(c):f(d)$, where
+$f(x)$ is the label of $x$, or any characteristic of interest.  When $f(d)$ is
+computer, it can be \textbf{inferred} from the values of $f(a)$, $f(b)$ and
+$f(c)$, allowing us to apply this form of analogical reasoning to
+classification tasks, or more general problems such as that of rating
+prediction for recommendation tasks.\\
+
+Analogical recommendation was addressed in Chapters
+\ref{CHAP:background_reco_systems} and \ref{CHAP:analogical_recommendation}.
+Chapter \ref{CHAP:background_reco_systems} was a background chapter, where we
+clearly defined the problem we planned to address, and two popular
+collaborative filtering families (neighborhood methods and
+matrix-factorization techniques) that will be compared to our custom algorithms
+in the experiments.
+
+We then developed in Chapter \ref{CHAP:analogical_recommendation} an algorithm
+for rating prediction \cite{HugPraRicISMIS15}, on the basis that if four users
+are in proportion (i.e. their respective ratings are in arithmetic proportion),
+then it should also be the case for any item that one of the four users has not
+rated. This approach is directly inspired from past works on analogical
+classification. The experiments showed that this algorithm offers reasonable
+performance compared to neighborhood techniques, but its cubic complexity makes
+it simply impossible to use in real-world scenarios, due to enormous
+computation time.
+
+This led us to consider another kind of analogical recommendation, that does
+not rely on the search of $3$-tuples of users. This "clone"-based view
+\cite{HugPraRicSerFuzzIEEE16} is motivated from the fact that some users may
+have different interpretations of the rating scale that is used. Our results
+show that this "clone"-based view is extremely relevant, but it must be noted
+that this kind of bias in the user ratings had already been addressed in
+previous works.
+
+Finally, we provided an algorithm for the mining of analogical proportions in
+incomplete databases \cite{HugPraRicSerLFA16}, strongly inspired from the
+mining of association rules. We used this algorithm to extract analogical
+proportions between items in a rating database, which actually corresponds to
+the database that we had been using for our recommendation experiments. Our
+results showed that the analogies that we found were in fact rather
+uninteresting, in that they related four items that were either equally
+appreciated, or equally disliked. There were no discrepancy in the ratings. In
+some way, this fact can retrospectively explain the modest results of our first
+analogical recommendation algorithm, and its performances that were close to
+that of neighborhood methods.\\
+
+In Chapter \ref{CHAP:functional_definition}, we described our contributions to
+the field of analogical classification \cite{HugPraRicSerECAI16}. Our first key
+contribution was to provide a unifying functional definition of analogical
+classifiers, which were yet only known from their algorithmic descriptions.
+From this definition, we were able to derive various theoretical properties. In
+particular, we showed that the VC-dimension of analogical classifiers is
+infinite, and that their error rate is closely related to that of the $k$-NN
+algorithms, as can be seen on the analytical formula that we derived. In fact,
+our functional definition establishes clear links between analogical
+classification and nearest-neighbors classification. We have indeed showed that
+analogical classification can be viewed as a two-steps procedure: first the
+training set is extended by analogy, where new examples are generated and
+assigned a potentially noisy label called the analogical label. Then, using
+this extended training set, all the remaining elements can be labeled using the
+classical $k$-NN procedure. This new point of view is quite interesting,
+because it clearly binds the two processes triggered by analogical proportions
+(namely inference and creativity) as the two sides of the same coin.
+
+In Chapter \ref{CHAP:analogy_preserving_functions}, we investigated a question
+that naturally followed from the results of Chapter
+\ref{CHAP:functional_definition}: how can we ensure that the analogical
+extension is completely error-free? In other word, is there a criteria that
+tells us that the new examples that are generated are associated to the correct
+label? We have been able to answer this question in a Boolean setting: the
+analogical extension is perfectly sound if and (only if) the Boolean function
+$f$ underlying the label is an affine function. This strong result
+\cite{CouHugPraRicIJCAI17} is analogous to that of Davies and Russel (see
+Section \ref{SEC:Davies_and_Russel}), who also provided a side condition that
+allowed to safely use an analogical inference principle. Their analogical
+inference principle was obviously different than ours (although we could claim
+that ours is a particular case of theirs), but the two approaches are
+comparable in terms of general philosophy. We extended our results to the real
+setting and in the case where attributes are nominally-valuated. These results
+open the door to various speculative research topics, that we will now explore.
+
+\paragraph{Future work}
