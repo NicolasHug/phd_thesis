@@ -15,13 +15,13 @@ to build computer programs. In the second chapter, we thoroughly described
 various definitions of analogical proportions in different settings, with a
 particular focus on the arithmetic and Boolean proportions. We have tried to
 provide the reader with different geometrical insights on these proportions,
-which where hopefully useful to gain a better intuition of these proportions.
+which where hopefully useful to gain a better intuition.
 Finally, we considered a toy classification problem in a Boolean setting that
 allowed us to introduce the analogical equation solving process and most
 importantly, our analogical inference principle. This principle states that if
 we have $a:b::c:d$, then we should also have $f(a) : f(b) :: f(c):f(d)$, where
 $f(x)$ is the label of $x$, or any characteristic of interest.  When $f(d)$ is
-computer, it can be \textbf{inferred} from the values of $f(a)$, $f(b)$ and
+unknown, it can be \textbf{inferred} from the values of $f(a)$, $f(b)$ and
 $f(c)$, allowing us to apply this form of analogical reasoning to
 classification tasks, or more general problems such as that of rating
 prediction for recommendation tasks.\\
@@ -29,7 +29,7 @@ prediction for recommendation tasks.\\
 Analogical recommendation was addressed in Chapters
 \ref{CHAP:background_reco_systems} and \ref{CHAP:analogical_recommendation}.
 Chapter \ref{CHAP:background_reco_systems} was a background chapter, where we
-clearly defined the problem we planned to address, and two popular
+clearly defined the problem we planned to address, and described two popular
 collaborative filtering families (neighborhood methods and
 matrix-factorization techniques) that will be compared to our custom algorithms
 in the experiments.
@@ -45,10 +45,10 @@ it simply impossible to use in real-world scenarios, due to enormous
 computation time.
 
 This led us to consider another kind of analogical recommendation, that does
-not rely on the search of $3$-tuples of users. This "clone"-based view
+not rely on the search of $3$-tuples of users. This ``clone''-based view
 \cite{HugPraRicSerFuzzIEEE16} is motivated from the fact that some users may
 have different interpretations of the rating scale that is used. Our results
-show that this "clone"-based view is extremely relevant, but it must be noted
+show that the concept of ``clone'' is extremely relevant, but it must be noted
 that this kind of bias in the user ratings had already been addressed in
 previous works.
 
@@ -62,7 +62,7 @@ uninteresting, in that they related four items that were either equally
 appreciated, or equally disliked. There were no discrepancy in the ratings. In
 some way, this fact can retrospectively explain the modest results of our first
 analogical recommendation algorithm, and its performances that were close to
-that of neighborhood methods.\\
+those of neighborhood methods.\\
 
 In Chapter \ref{CHAP:functional_definition}, we described our contributions to
 the field of analogical classification \cite{HugPraRicSerECAI16}. Our first key
@@ -129,7 +129,14 @@ be given a higher weight in the aggregation, on the basis of some particular
 static criteria that still needs to be identified.\\
 
 Another track of research can be motivated by looking at Figure
-\ref{FIG:piecewise_affine}. The function $f$ is not affine, but is instead
+\ref{FIG:piecewise_affine}.
+\begin{figure}[!h]
+\centering
+  \includegraphics[width=3in]{figures/piecewise_affine.pdf}
+  \caption{A real function $f$ that is piecewise affine.}
+\label{FIG:piecewise_affine}
+\end{figure}
+The function $f$ is not affine, but is instead
 \textbf{piecewise affine}. If we manage to find four elements $\mathbf{a},
 \mathbf{b}, \mathbf{c}, \mathbf{d} \in X^m$ that are on the same simplex (a
 simplex is here defined as a subset of $X^m$ where $f$ is affine), then we know
@@ -138,18 +145,18 @@ $f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})$. Well in $\mathbb{R}^m$ this
 result is not really useful, but we can actually show that every Boolean
 function is piecewise affine! So theoretically, if we can identify all the
 simplices, this means that we should be able to produce a sound extension in any
-case, for any function $f$. This probably sounds too good to be true, and so
-far our experiments show that there is no simplex including four elements
-$\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}$ where the associated class
-equation is solvable, thus compromising this track of research. But these are
-still preliminary experiments, and a more thorough investigation deserves to be
-addressed.\\
+case, for any function $f$, and for any training set. This probably sounds too
+good to be true, and so far our experiments tend to show that there is no
+simplex including four elements $\mathbf{a}, \mathbf{b}, \mathbf{c},
+\mathbf{d}$ where the associated class equation is solvable, thus compromising
+this track of research. But these are still preliminary experiments, and a more
+thorough investigation deserves to be addressed.\\
 
 Finally, we will close this discussion by mentioning the elephant in the room
 that we have so far ignored: transfer learning. Transfer learning is a current
 trend in the machine learning community whose purpose is to use the knowledge
 of a source problem $S$, to apply it to a less known target problem $T$.
-Undoubtedly, transfering knowledge is the essence of analogy, but techniques in
+Undoubtedly, transferring knowledge is the essence of analogy, but techniques in
 transfer learning usually involve statistical tools (see e.g.
 \cite{PanYanTKDE10} for a survey). The use of analogical proportions for such
 purposes is still entirely to explore.
