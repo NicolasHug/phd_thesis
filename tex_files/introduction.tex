@@ -79,9 +79,9 @@ analogical recommendation are strongly inspired by previous works on analogical
 classification. Moreover, the motivation for Chapter
 \ref{CHAP:analogy_preserving_functions} can be directly derived from the
 results of Chapter \ref{CHAP:functional_definition}, but it will be also
-interesting to account for \ref{CHAP:analogy_preserving_functions} in the light
-of the result of Chapter \ref{CHAP:functional_definition}.
-This document is structured as follows.\\
+interesting to account for Chapter \ref{CHAP:analogy_preserving_functions} in
+the light of the results of Chapter \ref{CHAP:analogical_recommendation}.  This
+document is structured as follows.\\
 
 The first chapter will provide the necessary background on existing
 models of analogical reasoning, with a strong emphasis on models that allow to
@@ -99,7 +99,7 @@ done before. We will also go through a toy classification problem that will
 allow us to describe the process of \textbf{analogical equation
 solving}\footnote{Very roughly, analogical equation solving is the process of
 finding the unknown $x$ in the proportion \textit{$a$ is to $b$ as $c$ is to
-$x$}.}, and the \textbf{analogical inference principle} which is the principle
+$x$}, e.g. \textit{France is to Paris as Germany is to What?}}, and the \textbf{analogical inference principle} which is the principle
 underlying all of our investigations. In a classification context, the
 analogical inference principle states that if $a$ is to $b$ as $c$ is to $d$,
 then we should also have that $f(a)$ is to $f(b)$ as $f(c)$ is to $f(d)$, where
@@ -109,7 +109,7 @@ premise, but it can still be used for classification tasks which is the subject
 of the third chapter.\\
 
 The study of analogical classification is indeed the object of Chapter
-\ref{CHAP:functional_definition} which corresponds to a detailed version of our
+\ref{CHAP:functional_definition}, which corresponds to a detailed version of our
 ECAI paper: \cite{HugPraRicSerECAI16}. In this chapter, we will start to
 address one of the two main objectives of this thesis: identifying theoretical
 properties of analogical classifiers. Our first contribution will be to provide
@@ -167,16 +167,17 @@ the analogical inference principle that had been underlying all of our
 investigations so far. In the last chapter, we will go back to our theoretical
 considerations, and provide a criteria that allows to apply this analogical
 inference in a sound way. We have briefly described that the analogical
-inference principle states that if four elements $a, b, c, d$ are in proportion,
-then their classes $f(a), f(b), f(c), f(d)$ should also be in proportion. We
-will provide a complete characterization of the functions $f$ such that when
-four elements are in proportion, then their image by $f$ are also in
-proportion. It will be clear that these functions are also the ones that allow
-to extend a training set by analogy in a perfectly safe way. We will call these
-functions the \textbf{analogy preserving} functions, and they will turn out to
-be the well-known affine functions, both in Boolean and real settings. These
-investigations led to an IJCAI paper \cite{CouHugPraRicIJCAI17}.\\
+inference principle states that if four elements $a, b, c, d$ are in
+proportion, then their classes $f(a), f(b), f(c), f(d)$ should also be in
+proportion. We will provide a complete characterization of the functions $f$
+such that when four elements are in proportion, then their image by $f$ are
+also in proportion. It will be clear that these functions are also the ones
+that allow to extend a training set by analogy in a perfectly safe way. We will
+call these functions the \textbf{analogy preserving} functions, and they will
+turn out to be the well-known affine functions, both in Boolean and real
+settings. These investigations led to an IJCAI paper
+\cite{CouHugPraRicIJCAI17}, and will provide diverse futur research tracks.\\
 
 
 We will now start with the first chapter, dedicated to the description of
-previous attempts at formalizing analogical reasoning.
+previous (and current) attempts at formalizing analogical reasoning.
