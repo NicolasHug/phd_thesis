@@ -11,7 +11,7 @@ the chapters here).
 
 The first chapter was dedicated to give the necessary background on existing
 models of analogical reasoning,  with a strong emphasis on models that allowed
-to build computable programs. In the second chapter, we thoroughly described
+to build computer programs. In the second chapter, we thoroughly described
 various definitions of analogical proportions in different settings, with a
 particular focus on the arithmetic and Boolean proportions. We have tried to
 provide the reader with different geometrical insights on these proportions,
@@ -99,4 +99,56 @@ comparable in terms of general philosophy. We extended our results to the real
 setting and in the case where attributes are nominally-valuated. These results
 open the door to various speculative research topics, that we will now explore.
 
-\paragraph{Future work}
+\paragraph{Future work\\}
+
+In Section \ref{SEC:approximate_ap_functions}, we presented the concept of
+approximate AP functions. Indeed in practice, there is no way
+to know for sure if the function $f$ that we want to learn is completely
+affine. So having statistical guarantees about the quality of the analogical
+extension depending on how far the function $f$ is from the set of affine
+function is a clear topic of interest. As previously mentioned, a result of the
+following form would be extremely interesting:
+$$P(\omegasf \geq \eta) > 1 - \delta,$$
+where $\eta \in [0, 1]$ and $\delta \in [0, \frac{1}{2}]$ are functions
+depending on $\epsilon$ and $\mid S \mid$. The value $\epsilon$ tells us that
+$f$ is $\epsilon$-close from the set of affine functions.  We are currently
+investigating a somewhat simpler question:
+$$P(\omegasf < 1) > 1 - \delta,$$
+where $\delta$ is still a function of $\epsilon$. In other words, we want to
+have an upper bound of the probability of the event ``\textit{$\esfs$ is
+unsound}''.\\
+
+We have also seen during our experimentations that even if some functions are
+highly not AP, the quality of the analogical extension may still be very high.
+This is because of the majority-vote procedure that is applied when we compute
+the analogical label of the elements. This aspect has been left out of the
+discussion so far, but it is clear that it is a decisive step of our inference
+process, and it has to be thoroughly studied to fully understand the analogical
+classification process. We may for example suppose that some $3$-tuples should
+be given a higher weight in the aggregation, on the basis of some particular
+static criteria that still needs to be identified.\todo{Miclet?}\\
+
+Another track of research can be motivated by looking at Figure
+\ref{FIG:piecewise_affine}. The function $f$ is not affine, but is instead
+\textbf{piecewise affine}. If we manage to find four elements $\mathbf{a},
+\mathbf{b}, \mathbf{c}, \mathbf{d} \in X^m$ that are on the same simplex (a
+simplex is here defined as a subset of $X^m$ where $f$ is affine), then we know
+that we can correctly predict the value of $f(\mathbf{d})$ from those of
+$f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})$. Well in $\mathbb{R}^m$ this
+result is not really useful, but we can actually show that every Boolean
+function is piecewise affine! So theoretically, if we can identify all the
+simplices, this means that we should be able to produce a sound extension in any
+case, for any function $f$. This probably sounds too good to be true, and so
+far our experiments show that there is no simplex including four elements
+$\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}$ where the associated class
+equation is solvable, thus compromising this track of research. But these are
+still preliminary experiments, and a more thorough investigation deserves to be
+addressed.\\
+
+Finally, we will close this discussion by mentioning the elephant in the room
+that we have so far ignored: transfer learning. Transfer learning is a current
+trend in the machine learning community whose purpose is to use the knowledge
+of a source problem $S$, to apply it to a less known target problem $T$.
+Current techniques in transfer learning usually involve statistical tools (see
+e.g. \cite{PanYanTKDE10} for a survey), but the use of analogical proportions
+for such purposes is still entirely to explore.
