@@ -19,7 +19,7 @@ first chapter, we provide an overview of various attempts to formalize
 analogical reasoning, with a strong emphasis on computational models. In the
 next chapter we will describe in more details the modeling of analogical
 proportions, especially in the Boolean and real settings and their application
-to machine learning tasks.
+to machine learning tasks. This chapter is structured as follows.
 
 Section \ref{SEC:models_without_proportions} will be devoted to the description
 of existing models that do not make explicit use of analogical proportions, and
@@ -66,7 +66,7 @@ $$
 
 Another early attempt at formalizing analogical reasoning is due to the
 philosopher of science Mary Hesse. In \cite{Hes66}, Hesse proposes to represent
-an analogy in a tabular form, as illustrated in Table \ref{TAB:Hesse_analogy}
+an analogy in a tabular form, as illustrated in Table \ref{TAB:Hesse_analogy}.
 \begin{table}[t]
   \centering
   \begin{tabular}{ll}
@@ -84,7 +84,7 @@ an analogy in a tabular form, as illustrated in Table \ref{TAB:Hesse_analogy}
   \caption{The tabular representation of an analogy between cows and horses.}
   \label{TAB:Hesse_analogy}
 \end{table}
-We already acknowledge here a mapping between two domains: a source domain (the
+We already recognize here a mapping between two domains: a source domain (the
 bovine domain) and a target domain (the equid domain). In Hesse's theory, an
 analogy should follow three general principles to be considered seriously. The
 first (questionable) requirement is the \textbf{requirement of material
@@ -112,12 +112,11 @@ Chapter \ref{CHAP:formal_analogical_proportions}.
 
 \subsection{Analogy as a structural mapping}
 
-We have seen that the role of a structural mapping between a source domain and
-a target domain has been recognized for a long time as a key component of
-analogical reasoning: see for example P\'olya in \cite{Pol54}, or Hesse's
-theory that we have just described. As such, this principle has led to numerous
-theories and computational models that we briefly (and non-exhaustively) recall
-here.
+The role of a structural mapping between a source domain and a target domain
+has been recognized for a long time as a key component of analogical reasoning:
+see for example P\'olya in \cite{Pol54}, or Hesse's theory that we have just
+described. As such, this principle has led to numerous theories and
+computational models that we briefly (and non-exhaustively) recall here.
 
 \paragraph{Gentner's Structure Mapping Theory\\}
 
@@ -141,7 +140,7 @@ principle is called the \textbf{systematicity principle}, for which we now give
 some technical details.
 
 The world is assumed to be represented by objects (belonging either to the
-source domain $S$ or the target domain $T$), along with some
+source domain $S$ or to the target domain $T$), along with some
 \textbf{predicates} that deal with one or more objects of the same domain. The
 distinction is made between predicates that only take one argument
 (\textbf{attributes} of objects), and those  that take at least two arguments 
@@ -190,7 +189,7 @@ conceptually summarized as follows:
 \end{enumerate}
 In its most simple form, the SME algorithm can be viewed as the finding of a
 maximum common subgraph between two graphs, namely those representing the
-source and the target domains. In such, SME is part of the connectionist
+source and the target domains. As such, SME is part of the connectionist
 approaches.
 
 In  \cite{ChaFreHof92}, authors point out various concerns about SMT and SME.
@@ -199,7 +198,7 @@ inputs of the source and target domains, and that the intelligence mostly comes
 from these descriptions:
 
 \begin{quote}
-  when the program’s discovery of the correspondences between the two situations
+  when the program's discovery of the correspondences between the two situations
   is a direct result of its being explicitly given the appropriate structures
   to work with, its victory in finding the analogy becomes somewhat hollow.
   Since the representations are tailored (perhaps unconsciously) to the problem
@@ -262,7 +261,7 @@ approaches.
 
 \paragraph{Heuristic-Driven Theory Projection\\}
 
-Another framework where structural mapping is considered the core of an
+Another framework where structural mapping is considered at the core of an
 analogical process is the so-called Heuristic-Driven Theory Projection proposed
 by Gust, K\"uhnberger and Schmid \cite{GusKunSchTCS06}. While in SME and ACME
 the main algorithm boils down to finding a maximum common subgraph between the
@@ -364,7 +363,8 @@ proportion.
 \begin{figure}[!h]
 \centering
 \includegraphics[width=3in]{figures/evans.pdf}
-\caption{A geometrical analogy problem}
+\caption{A geometrical analogy problem: figure $A$ is to figure $B$ as figure
+  $C$ is to which candidate?}
 \label{FIG:evans}
 \end{figure}
 
@@ -394,11 +394,12 @@ transforming $C$ into one of the candidate solutions. The chosen solution is
 the one that maximizes the resemblance between the two sets of rules.
 
 An interesting fact is that ANALOGY analyses the way to go from $A$ to $B$ and
-applies to go from $C$ to $D$, but it does not make use of \textit{central
-permutation}: it may just as well analyze the way to go from $A$ to $C$ and
+applies it to go from $C$ to $D$, but it does not make use of \textit{central
+permutation}\footnote{The central permutation axiom, described in the next
+chapter, states that $A:B::C:D \iff A:C::B:D$.}: it may just as well analyze the way to go from $A$ to $C$ and
 transpose it to go from $B$ to $D$. Note also that in ANALOGY the semantics
 behind the relations and the geometrical objects are not taken into account. In
-this respect, ANALOGY is close to Gentner's Structure Mapping Theory (and
+this respect, ANALOGY is close to Gentner's Structure Mapping Theory (but
 preexisting by far).
 
 
@@ -422,9 +423,11 @@ With regards to the memory structure, their assumption is that it can be
 considered as an $m$-dimensional Euclidean space. This assumption is originally
 that of Henley \cite{Hen69} who showed, with the help of social experiments,
 that a set of 30 mammals could be fairly well represented in the 3-dimensional
-space $\mathbb{R}^3$ with axes ferocity, humanness, and size. It is supposed
-that the semantic similarity that people associate with two concepts is
-inversely proportional to their distance in the Euclidean space $\mathbb{R}^3$.
+space $\mathbb{R}^3$ with the three axes \textit{ferocity}, \textit{humanness},
+and \textit{size}. It is supposed that the semantic similarity that people
+associate with two concepts is inversely proportional to their distance in the
+Euclidean space $\mathbb{R}^3$. For example, \textit{cow} and \textit{horse}
+should be fairly close, but \textit{rat} would likely be far from both.
 
 Rumelhart and Abrahamsen are interested in the problem of solving an analogical
 equation (although they never state it in these terms): given three concepts
@@ -622,9 +625,10 @@ Cornuéjols illustrate the plausibility of his model using experiments in the
 microworld of Copycat. After defining the Kolmogorov complexity of the built-in
 relations (\textit{direction}, \textit{length}, etc.), and those of the
 representations of the inputs, the solutions of the analogical equations are
-set as those minimizing the above criteria. The empirical results show that
+set as those minimizing the above criterion. The empirical results show that
 this model, in addition to its theoretical appeal due to the proximity with
-MDLP, is at the very least an interesting option to further investigate. In a
+MDLP, is at the very least an interesting option that deserves further
+investigations. In a
 recent work , this model of analogy has been applied to a task of transfer
 learning \cite{CorMur16}.
 
@@ -637,7 +641,7 @@ should also be as \textit{complicated} to go from $b$ to $a$ as to go from $d$
 to $c$. More formally:
 $$a:b::c:d \implies K(b \given a) = K(d \given c) \text{ and } K(a \given b) =
 K(c \given d).$$
-This criteria was used to automatically discriminating \textit{good} analogies
+This criterion was used to automatically discriminate \textit{good} analogies
 from \textit{bad} analogies, where objects were concepts represented as words
 of the natural language, and where their Kolmogorov complexity was roughly
 approximated using online search-engine queries. The experiments showed that
@@ -741,4 +745,5 @@ motivated by cognitive and psychological investigations. It is only recently
 that some authors, starting from the pioneering investigation in \cite{Lep04},
 have provided a formal framework to deal with analogical proportions in general
 algebraic settings, which opened the door to many computational applications.
-These formal analogical proportions are the subject of the next chapter.
+These formal analogical proportions probably are the most important concept of
+this document. We will now review this topic in the next chapter.

@@ -1,4 +1,4 @@
-% Oscar's command (it works): Fills blank pages until next odd-numbered page.
+%d Oscar's command (it works): Fills blank pages until next odd-numbered page.
 % Used to emulate single-sided frontmatter. This will work for title, abstract
 % and declaration. Though the contents sections will each start on an
 % odd-numbered page they will spill over onto the even-numbered pages if
@@ -146,5 +146,5 @@ def}}}{=}}}
 \newcommand{\repeatcaption}[2]{%
   \renewcommand{\thefigure}{\ref{#1}}%
   \captionsetup{list=no}%
-  \caption{#2 (repeated from page \pageref{#1})}%
+  \caption{#2 (Repeated from page \pageref{#1}).}%
 }

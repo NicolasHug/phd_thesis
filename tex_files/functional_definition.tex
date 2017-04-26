@@ -5,15 +5,14 @@
 \localtableofcontents*
 \vspace*{\baselineskip}
 
-\initial{I}n Section \ref{SEC:machine_learning_with_boolean_proportions}, we
+\initial{I}n the previous chapter, we
 briefly described a basic process of analogical classification in an informal
-way, making sure that everything went smoothly. In practice, bad things happen,
-always. In this chapter, we will clearly and formally define analogical
-classification, which will help us clarify some of the grey areas of Section
-\ref{SEC:machine_learning_with_boolean_proportions}. Also (and most
+way. In this chapter, we will clearly and formally define analogical
+classification, which will help us clarify some of the grey areas that we have
+glimpsed before. Also (and most
 importantly), we will describe our contributions to this problem.
 
-A first form of analogical classifiers has been defined in the works of Stroppa
+A first form of analogical classifier has been defined in the works of Stroppa
 and Yvon \cite{StrYvoCNLL05}, which we will refer to as \textbf{conservative
 classifiers}. Another form of analogical classifiers has later been proposed in
 the works of Bayoudh, Delhay and Miclet \cite{MicBayDelJAIR08,
@@ -21,7 +20,7 @@ BayMicDelIJCAI07}, referred-to here as \textbf{extended classifiers}.
 
 Though the theoretical groundings of the conservative and extended
 classifiers have a lot in common (they are both analogical classifiers after
-all), we will see that their practical implementation are actually quite
+all), we will see that their practical implementations are actually quite
 different. We will show however that the extended classifier is a
 generalization of the conservative one, and most importantly that these two
 approaches can be factorized into a single, unifying framework.
@@ -36,7 +35,7 @@ This chapter is structured as follows. In Section
 approaches to analogical classification, that we will name here the
 conservative and the extended classifiers. We will then get to the heart of the
 matter and start describing our first contribution, that consists in
-factorizing this two approaches into a single functional description. Thanks to
+factorizing these two approaches into a single functional description. Thanks to
 this functional definition of analogical learners\footnote{In what follows, we
 will abuse language and use \textit{analogical learner} and
 \textit{analogical classifier} as synonyms.}, we will be able in Section
@@ -67,7 +66,8 @@ For any $\mathbf{x} \in X^m$, the value $f(\mathbf{x})$ is called its
 \textbf{class} or \textbf{label}.
 The functional notation $f(\mathbf{x})$ suggests that all labels
 are defined by an underlying function $f \colon X^m \to Y$, which is the usual
-general view point of machine learning. In the case of classification, $Y$ is a
+general view point of machine learning (usually, $\mathbf{x}$ is also
+considered as a random variable). In the case of classification, $Y$ is a
 finite set of size $C$ where $C$ is the number of different classes. The goal
 of a classifier is to \textbf{learn} the function $f$ on the basis of the
 elements in $S$, called the \textbf{examples}. The output of a classifier is a
@@ -159,7 +159,8 @@ with some minor differences with our definitions.
 Intuitively,  $\esf$ can be regarded as the set of all $\mathbf{x} \in X^m$
 that are in proportion with at least one 3-tuple in $S$, provided that the
 equation related to the associated labels is also solvable. For any $S$ and any
-$f$, $\esf$ satisfies some interesting properties: \begin{enumerate}
+$f$, $\esf$ satisfies some elementary properties:
+\begin{enumerate}
 \item $S \subseteq \esf$, since $\mathbf{x} : \mathbf{x} :: \mathbf{x}
   :\mathbf{x}$ always holds;
 \item $\aext{\varnothing}{f} = \varnothing$, and $\aext{X^m}{f}=X^m$;
@@ -255,7 +256,7 @@ functional view of conservative classifiers:
 \begin{definition}[Analogical label]
   \label{DEF:analogical_label}
   For any element $\mathbf{x}$ of $\esf$, we denote $\mathbf{C}(\mathbf{x})$
-  the set of the class equations solutions associated with $\mathbf{x}$:
+  the set of solutions to the class equations associated with $\mathbf{x}$:
   $$\mathbf{C}(\mathbf{x}) \eqdef \Set{y | f(\mathbf{a}) : f(\mathbf{b}) ::
   f(\mathbf{c}) :y, \quad \text{with }(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in \rsfx}$$
   We then define the \textbf{analogical
@@ -272,6 +273,7 @@ $\mathbf{C}$. In case of a tie, the returned element is chosen at random between
 the most frequent elements.
 \end{definition}
 
+\noindent
 We are now in position to give a functional definition of the conservative
 classifier:
 
@@ -316,7 +318,7 @@ that the search in $S^3$ has to be done for every new element $\mathbf{x}$ that
 we want to classify, and can prove to be quite expensive in computation time,
 even for small sizes of $S$. However, taking advantage of our functional
 definition, we can reformulate the learning process of a conservative
-classifier as follow:
+classifier as follows:
 
 \begin{itemize}
 \item First, compute $\esf$. While $\esf$ is begin computed, it is trivial to
@@ -337,29 +339,37 @@ classifiers belonging to the class of lazy learners. Here, the computation of
 the analogical extension can be viewed as a generalization process, even if not
 all elements of the universe $X^m$ are affected by this generalization.
 
-We will end this Section on conservative classifier by sketching a use-case
+We will end this discussion on conservative classifier by sketching a use-case
 described in \cite{StrYvoREPORT05}, where an analogical proportion is defined
 on the set of words over a finite alphabet, and the task is to learn the
 conjugation of English verbs. This setting is slightly different than that of
 classification that we have settled-in, but all definitions and concepts remain
 valid. Here, solving the analogical equation
-$\text{view}:\text{reviewer}::\text{search}:y$ leads to $\text{researcher}$,
+$\textit{view}:\textit{reviewer}::\textit{search}:y$ leads to $\textit{researcher}$,
 using the definition of the analogy and the concatenation operator.
+
+
+\begin{testexample}
 We have a training set $S=\Set{\mathbf{x}^{(1)},\mathbf{x}^{(2)},
 \mathbf{x}^{(3)}, \mathbf{x}^{(4)}, \mathbf{x}^{(5)}}$ where
-$\mathbf{x}^{(1)}=(read,3,reads), \mathbf{x}^{(2)}=(read,G,reading),
-\mathbf{x}^{(3)}=(view,3,views)$, $\mathbf{x}^{(4)}=(view,G,viewing),
-\mathbf{x}^{(5)}=(eat,3,eats)$. $(read,3,reads)$ means that $read$ is
-transformed into $reads$ when conjugated at the third person singular, and $G$
-stands for the gerund form.
+  $\mathbf{x}^{(1)}=(\textit{read},3,\textit{reads}),
+  \mathbf{x}^{(2)}=(\textit{read},G,\textit{reading}),
+  \mathbf{x}^{(3)}=(\textit{view},3,\textit{views})$,
+  $\mathbf{x}^{(4)}=(\textit{view},G,\textit{viewing}),
+  \mathbf{x}^{(5)}=(\textit{eat},3,\textit{eats})$.\\
+  $(\textit{read},3,\textit{reads})$ means that $\textit{read}$ is
+  transformed into $\textit{reads}$ when conjugated at the third person
+  singular, and $G$ stands for the gerund form.
 
-Given a new element $\mathbf{x}=(eat,G,y)$, $\rsfx=
+  Given a new element $\mathbf{x}=(\textit{eat},G,?)$, $\rsfx=
 \Set{\left(\mathbf{x}^{(1)}, \mathbf{x}^{(2)}, \mathbf{x}^{(5)}\right),
 \left(\mathbf{x}^{(3)},\mathbf{x}^{(4)},\mathbf{x}^{(5)}\right)}$. The
-prediction is as expected $\hat{f}(\mathbf{x})=\text{eating}$, which is the
-solution of the equations $\text{read}:\text{reading}::\text{eat}:y$ and
-$\text{view}:\text{viewing}::\text{eat}:y$. There is
-no solution for $\mathbf{x}=(absurd,G,y)$, just because $\rsfx= \varnothing$.
+prediction is as expected $\hat{f}(\mathbf{x})=\textit{eating}$, which is the
+solution of the equations $\textit{reads}:\textit{reading}::\textit{eats}:y$ and
+$\textit{views}:\textit{viewing}::\textit{eats}:y$. There is
+  no solution for $\mathbf{x}=(\textit{absurd},G,y)$, just because $\rsfx=
+  \varnothing$.
+\end{testexample}
 
 The fact that conservative learners cannot output a prediction for any
 $\mathbf{x}$ can here be considered a good thing: it would not be natural to
@@ -467,13 +477,14 @@ their negated versions and have thus been ignored.
     \bottomrule
   \end{array}
   $$
-  \caption{The values of $\text{AD}(a, b, c,d)$ for eight patterns of $a, b, c,
-  d$ in $\mathbb{B}$.}
+  \caption{The values of $\text{AD}(a, b, c,d)$ for $8$ patterns of $a, b, c,
+  d$ in $\mathbb{B}$. The $8$ remaining patterns are the negated versions of
+  these.}
   \label{TAB:analogical_dissimilarity}
 \end{table}
 The natural extension to $\mathbb{B}^m$ is again to consider component-wise
 proportions. The analogical dissimilarity in $\mathbb{B}^m$ is thus defined as
-the sum of the $m$ individual Add:
+the sum of the $m$ individual ADs:
 $$\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) = \sum\limits_{i=1}^m
 \AD(a_i,b_i,c_i,d_i).$$
 We get an analogical dissimilarity whose co-domain is $[0, 2m]$. In fact, if we
@@ -490,7 +501,7 @@ is not closed under addition (or subtraction), so technically it may happen that
 $(\mathbf{a} - \mathbf{b}), (\mathbf{c} - \mathbf{d})$, or their difference are
 not in $\mathbb{B}^m$ but in $\mathbb{R}^m$.}.
 Actually, we could use any $p$-norm in $\mathbb{B}^m$, so
-Definition \ref{DEF:AD_arithmetic_proportion} could also be use to give a more
+Definition \ref{DEF:AD_arithmetic_proportion} could also be used to give a more
 general definition of the analogical dissimilarity in $\mathbb{B}^m$. Here
 again, we are witnessing the close bond that links the Boolean proportion and
 and the arithmetic proportion.
@@ -558,9 +569,9 @@ extended classifier is a generalization of the conservative one.
 \begin{testexample}
 To better grasp the behaviour of the extended classifier, we will consider
 again Figure \ref{FIG:ae_example} that we repeat here for the sake of
-  convenience on page \pageref{FIG:ae_example2}. Let us and go
+  convenience on page \pageref{FIG:ae_example2}. Let us go
 through the classification process of $\mathbf{c}, \mathbf{f}, \mathbf{g}$ and
-$\mathbf{h}$. We will set consider $k$ to be equal to $1$. For $\mathbf{c}$,
+$\mathbf{h}$. We will here consider $k$ to be equal to $1$. For $\mathbf{c}$,
 the $3$-tuple in $S^3$ with the least value of $\AD$ is $(\mathbf{b},
 \mathbf{d}, \mathbf{a})$ with $\AD(\mathbf{b},\mathbf{d}, \mathbf{a},
 \mathbf{c}) = 0$. The set $\mathbf{C}(\mathbf{c})$ is thus $\Set{1}$, and leads
@@ -581,15 +592,15 @@ However, considering the above remark we are allowed to look for all other
 $3$-tuples that also have an $\AD$ of $1$. Actually, the $3$-tuple
 $(\mathbf{b}, \mathbf{d}, \mathbf{a})$ also has $\AD(\mathbf{b},\mathbf{d},
 \mathbf{a}, \mathbf{g}) = 1$, as can be verified on table \ref{TAB:AD_bdag}. We
-thus have $\mathbf{C}(\mathbf{g}) = \Set{1, 1}$: one solution comes from
+thus have $\mathbf{C}(\mathbf{g}) = \Set{1, 1}$: one solution that comes from the
+  solving of
 $f(\mathbf{e)} :f(\mathbf{e}):: f(\mathbf{e}) : y$ and another solution that
-comes from $f(\mathbf{b)} :f(\mathbf{d}):: f(\mathbf{a}) : y$.  Finally, we
+comes from the solving of $f(\mathbf{b)} :f(\mathbf{d}):: f(\mathbf{a}) : y$.  Finally, we
 have $\hat{f}(\mathbf{g}) = 1$. As for $\mathbf{h}$, we have
 $\mathbf{C}(\mathbf{h}) = \Set{1, 1}$: one solution comes from $f(\mathbf{a)}
 :f(\mathbf{b}):: f(\mathbf{e}) : y$ and the other comes from $f(\mathbf{d)}
 :f(\mathbf{d}):: f(\mathbf{d}) : y$, and we end up with $\hat{f}(\mathbf{h}) =
-1$. This completes our process overview for Algorithm
-\ref{ALGO:extended_classifier}!
+1$.
 \end{testexample}
 
 \begin{figure}[!h]
@@ -755,8 +766,9 @@ as transparent instead of plain black.
 Let us note that topologically speaking, Figure \ref{FIG:extended_classifier}
 is not representative of a real case: even if we always have $S \subseteq \esf
 \subseteq X^m$, this does not mean that these sets are embedded into one
-another as shown in the drawing. Actually, elements of $S$ (and thus of $\esf$)
-are usually scattered over the whole universe.
+another as shown in the drawing. Actually, if the underlying probability
+distribution of $X^m$ is uniform, the elements of $S$ (and thus of $\esf$) are
+scattered over the whole universe.
 
 \begin{testexample}
 Going back (for the last time!) to Figure \ref{FIG:ae_example}, our
@@ -812,11 +824,12 @@ $$\delta(\mathbf{x}, \nan(\mathbf{x},S)) \leq \delta(\mathbf{x},
 
 Now, let us consider  $\mathbf{x}^{(i)}$ an i.i.d. sequence of random variables
 in $\mathbb{R}^m$, where $\mathbb{R}^m$ is equipped with a probability measure
-denoted $P$. The training set will be denoted $S_n=\Set{\mathbf{x}^{(i)}, ~ i
+denoted $P$. The training set will be denoted
+$S_n=\Set{\left(\mathbf{x}^{(i)},f(\mathbf{x}^{(i)}) \right), ~ i
 \in [1, n]}$. As $S_n$ is random, then $\nan(\mathbf{x},S_n)$ can also be
 considered as a random element of $X^m$.  We then are in the exactly same
-context as the work of Cover \& Hart (\cite{CovHarTIT67}), and we obtain the
-same result:
+context as the work of Cover \& Hart who studied the 1-NN algorithm
+(\cite{CovHarTIT67}), and we obtain a similar result:
 \begin{property}
   \label{PROPER:convergence_nan}
   For any $\mathbf{x}$, its nan $\nanemph(\mathbf{x}, S_n)$ converges almost
@@ -853,7 +866,7 @@ Let us note the following points:
     structure or operator (see \cite{MicBayDelJAIR08} for a detailed discussion
     on this issue).
   \item Cover \& Hart proved that when $n$ tends to infinity, the probability
-    of error of the $1$-\NN classifier is less than twice that of the Bayes
+    of error of the 1-NN classifier is less than twice that of the Bayes
     probability of error, and therefore less than twice the probability of error of
     any other classifier. We have not been able to prove such a strong result
     for the $1$-\NAN~classifier, but its probability of error will be thoroughly
@@ -875,7 +888,7 @@ Let us note the following points:
     Moreover, when the nan and the nn are too close, paying the price of the
     noise related to the nan may not be worth it. This supports the common
     acknowledgement that analogical reasoning is mostly useful when very few
-    data are available.  In this later case extending a small training set with
+    data are available.  In this latter case, extending a small training set with
     its analogical extension may be particularly beneficial, as we will see in
     Chapter \ref{CHAP:analogy_preserving_functions}.
 
@@ -883,9 +896,10 @@ Let us note the following points:
 To conclude this discussion, even if the convergence result is interesting in
 itself, it does not say a lot in terms of machine learning. A much more
 interesting and powerful theoretical result of analogical classifiers will be
-proved in Chapter \ref{CHAP:analogy_preserving_functions}.
+proved in Chapter \ref{CHAP:analogy_preserving_functions}. Let us now focus on
+their VC-dimension.
 
-\subsection{Vapnik Chervonenkis (VC) dimension}
+\subsection{Vapnik Chervonenkis (VC) dimension of analogical classifiers}
 \label{SEC:VCdim}
 The notion of VC-dimension was originally defined by Vapnik and Chervonenkis
 \cite{Vap98}, and introduced into learnability theory by Blumer et al.
@@ -897,8 +911,8 @@ that we omit here, we have:
 
 $$R \leq R_{\text{emp}} + \sqrt{\frac{1}{n} \cdot \left[\text{VC}(\log(2n /
 \text{VC}) + 1) - \log(\eta/4)\right]},$$
-where $R_\text{emp}$ is the probability of error on a training set $S$ of size
-$n$, and VC is the VC-dimension of the learner. In our setting,
+where $R_\text{emp}$ is the probability of error on a training set $S_n$, and
+VC is the VC-dimension of the learner. In our setting,
 \begin{itemize}
   \item $R \eqdef P\left(\hat{f}(\mathbf{x}) \neq f(\mathbf{x}) \given[\big]
     \mathbf{x} \in X^m\right)$, and
@@ -946,7 +960,7 @@ the same result for the analogical learners.
   $\mathcal{AC}_k$. Therefore, the VC-dimension of $\mathcal{AC}_k$ is infinite.
 \end{proof}
 
-Clearly, the upper bound is a decreasing function in $n$, and an increasing
+Clearly, the upper bound of the true risk is a decreasing function in $n$, and an increasing
 function in the VC dimension of the learner. As such, we usually want the
 VC-dimension of our classifiers to be small. However, we have previously seen
 that the nearest neighbors classifiers, despite their infinite
@@ -1063,7 +1077,7 @@ This second term is then the accuracy of the $\NN_{\esfs}$ algorithm over the
 elements that have their nearest analogical neighbour in $\esfs$.
 
 In the light of these interpretations, we can directly rewrite the accuracy
-formula in a the concise form given in Proposition \ref{PROPOS:accuracy_nan}.
+formula in the concise form given in Proposition \ref{PROPOS:accuracy_nan}.
 \end{proof}
 
 The value $\acc(\NN_S, A)$ is the accuracy of $\NN_S$ over all the elements in
@@ -1157,7 +1171,7 @@ theoretical results:
     as\\
     $\acc(\NAN_S) \eqdef P\left(\hat{f}(\mathbf{x}) = f(\mathbf{x})
     \given[\big] \mathbf{x} \in X^m \setminus S \right)$.
-  \item The empirical accuracy of the 1NN classifier, which definition is of
+  \item The empirical accuracy of the 1NN classifier, whose definition is of
     course the same but this time $\hat{f}$ is the output of the 1NN
     classifier.
   \item The \textbf{theoretical} accuracy of 1NAN, as defined in Proposition
@@ -1178,11 +1192,11 @@ two disjoint sets of size $2^{m - 1}$: those for which $f(\mathbf{x})$ is
 equal to $1$, and those with labels equal to $0$. We say that the datasets are
 balanced. However, the other functions may lead to very unbalanced datasets. An
 extreme case is for example $f_3$ with $k = m$, which leads to $f_3(\mathbf{x})
-= x_1 \wedge x_2 \wedge \cdots \wedge x_m$. The only element whose label is $1$
-is the vector $\mathbf{x} = (1, 1, \cdots, 1)$. For these very unbalanced
+= x_1 \wedge x_2 \wedge \dots \wedge x_m$. The only element whose label is $1$
+is the vector $\mathbf{x} = (1, 1, \dots, 1)$. For these very unbalanced
 datasets, the accuracy of a classifier is not a relevant measure: predicting
 $0$ all the time would lead to an accuracy of almost $1$, but would
-systematically assign the wrong label to   $(1, 1, \cdots 1)$. Therefore, as
+systematically assign the wrong label to   $(1, 1, \dots 1)$. Therefore, as
 accuracy is our main concern here, we will focus on functions for which
 datasets are as balanced as possible.
 
@@ -1255,13 +1269,11 @@ that of 1-NN. While the accuracy of 1-NN over $f_1$ is not too bad, the one
 over $f_2$ is absolutely terrible and actually below $0.3$ (a random prediction
 would have done better!). This is one of the distinguishing features of the XOR
 functions: the nearest neighbor of an element is almost always in a different
-class, as can be seen on Figure \ref{FIG:classification_problem} (page
-\ref{FIG:classification_problem}). So sadly, the 1-NN algorithm can do nothing
-but wrong on these kind of functions. In Chapter
-\ref{CHAP:analogy_preserving_functions}, we will prove a strong result showing
-that both the projections (like $f_1$) and the XOR functions (like $f_2$)
-\textbf{always} lead to perfectly sound extensions, for any training set of any
-size.
+class. So, sadly, the 1-NN algorithm can do nothing but wrong on these kind of
+functions. In Chapter \ref{CHAP:analogy_preserving_functions}, we will prove a
+strong result showing that both the projections (like $f_1$) and the XOR
+functions (like $f_2$) \textbf{always} lead to perfectly sound extensions, for
+any training set of any size.
 
 Table \ref{TAB:monks} shows the same metrics for the Monk datasets and also
 reports the results of the Analogical Proportion Classifier (\textit{APC}) from
@@ -1349,7 +1361,7 @@ definition tells us that we can consider the NAN algorithm as a NN strategy on a
 extended and noisy training set: the analogical extension $\esf$. This leads us
 to consider analogical classification as a two-steps process:
 \begin{itemize}
-  \item First, the training set is extended to the analogical extension
+  \item First, the training set is extended to the analogical extension.
   \item Then, a $k$-NN algorithm is used on this extended training set.
 \end{itemize}
 Obviously, the accuracy of the NAN algorithm depends on the quality of the

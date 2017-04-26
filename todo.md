@@ -1,8 +1,14 @@
 - citer les jap
 - couleur cubes
 - Biblio: cross ref ? Notamment Burke
+- Envoyer manuscrit à Labruyere une fois qu'il sera envoyé aux rapporteurs
+  (mettre en copie par exemple)
 
-New:
+- multiple-valued ou multiple valuated???
+
+
+Done
+====
 - Intro
 - Conclu
 - Abstract
@@ -17,5 +23,7 @@ New:
 
 
 
-- Envoyer manuscrit à Labruyere une fois qu'il sera envoyé aux rapporteurs
-  (mettre en copie par exemple)
+
+Typos
+=====
+- lack (of) novelty

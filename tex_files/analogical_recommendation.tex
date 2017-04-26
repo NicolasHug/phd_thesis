@@ -204,7 +204,7 @@ recommend $i$ to $u$ if $\hat{r}_{ui} \geq 4$.
 
 All reported results are averaged over a 5-folds cross-validation procedure.
 Obviously, the five folds are the same for all of the algorithms, to allow for
-meaningful comparisons.  The dataset that we used is the Movielens-100K
+meaningful comparisons.  The dataset that we used is the MovieLens-100K
 dataset\footnote{http://grouplens.org/datasets/movielens/}, composed of 100,000
 ratings from 1000 users and 1700 movies. Each rating belongs to the interval
 $[1, 5]$, and the sparsity of this dataset is of about 94\%, i.e. only 6\% of
@@ -245,7 +245,7 @@ depth in the conclusion of this chapter.
                    Random &  & &  1.52& 81 & 86 & 89 & 88 &  .432 & .155 & 1s\\
 \bottomrule
 \end{tabular}
-\caption{Performances of recommendation algorithms on the Movielens-100k
+\caption{Performances of recommendation algorithms on the MovieLens-100k
   dataset.}
 \label{TAB:parall_performances_comparison}
 \end{table}
@@ -428,7 +428,7 @@ $$
 t\text{-}C(u) \eqdef \Set{v \in U | \forall i \in I_{uv},~ r_{ui} = r_{vi} + t}.
 $$
 From then on, computing $\predrui$ amounts to finding all the users $v$ that
-satisfy this criteria, and computing an aggregation of their rating for $i$,
+satisfy this criterion, and computing an aggregation of their rating for $i$,
 which can simply be an average. We implemented this basic algorithm described
 by Algorithm \ref{ALGO:bruteforce}, and referred to as \textit{brute-force}.
 
@@ -455,7 +455,7 @@ by Algorithm \ref{ALGO:bruteforce}, and referred to as \textit{brute-force}.
 \end{algorithm}
 
 Of course, one may want to relax the definition of a $t$-clone, as the current
-one is too strict and only very few users will satisfy this criteria. In our
+one is too strict and only very few users will satisfy this criterion. In our
 implementation, we chose the following condition:
 $$
 t\text{-}C(u) \eqdef \Set{v \in U |  \sum_{i \in I_{uv}} |(r_{ui} - r_{vi}) -
@@ -610,8 +610,8 @@ reasons that will become clear at the end of this discussion, we also evaluated
 the Bsl algorithm, whose prediction is simply the baseline predictor, i.e.
 $\predrui = b_{ui}$. The evaluation protocol is the same as that of Section
 \ref{SEC:experiments_analogical_reco_basic}, i.e. results are averaged over a 5-folds cross-validation
-procedure. In addition to the Movielens-100k dataset presenter earlier, we also
-used the Movielens-1M dataset containing 1 million ratings with 6000 users and
+procedure. In addition to the MovieLens-100k dataset presenter earlier, we also
+used the MovieLens-1M dataset containing 1 million ratings with 6000 users and
 4000 movies.  For each of these algorithms, the number of neighbors or clones
 used to output a prediction is $k = 40$, except for the brute-force algorithm
 where the number of clones can not be controlled. The RMSE and MAE of the
@@ -637,7 +637,7 @@ algorithms are reported on Table
     Bsl & &  & .945 & .749 & .909& .719\\
 \bottomrule
 \end{tabular}
-  \caption{RMSE and MAE of our clone-based algorithms on the movielens 100k and
+  \caption{RMSE and MAE of our clone-based algorithms on the MovieLens-100k and
   1M datasets.}
   \label{TAB:clone_based_rmse_mae}
 \end{table}
@@ -647,7 +647,7 @@ recommendation principle significantly outperforms the most basic $k$-NN
 algorithm, and thus validates the need to take into account biases between
 users. The brute-force is however a lot heavier to compute, and thus not very
 suitable for real world recommendation purposes (its performances on the
-Movielens-1M dataset simply could not be computed). The two other clone-based
+MovieLens-1M dataset simply could not be computed). The two other clone-based
 algorithms, however, have the exact same complexity of any $k$-NN-based
 algorithm which is a significant improvement from the algorithm described in
 Section \ref{SEC:analogical_reco_basic_algo}.
@@ -665,7 +665,7 @@ accuracies, this means that the way users relate as clones is an important
 feature of the dataset and should not be ignored.
 
 Performances of the Clone algorithms are close to those of the state of the
-art $\knns$ algorithm, yet the difference is more striking on the Movielens-1M
+art $\knns$ algorithm, yet the difference is more striking on the MovieLens-1M
 dataset. It is however important to understand that these algorithms differ on
 the following points:
 \begin{itemize}
@@ -682,7 +682,7 @@ the following points:
   an impact on the bias. As baselines are computed on the whole training set,
     they tend to capture most of the noise when the training set gets bigger.
     This may explain why the difference between the Clone algorithms and
-    $\knns$ is more striking on the Movielens-1M dataset.
+    $\knns$ is more striking on the MovieLens-1M dataset.
 \end{itemize}
 
 As previously mentioned in Section \ref{SEC:similarity_measures}, it is recommended to perform a
@@ -707,7 +707,7 @@ to assess user-system interactions.
 
 Indeed, what ultimately matters is how well a recommender system can
 \textbf{rank} the preferences of a user for all the items. Also, rather than
-defining clones with the general numerical criteria ($r_{ui} = r_{vi} +
+defining clones with the general numerical criterion ($r_{ui} = r_{vi} +
 t_{vu}$), we may instead consider that two users are clones if they order their
 common items in the same way. Back to Figure \ref{FIG:alice_and_bob_clones}, we
 see that Alice and Bob are perfect clones and we actually do not need to know
@@ -804,7 +804,7 @@ equal ratings.
 
 We evaluated the performance of our algorithm and compared it to other
 previously described approaches, using the exact same evaluation protocol as in
-the previous sections. The Movielens-1M dataset was not benchmarked, because
+the previous sections. The MovieLens-1M dataset was not benchmarked, because
 the computation of Spearman'rho was too computationally intensive on this
 bigger dataset.
 
@@ -839,7 +839,7 @@ Results are reported in table \ref{table:res100kRank}.
 \FCP  &  .7063   & .7096 &  .7163   \\
 \bottomrule
 \end{tabular}
-\caption{\FCP of our rank prediction algorithm on the Movielens-100k
+\caption{\FCP~ of our rank prediction algorithm on the MovieLens-100k
   dataset.}
 \label{table:res100kRank}
 \end{table}
@@ -899,8 +899,8 @@ this is why we have relaxed the condition for an analogy to hold in Algorithm
 
 In this section, we will design an algorithm that is able to answer all of
 the above questions, by extracting all the analogical proportions underlying a
-database that satisfy some given quality criteria. We will apply this algorithm
-to the Movielens database, and see how this relates to our recommendation task.
+database that satisfy some given quality criterion. We will apply this algorithm
+to the MovieLens database, and see how this relates to our recommendation task.
 We will here look for analogies between items (movies in our case) instead of
 looking for analogies between users, because the interpretation of a
 movie-based proportion is actually easier, and because the parallel with
@@ -1017,7 +1017,7 @@ now get to the heart of the matter.
 In order to avoid any ambiguity, we formally define our problem first.
 \subsubsection{Problem definition and links to association rules}
 
-We will be looking for analogies between items in the Movielens database, but
+We will be looking for analogies between items in the MovieLens database, but
 our method can naturally be extended to any other database with the same
 structure.  We dispose of a set of users $U$ and a set of items $I$. Each user
 $u$ has rated (or purchased) a given set of movies $I_u \subseteq I$. In this
@@ -1146,7 +1146,7 @@ quality evaluation $f$ along with a threshold $\beta$.
 After having built all the $4$-itemsets whose support is above the threshold
 $\alpha$ with the Apriori algorithm, we compute the quality of the proportions
 associated with the three equivalent classes and keep those that satisfy our
-criteria. These steps are described in Algorithm \ref{ALGO:proportion_mining}.
+criterion. These steps are described in Algorithm \ref{ALGO:proportion_mining}.
 
  \begin{algorithm}[!ht]
    \caption{Analogical proportion mining.}
@@ -1188,7 +1188,7 @@ account.
 
 \subsection{Experiments and discussion}
 
-As previously indicated, we have considered the Movielens-100k dataset for our experiments: 100,000
+As previously indicated, we have considered the MovieLens-100k dataset for our experiments: 100,000
 ratings in $[1, 5]$ from $1000$ users and $1700$ movies. We will first treat
 ratings as numerical values, and then in the second part of this investigation
 we will binarize them.
@@ -1460,7 +1460,7 @@ descending order.
 \begin{figure}[!h]
 \centering
   \includegraphics[width=4in]{figures/quality_of_proportions.pdf}
-  \caption{Quality of the proportions 993 proportions. The quality of a
+  \caption{Quality of the 993 proportions. The quality of a
   proportion is defined as the faction of component-proportions that stand
   perfectly.}
 \label{FIG:quality_proportions}
@@ -1488,7 +1488,7 @@ custom quality function.
 \begin{figure}[!h]
 \centering
   \includegraphics[width=4in]{figures/quality_of_proportions_different.pdf}
-  \caption{Quality of the proportions 993 proportions. The quality of a
+  \caption{Quality of the 993 proportions. The quality of a
   proportion is defined as the faction of components that make up perfect
   proportions, forbidding patterns $0:0::0:0$ and $1:1::1:1$.}
 \label{FIG:quality_proportions_different_ab_cd}
@@ -1577,7 +1577,7 @@ database, except for those involving four neighbors. So after all, our
 analogy-based inference principle was reduced to that of the classical $k$-NN
 approach. Clearly in that case, paying the price of the cubic search in the set
 of all users is really not worth it. This is entirely dependent on the database
-that was used (in our case, the Movielens dataset), and we may still presume
+that was used (in our case, the MovieLens dataset), and we may still presume
 that there should exist a dataset were the use of analogical proportion is
 beneficial over a simple neighborhood approach.
 
@@ -1602,7 +1602,7 @@ features of Surprise are the following ones:
     clear and precise as possible by pointing out every detail of the
     algorithms.
   \item Dataset handling is made easy. Custom datasets can be used, and the
-    Movielens datasets are natively supported.
+    MovieLens datasets are natively supported.
   \item Various ready-to-use prediction algorithms are available, such as
     baseline algorithms, neighborhood methods, matrix factorization-based (SVD,
     PMF, SVD++, NMF), and many others. Also, various similarity measures
