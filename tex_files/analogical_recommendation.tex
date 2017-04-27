@@ -6,14 +6,15 @@
 \initial{N}ow that we have enough background on recommender systems, we are in
 a position to present our contribution to analogical recommendation.\\
 
-In Section \ref{SEC:analogical_reco_basic_algo}, we describe our first approach
-which is directly inspired from extended classifiers, and compare it to the
+This chapter is structured as follows. In Section
+\ref{SEC:analogical_reco_basic_algo}, we describe our first approach which is
+directly inspired from extended classifiers, and compare it to the
 neighborhood approach and matrix factorization-based techniques. In Section
 \ref{SEC:clone_based_view} we devise a new algorithmic framework that is still
 inspired by analogy, but that does not rely on the search of $3$-tuples which
 will appear to be very costly. Finally in Section
 \ref{SEC:mining_analogical_proportions}, we address the problem of mining
-analogical proportion in partially described databases, and describe how the
+analogical proportions in partially described databases, and describe how the
 solving of this problem can be applied to a recommendation task. This will also
 help us to retrospectively analyze the results obtained in Section
 \ref{SEC:analogical_reco_basic_algo}.
@@ -37,33 +38,34 @@ they have commonly rated, the analogical proportion $r_{aj} : r_{bj} :: r_{cj}
 : r_{dj}$ holds, then it should also hold for an item $i$ that $a, b, c$ have
 rated but $d$ has not (i.e. $r_{di}$ is the missing component):
 $$
-\infer{
-r_{ai} : r_{bi} :: r_{ci} : r_{di} ~~ \forall i \in I_a \cap I_b \cap I_c,
-\text{ and } i\notin I_d }{r_{aj} : r_{bj} :: r_{cj} : r_{dj} ~~ \forall j \in
+\inferrule{r_{aj} : r_{bj} :: r_{cj} : r_{dj} ~~ \forall j \in
 I_a \cap I_b \cap I_c \cap  I_d}
+{r_{ai} : r_{bi} :: r_{ci} : r_{di} ~~ \forall i \in I_a \cap I_b \cap I_c,
+\text{ and } i\notin I_d }
 $$
 This leads us to estimate $r_{di}$ as the solution $y$ of the following
 analogical equation:
 $$r_{ai} : r_{bi} :: r_{ci} : y.$$
-Naturally, we may find multiple many $3$-tuples $(a, b, c)$ that are in proportion with
-$u$, so we will need  to aggregate all t he candidate solutions $y$.  Given a
+Naturally, we may find many $3$-tuples $(a, b, c)$ that are in proportion with
+$u$, so we will need  to aggregate all the candidate solutions $y$.  Given a
 pair $(u,i)$ such that $\rui \notin R$, the main procedure to estimate $\rui$
 is as follows:
 \begin{enumerate}
 \item Find the set of 3-tuples of users $a, b, c$ such that an analogical
   proportion stands between $a, b, c,$ and $u$ and such that the equation
-    $r_{ai} : r_{bi} :: r_{ci} : x$ is solvable.
+    $r_{ai} : r_{bi} :: r_{ci} : y$ is solvable.
 \item Solve the equation $r_{ai} : r_{bi} :: r_{ci} : y$ and consider the
-  solution $x$ as a candidate rating for $r_{ui}$.
+  solution $y$ as a candidate rating for $r_{ui}$.
 \item Set $\hat{r}_{ui}$ as an aggregate of all candidate ratings.
 \end{enumerate}
 
 This pseudo-algorithm is exactly that of a conservative classifier described in
 Section \ref{SEC:conservative_classifier}, except that here, the instance space
-(i.e. the space of $a, b, c, u$) changes with every pair $(u, i)$.
+(i.e. the space of $a, b, c, u$) changes with every pair $(u, i)$, and every
+$3$-tuple $(a, b, c)$.
 
 In our implementation, we have used the arithmetic proportion in
-$\mathbb{R}^m$: $a:b::c:u \iff a - b = c - u$.  The four users $a, b, c, d$ are
+$\mathbb{R}^m$: $a:b::c:u \iff a - b = c - u$.  The four users $a, b, c, u$ are
 here considered as vectors of ratings in a space defined by their common items.
 For the sake of clarity though, we will not write them with boldface letters
 and $a$ will denote both the user $a$ as well as its vectorial representation.
@@ -150,12 +152,11 @@ nearest neighbors, or look for all instances that are within a given distance.
 We have considered a strict condition for the solvability of the equation
 $r_{ai} - r_{bi} = r_{ci} - y$: as the exact arithmetic result $y=r_{ci} +
 r_{bi} -r_{ai}$ does not necessarily belong to the rating scale used in our
-experiments (which is $[1,5]$), we have
-considered that the equation is solvable only when $r_{ai}=r_{bi}$ or
-$r_{ai}=r_{ci}$. In both cases, we ensure the solution $x \in
-[1,5]$. We also tried another option where an equation is considered solvable
-when the solution belongs to $[1, 5]$. This option led to extremely close
-results, where differences where not significant.
+experiments (which is $[1,5]$), we have considered that the equation is
+solvable only when $r_{ai}=r_{bi}$ or $r_{ai}=r_{ci}$. In both cases, we ensure
+that the solution $y$ is in $[1,5]$.  We also tried another option where an
+equation is considered solvable when the solution belongs to $[1, 5]$. This
+option led to extremely close results, where differences where not significant.
 
 Just like for the neighborhood approach described earlier, it is perfectly
 possible to apply this algorithm in an item-based way rather
@@ -179,7 +180,7 @@ recommendation algorithms that we have already mentioned:
   \item The basic neighborhood approach (denoted $k$-NN) with different
     similarity metrics, namely Mean Squared Difference, Cosine similarity and
     Pearson similarity.  For these three algorithms, the size of the
-    neighborhood was set to $k=40$
+    neighborhood was set to $k=40$.
   \item The matrix-factorization algorithm (denoted PMF), as described in section \ref{SEC:matrix_facto}.
     The number of factors was set to $f = 100$, and the optimization problem
     was solved by a stochastic gradient descent of $20$ iterations with
@@ -198,7 +199,7 @@ surprise. Precision, recall, F-measure and coverage  are reported as
 percentages. Remember that for these dimensions high values mean high
 performance, while for RMSE and surprise low values are better.  RMSE is the
 only measure that only depends on the prediction algorithm $A$. All the other
-dimension depend on the items that we actually choose to recommend, and as such
+dimensions depend on the items that we actually choose to recommend, and 
 rely on the the recommendation strategy $S$. Here, we have chosen to
 recommend $i$ to $u$ if $\hat{r}_{ui} \geq 4$.
 
@@ -210,7 +211,7 @@ ratings from 1000 users and 1700 movies. Each rating belongs to the interval
 $[1, 5]$, and the sparsity of this dataset is of about 94\%, i.e. only 6\% of
 all possible ratings are actually known. We also report the computation time of
 each algorithm (roughly estimated), which is not an average but the total over
-the five folds. All our experiments have been run using Surprise
+the five folds. All our experiments have been carried out using Surprise
 \cite{Surprise}, a Python recommendation library that we have developed
 specifically for the occasion. The Surprise package will be described more in
 depth in the conclusion of this chapter.
@@ -265,7 +266,7 @@ even worse computation times. We thus have chosen two different strategies:
     the prediction is an average from all the $3$-tuples in $U_i^3$, choosing a
     large value of $n$ should lead to a fairly good estimate. We have reported
     the results for $n = 100$ and $n = 1000$. Note though that $\mid U_i
-    \mid^3$ is usually much, much larger than 1000, so we only have very rough
+    \mid^3$ is usually much larger than 1000, so we only have very rough
     estimation here.
   \item The second one is to consider the $3$-tuples $(a, b, c)$ in the
     neighborhood of $u$, using the assumption that the neighbors of $u$ are
@@ -306,7 +307,7 @@ fitness of the recommendation strategy $S$ (such as the coverage) greatly
 depends \textbf{also} on the fitness of the prediction algorithm $A$, simply
 because $S$ highly depends on $A$. Therefore, the coverage of the Random
 algorithm cannot be taken very seriously, because its accuracy (RMSE) is
-disastrous: it's only by chance that some items were estimated with a rating
+disastrous: it  is only by chance that some items were estimated with a rating
 greater than $4$, and then were recommended. The same goes for the Parall
 Sample 100 algorithm, which has a quite bad accuracy.  Actually, the most
 reasonable choice would probably the PMF algorithm again, which has the best
@@ -323,16 +324,16 @@ tend to produce more diverse recommendations, as would also suggest the results
 on the coverage.
 
 The surprise measures are a bit more tricky to analyze. Looking at $\surpmax$,
-which assess the least surprising recommendation (average over all users), we
+which assesses the least surprising recommendation (average over all users), we
 see that the analogy-based algorithms tend to perform better, but the
 $\surpavg$ measure counterbalances this observation. Undoubtedly, the surprise
 associated to a recommendation remains an extremely tricky concept to grasp and
 to model, and the measures presented here only allow to assess a very rough
-aspect.
+aspect of this complex dimension.
 
 As a side note, we have only reported the RMSE for the Mean algorithm, because
 this algorithm always outputs a prediction of $\predrui = \mu = 3.53$ which is
-lower than $4$, the threshold we chose for our recommendation strategy $S$.
+lower than the threshold we have chosen for our recommendation strategy $S$.
 Therefore, not a single item is recommended with this algorithm, and the
 precision, recall, etc. are not defined (or simply 0).
 
@@ -347,7 +348,7 @@ recommender systems, where computation time is one of the most decisive factor.
 
 Nonetheless, it is still possible to design analogy-inspired solutions for
 recommendation. In the next section, we describe other algorithms that rely on
-the concept of \textbf{clones} and that generalize the classical neighborhood
+the concept of \textbf{\textit{clones}} and that generalize the classical neighborhood
 approach.
 
 \section{A ``clone''-based view of analogical recommendation}
@@ -365,7 +366,7 @@ is a chance that this agreement is not perfectly reflected in the ratings: $u$
 might have rated $i$ with $r_{ui} = 1$ and $v$ with $r_{vi} = 3$, simply
 because from $v$' point of view $3$ is a \textit{bad} rating, while for $u$ a
 rating of $3$ would simply mean \textit{decent} or \textit{good enough}.  In
-the following, we refer such users that \textit{semantically} agree on their
+the following, we refer to such users that \textit{semantically} agree on their
 common items (but not necessarily \textit{numerically}) as \textbf{clones}, as
 illustrated in Figure \ref{FIG:alice_and_bob_clones}. Please note that the word
 $clone$ is not used here to mean \textit{strictly identical}, but rather in the
@@ -577,7 +578,7 @@ algorithm as a whole is to see that it conceptually follows these steps:
     where all ratings are given from the same frame of reference (in this case
     $0$), thus
     discarding any bias coming from the users or from the items. In $R'$,
-    ratings can then be considered as absolute, in the sens that they are not
+    ratings can then be considered as absolute, in the sense that they are not
     spoiled by the users moods or the items inherent popularity.
   \item Using $R'$, compute similarities between users using the cosine
     similarity (the cosine similarity is the same as the Pearson correlation
@@ -591,6 +592,7 @@ algorithm as a whole is to see that it conceptually follows these steps:
 \noindent
 In what follows, this algorithm will be referred to as $\knns$.
 
+\noindent
 It is very clear that the use of the baseline predictors and the use of
 clone-based recommendation are motivated by the same reasons: they both come
 from the fact that users (and items) tend to interpret the rating scale
@@ -614,7 +616,7 @@ procedure. In addition to the MovieLens-100k dataset presenter earlier, we also
 used the MovieLens-1M dataset containing 1 million ratings with 6000 users and
 4000 movies.  For each of these algorithms, the number of neighbors or clones
 used to output a prediction is $k = 40$, except for the brute-force algorithm
-where the number of clones can not be controlled. The RMSE and MAE of the
+where the number of clones cannot be controlled. The RMSE and MAE of the
 algorithms are reported on Table
 \ref{TAB:clone_based_rmse_mae}.
 
@@ -695,9 +697,10 @@ discount clones that rely on a too small number of common items.
 
 Leaving clones for a moment, let us focus now on the Bsl predictor. Bsl outperforms by far the RMSE of the
 $k$-NN algorithm, and in fact if we go back to table
-\ref{TAB:parall_performances_comparison}, we see that it outperforms also the
+\ref{TAB:parall_performances_comparison} on page
+\pageref{TAB:parall_performances_comparison}, we see that it outperforms also the
 algorithms mentioned there. Yet, this algorithm is unable to output
-personalized recommendation: all recommendations would be the same for
+personalized recommendations: all the recommendations would be the same for
 \textbf{any} user! This is simply due to the fact that in the prediction
 $\predrui = \mu  + b_u + b_i$, the only user-dependent factor is the term
 $b_u$, which is the \textbf{same} in all the predictions regardless of the
@@ -867,7 +870,7 @@ neighborhood, which may explain the differences in performance.
 This closes for now our contributions to analogical recommendation. We will
 come back to it in the conclusion of this chapter, and we will now focus on a
 somewhat unrelated problem: analogical proportion mining in databases. As we
-will see though, analogical recommendation can in fact be view as both a
+will see though, analogical recommendation can in fact be viewed as both a
 motivation \textbf{and} as a purpose for the mining of analogical proportions.
 
 \section{Mining analogical proportions}

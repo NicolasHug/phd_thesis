@@ -85,19 +85,20 @@ because it clearly binds the two processes triggered by analogical proportions
 In Chapter \ref{CHAP:analogy_preserving_functions}, we investigated a question
 that naturally followed from the results of Chapter
 \ref{CHAP:functional_definition}: how can we ensure that the analogical
-extension is completely error-free? In other word, is there a criterion that
+extension is completely error-free? In other words, is there a criterion that
 tells us that the new examples that are generated are associated to the correct
 label? We have been able to answer this question in a Boolean setting: the
 analogical extension is perfectly sound if and (only if) the Boolean function
 $f$ underlying the label is an affine function. This strong result
-\cite{CouHugPraRicIJCAI17} is analogous to that of Davies and Russel (see
-Section \ref{SEC:Davies_and_Russel}), who also provided a side condition that
+\cite{CouHugPraRicIJCAI17} is reminiscent of that of Davies and Russel (see
+Section \ref{SEC:Davies_and_Russel}), who provided a side condition that
 allowed to safely use an analogical inference principle. Their analogical
-inference principle was obviously different than ours (although we could claim
-that ours is a particular case of theirs), but the two approaches are
-comparable in terms of general philosophy. We extended our results to the real
-setting and in the case where attributes are nominally-valuated. These results
-open the door to various speculative research topics, that we will now explore.
+inference principle was actually quite different than ours (although we could claim
+that ours is a particular case of theirs), but the two approaches can be
+considered similar from a general point of view. We extended our results to the
+real setting and in the case where attributes are nominally-valuated. These
+results open the door to various speculative research topics, that we will now
+explore.
 
 \paragraph{Future work\\}
 
@@ -136,21 +137,18 @@ Another track of research can be motivated by looking at Figure
   \caption{A real function $f$ that is piecewise affine.}
 \label{FIG:piecewise_affine}
 \end{figure}
-The function $f$ is not affine, but is instead
-\textbf{piecewise affine}. If we manage to find four elements $\mathbf{a},
-\mathbf{b}, \mathbf{c}, \mathbf{d} \in X^m$ that are on the same simplex (a
-simplex is here defined as a subset of $X^m$ where $f$ is affine), then we know
-that we can correctly predict the value of $f(\mathbf{d})$ from those of
-$f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})$. Well in $\mathbb{R}^m$ this
-result is not really useful, but we can actually show that every Boolean
-function is piecewise affine! So theoretically, if we can identify all the
-simplices, this means that we should be able to produce a sound extension in any
-case, for any function $f$, and for any training set. This probably sounds too
-good to be true, and so far our experiments tend to show that there is no
-simplex including four elements $\mathbf{a}, \mathbf{b}, \mathbf{c},
-\mathbf{d}$ where the associated class equation is solvable, thus compromising
-this track of research. But these are still preliminary experiments, and a more
-thorough investigation deserves to be addressed.\\
+The function $f$ is not affine, but is instead \textbf{piecewise affine}. We
+know from our results that for any elements $\mathbf{a}, \mathbf{b},
+\mathbf{c}, \mathbf{d} \in X^m$ that are on the same simplex (a simplex is here
+defined as a subset of $X^m$ where $f$ is affine), then we can correctly
+predict the value of $f(\mathbf{d})$ from those of $f(\mathbf{a}),
+f(\mathbf{b}), f(\mathbf{c})$. Well in $\mathbb{R}^m$ this result is not really
+useful, but we can actually show that every Boolean function is piecewise
+affine! So theoretically, if we can identify all the simplices, this means that
+we should be able to produce a sound extension in any case, for any function
+$f$, and for any training set. At this point, only preliminary experiments
+have been carried out, and a more thorough investigation deserves to be
+addressed.\\
 
 Finally, we will close this discussion by mentioning the elephant in the room
 that we have so far ignored: transfer learning. Transfer learning is a current
