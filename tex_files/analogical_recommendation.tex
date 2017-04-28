@@ -889,9 +889,10 @@ Our analogical inference principle used in the first section states that if four
 then their ratings for an item $i$ that $d$ has not rated should also be in
 analogy:
 $$
-\infer{ r_{ai} : r_{bi} :: r_{ci} : r_{di} ~~ \forall i \in I_a \cap I_b \cap
-I_c, \text{ and } i\notin I_d }{r_{aj} : r_{bj} :: r_{cj} : r_{dj} ~~ \forall j
-\in I_a \cap I_b \cap I_c \cap  I_d}
+\inferrule{r_{aj} : r_{bj} :: r_{cj} : r_{dj} ~~ \forall j \in
+I_a \cap I_b \cap I_c \cap  I_d}
+{r_{ai} : r_{bi} :: r_{ci} : r_{di} ~~ \forall i \in I_a \cap I_b \cap I_c,
+\text{ and } i\notin I_d }
 $$
 But we have so far neglected a central question: do such proportions actually
 exist in our database? Can we find enough 4-tuples of users such that their
@@ -958,12 +959,12 @@ a naive association rules mining algorithm would be as follows:
   where the join is the union and the meet is the intersection.
 \item Let $I_S$ be any of the $2^m$ itemsets in $2^I$. Then for each $I_S$,
   compute all partitions $(X, Y)$ of $I_S$ and calculate the confidence
-    associated with the rule $X \implies Y$. If the confidence is below a given
+    associated with the rule $X \implies Y$. If the confidence is above a given
     threshold, then keep the association rule, else discard it.
 \end{enumerate}
 
 The second step remains reasonable and cannot really be optimized, but the
-first one is obviously impossible in practice due to the terrific size $2^I$,
+first one is obviously impossible in practice due to the terrific size of $2^I$,
 when real-world databases usually contain hundreds or thousands of items.
 The most famous algorithm for association rule mining probably is the
 \textbf{Apriori} algorithm introduced in \cite{AgrSriVLDB94}, that we will
@@ -999,7 +1000,6 @@ in the following steps:
     the above naive algorithm is used to assess the confidence of the
     association rules.
 \end{enumerate}
-
 In the end, we are provided with a set of association rule than comply with
 some quality requirements, and that give us insightful information that link
 the elements of our database.
@@ -1026,7 +1026,7 @@ structure.  We dispose of a set of users $U$ and a set of items $I$. Each user
 $u$ has rated (or purchased) a given set of movies $I_u \subseteq I$. In this
 setting, each user $u$ is actually considered to be a transaction $t$, as
 defined in the previous section. The set of all the ratings $\rui$ is denoted
-$R$ and can be viewed as a sparse matrix where user are columns and items are
+$R$ and can be viewed as a sparse matrix where users are columns and items are
 rows (or the reverse).  For now, we do not care about the rating values and
 just focus on whether the rating exists or not (just like we only care about
 the fact that an item has been bought in the case of association rules). We
@@ -1062,7 +1062,7 @@ Here again, we will only be interested in proportions whose support is greater
 than some threshold $\alpha$: a proportion built on only two components is a
 lot less meaningful than a proportion built on dozens of components.
 
-When given four items $a, b, c, d$, the question is know to find out which is
+When given four items $a, b, c, d$, the question is now to find out which is
 the proportion that actually holds. It could be $a:b::c:d$, but it could just
 as well be $a:b::d:c$ or $a:c:d:b$, or any of the $24$ ($4!$) combination of
 these four elements. Fortunately, we do not have to test all the $24$
@@ -1131,7 +1131,7 @@ of the rating scale.
     \ref{SEC:formal_definitions_proportions}. As the quality each proportion is
     evaluated in a component-wise fashion, we can choose various aggregation
     functions to assess the overall quality: mean, max, min, or also compare
-    two proportion by lexicographic order. We will give further details in the
+    two proportions by lexicographic order. We will give further details in the
     experiments section.
   \item Finally, by adopting a statistical point of view, we can try to
     evaluate the probability of observing the proportion $a:b::c:d$, and
@@ -1180,7 +1180,7 @@ $\mathcal{P}$ that still relate to the same four items, i.e. we could find in
 $\mathcal{P}$ the proportion $a:b::c:d$ as well as the non-equivalent
 proportion $a:b::d:c$. It should not seem natural to have these two proportions
 in $\mathcal{P}$, so if this happens this is probably because the quality
-function $f$ that is too permissive, or because the threshold $\beta$ is not
+function $f$ is too permissive, or because the threshold $\beta$ is not
 correctly tuned.
 
 We also want to stress the point that the actual rating values are only used in
@@ -1200,11 +1200,15 @@ we will binarize them.
 
 For our purpose, we actually do not need to set a quality threshold $\beta$,
 which would by the way be quite arbitrary. Instead, we will only be interested
-in \textbf{comparing} the quality of the  proportions. We have chosen to
+in \textbf{comparing} the quality of the  proportions. We will not make use of
+the analogical dissimilarity because the AD is dependent on the dimensions of
+the vectors, and we will necessarily compare proportions that have different
+dimension so this would not make sense. Instead, we have chosen to
 compare two proportions by first computing the truth value of each of their
 component-wise proportions using the graded-view of analogical proportions
 described in Section \ref{SEC:formal_definitions_proportions}, and then by
-comparing these truth values in lexicographic order.
+comparing these truth values in lexicographic order. This allows to compare
+proportions that have different dimensions in a more meaningful way.
 
 This fuzzy view of analogical proportion is recalled here: for four real
 elements $a, b, c, d \in [0, 1]$, the quality of the analogical proportion
@@ -1229,7 +1233,7 @@ chosen to compare them with the mean of the truth values, the best proportion
 would have been the second one. In the remaining of this discussion, a
 \textbf{component-proportion} will denote a proportion between ratings (for
 example the proportion $0:1::0:1$ is the first component-proportion of
-$i_1:i_2::i3:i4$), and in general a proportion  will refer to an analogy
+$i_1:i_2::i_3:i_4$), and in general a proportion  will refer to an analogy
 between items (i.e. it is an aggregation of component-proportions).
 \end{testexample}
 
@@ -1272,16 +1276,16 @@ with a minimum support of $200$ common users. The results are reported on Table
     &\multicolumn{1}{c}{$i_1$}  & \multicolumn{1}{c}{$i_2$} &
     \multicolumn{1}{c}{$i_3$} & \multicolumn{1}{c}{$i_4$}\\
   \midrule
- 1&   Star Wars & The Empire Strikes Back & Raiders of the Lost Ark & Return of the Jedi  \\
- 2&   Star Wars & Return of the Jedi & Raiders of the Lost Ark & The Empire Strikes Back  \\
- 3&   Star Wars & The Empire Strikes Back & Return of the Jedi & Raiders of the Lost Ark  \\
- 4&   Star Wars & Raiders of the Lost Ark & Return of the Jedi & I.J. and the Last Crusade  \\
- 5&   Star Wars & Return of the Jedi & Raiders of the Lost Ark & The Fugitive  \\
- 6&   Star Wars & Raiders of the Lost Ark & Return of the Jedi & Back to the Future  \\
- 7&   Star Wars & The Empire Strikes Back & Raiders of the Lost Ark & I.J. and the Last Crusade  \\
- 8&   Star Wars & The Empire Strikes Back & Return of the Jedi & I.J. and the Last Crusade  \\
- 9&   Star Wars & The Empire Strikes Back & I.J. and the Last Crusade & Return of the Jedi  \\
- 10&   Star Wars & Raiders of the Lost Ark & The Empire Strikes Back & The Fugitive\\
+ 1&   Star Wars & The Emp. Strikes Back & Raid. of the Lost Ark & Return of the Jedi  \\
+ 2&   Star Wars & Return of the Jedi & Raid. of the Lost Ark & The Emp. Strikes Back  \\
+ 3&   Star Wars & The Emp. Strikes Back & Return of the Jedi & Raid. of the Lost Ark  \\
+ 4&   Star Wars & Raid. of the Lost Ark & Return of the Jedi & I.J. and the Last Crus.  \\
+ 5&   Star Wars & Return of the Jedi & Raid. of the Lost Ark & The Fugitive  \\
+ 6&   Star Wars & Raid. of the Lost Ark & Return of the Jedi & Back to the Future  \\
+ 7&   Star Wars & The Emp. Strikes Back & Raid. of the Lost Ark & I.J. and the Last Crus.  \\
+ 8&   Star Wars & The Emp. Strikes Back & Return of the Jedi & I.J. and the Last Crus.  \\
+ 9&   Star Wars & The Emp. Strikes Back & I.J. and the Last Crus. & Return of the Jedi  \\
+ 10&   Star Wars & Raid. of the Lost Ark & The Emp. Strikes Back & The Fugitive\\
 \bottomrule
 \end{tabular}
 \caption{The ten best item proportions with a support of more than $200$ common
@@ -1339,6 +1343,8 @@ general. If we really want to ban popular movies, we can also set a
 the number of itemsets that we consider, leading to a significant improvement
 in computation time. These two options will be explored.
 
+\paragraph{Promoting \textit{disagreement} proportions\\}
+
 Table \ref{TAB:best_prop_num_customTV_200} shows the 10 best proportions with a
 minimum support of $200$, with a tweaked comparison function. Here, the truth
 value of a component-proportion $r_1 : r_2 :: r_3 : r_4$ is defined by:
@@ -1374,7 +1380,7 @@ lexicographic order of all the $A'$ values.
 
 We still have a lot of Star Wars movies (and a few Indiana Jones), but the
 movies seem more diverse: we now have 11 unique movies, instead of just 7
-before. Nine of these proportions comply with the pattern \textit{Star Wars
+before. 9 of these proportions comply with the pattern \textit{Star Wars
 movie} is to \textit{Other Star Wars movie} what \textit{movie A} is to
 \textit{movie B}. This suggests that we should find strong links underlying the
 connection between \textit{Movie A} and \textit{Movie B}, because the two Star
@@ -1388,6 +1394,8 @@ movies are very popular just like in Table \ref{TAB:best_prop_num_basic_200},
 their genres are however quite different: while we have considered Star Wars
 and Indiana Jones to be of the same kind, we can fairly claim that a Star Wars
 movie is very far from Fargo, Pulp Fiction or The Silence of the lambs.
+
+\paragraph{Lowering support threshold\\}
 
 Table \ref{TAB:best_prop_num_basic_10_50} illustrates the ten best proportions
 we have found after setting the minimum support at 10, and a maximum support at
@@ -1430,7 +1438,7 @@ not really surprising that we observe the two patterns $a:b::c:d$ and
 $a:b::d:c$. This comes from the fact that these movies are often given similar
 (and high) ratings. The other proportions involve movies that are still from the
 90's and that have reviewed pretty bad reviews from critics: they seem to be
-\textit{so bad it's good} kind.
+from the \textit{so bad it's good} kind.
 
 \subsubsection{Boolean ratings}
 
@@ -1453,8 +1461,8 @@ They involve the same 7 movies and are so alike that we choose not to show them
 here to avoid redundancy. Indeed, the set of candidate 4-itemsets are
 necessarily the same in the two settings: recall that on the first stage of the
 algorithm, we do not care about the rating values so the fact that ratings are
-binary or numerical do not change anything. The fact that the best proportion
-still are the same is an argument in support of the coherence of the two
+binary or numerical do not change anything. The fact that the best proportions
+are still the same is an argument in support of the coherence of the two
 quality functions.
 
 There are in total 993 candidate 4-itemsets. Figure
@@ -1534,7 +1542,7 @@ time is a scarce resource.
 These observations led us to consider another framework for analogical
 recommendation in Section \ref{SEC:clone_based_view}. Acknowledging the fact
 that each user tends to have a very
-personal idea of what a good (or bad) rating, we introduced the notion of clones
+personal idea of what a good (or bad) rating should be, we introduced the notion of clones
 which captures how two users tend to agree semantically on a rating. This
 semantic agreement is not necessarily reflected in the numerical rating values:
 for a user $u$, the value 3 may
@@ -1568,7 +1576,7 @@ the general mining algorithm, treating ratings as numerical values and as
 Boolean values. The main take-away message was that the best analogies that
 could be extracted between items were involving users with similar tastes: the four movies of a
 proportion were mostly neighbors, in the sense that users tend to agree on
-their respective ratings. Also, when forcing proportion to display a
+their respective ratings. Also, when forcing proportions to display a
 disagreement in the ratings of the four movies, the best proportions that were
 revealed still had a pretty bad quality.
 
@@ -1586,7 +1594,8 @@ beneficial over a simple neighborhood approach.
 
 Even if our investigations on analogical recommendation did not completely live
 up to our expectations, there still is a contribution of ours that  is worth
-mentioning. As pointed out earlier in the first section, all of our experiments
+mentioning. As pointed out earlier in the first section, all of our
+recommendation experiments
 where carried out using Surprise\footnote{\url{http://surpriselib.com}}
 \cite{Surprise}, an open source Python recommendation engine that we have
 developed. Quite surprisingly, when we started our experiments a few years
@@ -1594,7 +1603,7 @@ ago, there were no Python library that would allow to easily run
 cross-validation procedures, or that would make the implementation of a
 recommendation algorithm easy. But most importantly, it seemed that most of the
 implementation details of the available algorithms were never explicitly
-mentioned, so it made comparing performances of the algorithm difficult, if not
+mentioned, so it made comparing performances of the algorithms difficult, if not
 meaningless. So we decided to write our own package. We started out by writing
 our own custom (and hacky) scripts, which grew up to become a much more
 complete and fairly popular recommendation engine. As of April 2017, the main

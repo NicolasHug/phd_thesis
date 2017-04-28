@@ -26,7 +26,7 @@ used. Even if this argument is perfectly admissible, we cannot spare ourselves
 the very questioning of the analogical inference principle. We say that if
 four elements are in proportion then so are their classes... But why should it
 even be true? Actually, this question of \textit{why} will probably be best
-answered by philosophers, rather than by computer scientist. We can however
+answered by philosophers, rather than by computer scientists. We can however
 answer the question of \textit{when}: when is the analogical inference
 principle sound? Said differently, what are the conditions on the function $f$
 so that the inference
@@ -35,13 +35,7 @@ $$
 f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})}
 $$
 is sound? The current chapter will be devoted to this question, in a Boolean
-setting. In this regard,
-the problem we address here is related to the contribution of Davies and Russel
-that we described in Section \ref{SEC:Davies_and_Russel} the authors gave a
-necessary condition for the following inference principle to hold:
-$$\inferrule{P(S) \wedge Q(S) \\ P(T)}{Q(T)}.$$
-The links and differences between this inference principle and ours will be
-discussed in the conclusion of this document.
+setting.
 
 It is actually pretty easy to build up simple problems where the application of
 our analogical inference principle leads to disastrous results.  Take for
@@ -93,14 +87,14 @@ are fully compatible with the analogical inference principle in a Boolean
 setting. Let us restate the inference principle in this context to explain what
 we mean: for any four elements $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}$
 in $\mathbb{B}^m$, the analogical inference principle states that if
-$\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$, then $f(\mathbf{a}):
-f(\mathbf{b}):: f(\mathbf{c}): f(\mathbf{d})$ where $f$ is a Boolean function
+$\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$ holds, then $f(\mathbf{a}):
+f(\mathbf{b}):: f(\mathbf{c}): f(\mathbf{d})$ also holds, where $f$ is a Boolean function
 from $\mathbb{B}^m$ to $\mathbb{B}$. We have said it before:  this principle is
 unsound. The goal of this chapter is to identify all of the functions $f$ that
 lead to a valid conclusion, i.e. the functions such that $\mathbf{a}:
 \mathbf{b}:: \mathbf{c}: \mathbf{d} \implies f(\mathbf{a}):f(\mathbf{b})::
 f(\mathbf{c}): f(\mathbf{d})$ (with some minimal and natural requirements). We
-will say that these functions are \textbf{analogy preserving}.
+will say that these functions are \textbf{analogy preserving} (AP).
 
 We will tackle this problem by adopting the general point of view of  the
 training set extension. In Section \ref{SEC:extending_a_training_set}, we first
@@ -110,7 +104,7 @@ functions. In Section \ref{SEC:a_complete_characterization_of_AP_functions}, we
 give a complete and accurate depiction of analogy preserving functions by
 showing that the class of analogy preserving functions is the class of
 (Boolean) affine functions. This strong theoretical result is complemented in
-Section \ref{SEC:beyond_boolean_AP_functions}, study the some functions that
+Section \ref{SEC:beyond_boolean_AP_functions}, where we study some functions that
 derive from AP in various ways. We also address the identification of AP
 functions in a nominally valued setting and in a real setting, where we will
 once again witness the close links between the Boolean proportion and the
@@ -176,8 +170,9 @@ set.
 Actually, only a few methods have been proposed for extending a training set with
 new examples, and most of them are specific to a particular application. For
 example in \cite{CanPerArlLlo06}, some techniques are proposed but they are
-only relevant for character recognition tasks. Intuitively, we may build a new
-example starting from 1, 2 or 3 known examples.
+only relevant for character recognition tasks. In the general case, we may
+consider that we can build a new example starting from 1, 2 or 3 known
+examples.
 \begin{enumerate}
 \item With one example, a natural way to proceed is to use the classical
   neighborhood approach: given one  example $(\mathbf{a},f(\mathbf{a}))$, we
@@ -670,13 +665,15 @@ Now, we will prove that every affine function is AP:
   \includegraphics[width=2in]{figures/affine_functions_neighbors.pdf}
   \caption{The labels as determined by the affine function $g(x_1, x_2, x_3) =
   x_1 + x_3 + x_3$. Each $1$ is surrounded by three $0$, and each $0$
-  is surrounded by three $1$. Also, note that solving any (solvable) analogical
-  equation leads to the correct solution: This is because $g$ is AP.}
+  is surrounded by three $1$. Note that solving any (solvable) analogical
+  equation leads to the correct solution: this is because $g$ is AP. Also, we
+  see that we have here a classification problem that is highly non-linearly
+  separable.}
   \label{FIG:affine_functions_neighbors}
 \end{figure}
 
 Proposition \ref{PROPOS:affine_functions_are_ap} can now retrospectively
-explain the results of Figure \ref{FIG:nan_vs_nn} on page \ref{FIG:nan_vs_nn}
+explain the results of Figure \ref{FIG:nan_vs_nn} on page \pageref{FIG:nan_vs_nn}
 for the two functions $f_1$ and $f_2$, which are both instances of affine
 functions. We saw that for these two functions, $\omegasf$ (defined as the
 proportion of elements $\mathbf{x}$ in $\esfs$ for which $\albl{x} = f(x)$) was
@@ -781,7 +778,7 @@ We have seen that every affine function is AP, i.e. if $d(f)\leq 1$, then $f\in
   then $f$ is not AP, so the class of AP functions is $L$.
 \end{proof}
 
-In the end, we proved that {\bf the class of functions that ensure a sound
+In the end, we have proved that {\bf the class of functions that ensure a sound
 analogical extension of any training set $S \subseteq \mathbb{B}^m$ is the class
 of affine functions $L$}. If the function is not affine, then there exists a
 training set $S \subseteq \mathbb{B}^m$ for which $\mathbf{E}_S(f)$ is unsound.
@@ -982,6 +979,8 @@ following question: what remains of the quality of the analogical extension
 $\mathbf{E}_S(f)$ when $f$ deviates from being AP in different ways? We will
 here investigate this question.
 
+\paragraph{$\epsilon$-close functions from $L'$\\}
+
 Recall that for a given a training $S$, we defined $\omegasf$ as the quality of the
 extension $\esf$ with $\omegasf \eqdef P\left(\albl{\mathbf{x}} = f(\mathbf{x})
 \given[\big] \mathbf{x} \in \esfs\right).$ By definition, $\omegasf=1$ for all
@@ -1077,6 +1076,7 @@ depending on $\epsilon$ and $\mid S \mid$. Such a result would be strongly
 linked to the PAC learning theory \cite{Val72}, and is the object of current
 research.
 
+\paragraph{Other non-AP functions\\}
 
 
 We have studied so far the variation of $\omegasf$ when $f$ deviates from
