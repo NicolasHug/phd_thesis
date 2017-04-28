@@ -1167,24 +1167,24 @@ simply because we do not even know how to \textit{write} them. When dealing
 with Boolean functions we used an algebraic point of view that allowed us
 to write the functions in their Algebraic Normal Form, and we identified the AP
 functions as those which have a particular ANF. But here this will not be
-possible because there are no algebraic structure on the Cartesian product that
+possible because there is no algebraic structure on the Cartesian product that
 is the domain of our functions.
 
 Nonetheless, we will still find close links between the AP Boolean functions
 and the AP functions of our current setting, and these links are based on the
-\textit{binarization} of the nominal attribute. Indeed, any nominal attribute
+\textit{binarization} of the nominal attributes. Indeed, any nominal attribute
 with $k$ values can be binarized into $k$ Boolean attributes. We can also choose
 $k- 1$ attributes, or some other fancy binarization procedure, but we will
 stick to the simplest one:
 binarizing the \textit{color} attribute leads to three binary attributes
-$(is\_red, is\_green, is\_blue)$ so that $red$ value is coded as $(1, 0, 0)$,
+$(is\_red, is\_green, is\_blue)$ so that $red$ is coded as $(1, 0, 0)$,
 $green$ is coded as $(0, 1 , 0)$ and $blue$ is coded as $(0, 0, 1)$. Obviously,
 the $k$ Boolean attributes are not independent: for example $(1, 1, 1)$  is not
 a valid value.  More formally, let us denote $\bin$ this injective embedding
-going from $X_i=\{v_1, \cdots, v_k\}$ to $\mathbb{B}^k$:
-$$\bin(v_i) \eqdef (0, \cdots, 0, 1, 0, \cdots 0),$$
+going from $X_i=\{v_1, \dots, v_k\}$ to $\mathbb{B}^k$:
+$$\bin(v_i) \eqdef (0, \dots, 0, 1, 0, \dots 0),$$
 where $1$ is at position $i$.  So if we have a set of nominal attributes $x_1,
-\cdots, x_m$ where $x_i$ takes its values in a finite set $X_i$, the Cartesian
+\dots, x_m$ where $x_i$ takes its values in a finite set $X_i$, the Cartesian
 product  $\prod_{i=1}^m X_i$ can be mapped into the set $\prod_{i=1}^m
 \mathbb{B}^{\mid X_i \mid}$ by applying the injective embedding $\bin$ in a
 component-wise fashion:
@@ -1223,7 +1223,7 @@ $\bin(\prod_{i=1}^m X_i)$, which is included in $\prod_{i=1}^m
 \mathbb{B}^{|X_i|}$. This is why $f^b$ is considered to be a partial function.
 
 Nevertheless, the AP property is still relevant for functions that are only
-partially defined: a partially defined function that always lead to a perfectly
+partially defined: a partially defined function that always leads to a perfectly
 sound analogical extension for any training set $S$ will also be said to be
 Analogy Preserving, and will be called PAP for Partial AP. Just like in Section
 \ref{SEC:a_complete_characterization_of_AP_functions}, a natural way to
@@ -1293,11 +1293,11 @@ Thanks to Property \ref{PROPER:analogy_nominal_iff_analogy_bin}, we have seen
 \end{proof}
 
 In the end, the notions of AP function is smoothly transferable to the notion
-of PAP function. This result is only purely theoretical, and sadly there are
-not much we can extract from it for practical use. Proposition
+of PAP function. This result is only purely theoretical, and sadly thereis  
+not much more we can extract from it for practical use. Proposition
 \ref{PROPOS:PAP_eq_AP} tells us that when dealing with nominal attributes, if
 the function underlying the ground truth labels is affine once the dataset has
-been binarized, then we can safely extend our training set. Unfortunately, as
+been binarized, then we can safely extend our training set. As
 there are no common operators on the set  $\prod_{i=1}^n X_i$, we are not able
 to give a more accurate characterization of AP functions in such settings.
 
@@ -1420,8 +1420,8 @@ where $+$ is now the module 2 addition. Also, noting that $\mathbf{a} :
 $\sol(a, b, c) = a + b + c$, the proof can be derived easily. We chose to give
 the longest one in Section
 \ref{SEC:a_complete_characterization_of_AP_functions} because this is the one
-that was originally derived (plus, it was the one that were used in our
-publication \ref{CouHugPraRicIJCAI17}).
+that was originally derived (plus, it was the one that was used in our
+publication \cite{CouHugPraRicIJCAI17}).
 
 \section*{Conclusion}
 
@@ -1433,10 +1433,10 @@ functions (namely their algebraic normal form), we have been able to prove that
 the class of AP functions is the class of affine functions, i.e. functions
 whose degree is less than $1$.
 
-We chose to tackle the problem of finding the class of AP functions from the
+We have chosen to tackle the problem of finding the class of AP functions from the
 angle of training set extension. It became clear that the class of AP functions
 can be seen as the class of functions that allow  a perfectly sound extension,
-or equivalently as the class that allow the analogical inference principle to
+or equivalently as the class of functions that allow the analogical inference principle to
 be sound.
 
 We also provided a more explicit version of the analogical inference principle
@@ -1464,7 +1464,7 @@ is able to compensate of the candidates that were wrong in their predictions,
 because it will choose the most common predictor which happens to be the
 correct label.  Ultimately, even if only $50\% + \epsilon$ ($\epsilon > 0$) of
 the candidates are correct, it is still enough to have a perfectly sound
-extension. The class of AP functions ensure that exactly $100\%$ of the
+extension. The class of AP functions ensures that exactly $100\%$ of the
 candidates are correct, but it is clear that such a requirement is too strong
 to be really useful in practice. The derivation of a theoretical result
 involving the role  of the majority-vote procedure is still a topic of current
@@ -1472,7 +1472,7 @@ research.
 
 Our main goal was to identify the class of AP functions in a Boolean setting.
 We have extended our results to two other domains. It is often the case that
-the classification problem does not involve purely Boolean attribute, but
+the classification problem does not involve purely Boolean attributes, but
 rather a more general domain where instances are multi-valuated. Sadly in these
 domains, there are no know structure or operators, so it was not possible to
 give a clear identification of AP functions such as that of Boolean AP
@@ -1483,5 +1483,5 @@ of AP functions in a real setting, i.e. for functions from $\mathbb{R}^m$ to
 $\mathbb{R}$. It turns out that the class of real AP functions is the class of
 real affine functions, just like the class of Boolean AP functions is the class
 of Boolean affine functions. The result for real functions was much easier to
-prove and in the end quite trivial, and seems to strongly limit use of the
+prove and in the end quite trivial, and seems to strongly limit the use of the
 analogical inference principle in a real setting.
