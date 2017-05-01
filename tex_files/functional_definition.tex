@@ -219,14 +219,14 @@ $\rsfx$ is simply the set of 3-tuples in $S$ which are analogically linked to
 $\mathbf{x}$.
 
 \begin{testexample}
-Considering again the example of Figure \ref{FIG:ae_example}, we have that
+Considering again the example of Figure \ref{FIG:ae_example}, we have 
 $\aroot{S}{f}{\mathbf{c}} = \Set{(\mathbf{b}, \mathbf{d},\mathbf{a}),
 (\mathbf{b}, \mathbf{a},\mathbf{d})}$. However, the two corresponding
 proportions $\mathbf{b}: \mathbf{d}::\mathbf{a}:\mathbf{c}$ and $\mathbf{b}:
 \mathbf{a}::\mathbf{d}:\mathbf{c}$ are equivalent, and we will follow the
 convention that the analogical root should only contain non-equivalent
 3-tuples, so technically $\aroot{S}{f}{\mathbf{c}}$ is entirely described by
-$\Set{(\mathbf{b}, \mathbf{d},\mathbf{a})}$.  We also have that
+$\Set{(\mathbf{b}, \mathbf{d},\mathbf{a})}$.  We also have 
 $\aroot{S}{f}{\mathbf{f}} = \Set{(\mathbf{a}, \mathbf{b},
 \mathbf{e})}$, $\aroot{S}{f}{\mathbf{a}} = \Set{(\mathbf{a}, \mathbf{a},
 \mathbf{a}), (\mathbf{b}, \mathbf{b}, \mathbf{a}), (\mathbf{d}, \mathbf{d},
@@ -280,7 +280,7 @@ classifier:
 \begin{definition}[Conservative classifier]
   \label{DEF:conservative_classifier}
   Given a training set $S$ with an underlying ground truth function $f$,
-  a conservative classifier sets the prediction of an element $\mathbf{x}$ as
+  a \textbf{conservative classifier} sets the prediction of an element $\mathbf{x}$ as
   follows:
 
   $$\text{If } \mathbf{x} \in \esf, ~ \hat{f}(\mathbf{x}) \eqdef \albl{\mathbf{x}}.
@@ -304,7 +304,7 @@ $\aroot{S}{f}{\mathbf{c}} = \Set{(\mathbf{b}, \mathbf{d},\mathbf{a})}$ and
 $\mathbf{C}(\mathbf{c}) = \Set{1}$. Also, $\hat{f}(\mathbf{f}) \eqdef
 \albl{\mathbf{f}} = 1$, because $\aroot{S}{f}{\mathbf{f}} =
 \Set{(\mathbf{a},\mathbf{b},\mathbf{e})}$ and $\mathbf{C}(\mathbf{f}) =
-\Set{1}$. Here, we did not need to use the majority vote procedure as there was
+\Set{1}$. Here, we did not need to use the majority-vote procedure as there was
 only one candidate solution for each prediction. As $\mathbf{g}$ and
 $\mathbf{h}$ do not belong to $\esf$, both $\albl{\mathbf{g}}$ and
 $\albl{\mathbf{h}}$ stay undefined.
@@ -342,7 +342,7 @@ all elements of the universe $X^m$ are affected by this generalization.
 We will end this discussion on conservative classifier by sketching a use-case
 described in \cite{StrYvoREPORT05}, where an analogical proportion is defined
 on the set of words over a finite alphabet, and the task is to learn the
-conjugation of English verbs. This setting is slightly different than that of
+conjugation of English verbs. This setting is slightly different from that of
 classification that we have settled-in, but all definitions and concepts remain
 valid. Here, solving the analogical equation
 $\textit{view}:\textit{reviewer}::\textit{search}:y$ leads to $\textit{researcher}$,
@@ -373,7 +373,7 @@ $\textit{views}:\textit{viewing}::\textit{eats}:y$. There is
 
 The fact that conservative learners cannot output a prediction for any
 $\mathbf{x}$ can here be considered a good thing: it would not be natural to
-look for the gerund form of \textit{absurd}. However, in many use cases we do
+look for the gerund form of \textit{absurd}. However, in many use-cases we do
 want our classifier to be able to predict the label of any element. This is why
 other options have been implemented to overcome this problem, and to extend in
 some sense the generalization ability of analogical learners. This is the
@@ -495,11 +495,11 @@ Definition \ref{DEF:AD_arithmetic_proportion} is equivalent to Definition
 \mathbf{b},\mathbf{c},\mathbf{d}) =
 \norm{1}{(\mathbf{a}-\mathbf{b})-(\mathbf{c}-\mathbf{d})}$. Note that the
 expression $\norm{1}{(\mathbf{a}-\mathbf{b})-(\mathbf{c}-\mathbf{d})}$ is
-nothing but the Hamming distance between the two vectors
-$(\mathbf{a}-\mathbf{b})$ and $(\mathbf{c}-\mathbf{d})$\footnote{$\mathbb{B}^m$
+nothing but the Hamming distance between the two vectors\footnote{$\mathbb{B}^m$
 is not closed under addition (or subtraction), so technically it may happen that
 $(\mathbf{a} - \mathbf{b}), (\mathbf{c} - \mathbf{d})$, or their difference are
-not in $\mathbb{B}^m$ but in $\mathbb{R}^m$.}.
+not in $\mathbb{B}^m$ but in $\mathbb{R}^m$.}
+$(\mathbf{a}-\mathbf{b})$ and $(\mathbf{c}-\mathbf{d})$.
 Actually, we could use any $p$-norm in $\mathbb{B}^m$, so
 Definition \ref{DEF:AD_arithmetic_proportion} could also be used to give a more
 general definition of the analogical dissimilarity in $\mathbb{B}^m$. Here
@@ -550,7 +550,7 @@ $3$-tuple $(\mathbf{a}, \mathbf{a}, \mathbf{a})$ with $\mathbf{a} \in S$.
 Hence, Algorithm \ref{ALGO:extended_classifier} is able to predict the label of
 any element $\mathbf{x} \in X^m$.
 
-For the sake of simplicity, we have here ignored a small but relevant detail:
+For the sake of simplicity, we ignored here a small but relevant detail:
 in their implementation \cite{BayMicDelIJCAI07}, the authors actually look for
 all the 3-tuples that have the same analogical dissimilarity as the
 $k^\text{th}$ one. For example if the $k^\text{th}$ 3-tuple has an $\AD$ of 5,
@@ -592,9 +592,9 @@ However, considering the above remark we are allowed to look for all other
 $3$-tuples that also have an $\AD$ of $1$. Actually, the $3$-tuple
 $(\mathbf{b}, \mathbf{d}, \mathbf{a})$ also has $\AD(\mathbf{b},\mathbf{d},
 \mathbf{a}, \mathbf{g}) = 1$, as can be verified on table \ref{TAB:AD_bdag}. We
-thus have $\mathbf{C}(\mathbf{g}) = \Set{1, 1}$: one solution that comes from the
+thus have $\mathbf{C}(\mathbf{g}) = \Set{1, 1}$: one solution comes from the
   solving of
-$f(\mathbf{e)} :f(\mathbf{e}):: f(\mathbf{e}) : y$ and another solution that
+$f(\mathbf{e)} :f(\mathbf{e}):: f(\mathbf{e}) : y$ and the other solution 
 comes from the solving of $f(\mathbf{b)} :f(\mathbf{d}):: f(\mathbf{a}) : y$.  Finally, we
 have $\hat{f}(\mathbf{g}) = 1$. As for $\mathbf{h}$, we have
 $\mathbf{C}(\mathbf{h}) = \Set{1, 1}$: one solution comes from $f(\mathbf{a)}
@@ -653,6 +653,7 @@ $$\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{d})=\norm{p}{\mathbf{d} -
 where $\mathbf{d}'\eqdef\mathbf{c}-\mathbf{a}+\mathbf{b}$. Actually,
 $\mathbf{d}'$ is nothing but the $4^\text{th}$ vertex of the parallelogram
 $\mathbf{a}\mathbf{b}\mathbf{c}\mathbf{d}'$, or equivalently, $\mathbf{d}'$ is
+the
 solution of the equation $\mathbf{a}: \mathbf{b} :: \mathbf{c} : \mathbf{x}$.
 All this means that $\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{d})$ simply
 is the distance between $\mathbf{d}$ and this $4^\text{th}$ vertex
@@ -678,7 +679,7 @@ Let us consider (again) Figure \ref{FIG:ae_example} on page
   on page \pageref{TAB:AD_bdag}.
 We now can reinterpret this statement: $\AD(\mathbf{b}, \mathbf{d}, \mathbf{a},
 \mathbf{g})$ should be equal to the distance between $\mathbf{g}$ and another
-vector that make up a perfect parallelogram with the $3$-tuple
+vector that makes up a perfect parallelogram with the $3$-tuple
 $(\mathbf{b},\mathbf{d}, \mathbf{a})$. This vector is naturally
 $\sol(\mathbf{b},\mathbf{d}, \mathbf{a}) = \mathbf{c}$ and have indeed
 $H(\mathbf{c}, \mathbf{g}) =  \AD(\mathbf{b}, \mathbf{d}, \mathbf{a},
@@ -703,7 +704,7 @@ elements the $k$ \textbf{nearest analogical neighbors} of $\mathbf{x}$:
 \begin{definition}[The $k$ nearest analogical neighbors]
   \label{DEF:knan}
   For any $\mathbf{x} \in X^m$, and any training set $S \subset X$, we define
-  the $k$ nearest analogical neighbors of $\mathbf{x}$ as the set:
+  the \textbf{$k$ nearest analogical neighbors of $\mathbf{x}$} as the set:
   $$k\text{-nan}\left(\mathbf{x}, S\right) \eqdef \Set{\argmin_{\mathbf{d}' \in
   A_E^Y(S)}^k
   \delta(\mathbf{x},\mathbf{d}')},
@@ -725,7 +726,7 @@ frequent analogical label:
 \begin{definition}[Extended classifier]
   \label{DEF:extended_classifier}
   Given a training set $S$ with an underlying ground truth function $f$,
-  an extended classifier with parameter $k$ sets the prediction of an element
+  an \textbf{extended classifier} with parameter $k$ sets the prediction of an element
   $\mathbf{x} \in X^m$ as follows:
 
   $$\hat{f}(\mathbf{x}) \eqdef \text{Mode}\Set{\albl{\mathbf{d}'} | \mathbf{d}'
@@ -807,7 +808,7 @@ learners. This is the purpose of the next section.
 \section{Theoretical properties of analogical classifiers}
 \label{SEC:theoretical_properties_of_analogical_classifiers}
 
-The functional definition of analogical learners opens the door the study of
+The functional definition of analogical learners opens the door to the study of
 various theoretical properties of analogical classifiers, which had only been
 described algorithmically so far. Just like for the $k$-NN literature,
 theoretical results are easier to derive when $k = 1$. We will therefore mostly
@@ -827,7 +828,7 @@ in $\mathbb{R}^m$, where $\mathbb{R}^m$ is equipped with a probability measure
 denoted $P$. The training set will be denoted
 $S_n=\Set{\left(\mathbf{x}^{(i)},f(\mathbf{x}^{(i)}) \right), ~ i
 \in [1, n]}$. As $S_n$ is random, then $\nan(\mathbf{x},S_n)$ can also be
-considered as a random element of $X^m$.  We then are in the exactly same
+considered as a random element of $X^m$.  We then are exactly in the same
 context as the work of Cover \& Hart who studied the 1-NN algorithm
 (\cite{CovHarTIT67}), and we obtain a similar result:
 \begin{property}
@@ -874,7 +875,7 @@ Let us note the following points:
   \item We have to be careful about the interpretation of Property
     \ref{PROPER:convergence_nan} in terms of machine learning. Indeed, another
     key property is proved in \cite{CovHarTIT67}: for an integrable
-    function $f$  over $\mathbb{R}^m$ w.r.t. the probability measure $P$, the
+    function $f$  over $\mathbb{R}^m$ with regards to the probability measure $P$, the
     expectation of $f(\nn(\mathbf{x},S_n))- f(\mathbf{x})$ converges to 0 when
     $n$ tends to infinity.  This means that asymptotically, the nearest
     neighbour of $\mathbf{x}$ has the same properties as $\mathbf{x}$, and
@@ -896,7 +897,7 @@ Let us note the following points:
 To conclude this discussion, even if the convergence result is interesting in
 itself, it does not say a lot in terms of machine learning. A much more
 interesting and powerful theoretical result of analogical classifiers will be
-proved in Chapter \ref{CHAP:analogy_preserving_functions}. Let us now focus on
+proven in Chapter \ref{CHAP:analogy_preserving_functions}. Let us now focus on
 their VC-dimension.
 
 \subsection{Vapnik Chervonenkis (VC) dimension of analogical classifiers}
@@ -930,9 +931,8 @@ study. The VC-dimension is defined as follows:
   elements in $X^m$. There are exactly $2^n$ ways to label each of the $n$
   elements. If for any labeling, there exists a learner in $\mathcal{C}$ that
   correctly labels all the elements in $S_n$, we say that $\mathcal{C}$
-  \textbf{shatters} $S_n$.\\
-
-  The VC-dimension of $\mathcal{C}$ is the biggest $n$ such that there exists a
+  \textbf{shatters} $S_n$.
+  The \textbf{VC-dimension} of $\mathcal{C}$ is the biggest $n$ such that there exists a
   set of $n$ points $S_n$ that can be shattered by $\mathcal{C}$.  When there
   exists a set $S_n$ that can be shattered for any size $n$, we say that the
   VC-dimension is infinite.
@@ -1106,7 +1106,7 @@ to the consistent facts:
 \end{definition}
 
 This closes our contributions to the theoretical properties of analogical
-classifiers. In the next section, we empirically investigate and illustrate the
+classifiers. In the next section, we will empirically investigate and illustrate the
 soundness of our results.
 
 \section{Experiments and empirical validation}
@@ -1148,7 +1148,7 @@ universe, we have investigated various sizes between $3$ and $100$. When
 dealing with a training set of size $100$, the cubic complexity of the
 analogical classifier leads to explore a set of approximately $100^3$ elements:
 as a consequence, we limit our investigation to a maximum of 100 elements in
-the training set in order to get realistic execution time.
+the training set in order to get a realistic execution time.
 
 All the accuracy (and other metrics) computations are averaged over a set of
 100 experiments. We have made sure that the class distributions of the training
@@ -1319,7 +1319,7 @@ provided that the training set is big enough.
 %to be added: we only want to construct analogical proportions of the form $a :
 %b :: c : x$ where $a$, $b$, $c$ and $x$ are all distinct elements. Indeed, the
 %proportions $x : x :: x : x$ and $x' : x :: x' : x$ are always true, and the
-%solution label related to these proportions would bias the final majority vote
+%solution label related to these proportions would bias the final majority-vote
 %procedure in a significant way towards the real label $\dot{x}$.
 %
 %We have applied this estimation protocol to all of the Boolean settings we have
@@ -1376,10 +1376,10 @@ $k$-NN style reasoning is natural. In the opposite case, when we only have a
 few relevant cases at hand, applying analogical proportion-based predictions
 appears to be a meaningful option.
 
-This concludes for now our investigations with analogical classifiers. We have
+This concludes for now our investigations on analogical classifiers. We have
 seen that they have so far mostly been used for natural language processing
 tasks, or classification in Boolean settings. One of the main goal of this
 thesis was to apply analogical proportion-based reasoning to concrete,
 real-world applications. We have chosen to investigate the suitability of
-analogical proportion in the design of recommender systems. This is the object
-of the next two chapters.
+analogical proportion in the design of recommender systems. This will be the
+object of the next two chapters.

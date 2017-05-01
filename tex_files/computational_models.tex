@@ -24,7 +24,7 @@ to machine learning tasks. This chapter is structured as follows.
 Section \ref{SEC:models_without_proportions} will be devoted to the description
 of existing models that do not make explicit use of analogical proportions, and
 Section \ref{SEC:models_with_analogical_proportions} will describe models that
-make use of analogical proportion in one way or another, but that still do not
+make use of analogical proportions in one way or another, but that still do not
 use analogical proportions in a formal way (these models will be the object of
 the next chapter).
 
@@ -46,10 +46,11 @@ find the center of gravity of the triangle: a somewhat simpler problem. He
 writes:
 
 \begin{quote}
-Knowing that the triangle and the tetrahedron are alike in many respects, we
+  Knowing that the triangle and the tetrahedron are alike in many respects, we
   conjecture that they are alike in one more respect. It would be foolish to
-  regard the plausibility of such conjectures as certainty, but it would just
-  as foolish, or even more foolish, to disregard such plausible conjectures.
+  regard the plausibility of such conjectures as certainty, but it would be
+  just as foolish, or even more foolish, to disregard such plausible
+  conjectures.
 \end{quote}
 
 As the center of gravity of a triangle is the meeting point of the three
@@ -318,7 +319,7 @@ disjunction. In the end, the complete analogical inference principle of Davies
 and Russel can be described as:
 
 $$\inferrule{P(S) \wedge Q(S) \\\\ P(T) \\\\  \left(\forall x ~ P(x) \implies
-Q(x)\right) \vee \left(\forall x ~ P(x) \implies \neg Q(x)\right)}{Q(T)}.$$
+Q(x)\right) \vee \left(\forall x ~ P(x) \implies \neg Q(x)\right)}{Q(T)}$$
 
 It is clear that when we have $P(S) \wedge Q(S)$, the right disjunct $\forall x
 ~ P(x) \implies \neg Q(x)$ cannot be true so the inference principle is still
@@ -331,7 +332,7 @@ bit more sophisticated than the one we have described here for the sake of
 understanding. Indeed, the more complex determination rule that they propose is
 as follows:
 $$\forall (y, z), ~ \left[\exists x~ P(x, y) \wedge Q(x, z)\right] \implies
-\left[\forall x~ P(x, y) \implies Q(x, z)\right]
+\left[\forall x~ P(x, y) \implies Q(x, z)\right].
 $$
 
 If $P(x, y)$ expresses that the car $x$ has the color yellow and if $Q(x, z)$
@@ -352,7 +353,7 @@ analogical proportions.
 
 \subsection{Solving geometric problems}
 
-The ANALOGY program of Thomas Evans \cite{Eva64} is one of the pioneer work in
+The ANALOGY program of Thomas Evans \cite{Eva64} is one of the pioneer works in
 the design of programs capable of analogical reasoning. ANALOGY, written in
 LISP\footnote{And according to its author, the largest LISP program at the
 time!}, is able to solve analogical equations in the form of geometrical
@@ -372,7 +373,7 @@ The inputs to the program are rough, hand-built low-level descriptions of the
 figures. For example, simple geometric shape such as circles, rectangles or
 triangles are all described with one single primitive:
 \textit{SIMPLE\_CLOSED\_CURVE(\dots)}, where the arguments are the start and
-end of of the (multiple) lines, and their curvatures. The program is then
+end of the (multiple) lines, and their curvatures. The program is then
 divided into two distinct parts.
 
 The role of the first part is to build high level representations of the
@@ -482,7 +483,8 @@ Copycat \cite{Mit93} (see also \cite{HofMit94}) is another famous program that
 performs analogical reasoning tasks, introduced by Melanie Mitchell and Douglas
 Hofstadter. The problems considered by Copycat are the solving of analogical
 equations in a \textit{microworld} of strings of letters. A typical Copycat
-problem looks as follows: $$\mathbf{abc} : \mathbf{abd} :: \mathbf{ijk} : x$$
+problem looks as follows:
+$$\mathbf{abc} : \mathbf{abd} :: \mathbf{ijk} : x.$$
 
 What should the value of $x$ be? Various answers may be relevant here, such as
 $\mathbf{ijd}$ (replace the right-most letter by $\mathbf{d}$), but the most
@@ -493,7 +495,7 @@ given equal chances of success.
 
 This principle is strongly reflected in the Copycat program which is
 probabilistic in nature: for the same problem, various solutions can be found
-depending on the initial condition. For example the  equation $\mathbf{abd} :
+depending on the initial condition. For example the  equation $\mathbf{abc} :
 \mathbf{abd} :: \mathbf{mrrjjj} : x$ leads to $\mathbf{mrrkkk}$ in 70\% of the
 cases (over 1000 experiments), and to $\mathbf{mrjjk}$ 20\% of the time. Other
 less plausible solutions make up the remaining 10\%.
@@ -532,17 +534,17 @@ components: the workspace, the codelets, and the temperature.
 \label{FIG:copycat_snapshot}
 \end{figure}
 
-Figure \ref{FIG:copycat_snapshot} illustrate the internal state of Copycat
+Figure \ref{FIG:copycat_snapshot} illustrates the internal state of Copycat
 during the solving of $\mathbf{abc} : \mathbf{abd} :: \mathbf{mrrjjj}: x$. 195
 codelets have run so far, so the temperature is average and some structure have
 been properly established, such as the \textit{successor group} $\mathbf{abc}$
 and the \textit{sameness group} $\mathbf{jjj}$. The $\mathbf{rr}$ group is also
-begin defined, though still weaker than the others at this stage. Also, a rule
+being defined, though still weaker than the others at this stage. Also, a rule
 describing the change from $\mathbf{abc}$ to $\mathbf{abd}$ has been
 established: \textit{replace the right-most letter by its successor}. Depending
 on the future behaviour of the codelets, this rule with either stick till the
 end of the program or change to lead to the most common prediction $x =
-\mathbf{kkk}$.
+\mathbf{mrrkkk}$.
 
 Copycat is clearly a complex adaptative system where a global behaviour emerges
 from small, independent parts. According to its authors, \textit{Copycat's
@@ -571,7 +573,7 @@ papers, Cornuéjols hypothesizes that the best analogy between a source and a
 target model is the \textit{simplest} one, meaning that its description length
 is minimal, in terms of Kolmogorov complexity.
 
-Let us first first recall some basic knowledge about Kolmogorov complexity,
+Let us first recall some basic knowledge about Kolmogorov complexity,
 before diving into more technical details. The Kolmogorov complexity of a
 string of characters $x$, denoted $K(x)$, is the length of the shortest
 computer program capable of outputting $x$ on a universal Turing machine. $K(x)$ is supposed to capture the
@@ -595,7 +597,7 @@ $M_T$), that can describe their corresponding objects.
 \begin{figure}[!h]
 \centering
 \includegraphics[width=1.5in]{figures/cornuejols_model.pdf}
-\caption{The two domains $S$ and $T$ in Cornuejols' model.}
+\caption{The two domains $S$ and $T$ in Cornuéjols' model.}
 \label{FIG:cornuejols_model}
 \end{figure}
 
@@ -621,16 +623,15 @@ where:
 Notice that the terms $y_i$ are not considered in this cost function, because
 they are entirely defined by their corresponding $x_i$ and $f_i$.
 
-Cornuéjols illustrate the plausibility of his model using experiments in the
+Cornuéjols illustrates the plausibility of his model using experiments in the
 microworld of Copycat. After defining the Kolmogorov complexity of the built-in
 relations (\textit{direction}, \textit{length}, etc.), and those of the
 representations of the inputs, the solutions of the analogical equations are
 set as those minimizing the above criterion. The empirical results show that
 this model, in addition to its theoretical appeal due to the proximity with
 MDLP, is at the very least an interesting option that deserves further
-investigations. In a
-recent work , this model of analogy has been applied to a task of transfer
-learning \cite{CorMur16}.
+investigations. In a recent work, this model of analogy has been applied to a
+task of transfer learning \cite{CorMur16}.
 
 Adopting a different (but close) approach, the association between Kolmogorov
 complexity and the evaluation of the quality of an analogy has also been
@@ -664,7 +665,7 @@ motivated by its psychological appeal: it is indeed well acknowledged that,
 when confronted with an unknown situation, humans tend to make use of their
 past knowledge about some other similar situation to solve the problem at hand.
 As an example, the recipe of a strawberry pie could be easily inferred using
-the past knowledge on the recipe of other fruit-pies (e.g. apple pie, pear pie,
+the past knowledge on the recipe of other fruit pies (e.g. apple pie, pear pie,
 etc.).
 
 In its most general form, CBR is a way of reaching the unknown solution $S$ to a
@@ -683,7 +684,7 @@ succession of the following four steps:
     $P_i$ are aggregated in some way, and adapted if needed to build up the
     final solution $S$.
   \item \textbf{Revise}: the relevance and the adequacy of the chosen solution
-    $S$ is evaluated, and $S$ is modified if needed.
+    $S$ are evaluated, and $S$ is modified if needed.
   \item \textbf{Retain}: if the revised solution $S$ ended up being a good
     choice, then the solution is retained and the couple $(P, S)$ is bound to
     be used in the solving of some future problems.
@@ -719,7 +720,7 @@ contrary actually: all elements are allowed to be extremely distinct. And
 indeed, if we are able to \textit{capture} how a given $P_i$ (that is not close
 to $P$) differs from $P$, then applying the same transformation to $S_i$ should
 give us a relevant potential solution $S$.  Acknowledging this fact, our
-approach to analogical learning will rather follow the following conceptual
+approach to analogical learning will rather follow another conceptual
 scheme: we will try to retrieve the proportions of the form $P_{i_1} : P_{i_2}
 :: P_{i_3} : P$, and the solution $S$ will be inferred by
 \textit{extrapolation}\footnote{The way $S$ is \textit{extrapolated} will be

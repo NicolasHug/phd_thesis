@@ -112,7 +112,7 @@ and $\oplus$ as the usual multiplication $\times$.
     a &= 30 = 1 \times 2 \times 3 \times 5\\
     b &= 60 = 2 \times 2 \times 3 \times 5\\
     c &= 25 = 1 \times 1 \times 5 \times 5\\
-    d &= 50 = 2 \times 1 \times 5 \times 5
+    d &= 50 = 2 \times 1 \times 5 \times 5.
   \end{align*}
 
 For each $i$, we either have $a_i = b_i$ and $c_i = d_i$ ($i = 2, 3, 4$) or
@@ -232,7 +232,7 @@ A more formal definition has been given in \cite{StrYvoREPORT05}:
     A = U \cup V\\
     B = U \cup W\\
     C = Z \cup V\\
-    D = Z \cup W\\
+    D = Z \cup W.
   \end{cases}
   $$
 \end{definition}
@@ -253,7 +253,7 @@ An equivalent definition of analogy between sets has been given in
   \label{DEF:analogy_set_miclet_henri}
   Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if:
   $$
-  A \setminus B = C \setminus D \text{ and } B \setminus A = D \setminus C
+  A \setminus B = C \setminus D \text{ and } B \setminus A = D \setminus C.
   $$
 \end{definition}
 
@@ -325,7 +325,8 @@ considering the set $\mathbb{B} = \{0, 1\}$:
 
 \begin{definition}[Boolean proportion (i)]
   \label{DEF:boolean_proportion}
-  Four elements $a, b, c, d$ in $\mathbb{B} = \{0, 1\}$ are in proportion if
+  Four elements $a, b, c, d$ in $\mathbb{B} = \{0, 1\}$ are in \textbf{Boolean
+  proportion} if
   \begin{align*}
     &\left[(a \wedge \neg b) \leftrightarrow (c \wedge \neg d)\right]  \wedge
     \left[(\neg a \wedge b)\leftrightarrow (\neg c \wedge d)\right], \text{ or equivalently}\\
@@ -434,7 +435,7 @@ By paying attention to Table \ref{TAB:six_valid_patterns}, we notice that the
 Boolean proportion can actually be defined in a simpler way:
 \begin{definition}[Boolean proportion (ii)]
   \label{DEF:boolean_proportion_informal}
-  Four elements $a, b, c, d$ in $\mathbb{B}$ are in proportion if:
+  Four elements $a, b, c, d$ in $\mathbb{B}$ are in \textbf{Boolean proportion} if:
   $$
   \begin{cases}
     a = b \text{ and } c = d\\
@@ -656,12 +657,11 @@ correspond to the $24 = 4!$ possible orderings of $a, b, c, d$.
   \textit{a bovine is to an equid as an equid is to a bovine}: here again, we
   cannot transform the concept \textit{bovine} into \textit{equid} in the same
   way as we would transform the concept \textit{equid} into \textit{bovine}.
-
-  Another illustration of the three classes of proportions
-  is illustrated in Figure \ref{FIG:3_classes}, using the arithmetic
-  proportion.
 \end{testexample}
 
+\noindent
+Another illustration of the three classes of proportions is illustrated in
+Figure \ref{FIG:3_classes}, using the arithmetic proportion.
 \begin{figure}[!h]
 \centering
   \includegraphics[width=1.5in]{figures/three_classes.pdf}
@@ -810,7 +810,8 @@ $H(\mathbf{a}, \mathbf{c}) = H(\mathbf{b}, \mathbf{d})$ are classical
 properties for parallelograms, but interestingly the third one $H(\mathbf{a},
 \mathbf{d}) = H(\mathbf{b}, \mathbf{c})$ is only true for rectangles. In fact,
 the parallelograms that we can build in $\mathbb{B}^m$ are \textbf{always}
-rectangles.
+rectangles.\\
+
 
 This closes this discussion on the geometric interpretation of Boolean
 proportions. In the next section we will apply the previously described notions
@@ -827,7 +828,7 @@ combined, these two concepts allow us to perform inference, and to apply
 analogical reasoning to machine learning tasks such as classification.
 
 We will here consider a toy classification problem in a Boolean setting, which
-will help up introduce these two fundamental notions. This toy problem will
+will help us introduce these two fundamental notions. This toy problem will
 also serve as an introduction to the next chapter, where we will study the
 theoretical properties of analogical classifiers. Because of the nature of the
 problem, this section will be a mix of particular and general considerations.
@@ -903,7 +904,7 @@ proportions are:
   \item $\mathbf{a} : \mathbf{c} :: \mathbf{f} : \mathbf{h}$
   \item $\mathbf{b} : \mathbf{d} :: \mathbf{f} : \mathbf{h}$
   \item $\mathbf{e} : \mathbf{f} :: \mathbf{g} : \mathbf{h}$
-  \item $\mathbf{c} : \mathbf{g} :: \mathbf{d} : \mathbf{h}$
+  \item $\mathbf{c} : \mathbf{g} :: \mathbf{d} : \mathbf{h}$.
 \end{enumerate}
 
 Applying the analogical inference principle to the first proportion $\mathbf{a}
@@ -922,8 +923,8 @@ of an analogical equation}.
 
 Generally speaking, an analogical equation is a proportion $a:b::c:x$ in a
 context where $x$ is unknown. Determining the value of $x$ is then called the
-\textit{solving} of this equation. Depending on the nature and values of $a, b$,
-and $c$, there may or may not exist a solution, and it might not be unique.
+\textit{solving} of this equation. Depending on the nature and values of $a, b,
+c$, there may or may not exist a solution, and it might not be unique.
 
 In fact, we have all been solving analogical equations since our childhood,
 because in the case of the geometric proportion it reduces to the well known
@@ -1069,9 +1070,10 @@ will be thoroughly addressed in the rest of this document:
     Can we find some theoretical guarantees that could allow us to use it on a
     sound basis? In Chapter \ref{CHAP:analogy_preserving_functions}, we
     will provide a complete characterization of the Boolean functions $f$ that
-    allow to derive sound conclusions.
+    allow to derive sound conclusions.\\
 \end{enumerate}
 
+\noindent
 Before moving further to the next section, let us  consider a seemingly trivial
 question: how many proportions can we build in $\mathbb{B}^m$? As we will see,
 this question will provide us with some further insight about the Boolean proportion.
@@ -1165,7 +1167,7 @@ flat (i.e. the pattern is always $a:b::a:b$ or $a:a::b:b$).
 
 In fact, it turns out that this sequence of numbers $0, 1, 12, 100\dots$ is
 already known as the A016283 sequence from the OEIS\footnote{The On-line
-Encyclopedia of Integer Sequences (\url{http://oeis.org/A016283})}.
+Encyclopedia of Integer Sequences (\url{http://oeis.org/A016283}).}.
 This sequence actually describes \textit{the number of rectangles that can be
 formed from the vertices of an $m$-dimensional cube}, which is exactly
 equivalent to the number of \textit{useful} proportions that we wanted to

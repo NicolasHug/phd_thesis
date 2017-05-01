@@ -18,12 +18,12 @@ when the element $d$ of the proportion is not known\footnote{Or any other
 element, actually.}, it can be \textbf{inferred} from the three other elements
 $a, b, c$. It seems indeed natural that even a child with basic geographic
 knowledge could answer the question \textit{France is to Paris as Germany is to
-what?} with the correct answer: \textit{Berlin}. And even in the case where our
+what?} with the correct answer: \textit{Berlin}. And even in the event that our
 subject does not know that the name of the correct answer is \textit{Berlin},
 they could still \textbf{imagine} a city  which is the capital of Germany, and
-suppose that this hypothetical city corresponds to the correct answer. We are
-here witnessing two key cognitive processes that can be triggered by the use
-of analogical proportions: inference, and creativity.
+suppose that this hypothetical city corresponds to the correct answer. We
+witness here two key cognitive processes that can be triggered using analogical
+proportions: \textbf{inference}, and \textbf{creativity}.
 
 As a tool that allows inductive inference, analogical reasoning has been
 proposed for plausible reasoning and for machine learning purposes. Indeed,
@@ -36,7 +36,7 @@ reasoning to real-world problems}, and the second one is to \textbf{exhibit
 some theoretical properties of analogical classifiers}.
 
 
-The application of analogical reasoning to concrete tasks is motivated from the
+The application of analogical reasoning to concrete tasks is motivated by the
 fact that the previous empirical investigations were only led in standard
 artificial settings. To our knowledge, the analogical learners were still to be
 experienced in real-world problems to assess their suitability in concrete
@@ -44,7 +44,7 @@ applications, where the requirements for success are often significantly
 different. We have chosen here to apply analogical learning to the field of
 recommender systems.
 
-Also, our theoretical investigations are motivated from the fact that so far,
+Also, our theoretical investigations are motivated by the fact that so far,
 analogical classifiers were only known from their algorithmic descriptions.  In
 fact, each implemented classifier provides a clean description of {\it how to
 compute}, but we definitely miss a clean description of {\it what do we
@@ -57,57 +57,60 @@ weaknesses.
 
 Chronologically, we first focused on the applicative side. Our first
 contributions were indeed devoted to applying analogical reasoning to the task
-of recommendation. Then, later, we led our theoretical investigations about
+of recommendation. Later, we led our theoretical investigations on
 analogical learners.
 
-In this document, we will choose however to present our work neither
-chronologically, nor thematically. We will instead first present some of our
-theoretical results (Chapter \ref{CHAP:functional_definition}), then we will
-fully describe our contributions to analogical recommendation (Chapter
-\ref{CHAP:analogical_recommendation}), and finally we will go back to other
-theoretical considerations in Chapter \ref{CHAP:analogy_preserving_functions}.
-The remaining chapters
-(\ref{CHAP:computational_models_of_analogical_reasoning},
-\ref{CHAP:formal_analogical_proportions}, and
-\ref{CHAP:background_reco_systems}) are intended to provide the necessary
-background on the different topics. This choice, that may seem a bit puzzling
-at first sight, is in fact motivated by pedagogical reasons. It will indeed
-become clear that the topic of analogical recommendation (Chapter
-\ref{CHAP:background_reco_systems}) is a lot easier to
-introduce and to understand once we have enough background on analogical
-classification (Chapter \ref{CHAP:functional_definition}), as our methods for
-analogical recommendation are strongly inspired by previous works on analogical
-classification. Moreover, the motivation for Chapter
-\ref{CHAP:analogy_preserving_functions} can be directly derived from the
-results of Chapter \ref{CHAP:functional_definition}, but it will be also
-interesting to account for Chapter \ref{CHAP:analogy_preserving_functions} in
-the light of the results of Chapter \ref{CHAP:analogical_recommendation}.  This
-document is structured as follows.\\
+In this document, we will choose to present our work somewhat differently.
+After having recalled the necessary background on analogical proportions in
+Chapters \ref{CHAP:computational_models_of_analogical_reasoning} and
+\ref{CHAP:formal_analogical_proportions}, we
+will present some of our
+theoretical results first in Chapter \ref{CHAP:functional_definition}. Then, we will
+fully describe our contributions to analogical recommendation  in Chapters
+\ref{CHAP:background_reco_systems} and \ref{CHAP:analogical_recommendation},
+and finally we will go back to other theoretical considerations in Chapter
+\ref{CHAP:analogy_preserving_functions}. Simply put, our contributions to the
+theoretical side will be split up by the topic of analogical recommendation.
+
+This choice, that may seem a bit
+puzzling at first sight, is in fact motivated by pedagogical reasons. It will
+indeed become clear that the topic of analogical recommendation (Chapter
+\ref{CHAP:background_reco_systems}) is a lot easier to introduce and to
+understand once we have enough background on analogical classification (Chapter
+\ref{CHAP:functional_definition}), as our methods for analogical recommendation
+are strongly inspired by previous works on analogical classification. Moreover,
+the motivation for Chapter \ref{CHAP:analogy_preserving_functions} can be
+directly derived from the results of Chapter \ref{CHAP:functional_definition},
+but it will be also interesting to account for Chapter
+\ref{CHAP:analogy_preserving_functions} in the light of the results of Chapter
+\ref{CHAP:analogical_recommendation}.  We now provide the detailed structure of
+this document.\\
 
 The first chapter will provide the necessary background on existing
 models of analogical reasoning, with a strong emphasis on models that allow to
 perform computational inference. These models are, for the most part, motivated
-by cognitive and psychological aspects, which is in contrast to our main
-computational tool: formal analogical proportions.\\
+by cognitive and psychological aspects, and depart from our main computational
+tool: formal analogical proportions.\\
 
 Formal analogical proportions are the subject of the second chapter. We will
-provide the definition of analogical proportions in various algebraic settings,
+provide their definitions in various algebraic settings,
 focusing on the two proportions that we will mostly use: the arithmetic
-proportion (dealing with real numbers), and the Boolean proportion. In addition
-to providing the formal definitions, we will try to give a geometrical insight
-on these two proportions, which to the best of our knowledge had never been
+proportion (dealing with real numbers), and the Boolean proportion. In
+addition, we will try to give a geometrical insight on these two proportions,
+which to the best of our knowledge had never been
 done before. We will also go through a toy classification problem that will
 allow us to describe the process of \textbf{analogical equation
 solving}\footnote{Very roughly, analogical equation solving is the process of
 finding the unknown $x$ in the proportion \textit{$a$ is to $b$ as $c$ is to
-$x$}, e.g. \textit{France is to Paris as Germany is to What?}}, and the \textbf{analogical inference principle} which is the principle
-underlying all of our investigations. In a classification context, the
-analogical inference principle states that if $a$ is to $b$ as $c$ is to $d$,
+$x$}, e.g. \textit{France is to Paris as Germany is to What?}}, and the
+\textbf{analogical inference principle} that underlies all
+of our investigations. In a classification context, this
+principle states that if $a$ is to $b$ as $c$ is to $d$,
 then we should also have that $f(a)$ is to $f(b)$ as $f(c)$ is to $f(d)$, where
-$f(x)$ is the function that determines the class of $x$. This is obviously an
+$f(x)$ is the function that determines the class of $x$. It is obviously an
 unsound inference principle, in that the conclusion does not follow from the
-premise, but it can still be used for classification tasks which is the subject
-of the third chapter.\\
+premise. But as we will see, it can still be used for classification tasks,
+which is the subject of the third chapter.\\
 
 The study of analogical classification is indeed the object of Chapter
 \ref{CHAP:functional_definition}, which corresponds to a detailed version of our
@@ -115,19 +118,20 @@ ECAI paper: \cite{HugPraRicSerECAI16}. In this chapter, we will start to
 address one of the two main objectives of this thesis: identifying theoretical
 properties of analogical classifiers. Our first contribution will be to provide
 a functional definition of analogical classifiers, that will unify the two
-previous approaches mentioned earlier. From this definition, we will be able to
-derive results related to the VC-dimension of these classifiers, as well as
-their error rate. Our functional definition will also reveal the close links
-that connect the analogical learners to the $k$-nearest neighbors ($k$-NN)
-techniques. We will show indeed that the analogical classification process can
-be viewed as a two-step procedure that first consists in extending the training
+previous approaches mentioned earlier. This new definition will bring more
+insight into these classifiers, enabling us to derive results related to their
+VC-dimension, as well as their error rate. Our functional definition will also
+reveal the close links between the analogical learners and the $k$-nearest
+neighbors ($k$-NN) techniques. We will show indeed that the analogical
+classification process can be viewed as a two-step procedure that first
+consists in extending the training
 set (by \textbf{generating} new examples), and then applying a $k$-NN
 classifier. Quite remarkably, the two key cognitive processes related to
-analogical proportions that we have mentioned, namely inference and creativity,
+analogical proportions (inference and creativity),
 are here blended together. From these results, a natural question arises: how
 can we ensure a training set extension that is completely error-free? This
 question will be addressed later in Chapter
-\ref{CHAP:analogy_preserving_functions}. The  following two chapters
+\ref{CHAP:analogy_preserving_functions}, while the  following two chapters
 (\ref{CHAP:background_reco_systems} and \ref{CHAP:analogical_recommendation})
 will be devoted to our second main objective: applying analogical reasoning to
 the task of recommendation.\\
@@ -161,9 +165,9 @@ problem of mining analogical proportions between users (or items) in a rating
 database \cite{HugPraRicSerLFA16}. Our result will help us to retrospectively
 interpret the modest performances of our analogical recommenders: as bland as
 it may seem, it turns out that there were just not enough decent analogies to
-be found in the databases that we used.\\
+be found in the available databases.\\
 
-But this down-to-earth observation will not spare us the very questioning of
+But this down-to-earth observation will lead us to the very questioning of
 the analogical inference principle that had been underlying all of our
 investigations so far. In the last chapter, we will go back to our theoretical
 considerations, and provide a criterion that allows us to apply analogical
@@ -178,7 +182,7 @@ that allow to extend a training set by analogy in a perfectly safe way. We will
 call these functions the \textbf{analogy preserving} functions, and they will
 turn out to be the well-known affine functions, both in Boolean and real
 settings. These investigations led to an IJCAI paper
-\cite{CouHugPraRicIJCAI17}, and will provide diverse future research tracks.\\
+\cite{CouHugPraRicIJCAI17}, and provide diverse future research tracks.\\
 
 
 We will now start with the first chapter, dedicated to the description of

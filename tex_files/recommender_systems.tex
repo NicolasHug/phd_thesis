@@ -72,7 +72,7 @@ you a fridge even though you just bought a brand new one). In systems were
 items are more homogeneous, i.e. in a movie store system, more  sophisticated
 approaches can be built relying on some metadata about the items (hence the
 name \textit{content}-based). In the case of movies, the metadata could be for
-example for example the genre, main actors, film director, etc\dots
+example the genre, main actors, film director, etc\dots
 
 As content-based techniques usually do not rely on a set of ratings to compute item
 similarities, a nice resulting feature is that new items that have not yet been
@@ -91,11 +91,11 @@ However, content-based systems are prone to various behaviours that tend to make
 them less competitive with collaborative filtering methods. The first obvious drawback, known as
 the problem of \textit{limited content analysis}, is precisely the need to
 describe items with metadata (remember our movie example with
-genre, actors etc.). Such descriptions can be extremely costly and can only
+genre, actors, etc.). Such descriptions can be extremely costly to acquire, and can only
 capture a very limited subset of item features, which are not necessarily the
 most important ones when it comes to the users personal tastes. Going back to
 our science fiction fan, it could be plausible that the user has a strong
-preference for the steampunk genre, and yet is perfectly indifferent to the
+preference for the steampunk sub-genre, and yet is perfectly indifferent to the
 superhero fiction movies, and both can still be considered as sub-genres of
 science fiction. A system that could not distinguish these two kinds of movies
 would fail to provide our steampunk fan with relevant recommendations.
@@ -104,7 +104,7 @@ Another well-known drawback of content-based recommenders is their tendency to
 overfit and recommend only items that users may already know or do not need
 anymore (such as a fridge!). The recommendations tend to lack in novelty,
 surprise and diversity. Also, content-based systems tend to output much less
-accurate prediction than the collaborative filtering methods (the way accuracy
+accurate predictions than the collaborative filtering methods (the way accuracy
 is computed will be described in Section
 \ref{SEC:Recommender_system_evaluation}). This is why collaborative filtering
 methods have gained in popularity.
@@ -112,7 +112,7 @@ methods have gained in popularity.
 \subsection{Collaborative filtering}
 
 The main idea behind collaborative filtering algorithms is to recommend items
-to a users that other users with similar tastes have liked in the past. In its
+to a user that other users with similar tastes have liked in the past. In its
 most general form, collaborative filtering methods (also called social
 filtering) try to model the social environment of users and to output
 recommendations based on the behaviour of their peers.
@@ -155,12 +155,13 @@ methods) are only suitable for certain kinds of items. While movies, books,
 music or news can all fit quite well within these two frameworks, this is not
 the case for some other items such as cars, bank loans, or real estates. Take
 for example the problem of car recommendation. A content-based approach would
-need to know what kind of cars the user have owned in the past, and would
+need to know what kind of cars the user has owned in the past, and would
 recommend some new cars that are similar to those past vehicles. This method is
-obviously bound to fail, not only because in practice such in formation about
+obviously bound to fail, not only because in practice such information about
 past vehicles is never available, but also because the recommendations would be
 based on some years-old preferences. As for collaborative methods, they would
-require the system to dispose of a massive amount of past transactions, and
+require the system to have a massive amount of past transactions at its
+disposal, and
 people do not buy as many cars as they watch movies: only very few information
 would be available, leading to disastrous results.
 
@@ -171,7 +172,7 @@ items that are available in the system) prevails over any other source of
 information, such as social information for example.
 
 A practical instance of  knowledge-based recommendation takes the form of a
-recommendation session, where the users indicate their needs in an interactive
+recommendation session, where users indicate their needs in an interactive
 manner, and the systems tries to match these needs as best as possible to
 provide useful recommendations. According to \cite{FelBur08}, there exists two
 kinds of knowledge-based systems, that differ in the way recommendations are
@@ -193,14 +194,14 @@ problem.
 
 We are well aware that these two definitions of case-based and constraint-based
 systems are quite general and vague, but the fact remains that practical
-implementation of such systems are so domain-dependent that is is difficult to
+implementation of such systems are so domain-dependent that it is difficult to
 exhibit a clear unifying framework that would still be accurate.
 
-Now that we have a clear overview of the various tasks that can be addressed in
-recommendation, we will detail the recommendation problem that will be
-addressed in the next chapter.
+Now that we have a clear overview of the various tasks that range among the
+wide topic of recommendation, we will detail the recommendation problem that
+will be addressed in the next chapter.
 
-\section{Recommendation by rating prediction}.
+\section{Recommendation by rating prediction}
 \label{SEC:recommendation_rating_prediction}
 
 In this section, we formally define the recommendation problem that we plan to
@@ -232,8 +233,8 @@ rating scales:
     meaningful when compared to others, e.g. $[$\textit{rejection, indifference,
     agreement}$]$.
 \end{itemize}
-In practice, these semantic distinctions are purely contextual: a rating
-scale $[1, 5]$ rating scale could perfectly be interpreted as purely numerical,
+In practice, these semantic distinctions are purely contextual: the
+$[1, 5]$ rating scale could perfectly be interpreted as purely numerical,
 or conversely as purely ordinal. This observation has been addressed for
 example in \cite{KorSillRECSYS11}, and will also be discussed here in the next
 chapter. However, the rating scale is a decisive component of a recommender
@@ -249,8 +250,8 @@ example, if a user has listened to a given track more than 10 times, we might
 consider this as an implicit rating of $1$. The ability to deal with both
 explicit and implicit ratings can lead to significant improvements for a
 recommender system. In \cite{KorSillRECSYS11}, a model using only explicit
-numerical ratings was extended to deal with implicit ratings, which improved
-the RMSE of the system (defined later) by a great deal. When no implicit
+numerical ratings was extended to deal with implicit ratings, which notably improved
+the RMSE of the system (defined later). When no implicit
 ratings are available, the same authors showed that the simple modeling of
 implicit ratings as $r_{ui}' = 1 \iff r_{ui} \in R$ led to significant
 improvements. Here, $r_{ui}'$ is an implicit rating stating that $u$ has rated
@@ -261,15 +262,15 @@ Also, the algorithms we will design will be of a collaborative nature, and
 therefore they will rely on a dataset containing user-item interactions (in our
 case, user-item ratings).
 Let us denote by $R$ the set of known ratings recorded in the system. In real
-systems the size of $R$ is very small with regard to the potential number of
+systems, the size of $R$ is very small with regard to the potential number of
 ratings which is $|U| \times |I|$, as a lot of ratings are missing. The set
 $\Ui$ will denote the set of users that have rated item $i$, and $\Uij \eqdef
-U_i \cap U_j$ is the set of users that have rated both item $i$ and item $j$.
+U_i \cap U_j$ is the set of users that have rated both items $i$ and $j$.
 Similarly, $\Iu$ is the set of items that user $u$ has rated, and $\Iuv \eqdef
 I_u \cap I_v$ is the set of items that both users $u$ and $v$ have rated.
 
 A very common way of providing personalized recommendations to a target user is
-to estimate their tastes for the items that the system provides. The taste of a
+to estimate their tastes regarding the items that the system provides. The taste of a
 user $u$ for a given item $i$ is usually represented as the rating that $u$
 would give to $i$.  Once these estimations are made, a simple option is to
 recommend the items with the highest ratings among all the estimated scores for
@@ -290,17 +291,17 @@ More formally, a recommender system usually proceeds as follows:
 When using a unary or binary rating scale, these two stages are usually
 indistinguishable: it is natural to recommend an item to a user if the
 estimated predicted rating is $1$. In practice, the recommendation strategy
-depends a lot on the pragmatic constraints of the system: a store manager way
+depends a lot on the pragmatic constraints of the system: a store manager may
 want to push forward a given item to boost its sells, regardless of the
 rating predictions outputted by the algorithm. As a result, most of the
 research has focused on the prediction algorithms, and so will we. Note also
 that this view is only meaningful for non-ordinal rating scale. When the output
 of prediction algorithm $A$ are ranks, the recommendation strategy $S$ is
-obvious and the distinction need not be made.
+obvious and the distinction between $A$ and $S$ is superfluous.
 
 Prediction algorithms implementations are strongly influenced by the fields of
 data mining and of course machine learning. However, we want to emphasize that
-the general setting of recommender systems is actually quite different than
+the general setting of recommender systems is actually quite different from
 that of classification or regression, the two main prediction tasks of machine
 learning. A naive reasoning could lead us to consider that the rating
 prediction problem with the rating scale $[1, 5]$ is nothing but a
@@ -335,8 +336,9 @@ We can distinguish three main evaluation settings. The first one is to perform
 provide some feedback. This evaluation process is probably the one that allows
 to best capture users need, because feedback is explicitly given. Naturally,
 this is also the most expensive kind of experiment to conduct, because it
-requires a lot of user time. The second evaluation setting is to perform online
-studies. In its most simple form, this is equivalent to A/B testing: to see
+requires a lot of user time. The second evaluation setting is to perform
+\textbf{on-line
+studies}. In its most simple form, this is equivalent to A/B testing: to see
 which of the two versions of our recommender performs better, we provide some
 users with the first version (A) and some other users with the second version
 (B). We
@@ -344,12 +346,12 @@ can then assess the change in performance between the two versions and decide
 which one is the most suitable for our needs.
 
 Finally, the last available option to evaluate recommender systems is to
-perform off-line evaluation: in this setting, we dispose of a dataset of past
+perform \textbf{off-line evaluation}: in this setting, we dispose of a dataset of past
 transactions (the set of all ratings $R$), and try to simulate user behaviour
 to compute different measures.  In general, we will use $k$-folds
 cross-validation procedures to reliably evaluate each of the performance
 measures. The set of all ratings $R$ is divided into $k$ (typically $5$)
-disjoint sets of equal sizes ; at each of the $k$ iterations, the test set
+disjoint sets of equal sizes; at each of the $k$ iterations, the test set
 $\Rtest$ is set to the $k^{\text{th}}$ subset and and the training set
 $\Rtrain$ is set as the union of the $k - 1$ remaining subsets: the system will
 be trained on $\Rtrain$ and tested on $\Rtest$. The reported performances are
@@ -376,9 +378,9 @@ $$\text{MAE}(A) = \frac{1}{|\Rtest|} \cdot \sum_{\rui \in \Rtest}|\predrui -
 As we said, RMSE probably is by far the most popular measure for
 evaluating the performance of a recommender system. The simple fact that \$1
 million was awarded for a 10\% improvement of RMSE during the Netflix competition
-illustrates the supremacy of RMSE. Yet this measure is also criticized, let
+illustrates the supremacy of RMSE. Yet this measure is also criticized, if
 only because it is not very easy to interpret it in a meaningful way: if you
-end-up with an RMSE of $0.5$, how do you know if it is good or not? You would
+end up with an RMSE of $0.5$, how do you know if it is good or not? You would
 need to compare multiple algorithms before knowing what can be thought of as a
 good RMSE, which by the way highly depends on  the rating scale.
 
@@ -399,13 +401,13 @@ can have a great RMSE score while still having no recommendation power.
 As we will see, in Section \ref{SEC:experiments_clone}, a simple baseline
 predictor  can outperform the RMSE of many other approaches, and yet this
 algorithm has absolutely no recommendation power: the recommendations that it
-outputs are the same of all the users.
+outputs are the same for all the users.
 
 To better reflect the user-system interaction, other precision-oriented metrics
 are sometimes used in order to provide a more informed view.
 
 \paragraph{Precision and recall\\}
-Precision and recall help measuring the ability of a system to provide relevant
+Precision and recall help measure the ability of a system to provide relevant
 recommendations, and are therefore indicators of the performance of the
 recommendation strategy $S$. They are defined by means of the number of true
 positives, true negatives, false positives and false negatives. As such, they
@@ -421,8 +423,8 @@ greater than $4$:
 $$I^S \eqdef \Set{i \in I | \exists u \in U, ~\predrui \geq 4,~ \rui \in \Rtest}.$$
 
 We also define $I^*$ as the set of items that are \textbf{actually} relevant to
-the users, i.e.  the set of items that would have been recommended to users if
-all the predictions made by $A$ were exact:
+the users, i.e.  the set of items that would have been recommended to the users
+if all the predictions made by $A$ were exact:
 $$I^* \eqdef \Set{i \in I | \exists u \in U, ~\rui \geq 4,~ \rui \in \Rtest}.$$
 
 \noindent
@@ -469,7 +471,7 @@ Users expect a recommender system to be surprising: recommending an extremely
 popular item is not really helpful. Be warned though: surprise is one of the
 most difficult notions to grasp, especially when it comes to assess it with
 numerical measures. Following the works of \cite{KamBriRecSys2014}, we will
-here define the surprise associated with a recommendation with the
+here define the \textbf{surprise} associated with a recommendation with the
 help of the pointwise mutual information (PMI). The PMI between two items $i$
 and $j$ is defined as follows:
 $$\text{PMI}(i, j) \eqdef -\log_2 \frac{P(i, j)}{P(i)P(j)} / \log_2 P(i, j),$$
@@ -541,7 +543,7 @@ neighbors of $u$ in $N_i^k(u)$. Usually, the aggregation is simply a mean
 weighted by the similarity between $u$ and $v$:
 
 \begin{definition}[Neighborhood approach]
-  The estimation of a rating $\rui$ using the neighborhood approach (also
+  The estimation of a rating $\rui$ using the \textbf{neighborhood approach} (also
   denoted $k$-NN here) is:
   $$\predrui = \frac{\sum\limits_{v \in N_i^k(u)} r_{vi} \cdot \text{sim}(u, v)}
   {\sum\limits_{v \in N_i^k(u)}\text{sim}(u, v)},$$
@@ -612,12 +614,12 @@ other users that $u$ does not even know.
 
 There are  many ways to define the similarity metric between two users (or
 items).
-One of the most common measure is the cosine similarity.
+One of the most common measure is the Cosine similarity.
 
 \begin{definition}[Cosine similarity]
-  The cosine similarity between two users $u$ and $v$ is defined as:
+  The \textbf{Cosine similarity} between two users $u$ and $v$ is defined as:
 $$
-\text{cosine sim}(u, v) \eqdef \frac{ \sum\limits_{i \in \Iuv} \rui \cdot \rvi}
+\text{Cosine sim}(u, v) \eqdef \frac{ \sum\limits_{i \in \Iuv} \rui \cdot \rvi}
 {\sqrt{\sum\limits_{i \in \Iuv} \rui^2} \cdot \sqrt{\sum\limits_{i \in \Iuv}
 \rvi^2}}.
 $$
@@ -625,18 +627,18 @@ $$
 
 Here, users $u$ and $v$ are considered as vectors in a vector space defined by
 the items they have both rated (the set of common items is $\Iuv$). Their
-cosine similarity simply is the cosine of the angle between the two vectors. An
+Cosine similarity simply is the cosine of the angle between the two vectors. An
 unnatural feature of this metric is that two vectors with (potentially
 different) constant values will always have a similarity of $1$, because they
-are collinear. For example if $u = (2, 2)$ and $v = (5, 5)$, $\text{cosine
+are collinear. For example if $u = (2, 2)$ and $v = (5, 5)$, $\text{Cosine
 sim}(u, v) = \frac{20}{\sqrt{8}\sqrt{50}} = 1$, while one would expect $u$ and
-$v$ to be quite different w.r.t. their tastes.
+$v$ to be quite different with regards to their tastes.
 
-Such a flaw can be overcame using the Pearson similarity, which can be viewed as
-a mean-centered version of the cosine similarity.
+Such a flaw can be overcome using the Pearson similarity, which can be viewed as
+a mean-centered version of the Cosine similarity.
 
 \begin{definition}[Pearson similarity]
-  The Pearson similarity between two users $u$ and $v$ is defined as:
+  The \textbf{Pearson similarity} between two users $u$ and $v$ is defined as:
 $$
 \text{Pearson sim}(u, v) \eqdef \frac{ \sum\limits_{i \in \Iuv}
 (\rui -  \mu_u) \cdot (\rvi - \mu_{v})} {\sqrt{\sum\limits_{i
@@ -651,9 +653,9 @@ One last similarity metric that we will use is the Mean Squared Difference
 (MSD)\footnote{Strictly speaking MSD is actually a distance rather than a
 similarity metric, so taking its inverse would do the job.}:
 \begin{definition}[Mean squared difference]
-  The mean squared difference between two users $u$ and $v$ is defined as:
+  The \textbf{Mean Squared Difference} between two users $u$ and $v$ is defined as:
 $$\text{MSD}(u, v) \eqdef \frac{1}{|\Iuv|} \cdot \sum\limits_{i \in \Iuv} (\rui
-- \rvi)^2$$
+- \rvi)^2.$$
 \end{definition}
 
 Notice that none of these metrics take into account the support between the two
@@ -666,7 +668,7 @@ two users toward zero if their support is low:
 $$\text{shrunk\_sim}(u, v) \eqdef \frac{\mid \Iuv \mid - 1}{\mid \Iuv \mid - 1
 + \lambda} \cdot \ssim(u, v),$$
 where $\lambda$ is a sort of regularization constant. Such shrinkage technique
-can be motivated from a Bayesian perspective, and usually leads to significant
+can be motivated by a Bayesian perspective, and usually leads to significant
 improvements in the system performances. It only makes sense however for
 similarity measures that are centered around zero, such as the Pearson
 similarity. We will not consider shrinkage in any of our experiments.
@@ -684,7 +686,7 @@ Consider for example the naive similarity computation of Algorithm
        \label{ALGO:naive_sim}
        \begin{algorithmic}
 
-         \STATE {\bf Input}: A set of ratings $R$
+         \STATE {\bf Input}: A set of ratings $R$.
          \STATE {\bf Output}: The similarity between all pairs of users.
          \FORALL{$u \in U$}
          \FORALL{$v \in U$}
@@ -704,14 +706,14 @@ $\mathcal{O}(\mid U \mid^2 \mid I \mid^2)$.
 
 However, the complexity can be taken down by a great deal if we proceed in a
 MapReduce fashion \cite{DeaGhe04}, as described in Algorithm \ref{ALGO:cosine}
-which exemplifies how to compute the cosine similarity.
+which exemplifies how to compute the Cosine similarity.
 \begin{algorithm}[!ht]
- \caption{Computation of the cosine similarity.}
+ \caption{Computation of the Cosine similarity.}
        \label{ALGO:cosine}
        \begin{algorithmic}
 
          \STATE {\bf Input}: A set of ratings $R$.
-         \STATE {\bf Output}: \text{cosine sim}(u, v) for all pairs of users.
+         \STATE {\bf Output}: \text{Cosine sim}(u, v) for all pairs of users.
          \STATE {\it Initialization ($n$  is defined as the number of users, i.e. $n
          = \mid U \mid$):}
          \STATE $\text{sim} = \text{null\_array}[n][n]$
@@ -783,8 +785,7 @@ insightful for us, we will briefly review it now.
 
 \subsubsection{Background on SVD}
 
-Let's first dive into the
-theory (but not for long):
+Let's first dive into the theory (but not for long):
 
 \begin{proposition}
   Any real-valued matrix $R \in \mathcal{M}^{m \times n}$ of rank $r$ can be
@@ -795,16 +796,16 @@ theory (but not for long):
   where $U\in \mathcal{M}^{m \times r}$, $\Sigma\in \mathcal{M}^{r \times r}$
   is a diagonal matrix, and $I\in \mathcal{M}^{n \times r}$. $U$ and $I$ are
   both \textbf{orthogonal} matrices, and this factorization is called the \textbf{Singular Value
-  Decomposition} of $R$.
+  Decomposition} (SVD) of $R$.
 \end{proposition}
 
-In practice, we know how to compute the the two matrices $U$ and $I$: their
-columns are are the
+In practice, we know how to compute the two matrices $U$ and $I$: their
+columns are the
 eigenvectors\footnote{For this reason, SVD and Principal Component Analysis are
 strongly related.} of the two matrices $R^tR$ and $RR^t$, and their associated
 eigenvalues are the squared entries of $\Sigma$, called the singular values
 (hence the name of the factorization).
-As $\Sigma$ is a diagonal matrix, it only act as a scaling factor for either $U$ or
+As $\Sigma$ is a diagonal matrix, it only acts as a scaling factor for either $U$ or
 $I$. For the sake of simplicity, we will consider that the decomposition can be
 written $R = UI^t$, where $\Sigma$ has been merged into either $U$ or $I$.
 
@@ -946,7 +947,7 @@ vectors $p_u$ and $q_i$ for every possible user and item. We saw that when the
 matrix $R$ is dense (i.e. when  there is no unknown entry), there exists an analytic
 solution for computing the two matrices $U$ and $I$. An equivalent solution is
 to solve the following minimization problem\footnote{From then on we will abuse
-notation and use $R$ either as a matrix (sparse or dense) and as a rating
+notation and use $R$ both as a matrix (sparse or dense) and as a rating
 dataset as defined in Section \ref{SEC:recommendation_rating_prediction}.},
 with the constraint that the vectors $q_i$ must be orthogonal, as well as the
 vectors $p_u$:
@@ -956,7 +957,7 @@ $$
 
 But what happens in a recommendation setting, where the matrix $R$ is extremely
 sparse? The SVD of $R$ is not even properly defined! One of the main
-contribution during the Netflix competition was made by Simon Funk in a blog
+contributions during the Netflix competition was made by Simon Funk in a blog
 post\footnote{\url{http://sifter.org/~simon/journal/20061211.html}}, who empirically
 showed that \textbf{we should actually just not care} that the matrix $R$ is
 sparse, and still solve the same optimization problem only using the known
@@ -966,7 +967,7 @@ out very efficient in practice. Before that, techniques usually involved  a
 preliminary step where the matrix $R$ was filled using some heuristic, in order
 to have a fully defined problem \cite{SarKarKonRie00}. Funk's contribution led
 him to the top 10 competitors of the Netflix competition at the time, and was
-heavily used by other competing teams, including the BellKor team who ended up
+heavily used by other competing teams, including the BellKor team that ended up
 winning the contest \cite{Kor09}. It also turns out that the orthogonality
 constraint is useful for interpretation purposes, but in practice it usually
 leads to a lower generalization power, so we will simply not bother and allow
@@ -975,7 +976,7 @@ the factor vectors to be non-orthogonal.
 The appeal of this basic approach does not only rest upon its link to SVD, but
 also because it is easily extendable. It was later improved and theoretically
 studied in many ways, for example by incorporating user and items biases
-\cite{KorACM2010} (which we will further detail later in Section
+\cite{KorACM2010} (which we will further detail in Section
 \ref{SEC:current_advances_neighborhood_techniques}), by adding the ability to
 incorporate implicit ratings along with explicit ones \cite{Pat07, KorACM2010},
 or by adding some time-dependent features, taking into account items popularity
@@ -992,11 +993,11 @@ $$
 \sum_{\rui \in R} \left(\rui - {q_i}^t \cdot p_u \right)^2 +
 \lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right),
 $$
-where $\lambda$ is a regularization term. Not
-surprisingly, stochastic gradient descent (SGD) tend to perform really well
-when it comes to the solving of this problem, and is quite simple to implement.
-We have already talked too much about matrix factorization, but a few lines
-more won't hurt so now propose to derive the associated SGD algorithm.
+where $\lambda$ is a regularization term. Not surprisingly, Stochastic Gradient
+Descent (SGD) tends to perform really well when it comes to solving this
+problem, and is quite simple to implement.  We have already talked too much
+about matrix factorization, but a few lines more won't hurt so we now propose
+to derive the associated SGD algorithm.
 
 \subsubsection{Optimization by Stochastic Gradient Descent}
 
@@ -1007,14 +1008,14 @@ descent would require to compute the derivative of $L$ with respect to
 $\theta$, in SGD we just assume that the derivative of each $L_k$ is enough.
 SGD is an iterative optimization process where the value of $\theta$ is updated
 using the following rule: $\theta = \theta - \alpha \frac{\partial
-L_k}{\partial \theta}$, where $\alpha$ the learning rate (or stepsize). This
+L_k}{\partial \theta}$, where $\alpha$ is the learning rate (or stepsize). This
 update is performed over all $k$s for a given number of times. Various
 theoretical guarantees about the convergence of this algorithm have been
 derived, that obviously depend on the stepsize and on some regularity
 conditions on the loss function $L$: see \cite{BotCurNoc16} for a recent
 overview.
 
-As far as we are concerned, our loss function is
+As far as we are concerned, our loss function is:
 $$
 L(p_u, q_i) \eqdef \sum_{\rui \in R} \left(\rui - {q_i}^t \cdot p_u \right)^2 +
 \lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right).
@@ -1058,12 +1059,12 @@ least squares methods. The idea is then to first consider all $q_i$ as
 constants and solve the associated linear problem. Then, the $p_u$ are
 considered constant and the associated problem is solved. Repeating these steps
 an arbitrary number of time will also converge to a local solution, and this
-methods is known as Alternating Least Squares \cite{BelKor07}.
+method is known as Alternating Least Squares \cite{BelKor07}.
 
 \section*{Conclusion}
 
 The purpose of this chapter was to provide the necessary background and tools,
-in preparation of the next chapter where we will describe our contributions on
+in preparation for the next chapter where we will describe our contributions on
 analogical recommendation.
 
 We have seen that the three main families of recommender systems are the
@@ -1079,12 +1080,12 @@ the general $k$-NN strategy. The neighborhood of each user is computed using a
 similarity metric that is based  on the ratings: two users are considered close
 if they like the same items and dislike the same items. Then, the prediction
 $\predrui$ is set as an aggregate (usually a weighted mean) of the ratings of
-the neighbors of $u$ for the item $i$. These neighborhood-based methods tend to
+the neighbors of $u$ for the item $i$. The neighborhood-based methods tend to
 model local relationship in the data. In contrast, the matrix
 factorization-based techniques, whose popularity has grown during the Netflix
 Prize, tend to model global effects in the data. These techniques define ratings
 in terms of user and item factors. Each user $u$ is modeled as a vector of
-factors which indicates how strong are is taste of $u$ for the given factors.
+factors which indicates how much the user likes the given factors.
 Each item $i$ is also modeled as a vector of factors which indicates how well
 $i$ corresponds to the given factors. The prediction $\rui$ is then set as the
 scalar product between these two vectors, while the vectors are estimated using

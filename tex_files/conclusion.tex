@@ -15,7 +15,7 @@ to build computer programs. In the second chapter, we thoroughly described
 various definitions of analogical proportions in different settings, with a
 particular focus on the arithmetic and Boolean proportions. We have tried to
 provide the reader with different geometrical insights on these proportions,
-which where hopefully useful to gain a better intuition.
+which were hopefully useful to gain a better intuition.
 Finally, we considered a toy classification problem in a Boolean setting that
 allowed us to introduce the analogical equation solving process and most
 importantly, our analogical inference principle. This principle states that if
@@ -46,7 +46,7 @@ computation time.
 
 This led us to consider another kind of analogical recommendation, that does
 not rely on the search of $3$-tuples of users. This ``clone''-based view
-\cite{HugPraRicSerFuzzIEEE16} is motivated from the fact that some users may
+\cite{HugPraRicSerFuzzIEEE16} is motivated by the fact that some users may
 have different interpretations of the rating scale that is used. Our results
 show that the concept of ``clone'' is extremely relevant, but it must be noted
 that this kind of bias in the user ratings had already been addressed in
@@ -57,10 +57,10 @@ incomplete databases \cite{HugPraRicSerLFA16}, strongly inspired from the
 mining of association rules. We used this algorithm to extract analogical
 proportions between items in a rating database, which actually corresponds to
 the database that we had been using for our recommendation experiments. Our
-results showed that the analogies that we found were in fact rather
+results showed that the analogies we found were in fact rather
 uninteresting, in that they related four items that were either equally
-appreciated, or equally disliked. There were no discrepancy in the ratings. In
-some way, this fact can retrospectively explain the modest results of our first
+appreciated, or equally disliked. There was no discrepancy in the ratings. In
+a way, this fact can retrospectively explain the modest results of our first
 analogical recommendation algorithm, and its performances that were close to
 those of neighborhood methods.\\
 
@@ -73,14 +73,14 @@ particular, we showed that the VC-dimension of analogical classifiers is
 infinite, and that their error rate is closely related to that of the $k$-NN
 algorithms, as can be seen on the analytical formula that we derived. In fact,
 our functional definition establishes clear links between analogical
-classification and nearest-neighbors classification. We have indeed showed that
+classification and nearest-neighbors classification. We have showed indeed that
 analogical classification can be viewed as a two-steps procedure: first the
 training set is extended by analogy, where new examples are generated and
 assigned a potentially noisy label called the analogical label. Then, using
 this extended training set, all the remaining elements can be labeled using the
 classical $k$-NN procedure. This new point of view is quite interesting,
-because it clearly binds the two processes triggered by analogical proportions
-(namely inference and creativity) as the two sides of the same coin.
+because it clearly binds together the two processes triggered by analogical
+proportions (inference and creativity) as the two sides of the same coin.
 
 In Chapter \ref{CHAP:analogy_preserving_functions}, we investigated a question
 that naturally followed from the results of Chapter
@@ -93,7 +93,7 @@ $f$ underlying the label is an affine function. This strong result
 \cite{CouHugPraRicIJCAI17} is reminiscent of that of Davies and Russel (see
 Section \ref{SEC:Davies_and_Russel}), who provided a side condition that
 allowed to safely use an analogical inference principle. Their analogical
-inference principle was actually quite different than ours (although we could claim
+inference principle was actually quite different from ours (although we could claim
 that ours is a particular case of theirs), but the two approaches can be
 considered similar from a general point of view. We extended our results to the
 real setting and in the case where attributes are nominally-valuated. These
@@ -105,21 +105,21 @@ explore.
 In Section \ref{SEC:approximate_ap_functions}, we presented the concept of
 approximate AP functions. Indeed in practice, there is no way
 to know for sure if the function $f$ that we want to learn is completely
-affine. So having statistical guarantees about the quality of the analogical
-extension depending on how far the function $f$ is from the set of affine
-function is a clear topic of interest. As previously mentioned, a result of the
+affine. So a clear topic of interest is to obtain statistical guarantees about
+the quality of the analogical extension, depending on how far the function $f$
+is from the set of affine functions. As previously mentioned, a result of the
 following form would be extremely interesting:
 $$P(\omegasf \geq \eta) > 1 - \delta,$$
 where $\eta \in [0, 1]$ and $\delta \in [0, \frac{1}{2}]$ are functions
 depending on $\epsilon$ and $\mid S \mid$. The value $\epsilon$ tells us that
 $f$ is $\epsilon$-close from the set of affine functions.  We are currently
 investigating a somewhat simpler question:
-$$P(\omegasf < 1) > 1 - \delta,$$
+$$P(\omegasf < 1) < \delta,$$
 where $\delta$ is still a function of $\epsilon$. In other words, we want to
 have an upper bound of the probability of the event ``\textit{$\esfs$ is
 unsound}''.\\
 
-We have also seen during our experimentations that even if some functions are
+We have also seen during our experimentations that even though some functions are
 highly not AP, the quality of the analogical extension may still be very high.
 This is because of the majority-vote procedure that is applied when we compute
 the analogical label of the elements. This aspect has been left out of the
@@ -152,9 +152,9 @@ addressed.\\
 
 Finally, we will close this discussion by mentioning the elephant in the room
 that we have so far ignored: transfer learning. Transfer learning is a current
-trend in the machine learning community whose purpose is to use the knowledge
+trend in the machine learning community, whose purpose is to use the knowledge
 of a source problem $S$, to apply it to a less known target problem $T$.
-Undoubtedly, transferring knowledge is the essence of analogy, but techniques in
-transfer learning usually involve statistical tools (see e.g.
+Undoubtedly, transferring knowledge is the essence of analogy, and techniques
+in transfer learning usually involve statistical tools (see e.g.
 \cite{PanYanTKDE10} for a survey). The use of analogical proportions for such
-purposes is still entirely to explore.
+purposes is still entirely to be explored.

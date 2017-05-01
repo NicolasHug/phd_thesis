@@ -7,13 +7,13 @@
 a position to present our contribution to analogical recommendation.\\
 
 This chapter is structured as follows. In Section
-\ref{SEC:analogical_reco_basic_algo}, we describe our first approach which is
+\ref{SEC:analogical_reco_basic_algo}, we will describe our first approach which is
 directly inspired from extended classifiers, and compare it to the
 neighborhood approach and matrix factorization-based techniques. In Section
-\ref{SEC:clone_based_view} we devise a new algorithmic framework that is still
+\ref{SEC:clone_based_view} we will devise a new algorithmic framework that is still
 inspired by analogy, but that does not rely on the search of $3$-tuples which
 will appear to be very costly. Finally in Section
-\ref{SEC:mining_analogical_proportions}, we address the problem of mining
+\ref{SEC:mining_analogical_proportions}, we will address the problem of mining
 analogical proportions in partially described databases, and describe how the
 solving of this problem can be applied to a recommendation task. This will also
 help us to retrospectively analyze the results obtained in Section
@@ -75,11 +75,11 @@ For the sake of clarity though, we will not write them with boldface letters
 and $a$ will denote both the user $a$ as well as its vectorial representation.
 Let us consider Figure \ref{FIG:analogical_recommendation}: the four users $a,
 b, c$ and $u$ are in proportion, i.e. they make up a parallelogram in the
-2-dimensional space of their common items, Titanic and Toy story. If the
+2-dimensional space of their common items, namely the two movies Titanic and Toy story. If the
 three users $a, b, c$ have rated a movie $i$ that $u$ has not rated, the
 estimation of $\rui$ will be such that $a, b, c$ and $u$ still make up a
 parallelogram, but this time in a 3-dimensional space. This process is also
-explained in Table \ref{TAB:analogical_recommendation}
+explained in Table \ref{TAB:analogical_recommendation}.
 
 \begin{figure}[!h]
 \centering
@@ -140,7 +140,7 @@ Algorithm \ref{ALGO:analogical_recommendation}.
       \STATE $C \gets C \cup \set{y}$ \quad // Add $y$ as a candidate rating
 	  \ENDFOR
 
-         \STATE $\hat{r}_{ui} = \text{mean}{y \in C} y$
+         \STATE $\hat{r}_{ui} = \text{mean}_{y \in C} ~y$
 
 \end{algorithmic}
      \caption{Analogical proportion-based algorithm for recommendation.}
@@ -149,7 +149,7 @@ Algorithm \ref{ALGO:analogical_recommendation}.
 
 We will note here an important point: while an extended classifier would look
 for the $k$ $3$-tuples with the least values of analogical dissimilarity, we
-here look for all three tuples whose AD is below some given threshold. This is
+here look for all $3$-tuples whose AD is below some given threshold. This is
 a common variant of the $k$-NN algorithm: you can either look for the $k$
 nearest neighbors, or look for all instances that are within a given distance.
 
@@ -171,7 +171,8 @@ the performances of the others recommendation algorithms, we
 will only focus on the user-based approach described here.
 
 In the next section, we will extensively study the performances of our
-analogical recommender and compare it other standard recommendation algorithms.
+analogical recommender, and compare it to other standard recommendation
+algorithms.
 
 \subsection{Experiments and results}
 \label{SEC:experiments_analogical_reco_basic}
@@ -203,19 +204,19 @@ surprise. Precision, recall, F-measure and coverage  are reported as
 percentages. Remember that for these dimensions high values mean high
 performance, while for RMSE and surprise low values are better.  RMSE is the
 only measure that only depends on the prediction algorithm $A$. All the other
-dimensions depend on the items that we actually choose to recommend, and 
-rely on the the recommendation strategy $S$. Here, we have chosen to
+dimensions depend on the items that we actually choose to recommend, and
+rely on the recommendation strategy $S$. Here, we have chosen to
 recommend $i$ to $u$ if $\hat{r}_{ui} \geq 4$.
 
 All reported results are averaged over a 5-folds cross-validation procedure.
-Obviously, the five folds are the same for all of the algorithms, to allow for
+Obviously, the $5$ folds are the same for all of the algorithms, to allow for
 meaningful comparisons.  The dataset that we used is the MovieLens-100K
 dataset\footnote{http://grouplens.org/datasets/movielens/}, composed of 100,000
 ratings from 1000 users and 1700 movies. Each rating belongs to the interval
 $[1, 5]$, and the sparsity of this dataset is of about 94\%, i.e. only 6\% of
 all possible ratings are actually known. We also report the computation time of
 each algorithm (roughly estimated), which is not an average but the total over
-the five folds. All our experiments have been carried out using Surprise
+the $5$ folds. All our experiments have been carried out using Surprise
 \cite{Surprise}, a Python recommendation library that we have developed
 specifically for the occasion. The Surprise package will be described more in
 depth in the conclusion of this chapter.
@@ -259,35 +260,36 @@ We have considered various alternatives for our analogical
 recommender. In fact, when trying to predict a single rating $\rui$, looking
 for \textbf{all} the $3$-tuples of users in $U_i$ as described in Algorithm
 \ref{ALGO:analogical_recommendation} is simply impractical\footnote{Remember
-that $U_i$ is the set of user that have rated item $i$.}: there are often too
+that $U_i$ is the set of users that rated item $i$.}: there are often too
 many users in $U_i$. As the complexity of this search is in $\mathcal{O}(\mid
 U_i\mid^3)$ and as $\mid U_i\mid$ can be quite large for some items, strictly
 sticking to Algorithm \ref{ALGO:analogical_recommendation} would lead to
 even worse computation times. We thus have chosen two different strategies:
 \begin{itemize}
-  \item The first one is to randomly sample a $3$-tuple in $U_i^3$ $n$ times.
+  \item The first one is to randomly sample $n$ times a $3$-tuple in $U_i^3$.
     As in the strict version of Algorithm \ref{ALGO:analogical_recommendation}
     the prediction is an average from all the $3$-tuples in $U_i^3$, choosing a
     large value of $n$ should lead to a fairly good estimate. We have reported
     the results for $n = 100$ and $n = 1000$. Note though that $\mid U_i
-    \mid^3$ is usually much larger than 1000, so we only have very rough
-    estimation here.
-  \item The second one is to consider the $3$-tuples $(a, b, c)$ in the
+    \mid^3$ is usually much larger than 1000, so we only have a very rough
+    estimation here. This option is referred-to as \textbf{Parall Sample}.
+  \item The second strategy is to consider the $3$-tuples $(a, b, c)$ in the
     neighborhood of $u$, using the assumption that the neighbors of $u$ are
     probably more reliable to yield a prediction where $u$ is involved. We have
     used the MSD metric to compute the neighborhood, and we have considered various
     sizes of neighborhood, namely $k = 20$  and $k = 30$. Unfortunately, values
-    of $k$ greater than $30$ lead to basically never-ending algorithms.
+    of $k$ greater than $30$ lead to basically never-ending algorithms. This
+    option is referred-to as \textbf{Parall $k$-NN}.
 \end{itemize}
 
 
-\paragraph{Analysis\\}
+\paragraph{RMSE analysis\\}
 
 Out of all the algorithm, the PMF algorithm is by far the most
-accurate, with and RMSE of 0.95. Matrix factorization  models were extremely popular during the
+accurate, with an RMSE of 0.95. Matrix factorization  models were extremely popular during the
 Netflix competition precisely because of their high accuracy. Note however that
-even if the matrix factorization algorithms cannot be overlooked when it comes
-to performance comparison, their philosophy remains quite different than that
+even though the matrix factorization algorithms cannot be overlooked when it comes
+to performance comparison, their philosophy remains quite different from that
 of other classical neighborhood approaches. They tend to model data structures
 at a high-level of abstraction, while neighborhood methods tend to model local
 features of the data. As such, it makes more sense to compare the performances
@@ -298,11 +300,13 @@ As expected, the RMSE of the
 Parall Sample algorithm gets better while $n$ grows, but still
 remains quite far from that of the $k$-NN algorithms. By paying attention to
 the Parall $k$-NN algorithms, we see that looking for the
-three-tuples in a the neighborhood of the users significantly improves the
+$3$-tuples in the neighborhood of the users significantly improves the
 accuracy of our analogy-based algorithms. Their RMSE is better than that of the
-neighborhood approaches when using cosine and Pearson similarity, and it may
-be expected that using a neighborhood size of $k=40$ would lead the an RMSE close
-to that of the $k$-NN algorithm with MSD similarity.
+neighborhood approaches when using Cosine and Pearson similarity, and it may
+be expected that using a neighborhood size of $k=40$ would lead to an RMSE
+close to that of the $k$-NN algorithm with MSD similarity.
+
+\paragraph{Coverage\\}
 
 Let us now consider the coverage measure. At first sight, it may appear that
 the Random and Parall Sample 100 algorithm have the best recall values. But this
@@ -312,30 +316,35 @@ depends \textbf{also} on the fitness of the prediction algorithm $A$, simply
 because $S$ highly depends on $A$. Therefore, the coverage of the Random
 algorithm cannot be taken very seriously, because its accuracy (RMSE) is
 disastrous: it  is only by chance that some items were estimated with a rating
-greater than $4$, and then were recommended. The same goes for the Parall
+greater than $4$, and were then recommended. The same goes for the Parall
 Sample 100 algorithm, which has a quite bad accuracy.  Actually, the most
 reasonable choice would probably the PMF algorithm again, which has the best
 RMSE and very decent coverage. With respect to coverage, our other
 analogy-based algorithms yield comparable performances to the
 neighborhood-based methods, with a slight advantage for analogy-based methods.
 
+\paragraph{Precision and Recall\\}
+
 As for precision, recall and F-measure, we somehow have the same situation: the
 Random algorithm seems to be the best one, but this need to be taken very
 carefully. Here again, the PMF algorithm probably yields the best actual trade-off.
 Comparatively, analogy-based algorithms have a slightly better F-measure than
-the neighborhood approaches. This may describe the fact that our algorithms
+the neighborhood approaches. This may describe the fact that our Parall algorithms
 tend to produce more diverse recommendations, as would also suggest the results
 on the coverage.
 
+\paragraph{Surprise\\}
 The surprise measures are a bit more tricky to analyze. Looking at $\surpmax$,
-which assesses the least surprising recommendation (average over all users), we
+which assesses the least surprising recommendation (averaged over all users), we
 see that the analogy-based algorithms tend to perform better, but the
 $\surpavg$ measure counterbalances this observation. Undoubtedly, the surprise
 associated to a recommendation remains an extremely tricky concept to grasp and
 to model, and the measures presented here only allow to assess a very rough
 aspect of this complex dimension.
 
-As a side note, we have only reported the RMSE for the Mean algorithm, because
+\paragraph{Other remarks\\}
+
+As a side note, we have reported only the RMSE for the Mean algorithm, because
 this algorithm always outputs a prediction of $\predrui = \mu = 3.53$ which is
 lower than the threshold we have chosen for our recommendation strategy $S$.
 Therefore, not a single item is recommended with this algorithm, and the
@@ -343,12 +352,13 @@ precision, recall, etc. are not defined (or simply 0).
 
 We are now led to computation time... The nightmare of every analogical
 proportion-based algorithm. All of the other algorithms can manage through the
-five-folds cross-validation procedure in less than a minute, but our
+$5$-folds cross-validation procedure in less than a minute, but our
 analogy-based algorithms need hours to yield only decent performances. This
 issue is linked to the cubic complexity of the analogy-based learners, which
 cannot cope with big amounts of data. For now, this limitation prevents
 analogy-based learners to be relevant in real-world applications such as
-recommender systems, where computation time is one of the most decisive factor.
+recommender systems, where computation time is one of the most decisive
+factor.\\
 
 Nonetheless, it is still possible to design analogy-inspired solutions for
 recommendation. In the next section, we describe other algorithms that rely on
@@ -368,7 +378,7 @@ about the rating scale. In the $[1, 5]$ scale for example, two users $u$ and
 $v$ might semantically agree on an item $i$ describing it as $bad$, but there
 is a chance that this agreement is not perfectly reflected in the ratings: $u$
 might have rated $i$ with $r_{ui} = 1$ and $v$ with $r_{vi} = 3$, simply
-because from $v$' point of view $3$ is a \textit{bad} rating, while for $u$ a
+because from $v$'s point of view $3$ is a \textit{bad} rating, while for $u$ a
 rating of $3$ would simply mean \textit{decent} or \textit{good enough}.  In
 the following, we refer to such users that \textit{semantically} agree on their
 common items (but not necessarily \textit{numerically}) as \textbf{clones}, as
@@ -385,19 +395,19 @@ sense that two clones are two users following parallel paths.
 
 It is obvious that in collaborative filtering, clones are of great interest
 when it comes to predicting a user's ratings, and yet the information they provide
-is often discarded. Indeed, in Figure \ref{FIG:alice_and_bob_clones}, Alice and
+are often discarded. Indeed, in Figure \ref{FIG:alice_and_bob_clones}, Alice and
 Bob would definitely not be considered as neighbors, so Bob would not be used to
 predict Alice's ratings, and Alice would not be used to predict Bob's ratings.
 The principle underlying the analogical clone-based view is the following: for
 predicting a missing rating for $u$, we not only look at its nearest neighbors
-but also to those users $v$ whose rating are such that $r_{ui} = r_{vi} + t_{vu}$
+but also at the users $v$ whose ratings are such that $r_{ui} = r_{vi} + t_{vu}$
 where $t_{vu}$ is a more or less constant \textbf{correction term} that can be
 either positive or negative. This correction term is the difference between
 Bob's ratings and those of Alice. When two users $u$ and $v$ are clones, we can
 come back to an analogical proportion-based viewpoint by noticing that we have:
 $$r_{ui} : r_{vi} :: r_{uj} : r_{vj},~~ r_{uj} : r_{vj} :: r_{uk} : r_{vk},
 \dots$$
-where $i, j, k, \cdots$ are the common items of $u$ and $v$. The algorithms we
+where $i, j, k, \cdots$ are the common items rated by $u$ and $v$. The algorithms we
 will derive will however be much more efficient than those of the previous
 section, because they will not rely on an extensive search of 3-tuples of
 users.
@@ -417,7 +427,7 @@ which could be rewritten as:
 $$\predrui = \aggr{\begin{subarray}{l}v \in C_i(u),\\ t_{vu} = 0\end{subarray}}(r_{vi} + t_{vu}).$$
 
 Following this general framework, one can construct a great variety of
-algorithms with various level of complexity. In the next subsections, we
+algorithms with various level of complexity. In the next subsections, we will
 propose a very straightforward algorithm, and a more efficient one.
 
 \subsubsection{A straightforward prediction algorithm}
@@ -428,14 +438,14 @@ basic method can outperform the classical neighborhood approach.
 
 Let us first introduce the notion of $t$-clone. In its most simple form, a
 user $v$ can be considered to be a $t$-clone of $u$ if the ratings of $v$
-exactly differ from those of $u$ from a constant $t$:
+exactly differ from those of $u$ by a constant term $t$:
 $$
 t\text{-}C(u) \eqdef \Set{v \in U | \forall i \in I_{uv},~ r_{ui} = r_{vi} + t}.
 $$
 From then on, computing $\predrui$ amounts to finding all the users $v$ that
-satisfy this criterion, and computing an aggregation of their rating for $i$,
+satisfy this criterion, and computing an aggregation of their ratings for $i$,
 which can simply be an average. We implemented this basic algorithm described
-by Algorithm \ref{ALGO:bruteforce}, and referred to as \textit{brute-force}.
+by Algorithm \ref{ALGO:bruteforce}, and referred to as \textbf{brute-force}.
 
  \begin{algorithm}[!ht]
    \caption{A brute-force algorithm for clone-based recommendation.}
@@ -444,7 +454,7 @@ by Algorithm \ref{ALGO:bruteforce}, and referred to as \textit{brute-force}.
 
       \STATE {\bf Input}: A set of known ratings $R$, a user $u$, an item
       $i$ such that $r_{ui} \notin R$.
-      \STATE {\bf Output}: $\hat{r}_{ui}$, an estimation of $r_{ui}$
+      \STATE {\bf Output}: $\hat{r}_{ui}$, an estimation of $r_{ui}$.
 
       \STATE {\bf Init}:
       \STATE $C = \varnothing$ \quad \quad // list of candidate ratings
@@ -469,7 +479,7 @@ which amounts to accept $v$ as a $t$-clone of $u$ if on average, the
 difference $|r_{ui} - r_{vi}|$ is equal to $t$ with a margin of $1$.
 The values of $t$ clearly depend on the rating scale. The datasets on which we
 tested our algorithms use the $[1, 5]$ interval, so possible values for $t$
-that were have considered are integer values in $[-4, 4]$.
+that we have considered are integer values in $[-4, 4]$.
 
 This is obviously a very rough algorithm, to which one could point out numerous
 flaws. The first obvious one is its time complexity which is very high, but the
@@ -479,24 +489,24 @@ method, as we will see in the experiments section.
 
 \subsubsection{Modeling clones with the similarity measure}
 Another option to consider clones is to use the well known neighborhood-based
-formula, and capture their effects by means of an appropriate similarity measure.
+formula, and capture their effects using an appropriate similarity measure.
 Recall that the general neighborhood formula is as follows:
 
 $$\predrui = \frac{\sum\limits_{v \in N_i^k(u)} r_{vi} \cdot \ssim(u, v)}
 {\sum\limits_{v \in N_i^k(u)}\ssim(u, v)}.$$
 
 We have seen that this formula is commonly used with classical similarity
-metrics such as Pearson similarity, cosine similarity, or inverse of MSD.
-However, these similarities are not plainly satisfactory when it comes to
+metrics such as Pearson similarity, Cosine similarity, or inverse of MSD.
+However, these similarities are not fully satisfactory when it comes to
 clones. Indeed with these metrics, two users are considered to be close if
 their common ratings are often the same, but two perfect clones $u$ and $v$
-with a significant correction term $t_{vu}$ would be considered as far from
+with a significant correction term $t_{vu}$ would be considered as being far from
 each other, thus involving a loss of information.
 
 We propose the following simple choice of metric to measure how two users
 relate as clones:
 $$\clonedist(u, v) \eqdef  \frac{1}{\mid I_{uv} \mid} \cdot
-\sum\limits_{i \in I_{uv}} \left[(r_{ui} - r_{vi}) - \mu_{uv}\right]^2$$
+\sum\limits_{i \in I_{uv}} \left[(r_{ui} - r_{vi}) - \mu_{uv}\right]^2,$$
 where $\mu_{vu}$ is the mean difference between ratings of $u$ and $v$:
 $$\mu_{uv} \eqdef \frac{1}{\mid I_{uv}\mid}\sum_{i \in I_{uv}} (r_{ui} -
 r_{vi}).$$
@@ -506,22 +516,22 @@ We can understand this distance in two ways:
 \item it can be regarded as the variance of the difference of ratings between
   $u$ and $v$,
 \item or it can be regarded as a simple MSD measure (defined in Section
-  \ref{SEC:neighborhood_approach} to which the mean difference of ratings between $u$ and $v$ has
+  \ref{SEC:neighborhood_approach}) to which the mean difference of ratings between $u$ and $v$ has
     been subtracted.
   \end{itemize}
 
-As our measure $\clonedist$ is a distance, it is necessary to transform it into
-a similarity measure. A Common choice is to take its inverse (while accounting
+As our measure $\clonedist$ is a distance, it needs to be turned into 
+a similarity measure. A common choice is to take its inverse (while accounting
 for zero division):
 $$\clonesim(u, v) = \frac{1}{\clonedist(u, v) + 1}.$$
 
 \noindent
-Once we know how to find the clones of a user, it is a simple matter to output
+Once we know how to find the clones of a user, it is easy to output
 a prediction using the classical neighborhood approach:
 $$\predrui = \frac{\sum_{v \in N_i^k(u)} (r_{vi} + \mu_{uv}) \cdot \clonesim(u,
 v)}{\sum_{v \in N_i^k(u)} \clonesim(u, v)}.$$
 
-This algorithm will be referred to as Clone. For the sake of completeness, we
+This algorithm will be referred to as \textbf{Clone}. For the sake of completeness, we
 also tried the same formula but with a more basic similarity metric that does
 not care about clones: MSD.
 
@@ -544,12 +554,12 @@ ratings of a user are $(2, 2, 1)$, its bias $b_u$ would be close to $-1$.
 
 Baselines are computed by solving a regularized least squares problem:
 $$\min_{b_u, b_i} \sum_{r_{ui} \in R} \left[r_{ui} - (\mu + b_u + b_i)\right]^2
-+ \lambda \left(b_u^2 + b_i^2 \right).$$
++ \lambda \left(b_u^2 + b_i^2 \right),$$
 which can be achieved efficiently by stochastic gradient descent, or
 alternating least squares. The regularization terms are here to avoid
 overfitting: they allow to give more confidence to biases that are computed on
 a high number of ratings. In our previous example, the user had only rated $3$
-items so we cannot say reliably say that its real bias is really close to $-1$.
+items so we cannot reliably say that its real bias is close to $-1$.
 The regularization term will allow to give a value closer to 0 for this user
 bias.
 
@@ -564,7 +574,7 @@ called SVD \cite{KorBel11}, and is nothing but the PMF algorithm with user and
 items biases. Its extension to handling implicit ratings is called SVD++
 \cite{KorBel11}, but we will not describe it here.
 
-In their work, the author have used this particular similarity metric, that is
+In their work, the authors have used this particular similarity metric, that is
 in perfect accordance with their prediction formula:
 $$\text{sim}(u, v) = \frac
 { \sum\limits_{i \in I_{uv}} (r_{ui} -  b_{ui}) \cdot (r_{vi} - b_{vi})}
@@ -572,8 +582,8 @@ $$\text{sim}(u, v) = \frac
 \sqrt{\sum\limits_{i \in I_{uv}} (r_{vi} -  b_{vi})^2}}.$$
 
 It is simply a Pearson correlation coefficient, except that instead of
-centering ratings by their means, they are centered with the baseline
-predictors. This seemingly simple tweaks actually has various consequences that
+centering ratings with their averages, they are centered with the baseline
+predictors. This seemingly simple tweak actually has various consequences that
 are very interesting. An intuitive and illuminating way to look at this
 algorithm as a whole is to see that it conceptually follows these steps:
 \begin{enumerate}
@@ -583,9 +593,9 @@ algorithm as a whole is to see that it conceptually follows these steps:
     $0$), thus
     discarding any bias coming from the users or from the items. In $R'$,
     ratings can then be considered as absolute, in the sense that they are not
-    spoiled by the users moods or the items inherent popularity.
-  \item Using $R'$, compute similarities between users using the cosine
-    similarity (the cosine similarity is the same as the Pearson correlation
+    spoiled by the users' moods or the items inherent popularity.
+  \item Using $R'$, compute similarities between users using the Cosine
+    similarity (the Cosine similarity is the same as the Pearson correlation
     coefficient, except that quantities are not centered).
   \item Output a prediction using the basic neighborhood formula. As this
     prediction belongs to the same space of $R'$ where ratings have no bias, it
@@ -598,7 +608,7 @@ In what follows, this algorithm will be referred to as $\knns$.
 
 \noindent
 It is very clear that the use of the baseline predictors and the use of
-clone-based recommendation are motivated by the same reasons: they both come
+clone-based recommendation are motivated by the same reason: they both come
 from the fact that users (and items) tend to interpret the rating scale
 differently.  This means that $\knns$ implicitly takes the idea of clones into
 account, and thus a form of analogical reasoning.  Differences and resemblances
@@ -616,7 +626,7 @@ reasons that will become clear at the end of this discussion, we also evaluated
 the Bsl algorithm, whose prediction is simply the baseline predictor, i.e.
 $\predrui = b_{ui}$. The evaluation protocol is the same as that of Section
 \ref{SEC:experiments_analogical_reco_basic}, i.e. results are averaged over a 5-folds cross-validation
-procedure. In addition to the MovieLens-100k dataset presenter earlier, we also
+procedure. In addition to the MovieLens-100k dataset presented earlier, we also
 used the MovieLens-1M dataset containing 1 million ratings with 6000 users and
 4000 movies.  For each of these algorithms, the number of neighbors or clones
 used to output a prediction is $k = 40$, except for the brute-force algorithm
@@ -655,8 +665,8 @@ users. The brute-force is however a lot heavier to compute, and thus not very
 suitable for real world recommendation purposes (its performances on the
 MovieLens-1M dataset simply could not be computed). The two other clone-based
 algorithms, however, have the exact same complexity of any $k$-NN-based
-algorithm which is a significant improvement from the algorithm described in
-Section \ref{SEC:analogical_reco_basic_algo}.
+algorithm, which is a significant improvement from the algorithm described in
+Section \ref{SEC:analogical_reco_basic_algo}.\\
 
 Our two Clone algorithms output (almost) exactly the same
 accuracies. This may seem a bit surprising, because the Clone MSD algorithm
@@ -697,7 +707,7 @@ account the number of common items between two users: the more items they
 share, the more confident we are when computing their similarity
 \cite{KorACM2010}. Such techniques can further improve both RMSE and MAE of the
 algorithm.  Similarly, in the clone-based approach, it might be of interest to
-discount clones that rely on a too small number of common items.
+discount clones that rely on a too small number of common items.\\
 
 Leaving clones for a moment, let us focus now on the Bsl predictor. Bsl outperforms by far the RMSE of the
 $k$-NN algorithm, and in fact if we go back to table
@@ -724,25 +734,25 @@ embedded in our clone-based framework.
 
 \subsection{Towards an ordinal view of ratings}
 
-We here investigate if we can devise a counterpart of the numerical clone-based
+We will here investigate if we can devise a counterpart of the numerical clone-based
 approach, which would be compatible with an ordinal view of the ratings.
 Indeed, an extreme way for unbiasing and comparing two sets of ratings is to
 forget about their numerical values, and only consider their respective rankings. The
 idea of viewing ratings in a ordinal manner is not new, and has been advocated
-for example in \cite{KorSillRECSYS11}.  In this section, we discuss an ordinal
-counterpart of the analogical approach previously presented.  Analogical
-reasoning with ordinal data has first been proposed in \cite{MicBarCAP09}, yet
-with a different concern.
+for example in \cite{KorSillRECSYS11}.  In this section, we will discuss an
+ordinal counterpart of the analogical approach previously presented.
+Analogical reasoning with ordinal data has first been proposed in
+\cite{MicBarCAP09}, yet with a different concern.
 
 \subsubsection{An algorithm for rank prediction}
 Indeed, the idea that ``\textit{the rating of user $u$ for item $i$ is to the
 rating of user $v$ for item $i$ as the rating of user $u$ for item $j$ is to
-the rating of user $v$ for item $j$}’’ may be understood  as well in an ordinal
+the rating of user $v$ for item $j$}'' may be understood  as well in an ordinal
 manner. This leads to state that ``\textit{the relative ranking of item $i$
   among the ratings given by user $u$  is to the relative ranking of item $i$
   among the ratings given by user $v$ as the relative ranking of item $j$ among
   the ratings given by user $u$  is to the relative ranking of item $j$ among
-the ratings given by user $v$}.
+the ratings given by user $v$}''.
 
 This means that we need to compare the rankings given by two users $u$ and $v$
 on their common items. In the following, $\rho_{ui}$ denotes the relative
@@ -761,8 +771,8 @@ possible algorithm would be as follows:
 \end{enumerate}
 
 This is obviously very similar to the numerical clone-based approach described
-before, but instead of predicting a rating, we output a the prediction of a rank. This
-approach is denoted as \textit{Rankin's}.
+before, but instead of predicting a rating, we output the prediction of a rank. This
+approach is denoted as \textbf{RankAnlg}.
 
 The computation of Spearman's rho takes into account the relative rankings of
 the ratings, and is computed as follows:
@@ -777,7 +787,7 @@ Spearman's rho is usually defined as a statistic for random variables, and we
 here have translated it as a realization of this statistic in our
 recommendation setting. A common issue when dealing with rankings is that there
 may be ties in the data. Consider for example user $u$ from Table
-\ref{TAB:rankings}, who's ratings are $1, 1, 2, 3, 3, 3$ for items $i_1, i_2,
+\ref{TAB:rankings}, whose ratings are $1, 1, 2, 3, 3, 3$ for items $i_1, i_2,
 i_3, i_4, i_5$ and $i_6$.
 \begin{table}[h!]
 \centering
@@ -800,9 +810,8 @@ Instead, it is common to consider that the ranking of a given item is the mean
 of the raw rankings for the items that share the same rating value. In our case,
 $\rho_{u{i_1}} = \rho_{u{i_2}} = \frac{1 + 2}{2}$, and $ \rho_{u{i_4}} =
 \rho_{u{i_5}} =  \rho_{u{i_6}} = \frac{4 + 5 + 6}{3}$.
-This way to
-proceed leads to a better estimation of Spearman's rho, and is equivalent to
-averaging over all possible permutations between the raw ranks of items with
+This process leads to a better estimation of Spearman's rho, and is equivalent
+to averaging over all possible permutations between the raw ranks of items with
 equal ratings.
 
 
@@ -812,7 +821,7 @@ equal ratings.
 We evaluated the performance of our algorithm and compared it to other
 previously described approaches, using the exact same evaluation protocol as in
 the previous sections. The MovieLens-1M dataset was not benchmarked, because
-the computation of Spearman'rho was too computationally intensive on this
+the computation of Spearman's rho was too computationally intensive on this
 bigger dataset.
 
 RMSE and MAE are good measure for evaluation rating prediction accuracy, but
@@ -833,8 +842,8 @@ proportion of concordant pairs.
   \FCP &\eqdef \frac{\sum\limits_{u \in U} c_u}{\sum\limits_{u \in U} c_u +
   \sum\limits_{u \in U} d_u}.
 \end{align*}
-Here, $\predrui$ here may represent either a rating prediction or a ranking
-prediction $\hat{\rho_{ui}}$.
+Here, $\predrui$ may represent either a rating prediction or a ranking
+prediction $\hat{\rho}_{ui}$.
 
 Results are reported in table \ref{table:res100kRank}.
 \begin{table}[!ht]
@@ -875,7 +884,7 @@ This closes for now our contributions to analogical recommendation. We will
 come back to it in the conclusion of this chapter, and we will now focus on a
 somewhat unrelated problem: analogical proportion mining in databases. As we
 will see though, analogical recommendation can in fact be viewed as both a
-motivation \textbf{and} as a purpose for the mining of analogical proportions.
+motivation \textbf{and} a purpose for the mining of analogical proportions.
 
 \section{Mining analogical proportions}
 \label{SEC:mining_analogical_proportions}
@@ -889,9 +898,9 @@ cubic, which makes it impossible to use in actual systems and hard to evaluate
 accurately. Also, the performances of this algorithm were quite modest, even in
 its most elaborated forms.
 
-Our analogical inference principle used in the first section states that if four users are in analogy,
-then their ratings for an item $i$ that $d$ has not rated should also be in
-analogy:
+Our analogical inference principle used in the first section states that if
+four users $a, b, c, d$ are in analogy, then their ratings for an item $i$ that
+$d$ has not rated should also be in analogy:
 $$
 \inferrule{r_{aj} : r_{bj} :: r_{cj} : r_{dj} ~~ \forall j \in
 I_a \cap I_b \cap I_c \cap  I_d}
@@ -916,8 +925,8 @@ association rules (described below) will be more natural. Both problems are
 symmetric though, and our solution can be adapted to user proportions in a
 straightforward manner.
 
-Because our method for mining analogical proportion is inspired from the mining
-of association rules, we first review this topic in the next subsection.
+Because our method for mining analogical proportions is inspired from the mining
+of association rules, we will first review this topic in the next subsection.
 
 \subsection{Association rules}
 
@@ -926,11 +935,11 @@ database, and that reveal dependencies between items. Recommendation is one of
 the principal application of association rules. Starting from the association
 rule $i \implies j$, which means that users that buy $i$ tend to buy $j$ with
 high probability, a recommendation system can suggest $j$ as soon as we bought
-$i$ but not yet $j$. A well-known example of association rule is the famous
-$\text{beer} \implies \text{diapers}$ association, who was revealed after
+$i$ (but not yet $j$). A well-known example of association rule is the famous
+$\text{beer} \implies \text{diapers}$ association, which was revealed after
 mining association rules in a supermarket selling history, suggesting that
-people tend to by beer and diapers altogether. We now formally introduce the
-problem of association rule mining.
+people tend to buy beer and diapers altogether. We now formally introduce the
+problem of \textbf{association rule mining}.
 
 Let $I = \Set{i_1, i_2, ..., i_m}$ be a set of $m$ items, and let $T =
 \Set{t_1, t_2, ..., t_n}$ be a multiset of transactions, where each transaction
@@ -947,10 +956,10 @@ absolute number $\mid \Set{t \in T | X \subseteq t}\mid$, but it only makes
 sense to consider it with respect to the total number of transactions $\mid T
 \mid$. Various
 measures can be used to evaluate the quality of an association rule, such as
-the \textbf{confidence } which can be expressed as:
+the \textbf{confidence} which can be expressed as:
 $$\text{Conf}(X \implies Y)~\eqdef~\frac{\supp (X \cup Y)}{\supp (X)}.$$
 As could be naturally expected, $\text{Conf}(X \implies Y)$ is equal to $1$
-when the items of $X$ and $Y$ are systematically bought together and decreases
+when the items of $X$ and $Y$ are systematically bought together, and decreases
 if the set $X$ is sometimes found in a transaction that does not contain $Y$.
 
 The mining of association rules is a popular research topic, and has been
@@ -960,7 +969,7 @@ a naive association rules mining algorithm would be as follows:
 \item First, generate the power set of $I$, i.e. the set of all subsets of $I$
   that we denote $2^I$.  We know that the elements in $2^I$ are partially
   ordered with respect to inclusion, and $2^I$ can be represented as a lattice
-  where the join is the union and the meet is the intersection.
+    where the \textit{join} is the union and the \textit{meet} is the intersection.
 \item Let $I_S$ be any of the $2^m$ itemsets in $2^I$. Then for each $I_S$,
   compute all partitions $(X, Y)$ of $I_S$ and calculate the confidence
     associated with the rule $X \implies Y$. If the confidence is above a given
@@ -968,7 +977,7 @@ a naive association rules mining algorithm would be as follows:
 \end{enumerate}
 
 The second step remains reasonable and cannot really be optimized, but the
-first one is obviously impossible in practice due to the terrific size of $2^I$,
+first one is obviously impossible to perform in practice due to the terrific size of $2^I$,
 when real-world databases usually contain hundreds or thousands of items.
 The most famous algorithm for association rule mining probably is the
 \textbf{Apriori} algorithm introduced in \cite{AgrSriVLDB94}, that we will
@@ -1004,7 +1013,7 @@ in the following steps:
     the above naive algorithm is used to assess the confidence of the
     association rules.
 \end{enumerate}
-In the end, we are provided with a set of association rule than comply with
+In the end, we are provided with a set of association rules than comply with
 some quality requirements, and that give us insightful information that link
 the elements of our database.
 
@@ -1017,18 +1026,18 @@ the elements of our database.
 
 Just like association rules, the identification of analogical proportions in a
 database is an additional information source, and deserves to be addressed. We
-now get to the heart of the matter.
+will now get to the heart of the matter.
 
 \subsection{Looking for analogies in an incomplete database}
 
-In order to avoid any ambiguity, we formally define our problem first.
+In order to avoid any ambiguity, we will formally define our problem first.
 \subsubsection{Problem definition and links to association rules}
 
 We will be looking for analogies between items in the MovieLens database, but
 our method can naturally be extended to any other database with the same
 structure.  We dispose of a set of users $U$ and a set of items $I$. Each user
 $u$ has rated (or purchased) a given set of movies $I_u \subseteq I$. In this
-setting, each user $u$ is actually considered to be a transaction $t$, as
+setting, each user $u$ can be considered as a transaction $t$, as
 defined in the previous section. The set of all the ratings $\rui$ is denoted
 $R$ and can be viewed as a sparse matrix where users are columns and items are
 rows (or the reverse).  For now, we do not care about the rating values and
@@ -1056,19 +1065,19 @@ involving a sufficient number of ratings), we can make use of the
 downward-closure property just like the Apriori algorithm, which will allow us
 to avoid many $4$-tuples that could not lead to good analogies.
 
-Let's now consider four items $a, b, c, d$, and our task is to find out if
+Let's now consider four users $a, b, c, d$, and our task is to find out if
 these four users make up a valid analogy. For now, we do not know in which
 order we need to consider them.  Just like for association rules, the notion of
 support still makes sense here because these four users make up a $4$-itemset:
 $$\supp(a, b, c, d) \eqdef \frac{\mid U_{abcd}\mid}{\mid U\mid},$$
-where $U_{abcd}$ is the set of user that have jointly rated $a, b, c$ and $d$.
+where $U_{abcd}$ is the set of users that have jointly rated $a, b, c$ and $d$.
 Here again, we will only be interested in proportions whose support is greater
 than some threshold $\alpha$: a proportion built on only two components is a
 lot less meaningful than a proportion built on dozens of components.
 
 When given four items $a, b, c, d$, the question is now to find out which is
 the proportion that actually holds. It could be $a:b::c:d$, but it could just
-as well be $a:b::d:c$ or $a:c:d:b$, or any of the $24$ ($4!$) combination of
+as well be $a:b::d:c$ or $a:c::d:b$, or any of the $24$ ($4!$) combinations of
 these four elements. Fortunately, we do not have to test all the $24$
 orderings.  We know from Chapter \ref{CHAP:formal_analogical_proportions} that
 there are exactly 3 equivalent classes of analogies, which are represented by:
@@ -1078,17 +1087,17 @@ there are exactly 3 equivalent classes of analogies, which are represented by:
   \item $a:d::c:b$.
 \end{itemize}
 Thus, testing these three orderings is enough to find out about the $24$
-possibles forms of analogies. To assess the quality of a proportion, we will
+possible forms of analogies. To assess the quality of a proportion, we will
 use a function $f$ that plays a similar role to the confidence function for
 association rules. Then, it will be natural to only consider analogies that
-are below some given quality threshold. Simply put, we would consider
+are above some given quality threshold. Simply put, we would consider
 $a:b::c:d$ as a valid analogy if $(a:b::c:d) \geq \beta$. In the end we are
 left with a set of proportions that represent analogical relations between four
 items.
 
 \subsubsection{Assessing the quality of a proportion}
 
-We here describe various functions $f$ that can assess the quality of a
+We will here describe various functions $f$ that can assess the quality of a
 proportion. The four items $a, b, c, d$ are considered as vectors of ratings in
 the space of their common users,
 and we will consider two cases: that of the binary rating scale $[0, 1]$, and
@@ -1113,7 +1122,7 @@ of the rating scale.
     analogical dissimilarity defined in Section \ref{SEC:extended_classifier}. For Boolean
     vectors, the analogical dissimilarity is defined as the number of
     components that need to change in order to have a perfect proportion. Note
-    however, that we ultimately want to \textbf{compare} the quality of
+    however that we ultimately want to \textbf{compare} the quality of
     different proportions, and the fact is that no two $4$-tuples of items will
     have the same common users, so the item vectors of the two different
     $4$-tuples will likely have different dimensions. Therefore, it might be
@@ -1123,36 +1132,36 @@ of the rating scale.
     of components where a Boolean proportion perfectly holds. It is a slightly
     less conservative approach than the above one but still very similar. In
     practice, this means that the two proportions $0:1::1:0$ and $1:0::0:1$
-    will be given a cost of $1$ instead of $2$. Here again, considering a
+    will be given an AD of $1$ instead of $2$. Here again, considering a
     fraction rather than an absolute number may be more meaningful, because
     of the different dimensions.
-  \item When the rating scale is numerical (e;g. $[1, 5]$), the analogical dissimilarity is
+  \item When the rating scale is numerical (e.g. $[1, 5]$), the analogical dissimilarity is
     defined as $\norm{p}{(a - b) - (c - d)}$, and indicates how well the
     parallelogram $abcd$ holds. Clearly, this can also be used as a measure of
     quality of the proportion.
   \item Another option for the gradual rating scale is to use the definitions
     of the fuzzy analogy evaluation described at the end of Section
-    \ref{SEC:formal_definitions_proportions}. As the quality each proportion is
+    \ref{SEC:formal_definitions_proportions}. As the quality of each proportion is
     evaluated in a component-wise fashion, we can choose various aggregation
     functions to assess the overall quality: mean, max, min, or also compare
     two proportions by lexicographic order. We will give further details in the
     experiments section.
   \item Finally, by adopting a statistical point of view, we can try to
     evaluate the probability of observing the proportion $a:b::c:d$, and
-    consider it as a meaningful proportion if it is unlikely that we could have
+    consider it a meaningful proportion if it is unlikely that we could have
     observed this proportion by random chance alone. This method is highly
     linked to statistical test theory.
 \end{itemize}
 
 \subsubsection{Algorithm}
 
-Our algorithm for mining analogical proportion imitates an association rule
+Our algorithm for mining analogical proportions imitates an association rule
 mining process: we preliminarily set a threshold $\alpha$ for the support, and a
 quality evaluation $f$ along with a threshold $\beta$.
 
 After having built all the $4$-itemsets whose support is above the threshold
 $\alpha$ with the Apriori algorithm, we compute the quality of the proportions
-associated with the three equivalent classes and keep those that satisfy our
+associated with the three equivalent classes, and keep those that satisfy our
 criterion. These steps are described in Algorithm \ref{ALGO:proportion_mining}.
 
  \begin{algorithm}[!ht]
@@ -1183,21 +1192,21 @@ In theory, it is possible to end up with two non-equivalent proportions in
 $\mathcal{P}$ that still relate to the same four items, i.e. we could find in
 $\mathcal{P}$ the proportion $a:b::c:d$ as well as the non-equivalent
 proportion $a:b::d:c$. It should not seem natural to have these two proportions
-in $\mathcal{P}$, so if this happens this is probably because the quality
-function $f$ is too permissive, or because the threshold $\beta$ is not
+in $\mathcal{P}$, so if this happens, it is probably because the quality
+function $f$ is too permissive or because the threshold $\beta$ is not
 correctly tuned.
 
 We also want to stress the point that the actual rating values are only used in
 the second part of the algorithm, i.e. when we evaluate the quality of the
 proportions. In the first part involving the Apriori algorithm, the only
-information that matter is that a rating exists. Its value is not taken into
+information that matter are that a rating exists. Its value is not taken into
 account.
 
 \subsection{Experiments and discussion}
 
 As previously indicated, we have considered the MovieLens-100k dataset for our experiments: 100,000
 ratings in $[1, 5]$ from $1000$ users and $1700$ movies. We will first treat
-ratings as numerical values, and then in the second part of this investigation
+ratings as numerical values, and in the second part of this investigation
 we will binarize them.
 
 \subsubsection{Numerical ratings}
@@ -1231,8 +1240,8 @@ A(a, b, c, d) =
 Consider for example the two $4$-itemsets of Table
 \ref{TAB:lexicographic_order}, where ratings $[1, 2, 3, 4, 5]$ have been mapped
 to $[0, .25, .5, .75, 1]$. We will consider that the first $4$-tuple $i_1, i_2,
-i_3, i_4$ (on the right) is a better proportion than the second one because
-once their truth values are sorted, the one of the right comes first. Had we
+i_3, i_4$ (on the left) is a better proportion than the second one because
+once their truth values are sorted, it is the one that comes first. Had we
 chosen to compare them with the mean of the truth values, the best proportion
 would have been the second one. In the remaining of this discussion, a
 \textbf{component-proportion} will denote a proportion between ratings (for
@@ -1336,11 +1345,11 @@ same.
 To try to discover some more surprising analogies, we basically have two
 options. The first one is to tweak a bit our quality function $f$ (and in our
 case, our comparison function) by penalizing proportions with the pattern
-$r:r::r:r$, or inversely by promoting those proportions $r : r' :: r :r'$ where
+$r:r::r:r$, or inversely by promoting the proportions $r : r' :: r :r'$ where
 $r$ and $r'$ are quite different. The second option is to lower the minimum
 support threshold, to allow movies that are rated by a reasonable (and not
 necessarily very high) number of users. As we have seen, movies with a very
-high number of ratings are likely yo lead to trivial proportions precisely
+high number of ratings are likely to lead to trivial proportions precisely
 because they are popular, and because people like them all equally well in
 general. If we really want to ban popular movies, we can also set a
 \textbf{maximum} support threshold. This will also have the benefit to limit
@@ -1355,7 +1364,7 @@ value of a component-proportion $r_1 : r_2 :: r_3 : r_4$ is defined by:
 $$A'(r_1, r_2, r_3, r_4) = \frac{1}{2} A(r_1, r_2, r_3, r_4) + \frac{1}{4} |r_1
 - r_2| + \frac{1}{4} |r_3 - r_4|.$$
 We are here promoting proportions where rating values tend to disagree, which
-should lead to different proportions to that of Table
+should lead to different proportions from that of Table
 \ref{TAB:best_prop_num_basic_200}. Proportions are still compared using the
 lexicographic order of all the $A'$ values.
 \begin{table}[h!]
@@ -1393,11 +1402,11 @@ Fugitive}? Is \textit{Twister} related to \textit{Independence Day}? Is
 \textit{Fargo} related to \textit{The Silence of the Lambs}? We will not
 venture to answer these questions, and leave them to the reader's appreciation.
 All we can say is that some forms of analogy seem to emerge from their
-respective ratings.  One thing we can note though, is that even if all these
+respective ratings.  One thing we can note though, is that even though all these
 movies are very popular just like in Table \ref{TAB:best_prop_num_basic_200},
 their genres are however quite different: while we have considered Star Wars
 and Indiana Jones to be of the same kind, we can fairly claim that a Star Wars
-movie is very far from Fargo, Pulp Fiction or The Silence of the lambs.
+movie is very far from Fargo, Pulp Fiction or The Silence of the Lambs.
 
 \paragraph{Lowering support threshold\\}
 
@@ -1435,37 +1444,37 @@ will not pretend to.
 
 Still, we shall try to make sense out of this. It seems that our proportions
 exhibit some sort of clustering: movies of proportions 1, 3, 8 and 9 are all
-movies from the 40'-50's. Clearly the users having rated the corresponding
+movies from the 40'-50's. Clearly the users that rated the corresponding
 movies must be some fans of the old movie-making era. Similarly, proportions 2
 and 10 are all movies from 1994 or 1995, suggesting a niche. Here again it is
 not really surprising that we observe the two patterns $a:b::c:d$ and
 $a:b::d:c$. This comes from the fact that these movies are often given similar
 (and high) ratings. The other proportions involve movies that are still from the
-90's and that have reviewed pretty bad reviews from critics: they seem to be
-from the \textit{so bad it's good} kind.
+90's and that are given pretty bad reviews from critics: they seem to belong to
+the \textit{so bad it's good} kind.
 
 \subsubsection{Boolean ratings}
 
-To complete this investigation, have led the same experiments with binary
-ratings. The ratings of the MovieLens dataset have been binarized by
-associating the value $1$ if the a rating $\rui$ is above the user's average
+To complete this investigation, we have led the same experiments with binary
+ratings. The ratings of the MovieLens dataset were binarized by
+associating the value $1$ if the rating $\rui$ is above the user's average
 rating $\mu_u$ (i.e. the user liked the movie) and $0$ otherwise (the user disliked the
 movie):
 $$\text{binary}(\rui) =
 \begin{cases}
   1 \text{ if } \rui \geq \mu_u\\
-  0 \text{ else},
+  0 \text{ else}.
 \end{cases}
 $$
 The quality of a movie-based proportion is here the fraction of perfect
 component-proportions. When setting a minimal support of 200 without any other
 constraint, it should not come as a surprise that the movie-proportions that we
 find are extremely similar to that of Table \ref{TAB:best_prop_num_basic_200}.
-They involve the same 7 movies and are so alike that we choose not to show them
+They involve the same 7 movies and are so alike that we chose not to show them
 here to avoid redundancy. Indeed, the set of candidate 4-itemsets are
 necessarily the same in the two settings: recall that on the first stage of the
 algorithm, we do not care about the rating values so the fact that ratings are
-binary or numerical do not change anything. The fact that the best proportions
+binary or numerical does not change anything. The fact that the best proportions
 are still the same is an argument in support of the coherence of the two
 quality functions.
 
@@ -1476,7 +1485,7 @@ descending order.
 \centering
   \includegraphics[width=4in]{figures/quality_of_proportions.pdf}
   \caption{Quality of the 993 proportions. The quality of a
-  proportion is defined as the faction of component-proportions that stand
+  proportion is defined as the fraction of component-proportions that stand
   perfectly.}
 \label{FIG:quality_proportions}
 \end{figure}
@@ -1504,11 +1513,11 @@ custom quality function.
 \centering
   \includegraphics[width=4in]{figures/quality_of_proportions_different.pdf}
   \caption{Quality of the 993 proportions. The quality of a
-  proportion is defined as the faction of components that make up perfect
+  proportion is defined as the fraction of components that make up perfect
   proportions, forbidding patterns $0:0::0:0$ and $1:1::1:1$.}
 \label{FIG:quality_proportions_different_ab_cd}
 \end{figure}
-Obviously, the quality drops significantly because we have forbidden patterns
+Obviously, the quality drops significantly for the mere reason that we have forbidden patterns
 like $r:r::r:r$. This tells us that in fact, \textbf{there are simply not a lot of
 interesting analogies}: the best proportion that we found is
 \textit{interesting} on less than 25\% of its components, which is quite small.
@@ -1525,11 +1534,11 @@ rating prediction algorithms, and also proposed a method for mining analogical
 proportions in an incomplete database.
 
 Section \ref{SEC:analogical_reco_basic_algo} described our first attempt at building an analogy-based
-prediction algorithm for recommendation. This algorithm was a direct
+prediction algorithm for recommendation. This algorithm is a direct
 application of the analogical inference principle, and is strongly related to
 the extended classifier that we have described in Chapter
 \ref{CHAP:functional_definition}. The basic
-underlying idea is that if four users $(a, b, c, d)$ are in analogy on their
+underlying idea is that if four users $(a, b, c, d)$ are in analogy regarding their
 common items (using the arithmetic proportion), then it should also be the
 case for other items that $d$ has not yet rated. We presented a user-based view
 where analogies were considered between users, but it is perfectly possible to
@@ -1557,7 +1566,7 @@ item biases. This method is based on the fact that some users tend to give
 higher ratings than others, and some items tend to be rated higher than some
 other items. We discussed how this view (using biases) is related to our view
 (using clones), and pointed out the similarities and differences of the two
-approaches. It turns out that these two techniques are really close, and the
+approaches. It turned out that these two techniques are really close, and the
 resemblance is reflected in the algorithms performances. Yet, as the bias-based
 method relies on a global optimization problem, it tends to be better at
 capturing the overall noise in the data, and still outperforms our method. Our
@@ -1569,7 +1578,7 @@ In Section \ref{SEC:mining_analogical_proportions}, we proposed an algorithm for
 proportions in a partially described database. This general method perfectly
 applies to the problem of mining analogies between users or items in a rating
 dataset, such as the one that was used in the first two sections. Based on the
-Apriori algorithm, our method is inspired from the mining of association rules
+Apriori algorithm, our method is inspired by the mining of association rules
 and allows to extract the potential analogies in an efficient way.
 We proposed many different quality functions allowing to assess the quality of
 a proportion, and naturally some of the quality functions are strongly related
@@ -1593,14 +1602,14 @@ analogy-based inference principle was reduced to that of the classical $k$-NN
 approach. Clearly in that case, paying the price of the cubic search in the set
 of all users is really not worth it. This is entirely dependent on the database
 that was used (in our case, the MovieLens dataset), and we may still presume
-that there should exist a dataset were the use of analogical proportion is
+that there should exist a dataset where the use of analogical proportion is
 beneficial over a simple neighborhood approach.
 
 Even if our investigations on analogical recommendation did not completely live
 up to our expectations, there still is a contribution of ours that  is worth
 mentioning. As pointed out earlier in the first section, all of our
 recommendation experiments
-where carried out using Surprise\footnote{\url{http://surpriselib.com}}
+were carried out using Surprise\footnote{\url{http://surpriselib.com}}
 \cite{Surprise}, an open source Python recommendation engine that we have
 developed. Quite surprisingly, when we started our experiments a few years
 ago, there were no Python library that would allow to easily run
@@ -1620,9 +1629,9 @@ features of Surprise are the following ones:
   \item Dataset handling is made easy. Custom datasets can be used, and the
     MovieLens datasets are natively supported.
   \item Various ready-to-use prediction algorithms are available, such as
-    baseline algorithms, neighborhood methods, matrix factorization-based (SVD,
+    baseline algorithms, neighborhood methods, matrix factorization (SVD,
     PMF, SVD++, NMF), and many others. Also, various similarity measures
-    (cosine, MSD, Pearson \dots) are built-in.
+    (Cosine, MSD, Pearson \dots) are built-in.
   \item The implementation of new algorithm ideas is made extremely simple.
   \item Cross-validation procedures can be run very easily, as well as
     exhaustive search over a set of parameters for optimization (much like the
