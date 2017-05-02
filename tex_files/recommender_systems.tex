@@ -8,9 +8,9 @@ essential to extract relevant information from basic noise
 \cite{RecoSystemHandbook,AdoTuzIEEE2005}. In the field of e-commerce,
 recommender systems play the role of search engines when surfing the entire
 web: they filter available items to provide relevant suggestions to customers.
-They help to answer questions as diverse as ``what movie to rent?", ``what car
-to buy?" or ``which restaurant to try?". They do so by providing the user with
-a list of recommendations.
+They help to answer questions as diverse as ``which movie to rent?", ``which
+car to buy?" or ``which restaurant to try?". They do so by providing the user
+with a list of recommendations.
 
 We have seen in the previous chapter that analogical learners exhibit promising
 results when compared to the $k$-NN algorithms in a Boolean setting. In chapter
@@ -23,15 +23,15 @@ systems, before diving into Chapter \ref{CHAP:analogical_recommendation} where
 we will describe our contributions and experiments. This chapter is structured
 as follows. We first provide a taxonomy
 of current research in the recommender systems area in Section
-\ref{SEC:taxonomy_rec_sys}, and set ourselves withing the collaborative
+\ref{SEC:taxonomy_rec_sys}, and set ourselves within the collaborative
 filtering framework. In Section \ref{SEC:recommendation_rating_prediction}, we
-formally define the recommendation problem that we will address in this
-document, and explain how to assess the quality of a recommender system. In
-Section \ref{SEC:neighborhood_and_matrix_facto_review}, we extensively describe
-two collaborative filtering methods: neighborhood-based algorithms, and matrix
-factorization-based techniques. These two families of algorithm will serve as
-baselines to which we will compare our own prediction algorithms in Chapter
-\ref{CHAP:analogical_recommendation}.
+formally define the specific recommendation problem that we will address in
+this document, and we explain how to assess the quality of a recommender system
+in this context. In Section \ref{SEC:neighborhood_and_matrix_facto_review}, we
+extensively describe two collaborative filtering methods: neighborhood-based
+algorithms, and matrix factorization-based techniques. These two families of
+algorithms will serve as baselines with which we will compare our own prediction
+algorithms in Chapter \ref{CHAP:analogical_recommendation}.
 
 \section{Taxonomy of recommender systems}
 \label{SEC:taxonomy_rec_sys}
@@ -1070,7 +1070,7 @@ analogical recommendation.
 We have seen that the three main families of recommender systems are the
 content-based, collaborative and knowledge-based techniques. Collaborative
 filtering is by far the most popular family of techniques today, so we will try
-to address this problem in our contributions. In particular, we will try to
+to address it in our contributions. In particular, we will try to
 build algorithms that are capable of predicting the rating $\rui$ that a user
 $u$ has given to an item $i$, on the basis of some past rating history.
 

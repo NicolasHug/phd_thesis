@@ -1533,24 +1533,24 @@ systems. We have proposed two frameworks based on analogy for the design of
 rating prediction algorithms, and also proposed a method for mining analogical
 proportions in an incomplete database.
 
-Section \ref{SEC:analogical_reco_basic_algo} described our first attempt at building an analogy-based
-prediction algorithm for recommendation. This algorithm is a direct
-application of the analogical inference principle, and is strongly related to
-the extended classifier that we have described in Chapter
-\ref{CHAP:functional_definition}. The basic
-underlying idea is that if four users $(a, b, c, d)$ are in analogy regarding their
-common items (using the arithmetic proportion), then it should also be the
-case for other items that $d$ has not yet rated. We presented a user-based view
-where analogies were considered between users, but it is perfectly possible to
-consider analogies between items.
+Section \ref{SEC:analogical_reco_basic_algo} described our first attempt at
+building an analogy-based prediction algorithm for recommendation. This
+algorithm is a direct application of the analogical inference principle, and is
+strongly related to the extended classifier that we have described in Chapter
+\ref{CHAP:functional_definition}. The basic underlying idea is that if four
+users $(a, b, c, d)$ are in analogy regarding their common items (using the
+arithmetic proportion), then it should also be the case for other items that
+$d$ has not yet rated. We presented a user-based view where analogies were
+considered between users, but it is perfectly possible to consider analogies
+between items.
 
 We have compared this algorithm with the two main approaches of collaborative
 filtering algorithms, namely neighborhood methods and matrix
 factorization-based techniques. Our algorithm yields decent accuracy compared
-to neighborhood methods, but is extremely expensive in terms of computational resources.
-It was clear that this simple and straightforward application of the analogical
-inference principle could not be used in real-world settings, where computation
-time is a scarce resource.
+to neighborhood methods, but is extremely expensive in terms of computational
+resources.  It was clear that this simple and straightforward application of
+the analogical inference principle could not be used in real-world settings,
+where computation time is a scarce resource.
 
 These observations led us to consider another framework for analogical
 recommendation in Section \ref{SEC:clone_based_view}. Acknowledging the fact
@@ -1563,16 +1563,17 @@ be a good rating, while for $v$ it may be a bad one. We derived two algorithms
 relying on this clone-based view of the ratings. We also described a quite
 recent technique in collaborative filtering, that allows to address user and
 item biases. This method is based on the fact that some users tend to give
-higher ratings than others, and some items tend to be rated higher than some
-other items. We discussed how this view (using biases) is related to our view
-(using clones), and pointed out the similarities and differences of the two
+higher ratings than others, and some items tend to be rated higher than others.
+We discussed how this view (using biases) is related to our view (using
+clones), and pointed out the similarities and differences of the two
 approaches. It turned out that these two techniques are really close, and the
 resemblance is reflected in the algorithms performances. Yet, as the bias-based
 method relies on a global optimization problem, it tends to be better at
 capturing the overall noise in the data, and still outperforms our method. Our
 last contribution to analogical recommendation was to consider an extreme case
 of clone-users, considering that the rating scale $[1, 5]$ could be interpreted
-as purely ordinal. Unfortunately, this track of research did not lead to promising results.
+as purely ordinal. Unfortunately, this track of research did not lead to
+promising results.
 
 In Section \ref{SEC:mining_analogical_proportions}, we proposed an algorithm for the mining of analogical
 proportions in a partially described database. This general method perfectly
@@ -1612,7 +1613,7 @@ recommendation experiments
 were carried out using Surprise\footnote{\url{http://surpriselib.com}}
 \cite{Surprise}, an open source Python recommendation engine that we have
 developed. Quite surprisingly, when we started our experiments a few years
-ago, there were no Python library that would allow to easily run
+ago, there was no Python library that would allow to easily run
 cross-validation procedures, or that would make the implementation of a
 recommendation algorithm easy. But most importantly, it seemed that most of the
 implementation details of the available algorithms were never explicitly
@@ -1636,10 +1637,11 @@ features of Surprise are the following ones:
   \item Cross-validation procedures can be run very easily, as well as
     exhaustive search over a set of parameters for optimization (much like the
     Grid Search feature of the excellent machine learning library scikit-learn
-    \cite{scikit-learn}).
+    \cite{scikit-learn}).\\
 \end{itemize}
 
-We now close our discussion on analogical recommendation and on practical
-applications of analogy. In the next chapter, we will go back to our original
-theoretical considerations, and try to challenge the analogical inference
-principle that we have so far blindly followed.
+With that, we now close our discussion on analogical recommendation and on
+practical applications of analogy. In the next chapter, having these findings
+in mind, we will go back to our original theoretical considerations and try to
+challenge the analogical inference principle that we have so far ``blindly''
+followed.

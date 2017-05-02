@@ -14,14 +14,14 @@ classifiers.  Both in \cite{BayMicDelIJCAI07} and in our experiments in Section
 \ref{SEC:experiments_and_empirical_validation}, these classifiers
 showed promising results, but were still only used in artificial Boolean
 classification problems. Analogical classifiers still had to prove their worth
-in real-world applications, and this was precisely the purpose of the last
+in real-world applications, and this was precisely the purpose of the previous
 chapter, where we designed various techniques to apply analogical inference on
 a recommendation task.
 
 Unfortunately, the results of a direct application of the analogical inference
 principle did not quite live up to our expectations. The conclusion of the last
 chapter offered a partial explanation to these modest results, stating that
-there were just too few decent analogies to be found on the datasets that we
+there were just too few decent analogies to be found in the datasets that we
 used. Even if this argument is perfectly admissible, we cannot spare ourselves
 the very questioning of the analogical inference principle. We say that if
 four elements are in proportion then so are their classes... But why should it
@@ -49,7 +49,7 @@ with three elements in $S$), then the classes of the four vertices are in
 proportion. In the right figure, we show all these elements, along with their
 estimated classes. The result is absolutely terrible, because the whole space
 is covered with instances belonging to both classes. In this example,
-an analogical classifier would lead to ridiculous accuracy results.
+an analogical classifier would lead to very poor accuracy results.
 
 \begin{figure}
 \centering
@@ -69,18 +69,18 @@ an analogical classifier would lead to ridiculous accuracy results.
 \end{figure}
 
 But if it is so easy for our analogical inference principle to fail, then why
-does it still work in some cases? Back to Figure \ref{FIG:nan_vs_nn} on page
-\pageref{FIG:nan_vs_nn}, the accuracies of the NAN algorithm were definitely
-not as bad as that of the problem we have just seen, and some of them were
-actually really good. A first obvious difference between the two experiments is
-that the one we just described deals with the arithmetic proportion with
-real-valued instances, while the other one deals with Boolean attributes. Does
-it mean that the analogical inference principle is bound to fail with the
-arithmetic proportion? We will probably not be able to completely answer this
-question, even though we will provide some insights.  We will instead focus on
-the Boolean setting which has seemed to be the most promising for analogical
-inference so far, and from there we will derive some links with the real-valued
-case.
+does it work well in some other cases? Back to Figure \ref{FIG:nan_vs_nn} on
+page \pageref{FIG:nan_vs_nn}, the accuracies of the NAN algorithm were
+definitely not as bad as that of the problem we have just seen, and some of
+them were actually really good. A first obvious difference between the two
+experiments is that the one we just described deals with the arithmetic
+proportion with real-valued instances, while the other one deals with Boolean
+attributes. Does it mean that the analogical inference principle is bound to
+fail with the arithmetic proportion? We will probably not be able to completely
+answer this question, even though we will provide some insights.  We will
+instead focus on the Boolean setting which has seemed to be the most promising
+for analogical inference so far, and from there we will derive some links with
+the real-valued case.
 
 In this chapter, we will provide a complete characterization of functions that
 are fully compatible with the analogical inference principle in a Boolean
@@ -1438,9 +1438,9 @@ whose degree is less than $1$.
 
 We have chosen to tackle the problem of finding the class of AP functions from the
 angle of training set extension. It became clear that the class of AP functions
-can be seen as the class of functions that allow  a perfectly sound extension,
-or equivalently as the class of functions that allow the analogical inference principle to
-be sound.
+can be seen as the class of functions which allow  a perfectly sound extension,
+or equivalently as the class of functions which allow the analogical inference
+principle to be sound.
 
 We also provided a more explicit version of the analogical inference principle
 which is in fact less restrictive than the one we had claimed so far. The
@@ -1449,7 +1449,7 @@ class equation $f(\mathbf{a}) : f(\mathbf{b}) ::f(\mathbf{c}) :y$ is not always
 solvable, and the relaxed version takes this fact into account. The class of AP
 functions is fully compatible with the relaxed version, but we have also
 identified the functions that are compatible with the strict version, which
-turned out to be the class of projections (or dictators) functions.
+turned out to be the class of projection (or dictator) functions.
 
 In real-world application though, purely affine functions are extremely rare.
 This means that using the analogical inference principle will necessarily
@@ -1477,7 +1477,7 @@ Our main goal was to identify the class of AP functions in a Boolean setting.
 We have extended our results to two other domains. It is often the case that
 the classification problem does not involve purely Boolean attributes, but
 rather a more general domain where instances are multi-valued. Sadly in these
-domains, there are no know structure or operators, so it was not possible to
+domains, there is no known structure or operators, so it was not possible to
 give a clear identification of AP functions such as that of Boolean AP
 functions. We were however able to provide a clear link between these AP
 functions and the Boolean AP functions by embedding the multi-valued space
