@@ -58,7 +58,7 @@ weaknesses.
 Chronologically, we first focused on the applicative side. Our first
 contributions were indeed devoted to applying analogical reasoning to the task
 of recommendation. Later, we led our theoretical investigations on
-analogical learners.
+analogical classification.
 
 In this document, we will choose to present our work somehow differently.
 After having recalled the necessary background on analogical proportions in
@@ -73,12 +73,13 @@ and finally we will address more theoretical considerations in Chapter
 theoretical side will be split up by the topic of analogical recommendation.
 
 This choice is in fact motivated by pedagogical reasons. It will
-indeed become clear that the topic of analogical recommendation (Chapter
-\ref{CHAP:background_reco_systems}) is a lot easier to introduce and to
-understand once we have enough background on analogical classification (Chapter
+indeed become clear that the topic of analogical recommendation (Chapters
+\ref{CHAP:background_reco_systems} and \ref{CHAP:analogical_recommendation}) is
+a lot easier to introduce and to understand once we have enough background on
+analogical classification (Chapter
 \ref{CHAP:functional_definition}), as our methods for analogical recommendation
 are strongly inspired by previous works on analogical classification. Moreover,
-whereas the motivation for Chapter \ref{CHAP:analogy_preserving_functions}
+whereas the motivations for Chapter \ref{CHAP:analogy_preserving_functions}
 could have been directly derived from the results of Chapter
 \ref{CHAP:functional_definition}, it will be more interesting to account for
 Chapter \ref{CHAP:analogy_preserving_functions} in the light of the results of
@@ -118,10 +119,11 @@ ECAI paper: \cite{HugPraRicSerECAI16}. In this chapter, we will start to
 address one of the two main objectives of this thesis: identifying theoretical
 properties of analogical classifiers. Our first contribution will be to provide
 a functional definition of analogical classifiers, that will unify the two
-pre-existing approaches mentioned earlier. This new definition will bring more
+pre-existing approaches mentioned earlier (\cite{StrYvoCNLL05} and
+\cite{BayMicDelIJCAI07}). This new definition will bring more
 insight into these classifiers, enabling us to derive results related to their
 VC-dimension, as well as their error rate. Our functional definition will also
-reveal the close links between the analogical learners and the $k$-nearest
+reveal the close links between the analogical classifiers and the $k$-nearest
 neighbors ($k$-NN) techniques. We will show indeed that the analogical
 classification process can be viewed as a two-step procedure that first
 consists in extending the training
@@ -163,7 +165,7 @@ interpretation of the rating scale. The algorithms that we derived were much
 more scalable than the previous ones, and these investigations where described
 in a Fuzz-IEEE paper \cite{HugPraRicSerFuzzIEEE16}.  Finally, we will address
 the problem of mining analogical proportions between users (or items) in a
-rating database \cite{HugPraRicSerLFA16}. Our result will help us to
+rating database \cite{HugPraRicSerLFA16}. Our results will help us to
 retrospectively interpret the modest performances of our analogical
 recommenders: as bland as it may seem, it turns out that there were just not
 enough decent analogies to be found in the available databases.\\
@@ -177,7 +179,7 @@ inference principle states that if four elements $a, b, c, d$ are in
 proportion, then their classes $f(a), f(b), f(c), f(d)$ should also be in
 proportion. We will provide a complete characterization of the functions $f$
 such that when four elements are in proportion, then their image by $f$ are
-also in proportion: these functions ensure a safe us of the analogical
+also in proportion: these functions ensure a safe use of the analogical
 inference principle. It will be clear that these functions are also the ones
 that allow to extend a training set by analogy in a perfectly safe way. We will
 call these functions the \textbf{analogy preserving} functions, and they will

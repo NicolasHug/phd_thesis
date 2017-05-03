@@ -1,13 +1,10 @@
-- couleur cubes
 - Biblio: cross ref ? Notamment Burke
 - Envoyer manuscrit à Labruyere une fois qu'il sera envoyé aux rapporteurs
   (mettre en copie par exemple)
 
-- multiple-valued ou multiple valuated???
-
-
 Done
 ====
+- couleur cubes
 - Intro
 - Conclu
 - Abstract
