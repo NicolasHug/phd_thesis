@@ -410,10 +410,10 @@ To illustrate this concept, here are
 the ANF of some common Boolean functions in $\mathbb{B}^2$ or $\mathbb{B}$:
 
 \begin{itemize}
-  \item $\text{AND}(x_1, x_2) = x_1 \cdot x_2$ ;
-  \item $\text{OR}(x_1, x_2) = x_1 + x_2 + x_1 \cdot x_2$ ;
-  \item $\text{XOR}(x_1, x_2) = x_1 + x_2$ ;
-  \item $\text{NEG}(x_1) = x_1 + 1$ ;
+  \item $\text{AND}(x_1, x_2) = x_1 \cdot x_2$;
+  \item $\text{OR}(x_1, x_2) = x_1 + x_2 + x_1 \cdot x_2$;
+  \item $\text{XOR}(x_1, x_2) = x_1 + x_2$;
+  \item $\text{NEG}(x_1) = x_1 + 1$;
   \item The constant function $f(x_1, x_2) = 0$ is represented by
     $a_\emptyset\cdot \mathbf{x}_\emptyset$ with $a_\emptyset =0$. The constant
     function $f(x_1, x_2) = 1$ is also represented by $a_\emptyset\cdot
@@ -628,7 +628,7 @@ Now, we will prove that every affine function is AP:
   where $H$ is the Hamming distance function.
 
   Let $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in \mathbb{B}^n$  such
-  that the two hypothesis in the definition of AP are satisfied, i.e.
+  that the two hypotheses in the definition of AP are satisfied, i.e.
   $$
   \mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}\quad \text{and}\quad
   g(\mathbf{a}) : g(\mathbf{b}) :: g(\mathbf{c}) : y\quad  \text{is  solvable}.
@@ -824,7 +824,7 @@ Yet, in the end, the ultimate use of this principle is to infer the value of
 $f(\mathbf{d})$, and we can only do that by the actual solving of the equation
 $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : y$ (remember that when we
 build the analogical extension, we always require the class equation to be
-solvable). This was also the case when we where dealing with the algorithmic
+solvable). This was also the case when we were dealing with the algorithmic
 description of the conservative classifier (see e.g. Algorithm
 \ref{ALGO:conservative_classifier}).  So if the equation is not
 solvable, we are unable to infer anything about $f(\mathbf{d})$. This is why
@@ -832,7 +832,7 @@ the AP functions are defined as the functions such that we have $f(\mathbf{a})
 :f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})$ provided that
 $\mathbf{a}: \mathbf{b}:: \mathbf{c}: \mathbf{d}$ stands \textbf{and that}
 $f(\mathbf{a}) :f(\mathbf{b}) :: f(\mathbf{c}) : y$ is solvable. With regard to
-this, we can say the class of AP functions are the class of functions that
+this, we can say that the class of AP functions is the class of functions that
 allow the following inference principle to be sound: $$
 \inferrule[\text{~~ Inference principle B}]{\mathbf{a} : \mathbf{b} ::
 \mathbf{c} : \mathbf{d} \\\\ \solvable(f(\mathbf{a}), f(\mathbf{b}),
@@ -870,9 +870,9 @@ every dictator function  is SAP.
 
 \begin{property}
   \label{PROPER:projections_are_sap}
-  Let $f$ be a dictator function, i.e. an affine function a the form:
+  Let $f$ be a dictator function, i.e. an affine function of the form:
   $$f(x_1, x_2, \cdots, x_m) = x_i + \alpha_0,$$
-  where $i \in [i, m]$ and $\alpha_0 \in \mathbb{B}$. Then $f$ is SAP.
+  where $i \in [1, m]$ and $\alpha_0 \in \mathbb{B}$. Then $f$ is SAP.
 \end{property}
 \begin{proof}
   Let $f$ be a dictator function: $f(\mathbf{x}) = x_i$ (we consider $\alpha_0$
@@ -886,18 +886,19 @@ every dictator function  is SAP.
   SAP. The case where $\alpha_0 = 1$ is derived in the same obvious way.
 \end{proof}
 
-We now show that the dictator functions are the only SAP functions:
+It is also easy to show that the two constant functions are SAP. We now show
+that the dictators and the constant functions are the only SAP functions:
 
 \begin{proposition}
-  The class of SAP functions is the class of dictator functions.
+  The class of SAP functions is the class of dictators and constant functions.
 \end{proposition}
 \begin{proof}
   We already know that a SAP function is an AP function, so a SAP function
-  necessarily is affine. Consider a function $f$ that is affine but that is not
-  a dictator function, i.e. $f$ is of the form:
+  necessarily is affine. Consider a function $f$ that is affine but that is
+  neither a dictator function nor a constant, i.e. $f$ is of the form:
   $$f(\mathbf{x}) = \alpha_1 \cdot x_1 + \cdots +\alpha_m \cdot x_m + \alpha_0,$$
-  with at least $\alpha_i = 1$ and $\alpha_j = 1$ for two indices $i$ and $j$
-  with $i\neq j \neq 0$. Without loss of generality, we will assume that
+  with at least $\alpha_i = 1$ and $\alpha_j = 1$ for two non-zero indices $i$ and $j$
+  with $i\neq j$. Without loss of generality, we will assume that
   $\alpha_0 = 0$.
   Consider now the 4-tuple $(\mathbf{a}, \mathbf{b}, \mathbf{c},
   \mathbf{d})$ such that:
@@ -949,10 +950,10 @@ f(\mathbf{c}))}{f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})}
 $$
 
 It is obvious that the second version (B) is less restrictive on the function
-$f$, and it is the one that is useful in practice. In subsection
+$f$, and it is the one that is useful in practice. In Section
 \ref{SEC:the_class_of_AP_functions}, we showed that the inference principle B
 is sound if and only if $f$ is an affine Boolean function. We also showed in
-subsection \ref{SEC:the_class_of_SAP_functions} that the inference principle A
+Section \ref{SEC:the_class_of_SAP_functions} that the inference principle A
 is sound for dictator functions (a particular case of affine functions).
 
 These are strong theoretical results, but obviously real-world problems are not
@@ -965,9 +966,9 @@ issues in the next section.
 
 The aim of this section will be to complement the theoretical results of
 Section \ref{SEC:a_complete_characterization_of_AP_functions}. We will first
-stay in the Boolean setting in subsection \ref{SEC:approximate_ap_functions}
+stay in the Boolean setting in Section \ref{SEC:approximate_ap_functions}
 and empirically study the behaviour of functions that  are \textit{close} from
-being AP. In subsections \ref{SEC:extension_to_nominal_attributes} and
+being AP. In Sections \ref{SEC:extension_to_nominal_attributes} and
 \ref{SEC:extension_to_real_valued_functions}, we will derive some more
 theoretical results about AP functions when dealing with nominal values and
 with real values.
@@ -982,15 +983,15 @@ following question: what remains of the quality of the analogical extension
 $\mathbf{E}_S(f)$ when $f$ deviates from being AP in different ways? We will
 here investigate this question.
 
-\paragraph{$\epsilon$-close functions from $L'$\\}
+\paragraph{$\varepsilon$-close functions from $L'$\\}
 
-Recall that for a given a training $S$, we defined $\omegasf$ as the quality of the
+Recall that for a given training $S$, we defined $\omegasf$ as the quality of the
 extension $\esf$ with $\omegasf \eqdef P\left(\albl{\mathbf{x}} = f(\mathbf{x})
 \given[\big] \mathbf{x} \in \esfs\right).$ By definition, $\omegasf=1$ for all
 $S$ iff $f$ is AP. What we want to know now is how $\omegasf$ is affected when
 $f$ is not a purely affine function. What we
 mean by \textit{not purely affine} is that $f$ is at a distance at most
-$\epsilon$ from the set
+$\varepsilon$ from the set
 of affine functions. We will define these notions now.
 
 Given two Boolean functions $f$ and $g$, we define their distance
@@ -999,23 +1000,23 @@ g(\mathbf{x})\right)$, where $P$ is the uniform distribution over
 $\mathbb{B}^m$. Here, $\mathbf{x} \in \mathbb{B}^m$ is also considered as a
 random variable.
 
-\begin{definition}[$\epsilon$-close functions]
-We say that $f$ is $\epsilon$-close to $g$ if $\text{dist}(f, g) \leq
-  \epsilon$, and that $f$ is $\epsilon$-close to a set of functions $\Sigma$ if
-  $\exists g \in \Sigma$ such that $f$ is $\epsilon$-close to $g$.
+\begin{definition}[$\varepsilon$-close functions]
+We say that $f$ is $\varepsilon$-close to $g$ if $\text{dist}(f, g) \leq
+  \varepsilon$, and that $f$ is $\varepsilon$-close to a set of functions $\Sigma$ if
+  $\exists g \in \Sigma$ such that $f$ is $\varepsilon$-close to $g$.
 \end{definition}
 
-We want to study here the value of $\omegasf$ when $f$ is $\epsilon$-close from
+We want to study here the value of $\omegasf$ when $f$ is $\varepsilon$-close from
 $L$, the set of affine functions. Note however that thanks to the
 code-independency property of the Boolean proportion ($1$ and $0$ play
 symmetric roles), we have that for any $S$ and any $f$, $\omegasf =
 \omega_S^{\neg f}$. As the set of affine functions is the set of linear
 functions and their negations, \textbf{it is enough to study the value of
-$\omegasf$ when $f$ is $\epsilon$-close to $L'$, the set of linear functions}.
+$\omegasf$ when $f$ is $\varepsilon$-close to $L'$, the set of linear functions}.
 
 This question is clearly of interest, because in practice there exists some
 statistical test allowing the practitioner to query a partially-known function
-$f$ to find out if it is $\epsilon$-close to $L'$. This test is the BLR test
+$f$ to find out if it is $\varepsilon$-close to $L'$. This test is the BLR test
 \cite{BluLubRub93}, whose steps are as follows:
 
 \begin{itemize}
@@ -1029,40 +1030,40 @@ $f$ to find out if it is $\epsilon$-close to $L'$. This test is the BLR test
 The main useful result is given in Property \ref{PROPER:BLR_test}:
 \begin{property}
   \label{PROPER:BLR_test}
-  If $BLR$ accepts $f$ with a probability at least $1-\epsilon$, then $f$ is
-  $\epsilon$-close to the set of linear functions $L'$.
+  If $BLR$ accepts $f$ with a probability at least $1-\varepsilon$, then $f$ is
+  $\varepsilon$-close to the set of linear functions $L'$.
 \end{property}
 
 So if we can exhibit a clear probabilistic dependence between $\omegasf$
-and $\epsilon$, this would allow the practitioner to have guarantees about
-$\omegasf$ because we can know $\epsilon$ from the BLR test.
+and $\varepsilon$, this would allow the practitioner to have guarantees about
+$\omegasf$ because we can know $\varepsilon$ from the BLR test.
 
 Let us first consider the following experiment. Starting from a linear function $g
 \colon \mathbb{B}^8 \to \mathbb{B}$ defined as  $g(\mathbf{x}) = x_1 + \cdots +
 x_8$, we introduce some noise by negating its output $g(\mathbf{x})$ with
-probability $\epsilon$. We thus obtain some functions $f_{\epsilon}$ that are
-$\epsilon$-close to $L'$, and report the value of $\omega_S^{f_\epsilon}$ averaged over $50$
+probability $\varepsilon$. We thus obtain some functions $f_{\varepsilon}$ that are
+$\varepsilon$-close to $L'$, and report the value of $\omega_S^{f_\varepsilon}$ averaged over $50$
 experiments.  Figure \ref{omega_vs_eps} gives an
-illustration of the variation of $\omega_S^{f_\epsilon}$ (simply denoted
-$\omega$) against  $\epsilon$ for different
+illustration of the variation of $\omega_S^{f_\varepsilon}$ (simply denoted
+$\omega$) against  $\varepsilon$ for different
 sizes of $S$ (as a percentage of $|\mathbb{B}^m|$).  Other experiments have
 been carried out with other affine functions (i.e.  with less essential
 variables or different arity), leading to very similar results. As a side note,
-$\epsilon$ only needs to be taken in $[0, \frac{1}{2}]$, because $f_\epsilon =
-\neg f_{1 - \epsilon}$ and for any $f$, we have $\omegasf = \omega_S^{\neg
+$\varepsilon$ only needs to be taken in $[0, \frac{1}{2}]$, because $f_\varepsilon =
+\neg f_{1 - \varepsilon}$ and for any $f$, we have $\omegasf = \omega_S^{\neg
 f}$.
 
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.6]{figures/omega_vs_eps_dim8_nexp50_std_nEss8.pdf}
-  \caption{$\omega$ for $\epsilon$-close functions to $L$.}
+  \caption{$\omega$ for $\varepsilon$-close functions to $L$.}
 \label{omega_vs_eps}
 \end{center}
 \end{figure}
 
-When $\epsilon = 0$, i.e. when $f_\epsilon$ is AP, we get $\omega = 1$ as expected from
+When $\varepsilon = 0$, i.e. when $f_\varepsilon$ is AP, we get $\omega = 1$ as expected from
 Proposition \ref{PROPOS:AP_is_L}. We observe an almost linear decrease in $\omega$ as
-$\epsilon$ grows to $0.3$ then leading to a plateau where $\omega =
+$\varepsilon$ grows to $0.3$ then leading to a plateau where $\omega =
 \frac{1}{2}$, indicating that the analogical labels $\albl{\mathbf{x}}$ are
 more or less random. Moreover, $\omega$ appears to decrease faster for small
 training set $S$. This is due to the fact that the analogical labels
@@ -1075,7 +1076,7 @@ We only have an empirical study here. Ultimately, it would be very interesting
 to prove a result like
 $$P(\omegasf \geq \eta) > 1 - \delta,$$
 where $\eta \in [0, 1]$ and $\delta \in [0, \frac{1}{2}]$ are parameters 
-depending on $\epsilon$ and $\mid S \mid$. Such a result would be strongly
+depending on $\varepsilon$ and $\mid S \mid$. Such a result would be strongly
 linked to the PAC learning theory \cite{Val72}, and is the object of current
 research.
 
@@ -1100,7 +1101,7 @@ and for all $S$.
 
 Table \ref{table_monks} reports the values of $\omega$ and $\beta$ over three
 datasets from the UCI repository, namely the three Monk's problems\footnote{As
-these datasets are nominally-valued, they are binarized.} \cite{UCIrepo}.
+these datasets are nominally-valued, they have been binarized.} \cite{UCIrepo}.
 Results are averaged over 100 experiments, where the training set $S$ is each
 time randomly sampled with a size of $30$\% of the universe of possible
 instances.
@@ -1123,7 +1124,7 @@ Monk 3 & .98 & .87 \\
 We observe that for each dataset, $\beta$ is significantly lower than $1$.
 This suggests that the Boolean functions underlying these datasets are highly
 not AP, because on average, there is a high proportion (around $20$\%) of
-candidates that predicted the wrong label. However, $\omega$ is no lower than
+candidates that predicted the wrong label. However, $\omega$ is not lower than
 $96$\%, implying extensions of very high quality.  \textbf{This is where the
 majority-vote comes into play}: in some cases, it may be able to compensate for
 the predictors that were wrong.  This is what happens here in $96$\%, $96$\%
@@ -1319,7 +1320,7 @@ to $\mathbb{R}$ with the arithmetic proportion?
 
 Well, we already know that the Boolean proportion and the arithmetic proportion
 are really close. Once again, we will witness this close bond: in a real
-setting, the class of AP functions is also the class of real linear functions.
+setting, the class of AP functions is also the class of real affine functions.
 Luckily, the proof is a lot easier to derive.  Let us first (re)define the
 arithmetic proportion:
 \begin{property}
@@ -1332,7 +1333,7 @@ arithmetic proportion:
   solvable and the solution is $\emph{sol}(a, b, c) = c - a + b$.
 \end{property}
 
-Please note that here, the $+$ is the regular addition operator (not the
+Please note that here, $+$ is the regular addition operator (not the
 modulo-2 addition as in the previous sections). We will also use a simple property of
 affine functions:
 
@@ -1465,7 +1466,7 @@ it may happen that the most common candidate label actually corresponds to the
 ground truth label $f(\mathbf{x})$. In this case, the majority-vote procedure
 is able to compensate for the candidates that were wrong in their predictions,
 because it will choose the most common predictor that happens to be the
-correct label.  Ultimately, even if only $50\% + \epsilon$ ($\epsilon > 0$) of
+correct label.  Ultimately, even if only $50\% + \varepsilon$ ($\varepsilon > 0$) of
 the candidates are correct, it is still enough to have a perfectly sound
 extension. The class of AP functions ensures that exactly $100\%$ of the
 candidates are correct, but it is clear that such a requirement is too strong

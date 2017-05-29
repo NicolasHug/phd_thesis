@@ -88,19 +88,20 @@ describes such classifiers.
     \setminus S$ for which $f(\mathbf{x})$ is unknown.
     \STATE {\bf Output}: $\hat{f}(\mathbf{x})$, an estimation of
     $f(\mathbf{x})$.
-    \STATE {\bf Init}: $\mathbf{C}(\mathbf{x}) = \varnothing$ \quad \quad // A multiset of candidate
+    \STATE {\bf Init}: $\mathbf{C}(\mathbf{x}) \leftarrow \varnothing$ \quad \quad // A multiset of candidate
     labels.
 
     \FORALL{$(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in S^3$ such that
     $\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{x}$}
     \IF{$f(\mathbf{a}) : f(\mathbf{b}) ::f(\mathbf{c}) : y$ is
     solvable}
-    \STATE $y = \sol\left(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})\right)$
-    \STATE $ \mathbf{C}(\mathbf{x}) = \mathbf{C}(\mathbf{x}) \cup y$
+    \STATE $y \leftarrow \sol\left(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})\right)$
+    \STATE $ \mathbf{C}(\mathbf{x}) \leftarrow \mathbf{C}(\mathbf{x}) \cup y$
     \ENDIF
 	  \ENDFOR
-    \STATE $\hat{f}(\mathbf{x}) = \text{Mode} (\mathbf{C}(\mathbf{x}))$ // The most common value in
+    \STATE $\hat{f}(\mathbf{x}) \leftarrow \text{Mode} (\mathbf{C}(\mathbf{x}))$ // The most common value in
     $\mathbf{C}(\mathbf{x})$ (undefined if $\mathbf{C}(\mathbf{x}) = \varnothing$).
+    \STATE ~~~~~~~~~~~~~~~~~~~~~~~~~~~ // Ties broken at random.
   \end{algorithmic}
 \end{algorithm}
 
@@ -170,8 +171,9 @@ $$\esfs \eqdef \esf \setminus S.$$ In a setting where for any
 $\mathbf{a},\mathbf{b}, \mathbf{c}$ the equation $\mathbf{a} : \mathbf{b} ::
 \mathbf{c} : \mathbf{x}$ is always solvable (as is the case for the arithmetic
 proportion) and such that the associated class equation is also solvable, we
-can show that the size of $\esfs$ is exactly $\frac{1}{2} n^2(n - 1)$. This
-value is thus a loose upper bound for $\mid \esfs\mid$, because in practice
+can show that the size of $\esfs$ is exactly $\frac{1}{2} n^2(n - 1)$
+\cite{BayMouMicAnqECML07}. This value is thus a loose upper bound for $\mid
+\esfs\mid$, because in practice
 equations are not always solvable.
 
 \begin{testexample}
@@ -255,7 +257,7 @@ functional view of conservative classifiers:
 \begin{definition}[Analogical label]
   \label{DEF:analogical_label}
   For any element $\mathbf{x}$ of $\esf$, we denote $\mathbf{C}(\mathbf{x})$
-  the set of solutions to the class equations associated with $\mathbf{x}$:
+  the multiset of solutions to the class equations associated with $\mathbf{x}$:
   $$\mathbf{C}(\mathbf{x}) \eqdef \Set{y | f(\mathbf{a}) : f(\mathbf{b}) ::
   f(\mathbf{c}) :y, \quad \text{with }(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in \rsfx}$$
   We then define the \textbf{analogical
@@ -320,7 +322,7 @@ definition, we can reformulate the learning process of a conservative
 classifier as follows:
 
 \begin{itemize}
-\item First, compute $\esf$. While $\esf$ is begin computed, it is trivial to
+\item First, compute $\esf$. While $\esf$ is being computed, it is trivial to
   also compute the set of candidates $\mathbf{C}(\mathbf{x})$ for each $x \in
     \esf$.
   \item Then, for all $x \in\esf$, compute
@@ -410,8 +412,8 @@ with the intuition. For any $\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d},
   \item $\AD(\mathbf{a}, \mathbf{b},\mathbf{e},\mathbf{f}) \leq \AD(\mathbf{a},
     \mathbf{b},\mathbf{c},\mathbf{d}) + \AD(\mathbf{c},
     \mathbf{d},\mathbf{e},\mathbf{f})$ (Triangle inequality)
-  \item In general, $\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) \neq
-    \AD(\mathbf{b}, \mathbf{a},\mathbf{c},\mathbf{d})$
+  \item $\AD(\mathbf{a}, \mathbf{b},\mathbf{c},\mathbf{d}) \neq \AD(\mathbf{b},
+    \mathbf{a},\mathbf{c},\mathbf{d})$ (except if $\mathbf{a}= \mathbf{b}$)
 \end{itemize}
 Naturally, the symmetry and central permutation properties lead to the same
 three classes of equivalence that we have for the analogical proportion. In
@@ -448,11 +450,11 @@ parallelogram. This can be achieved using the following definition:
 
 Of course, we will need an analogical dissimilarity in $\mathbb{B}^m$, but we
 will start small and consider $\mathbb{B}$ first:
-\begin{definition}[Analogical dissimilarity for Boolean vectors]
+\begin{definition}[Analogical dissimilarity for Boolean values]
   \label{DEF:AD_boolean_proportion}
   Given four elements $a, b, c, d$ of $\mathbb{B}$, the analogical
   dissimilarity $\text{AD}(a, b, c, d)$ is defined as the number of values that
-  have to be switched to get a proper analogy.
+  have to be flipped to get a proper analogy.
 \end{definition}
 \noindent
 Table \ref{TAB:analogical_dissimilarity} shows the values of $\AD(a, b, c, d)$
@@ -503,7 +505,7 @@ Actually, we could use any $p$-norm in $\mathbb{B}^m$, so
 Definition \ref{DEF:AD_arithmetic_proportion} could also be used to give a more
 general definition of the analogical dissimilarity in $\mathbb{B}^m$. Here
 again, we are witnessing the close bond that links the Boolean proportion and
-and the arithmetic proportion.
+the arithmetic proportion.
 
 As a measure of \textit{how poorly an analogical proportion holds}, the
 analogical dissimilarity will help us to define more flexible classifiers.  The
@@ -523,17 +525,17 @@ description of their classifier.
          for which $f(\mathbf{x})$ is unknown, and a constant $k > 0$.
          \STATE {\bf Output}: $\hat{f}(\mathbf{x})$, an estimation of
          $f(\mathbf{x})$.
-    \STATE {\bf Init}: $\mathbf{C}(\mathbf{x}) = \varnothing$ \quad \quad // A
+    \STATE {\bf Init}: $\mathbf{C}(\mathbf{x}) \leftarrow \varnothing$ \quad \quad // A
     multiset of candidate labels.
     \FORALL{$(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in S^3$ such that
          $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{c}) : y$ is solvable}
          \STATE compute $\AD(\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{x})$ and store it
 	    \ENDFOR
          \FORALL{$k$ least values of $\AD(\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{x})$}
-        \STATE $y = \sol\left(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})\right)$
-    \STATE $ \mathbf{C}(\mathbf{x}) = \mathbf{C}(\mathbf{x}) \cup y$
+        \STATE $y \leftarrow \sol\left(f(\mathbf{a}), f(\mathbf{b}), f(\mathbf{c})\right)$
+    \STATE $ \mathbf{C}(\mathbf{x}) \leftarrow \mathbf{C}(\mathbf{x}) \cup y$
     \ENDFOR
-    \STATE $\hat{f}(\mathbf{x}) = \text{Mode} (\mathbf{C}(\mathbf{x}))$ // The
+    \STATE $\hat{f}(\mathbf{x}) \leftarrow \text{Mode} (\mathbf{C}(\mathbf{x}))$ // The
          most common value in $\mathbf{C}(\mathbf{x})$
 \end{algorithmic}
 \end{algorithm}
@@ -657,7 +659,7 @@ solution of the equation $\mathbf{a}: \mathbf{b} :: \mathbf{c} : \mathbf{x}$.
 All this means that $\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{d})$ simply
 is the distance between $\mathbf{d}$ and this $4^\text{th}$ vertex
 $\mathbf{d}'$: $\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{d}) =
-\delta_p(\mathbf{d}, \mathbf{d}')$, where $\delta_p$ is the distance defined by
+\delta(\mathbf{d}, \mathbf{d}')$, where $\delta$ is the distance defined by
 the $p$-norm. Figure \ref{FIG:analogical_dissimilarity} schematically sums up all the aforementioned
 properties.  Note that when $(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in S^3$ and
 when the associated class equation is solvable, we naturally have $\mathbf{d}'
@@ -752,7 +754,7 @@ process of analogical classification as follows:
 Figure \ref{FIG:extended_classifier} gives an illustration of the classification process for
 $k = 1$: the
 label of $\mathbf{x} \in X$ is unknown, and we set it to that of $\mathbf{d}'
-\in \esf$ (a circle), which is its nearest analogical neighbour. To show that
+\in \esf$ (a circle), which is its nearest analogical neighbor. To show that
 the analogical label of $\mathbf{d}'$ has itself been inferred, it is depicted
 as transparent instead of plain black.
 \begin{figure}
@@ -847,8 +849,8 @@ context as the work of Cover \& Hart who studied the 1-NN algorithm
   To prove this result, they simply start from the fact that
   $\delta(\mathbf{x}, \nn(\mathbf{x}, S_n))$ converges in probability towards
   $0$:
-  $$\forall \epsilon > 0,~~P\Big(\delta(\mathbf{x}, \nn(\mathbf{x}, S_n)) >
-  \epsilon\Big) = 0.$$
+  $$\forall \varepsilon > 0,~~P\Big(\delta(\mathbf{x}, \nn(\mathbf{x}, S_n)) >
+  \varepsilon\Big) = 0.$$
   Using the previous fact that $\delta(\mathbf{x}, \nan(\mathbf{x},S_n)) \leq
   \delta(\mathbf{x}, \nn(\mathbf{x},S_n))$, the convergence in probability of
   $\delta(\mathbf{x}, \nan(\mathbf{x},S_n))$ towards $0$ is immediate. Then, it
@@ -870,21 +872,21 @@ Let us note the following points:
     probability of error, and therefore less than twice the probability of error of
     any other classifier. We have not been able to prove such a strong result
     for the $1$-\NAN~classifier, but its probability of error will be thoroughly
-    investigated in Subsection \ref{SEC:accuracy_analysis}.
+    investigated in Section \ref{SEC:accuracy_analysis}.
   \item We have to be careful about the interpretation of Property
     \ref{PROPER:convergence_nan} in terms of machine learning. Indeed, another
     key property is proved in \cite{CovHarTIT67}: for an integrable
     function $f$  over $\mathbb{R}^m$ with regards to the probability measure $P$, the
     expectation of $f(\nn(\mathbf{x},S_n))- f(\mathbf{x})$ converges to 0 when
     $n$ tends to infinity.  This means that asymptotically, the nearest
-    neighbour of $\mathbf{x}$ has the same properties as $\mathbf{x}$, and
+    neighbor of $\mathbf{x}$ has the same properties as $\mathbf{x}$, and
     particularly: \textbf{they have the same label}, which is a very powerful
     property when we are dealing with a classification task. Sadly, such a
     property has not been proven for $\nan(\mathbf{x}, S_n)$.
 \item Finally, it is clear that when $n$ goes to infinity, the behavior of an
-  analogical classifier tends to that of a nearest neighbours classifier.
-    Indeed, when $S_n$ is very big, the nearest analogical neighbour of an
-    element $\mathbf{x}$ simply is its nearest neighbour, in most cases.
+  analogical classifier tends to that of a nearest neighbors classifier.
+    Indeed, when $S_n$ is very big, the nearest analogical neighbor of an
+    element $\mathbf{x}$ simply is its nearest neighbor, in most cases.
     Moreover, when the nan and the nn are too close, paying the price of the
     noise related to the nan may not be worth it. This supports the common
     acknowledgement that analogical reasoning is mostly useful when very few
@@ -985,7 +987,7 @@ $$
 We now equip the set $X^m$ with a probability distribution denoted $P$.  The
 accuracy of the $\NAN_S$ classifier\footnote{The $S$ subscript is here to
 specify that the training set of the $\NAN$ algorithm is $S$. The same notation
-is used for the \textit{nearest neighbour} algorithm: $\NN_\Sigma$ is the $\NN$
+is used for the \textit{nearest neighbor} algorithm: $\NN_\Sigma$ is the $\NN$
 algorithm trained on the set $\Sigma$.} over all the elements of $X^m$ is
 defined as:
 $$\acc(\NAN_S, X^m)\eqdef P\left(\hat{f}(\mathbf{x})=f(\mathbf{x}) \given[\big]
@@ -1019,12 +1021,12 @@ $\esfs$, the accuracy $\acc(\NAN_S, X^m)$ can be split into two distinct parts a
   &\acc(\NAN_S, X^m) \eqdef P\left(\hat{f}(\mathbf{x})=f(\mathbf{x}) \given[\big] \mathbf{x} \in
   X^m\right) = P\left(\albl{\nan(\mathbf{x}, S)} = f(\mathbf{x})\right)\\
   =~&P\left([\albl{\nan(\mathbf{x}, S)} = f(\mathbf{x}) ]\wedge
-  [\nan(\mathbf{x}, S) \in S ] \right)~ +
-  P\left([\albl{\nan(\mathbf{x}, S)} = f(\mathbf{x})] \wedge [\nan(\mathbf{x},
+  [\nan(\mathbf{x}, S) \in S ] \right)~ +\\
+  &P\left([\albl{\nan(\mathbf{x}, S)} = f(\mathbf{x})] \wedge [\nan(\mathbf{x},
   S) \in \esfs]\right)\\
   =~&P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \wedge
-  [\nn(\mathbf{x}, \esf) \in S ]\right)~ +
-  P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \wedge
+  [\nn(\mathbf{x}, \esf) \in S ]\right)~ +\\
+  &P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \wedge
   [\nn(\mathbf{x}, \esf) \in \esfs]\right) \\
   =~&P\left([\albl{\nn(\mathbf{x}, \esf)} = f(\mathbf{x})] \given[\big]
   [\nn(\mathbf{x}, \esf) \in S ]\right) \times
@@ -1061,7 +1063,7 @@ can transform the first term to get a better grasp of its meaning:
 \end{align*}
 
 In this form, the first term is just the accuracy of the $\NN_S$ algorithm over
-the elements that have their nearest analogical neighbour in $S$.
+the elements that have their nearest analogical neighbor in $S$.
 As for the second term, the same process can be applied by observing that the
 event $[\nn(\mathbf{x}, \esf) \in\esfs]$ is equivalent to the event
 $[\nn(\mathbf{x}, \esf) = \nn(\mathbf{x}, \esfs)]$. This leads to
@@ -1073,7 +1075,7 @@ $[\nn(\mathbf{x}, \esf) = \nn(\mathbf{x}, \esfs)]$. This leads to
 \end{align*}
 
 This second term is then the accuracy of the $\NN_{\esfs}$ algorithm over the
-elements that have their nearest analogical neighbour in $\esfs$.
+elements that have their nearest analogical neighbor in $\esfs$.
 
 In the light of these interpretations, we can directly rewrite the accuracy
 formula in the concise form given in Proposition \ref{PROPOS:accuracy_nan}.
@@ -1116,7 +1118,7 @@ set of experiments that we now describe.
 \subsection{Evaluation protocol}
 
 Working with Boolean vectors, we have computed the accuracies of the 1-\NAN~and
-1-$\NN$~ algorithms over $X=\mathbb{B}^m$ for $m = 8$. Other values of $m$ have
+1-$\NN$~ algorithms over $X^m=\mathbb{B}^m$ for $m = 8$. Other values of $m$ have
 been investigated, leading to very similar results.  The ground truth label of
 the elements of $X^m$ is defined by different Boolean functions $f$:
 \begin{itemize}
@@ -1156,7 +1158,7 @@ our implementation of the $\NAN$ algorithm is not that of algorithm
 \ref{ALGO:extended_classifier}, but is instead that of the functional
 definition of the analogical classifier as described in Definition
 \ref{DEF:extended_classifier}: we first construct the analogical extension set
-of $S$, and then proceed to a nearest neighbour strategy over this noisy
+of $S$, and then proceed to a nearest neighbor strategy over this noisy
 extended training set. We have estimated probabilities by frequencies, thus
 implicitly assuming a uniform distribution on $X^m$.
 
@@ -1238,7 +1240,7 @@ This means that when $\mid S \mid$ is big enough (but not necessarily
 \textit{that} big with respect to $X^m$), the analogical extension of $S$
 covers the whole universe $X^m$ (obviously, the bigger the dimension $m$, the
 slower the convergence occurs): every element $\mathbf{x}$ is then its own
-nearest analogical neighbour and $\hat{f}(\mathbf{x}) = \albl{\mathbf{x}}$. It
+nearest analogical neighbor and $\hat{f}(\mathbf{x}) = \albl{\mathbf{x}}$. It
 is therefore straightforward to see that in this case,
 $$
   \omega \eqdef P\left(\albl{\mathbf{x}} = f(\mathbf{x}) \given[\big]
@@ -1249,7 +1251,7 @@ When $\gamma = 1$, the only elements $\mathbf{x}$ we want to classify belong to
 $\esfs$ (otherwise they would be in $S$), so this last term exactly corresponds
 to the accuracy of the classifier. Another way to see it is to observe that the
 first term of the expression of Proposition (\ref{PROPOS:accuracy_nan})
-$\acc(\NN_{S}, A) \cdot \alpha$ is zero
+$\acc(\NN_{S}, A) \cdot \alpha$ is null 
 because $\alpha = 0$. Only the second term $\acc(\NN_{\esfs}, B) \cdot (1 -
 \alpha)$ is of importance, and its value corresponds to $\omega$. As expected,
 this observation allows us to state that estimating the value of $\omega$ is
@@ -1298,7 +1300,7 @@ as the somewhat more complex algorithm described in Section
 \ref{SEC:extended_classifier}, and that here again the analogical extension set
 covers the whole universe: this means that a conservative approach would have
 been sufficient! Actually, this raises the following question: why would we
-want to look for more than one analogical neighbour when every element of the
+want to look for more than one analogical neighbor when every element of the
 universe is already in $\esf$, and therefore \textit{analogically linked} to
 those in $S$? Our experiments tend to show that this becomes superfluous,
 provided that the training set is big enough.
@@ -1337,10 +1339,10 @@ provided that the training set is big enough.
 
 \section*{Conclusion}
 
-In this Section, we have provided a functional and unifying definition of
+In this chapter, we have provided a functional and unifying definition of
 analogical learners, which turned out to be closely related to the $k$-NN
 classifiers. Starting from this definition, we were in a position to
-prove an analytical convergence result, similar to that of the nearest neighbour
+prove an analytical convergence result, similar to that of the nearest neighbor
 algorithm. Obviously, this is not enough to conclude regarding the predictive
 ability of analogy-based classifiers. We have also shown that their
 VC-dimension is infinite. It should not come as a surprise, as a very
@@ -1377,7 +1379,7 @@ appears to be a meaningful option.
 
 This concludes for now our investigations on analogical classifiers. We have
 seen that they have so far mostly been used for natural language processing
-tasks, or classification in Boolean settings. One of the main goal of this
+tasks, or classification in Boolean settings. One of the main goals of this
 thesis was to apply analogical proportion-based reasoning to concrete,
 real-world applications. We have chosen to investigate the suitability of
 analogical proportions in the design of recommender systems. This will be the

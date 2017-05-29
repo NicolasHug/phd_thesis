@@ -378,7 +378,7 @@ divided into two distinct parts.
 
 The role of the first part is to build high level representations of the
 figures from these raw descriptions. After identifying coherent shapes (such as
-triangle, square, etc) as independent objects, the program tries to find
+triangle, square, etc.) as independent objects, the program tries to find
 relations of the kind \textit{INSIDE(Obj1, Obj2)} or \textit{ABOVE(Obj1, Obj3)}
 between figures. Finally, similarities between every pair of objects are
 computed. The similarity measure is based on the transformability of the first
@@ -389,7 +389,7 @@ part are given as input (on punched cards!) to the second part.
 The second part relates to the analogical solving process per se. Using the
 output of the first part, ANALOGY will try to find a set of rules that
 transform figure $A$ into figure $B$. A rule would for example state
-\textit{REMOVE(Obj1), ROTATE(Obj2, 45\degree), etc.}. Then, by generalizing
+\textit{REMOVE(Obj1), ROTATE(Obj2, 45\degree)}, etc. Then, by generalizing
 each rule, it tries to establish a correspondence between these rules and those
 transforming $C$ into one of the candidate solutions. The chosen solution is
 the one that maximizes the resemblance between the two sets of rules.
@@ -557,7 +557,7 @@ between these extremes}.
 Ockham's razor (also Occam), due to the Franciscan philosopher William
 of Ockham (1285~-~1347), is a well known principle in machine learning theory.
 The main and most useful interpretation of the original Latin version states
-that when trying to explain a situation, if two hypothesis give the same answer
+that when trying to explain a situation, if two hypotheses give the same answer
 then the best one is probably the \textbf{simplest} one. In practice, what
 makes an hypothesis simple remains quite vague, at least from a computational
 point of view. Yet this principle has been formalized into Rissanen's Minimum
@@ -670,7 +670,7 @@ etc.).
 
 In its most general form, CBR is a way of reaching the unknown solution $S$ to a
 problem $P$ using the known solutions $S_i$ to problems $P_i$ that are
-\textbf{similar} to $P$. Each couple $(S_i, P_i)$ is called a \textbf{case},
+\textbf{similar} to $P$. Each pair $(S_i, P_i)$ is called a \textbf{case},
 hence the name of the paradigm.  The term \textit{problem} is here used in its
 most general sense.  In \cite{AamPla94}, a CBR process is described by the
 succession of the following four steps:
@@ -686,7 +686,7 @@ succession of the following four steps:
   \item \textbf{Revise}: the relevance and the adequacy of the chosen solution
     $S$ are evaluated, and $S$ is modified if needed.
   \item \textbf{Retain}: if the revised solution $S$ ended up being a good
-    choice, then the solution is retained and the couple $(P, S)$ is bound to
+    choice, then the solution is retained and the pair $(P, S)$ is bound to
     be used in the solving of some future problems.
 \end{enumerate}
 

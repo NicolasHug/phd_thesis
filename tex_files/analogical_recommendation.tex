@@ -108,7 +108,7 @@ $u$ & 5 & 3  & 3 & $\cdots$ & ? \\
 \end{table}
 
 Just like with the conservative classifier, we will face the problem that in
-practice, we may not find any $3$-tuple $a, b, c$ such that a perfect
+practice, we may not find any $3$-tuple $(a, b, c)$ such that a perfect
 proportion stands between $a, b, c$ and $u$. We will thus allow some distortion
 of shape for the parallelogram $abcu$ by choosing another condition, for
 example that $\norm{}{(a-b) - (c-u)} \leq \lambda$, where $\lambda$ is a
@@ -127,7 +127,7 @@ Algorithm \ref{ALGO:analogical_recommendation}.
       \STATE {\bf Output}: $\hat{r}_{ui}$, an estimation of $r_{ui}$.
 
       \STATE {\bf Init}:
-      \STATE $C = \varnothing$ \quad \quad // The set of candidate ratings
+      \STATE $C \leftarrow \varnothing$ \quad \quad // The set of candidate ratings
       \FORALL{
         users $a, b, c$ in $U_i$ such that:\\
         \begin{itemize}
@@ -140,7 +140,7 @@ Algorithm \ref{ALGO:analogical_recommendation}.
       \STATE $C \gets C \cup \set{y}$ \quad // Add $y$ as a candidate rating
 	  \ENDFOR
 
-         \STATE $\hat{r}_{ui} = \text{mean}_{y \in C} ~y$
+         \STATE $\hat{r}_{ui} \leftarrow \text{mean}_{y \in C} ~y$
 
 \end{algorithmic}
      \caption{Analogical proportion-based algorithm for recommendation.}
@@ -285,7 +285,7 @@ even worse computation times. We thus have chosen two different strategies:
 
 \paragraph{RMSE analysis\\}
 
-Out of all the algorithm, the PMF algorithm is by far the most
+Out of all the algorithms, the PMF algorithm is by far the most
 accurate, with an RMSE of 0.95. Matrix factorization  models were extremely popular during the
 Netflix competition precisely because of their high accuracy. Note however that
 even though the matrix factorization algorithms cannot be overlooked when it comes
@@ -318,7 +318,7 @@ algorithm cannot be taken very seriously, because its accuracy (RMSE) is
 disastrous: it  is only by chance that some items were estimated with a rating
 greater than $4$, and were then recommended. The same goes for the Parall
 Sample 100 algorithm, which has a quite bad accuracy.  Actually, the most
-reasonable choice would probably the PMF algorithm again, which has the best
+reasonable choice would probably be the PMF algorithm again, which has the best
 RMSE and very decent coverage. With respect to coverage, our other
 analogy-based algorithms yield comparable performances to the
 neighborhood-based methods, with a slight advantage for analogy-based methods.
@@ -326,7 +326,7 @@ neighborhood-based methods, with a slight advantage for analogy-based methods.
 \paragraph{Precision and Recall\\}
 
 As for precision, recall and F-measure, we somehow have the same situation: the
-Random algorithm seems to be the best one, but this need to be taken very
+Random algorithm seems to be the best one, but this needs to be taken very
 carefully. Here again, the PMF algorithm probably yields the best actual trade-off.
 Comparatively, analogy-based algorithms have a slightly better F-measure than
 the neighborhood approaches. This may describe the fact that our Parall algorithms
@@ -348,7 +348,7 @@ As a side note, we have reported only the RMSE for the Mean algorithm, because
 this algorithm always outputs a prediction of $\predrui = \mu = 3.53$ which is
 lower than the threshold we have chosen for our recommendation strategy $S$.
 Therefore, not a single item is recommended with this algorithm, and the
-precision, recall, etc. are not defined (or simply 0).
+precision, recall, etc. are not defined (or are null).
 
 We are now led to computation time... The nightmare of every analogical
 proportion-based algorithm. All of the other algorithms can manage through the
@@ -415,7 +415,7 @@ users.
 
 \subsection{Two new analogical algorithms}
 
-In the following, $C_i(u)$ will denote as the set of users that are clones of
+In the following, $C_i(u)$ will denote the set of users that are clones of
 $u$ and that have rated item $i$. From the previous informal definitions, one
 can easily derive a very general collaborative filtering framework for
 predicting a user's rating by taking into account its clones: $$\predrui =
@@ -457,15 +457,15 @@ by Algorithm \ref{ALGO:bruteforce}, and referred to as \textbf{brute-force}.
       \STATE {\bf Output}: $\hat{r}_{ui}$, an estimation of $r_{ui}$.
 
       \STATE {\bf Init}:
-      \STATE $C = \varnothing$ \quad \quad // list of candidate ratings
+      \STATE $C \leftarrow \varnothing$ \quad \quad // list of candidate ratings
       \FORALL{ users $v \in U_i$}
         \FORALL{$t$}
           \IF{$v \in t\text{-Clones}(u)$}
-          \STATE $C \gets C \cup \{r_{vi} + t\}$ \quad // add x as a candidate rating
+          \STATE $C \gets C \cup \{r_{vi} + t\}$ \quad // add $r_{vi} + t$ as a candidate rating
           \ENDIF
         \ENDFOR
 	    \ENDFOR
-    \STATE $\hat{r}_{ui} = \aggr{c \in C} c$
+    \STATE $\hat{r}_{ui} \leftarrow \aggr{c \in C} c$
 \end{algorithmic}
 \end{algorithm}
 
@@ -549,7 +549,7 @@ where $b_{ui}$ is a baseline (or bias) related to user $u$ and item $i$. Its
 expression is $b_{ui} = \mu + b_u + b_i$, where $b_u$ is supposed to model how
 $u$ tends to give higher (or lower) ratings than the average of all ratings
 $\mu$, and $b_i$ is supposed to model how $i$ tends to be rated higher or lower
-than $\mu$. For example, if the mean of all rating is $\mu = 3$, and the
+than $\mu$. For example, if the mean of all ratings is $\mu = 3$, and the
 ratings of a user are $(2, 2, 1)$, its bias $b_u$ would be close to $-1$.
 
 Baselines are computed by solving a regularized least squares problem:
@@ -835,10 +835,10 @@ number of discordant pairs. The FCP is then computed over all users as the
 proportion of concordant pairs.
 
 \begin{align*}
-  c_u &\eqdef \Set{(i, j) \in I^2 \quad | \quad \predrui > \predruj \text{ and
-  } r_{ui} > r_{uj}},\\
-  d_u &\eqdef \Set{(i, j) \in I^2 \quad | \quad \predrui \geq \predruj \text{
-    and } r_{ui} < r_{uj}},\\
+  c_u &\eqdef \Big| \Set{(i, j) \in I^2 \quad | \quad \predrui > \predruj \text{ and
+  } r_{ui} > r_{uj}}\Big|,\\
+  d_u &\eqdef \Big| \Set{(i, j) \in I^2 \quad | \quad \predrui \geq \predruj \text{
+    and } r_{ui} < r_{uj}}\Big|,\\
   \FCP &\eqdef \frac{\sum\limits_{u \in U} c_u}{\sum\limits_{u \in U} c_u +
   \sum\limits_{u \in U} d_u}.
 \end{align*}
@@ -876,9 +876,9 @@ supports $|I_{uv}|$ over all users $v \in N_i^k(u)$.
 \label{FIG:support_spearman_MSD}
 \end{figure}
 
-The use Spearman's rho tends to provide with neighbors that have smaller
-support, thus leading to a less significant and less accurate estimation of the
-neighborhood, which may explain the differences in performance.
+The use of Spearman's rho tends to provide with neighbors that have smaller
+support values, thus leading to a less significant and less accurate estimation
+of the neighborhood, which may explain the differences in performance.
 
 This closes for now our contributions to analogical recommendation. We will
 come back to it in the conclusion of this chapter, and we will now focus on a
@@ -952,9 +952,7 @@ is restricted to a single item. We define the \textbf{support} $\supp (X) $ of
 an itemset $X$ as the proportion of transactions that contain it:
 $$\supp(X) \eqdef \frac{\mid \Set{t \in T | X \subseteq t}\mid}{\mid T \mid}.$$
 Sometimes, the support is not defined as a proportion but rather as the
-absolute number $\mid \Set{t \in T | X \subseteq t}\mid$, but it only makes
-sense to consider it with respect to the total number of transactions $\mid T
-\mid$. Various
+absolute number $\mid \Set{t \in T | X \subseteq t}\mid$. Various
 measures can be used to evaluate the quality of an association rule, such as
 the \textbf{confidence} which can be expressed as:
 $$\text{Conf}(X \implies Y)~\eqdef~\frac{\supp (X \cup Y)}{\supp (X)}.$$
@@ -971,7 +969,7 @@ a naive association rules mining algorithm would be as follows:
   ordered with respect to inclusion, and $2^I$ can be represented as a lattice
     where the \textit{join} is the union and the \textit{meet} is the intersection.
 \item Let $I_S$ be any of the $2^m$ itemsets in $2^I$. Then for each $I_S$,
-  compute all partitions $(X, Y)$ of $I_S$ and calculate the confidence
+  compute all partitions $\set{X, Y}$ of $I_S$ and calculate the confidence
     associated with the rule $X \implies Y$. If the confidence is above a given
     threshold, then keep the association rule, else discard it.
 \end{enumerate}
@@ -1007,8 +1005,8 @@ in the following steps:
     keep those whose support is above $\alpha$.
   \item By joining these $2$-itemsets, build all possible $3$-itemsets and only
     keep those whose support is above $\alpha$.
-  \item Etc, etc... All the frequent $k$-itemsets are built by joining the
-    frequent $k-1$ itemsets.
+  \item Repeat the process: all the frequent $k$-itemsets are built by joining
+    the frequent $k-1$ itemsets.
   \item Once all the frequent itemsets have been computed, the second step of
     the above naive algorithm is used to assess the confidence of the
     association rules.
@@ -1050,8 +1048,8 @@ We need to insist here on the fact that we are dealing with a \textbf{sparse}
 database.  In the case where all values in $R$ are known, the problem of mining
 analogical proportion is pretty trivial: all we need is to look for all
 $4$-tuples of items, and evaluate how good the proportion $a:b::c:d$ is. This
-search is in $\mid I \mid^4$ which is absolutely awful, but there is simply no
-other way around. This problem is not really interesting in the sense that
+search is in $\mid I \mid^4$ which is extremely expensive, but there is
+probably no shortcut. This problem is not really interesting in the sense that
 there is no need to come up with an elaborated algorithm. Its parallel in the
 association rules world corresponds to the case where each transaction
 $t_i$ contains all the items ($\forall i, t_i = I$): the very idea of
@@ -1069,8 +1067,8 @@ Let's now consider four users $a, b, c, d$, and our task is to find out if
 these four users make up a valid analogy. For now, we do not know in which
 order we need to consider them.  Just like for association rules, the notion of
 support still makes sense here because these four users make up a $4$-itemset:
-$$\supp(a, b, c, d) \eqdef \frac{\mid U_{abcd}\mid}{\mid U\mid},$$
-where $U_{abcd}$ is the set of users that have jointly rated $a, b, c$ and $d$.
+$$\supp(a, b, c, d) \eqdef \frac{\mid I_{abcd}\mid}{\mid I\mid},$$
+where $I_{abcd}$ is the set of items that $a, b, c$ and $d$ have all rated.
 Here again, we will only be interested in proportions whose support is greater
 than some threshold $\alpha$: a proportion built on only two components is a
 lot less meaningful than a proportion built on dozens of components.
@@ -1091,7 +1089,7 @@ possible forms of analogies. To assess the quality of a proportion, we will
 use a function $f$ that plays a similar role to the confidence function for
 association rules. Then, it will be natural to only consider analogies that
 are above some given quality threshold. Simply put, we would consider
-$a:b::c:d$ as a valid analogy if $(a:b::c:d) \geq \beta$. In the end we are
+$a:b::c:d$ as a valid analogy if $f(a:b::c:d) \geq \beta$. In the end we are
 left with a set of proportions that represent analogical relations between four
 items.
 
@@ -1173,7 +1171,7 @@ criterion. These steps are described in Algorithm \ref{ALGO:proportion_mining}.
          and two thresholds $\alpha$ and $\beta$.
          \STATE {\bf Output}: A set $\mathcal{P}$ of analogical proportions
          between items.
-         \STATE $\mathcal{P} = \varnothing$
+         \STATE $\mathcal{P} \leftarrow \varnothing$
          \STATE \textit{Candidate retrieval:}
       \STATE Using Apriori, derive all the $4$-itemsets whose support is
          greater than $\alpha$.
@@ -1181,7 +1179,7 @@ criterion. These steps are described in Algorithm \ref{ALGO:proportion_mining}.
          \FORALL{$(a, b, c, d)$ in the set of $4$-itemsets}
          \FORALL {prop $\in \Set{(a:b::c:d), (a:b::d:c), (a:d::c:b)}$}
          \IF{$f(\text{prop)} \geq \beta$}
-         \STATE $\mathcal{P} = \mathcal{P} \cup \Set{\text{prop}}$
+         \STATE $\mathcal{P} \leftarrow \mathcal{P} \cup \Set{\text{prop}}$
          \ENDIF
          \ENDFOR
          \ENDFOR
@@ -1380,7 +1378,7 @@ lexicographic order of all the $A'$ values.
     4&Star Wars  & Twister  & Return of the Jedi  & Independence Day  \\
     5&Star Wars  & Return of the Jedi  & The Silence of the Lambs  & Fargo   \\
     6&Star Wars  & The Terminator  & Return of the Jedi  & Pulp Fiction   \\
-    7&Star Wars  & Pulp Fiction  & Return of the Jedi  & Terminator, The   \\
+    7&Star Wars  & Pulp Fiction  & Return of the Jedi  & The Terminator   \\
     8&Star Wars  & The Fugitive  & The Empire Strikes Back  & The Silence of the Lambs   \\
     9& Star Wars  & Pulp Fiction  & Return of the Jedi  & The Silence of the Lambs   \\
    10&Star Wars  & Pulp Fiction  & Raiders of the Lost Ark  & The Silence of the Lambs   \\
@@ -1402,11 +1400,12 @@ Fugitive}? Is \textit{Twister} related to \textit{Independence Day}? Is
 \textit{Fargo} related to \textit{The Silence of the Lambs}? We will not
 venture to answer these questions, and leave them to the reader's appreciation.
 All we can say is that some forms of analogy seem to emerge from their
-respective ratings.  One thing we can note though, is that even though all these
-movies are very popular just like in Table \ref{TAB:best_prop_num_basic_200},
-their genres are however quite different: while we have considered Star Wars
-and Indiana Jones to be of the same kind, we can fairly claim that a Star Wars
-movie is very far from Fargo, Pulp Fiction or The Silence of the Lambs.
+respective ratings.  One thing we can note however, is that even though all
+these movies are very popular just like in Table
+\ref{TAB:best_prop_num_basic_200}, their genres are however quite different:
+while we have considered Star Wars and Indiana Jones to be of the same kind, we
+can fairly claim that a Star Wars movie is very far from Fargo, Pulp Fiction or
+The Silence of the Lambs.
 
 \paragraph{Lowering support threshold\\}
 
@@ -1425,7 +1424,7 @@ avoids any highly popular movie.
   2&   Nick of Time  & It Could Happen to You  & Milk Money & Only You  \\
   3& To Catch a Thief  & An American in Paris  & Gigi  & Meet John Doe   \\
   4& Dangerous Minds  & Money Train  & Higher Learning  & With Honors   \\
-  5& Judge Dredd  & Under Siege 2: Dark Territory  & Shadow, The  & Mortal Kombat   \\
+  5& Judge Dredd  & Under Siege 2: Dark Territory  & The Shadow  & Mortal Kombat   \\
   6& Terminal Velocity & Under Siege 2: Dark Territory  & Money Train  & Drop Zone    \\
   7& Judge Dredd  &Under Siege 2: Dark Territory  &  Mortal Kombat  & Coneheads   \\
   8& To Catch a Thief  & An American in Paris  & Gigi  & Laura   \\

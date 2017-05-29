@@ -72,7 +72,7 @@ you a fridge even though you just bought a brand new one). In systems were
 items are more homogeneous, i.e. in a movie store system, more  sophisticated
 approaches can be built relying on some metadata about the items (hence the
 name \textit{content}-based). In the case of movies, the metadata could be for
-example the genre, main actors, film director, etc\dots
+example the genre, main actors, film director, etc.
 
 As content-based techniques usually do not rely on a set of ratings to compute item
 similarities, a nice resulting feature is that new items that have not yet been
@@ -174,7 +174,7 @@ information, such as social information for example.
 A practical instance of  knowledge-based recommendation takes the form of a
 recommendation session, where users indicate their needs in an interactive
 manner, and the systems tries to match these needs as best as possible to
-provide useful recommendations. According to \cite{FelBur08}, there exists two
+provide useful recommendations. According to \cite{FelBur08}, there exist two
 kinds of knowledge-based systems, that differ in the way recommendations are
 computed. The first category is made up of the \textbf{case-based} systems.
 Case-based recommenders obviously draw from research in case-base reasoning
@@ -184,7 +184,7 @@ ideal item expressed by the user's needs. In
 this respect, case-based recommenders are close to the aforementioned
 content-based systems. The second  kind of knowledge-based recommenders are the
 so-called \textbf{constraint-based} systems (see \cite{FelFriJanZan11} for a complete
-review). In such systems, user and items are described
+review). In such systems, users and items are described
 by a set of properties, along with a set of constraints. In the car
 recommendation example, an item constraint could for example express that a
 convertible car should not possess a sunroof, and user constraint could state
@@ -299,7 +299,7 @@ that this view is only meaningful for non-ordinal rating scale. When the output
 of prediction algorithm $A$ are ranks, the recommendation strategy $S$ is
 obvious and the distinction between $A$ and $S$ is superfluous.
 
-Prediction algorithms implementations are strongly influenced by the fields of
+Prediction algorithm implementations are strongly influenced by the fields of
 data mining and of course machine learning. However, we want to emphasize that
 the general setting of recommender systems is actually quite different from
 that of classification or regression, the two main prediction tasks of machine
@@ -352,7 +352,7 @@ to compute different measures.  In general, we will use $k$-folds
 cross-validation procedures to reliably evaluate each of the performance
 measures. The set of all ratings $R$ is divided into $k$ (typically $5$)
 disjoint sets of equal sizes; at each of the $k$ iterations, the test set
-$\Rtest$ is set to the $k^{\text{th}}$ subset and and the training set
+$\Rtest$ is set to the $k^{\text{th}}$ subset and the training set
 $\Rtrain$ is set as the union of the $k - 1$ remaining subsets: the system will
 be trained on $\Rtrain$ and tested on $\Rtest$. The reported performances are
 then averaged over the $k$ folds.
@@ -440,9 +440,9 @@ items over all relevant items:
 
 Precision and recall are complementary metrics: it would not make sense to
 evaluate an algorithm performance by only looking at the precision, without
-considering the recall. It is indeed quite easy to obtain a high precision (by
+considering the recall. It is indeed quite easy to obtain a high recall (by
 simply recommending all of the items), but that would lead to a terrible
-value of recall. Precision and recall are commonly summarized into the
+precision. Precision and recall are commonly summarized into the
 F-measure, which is their harmonic mean:
   $$
   \text{F} \eqdef 2 \cdot \frac{\text{Precision} \cdot
@@ -463,7 +463,7 @@ recommend a large amount of items: it is quite easy indeed to create a
 recommender system that would only recommend very popular items. Such a
 recommender system would drop to zero added value. We here define the
 \textbf{coverage} as the proportion of recommended items out of all existing
-items:
+items ($I$):
 $$\text{Coverage} \eqdef \frac{\mid I^S\mid}{\mid I\mid}.$$
 
 \paragraph{Surprise\\}
@@ -563,7 +563,7 @@ similarities can be reused for future predictions.
        \label{ALGO:neighborhood_prediction}
        \begin{algorithmic}
 
-         \STATE {\bf Input}: A set of ratings $R$, and a couple $(u, i)$ for
+         \STATE {\bf Input}: A set of ratings $R$, and a pair $(u, i)$ for
          which $\rui$ is  unknown.
          \STATE {\bf Output}: $\predrui$, an estimation of $\rui$.
          \STATE \textit{Training stage:}
@@ -571,17 +571,17 @@ similarities can be reused for future predictions.
          \STATE Compute $\ssim(u, v)$.
 	    \ENDFOR
        \STATE \textit{Prediction stage:}
-         \STATE $\text{denum} = 0, ~ \text{num} = 0$
-         \STATE $U_i^s = \text{Sorted}(U_i)$  // \textit{Sort by value of
+         \STATE $\text{denum} \leftarrow 0, ~ \text{num} \leftarrow 0$
+         \STATE $U_i^s \leftarrow \text{Sorted}(U_i)$  // \textit{Sort by value of
          $\ssim$ with $u$, in decreasing order}.
 
          \FORALL {$v \in U_i^s[:k]$}
          \STATE \textit{I.e. for the  $k$ first users in $U_i^s$}
-         \STATE \text{denum} += \ssim(u, v)
-         \STATE \text{num} += $\rvi \cdot \ssim(u, v)$
+         \STATE \text{denum} \leftarrow \text{denum}  $ + \ssim(u, v)$
+         \STATE \text{num} \leftarrow \text{num} $ + \rvi \cdot \ssim(u, v)$
          \ENDFOR
 
-         \STATE $\predrui = \frac{\text{num}}{\text{denum}}$
+         \STATE $\predrui \leftarrow \frac{\text{num}}{\text{denum}}$
 \end{algorithmic}
 \end{algorithm}
 
@@ -651,7 +651,7 @@ respectively.
 
 One last similarity metric that we will use is the Mean Squared Difference
 (MSD)\footnote{Strictly speaking MSD is actually a distance rather than a
-similarity metric, so taking its inverse would do the job.}:
+similarity metric, so we could take its inverse.}:
 \begin{definition}[Mean squared difference]
   The \textbf{Mean Squared Difference} between two users $u$ and $v$ is defined as:
 $$\text{MSD}(u, v) \eqdef \frac{1}{|\Iuv|} \cdot \sum\limits_{i \in \Iuv} (\rui
@@ -837,7 +837,7 @@ R = \begin{blockarray}{cccc}
 \begin{block}{(ccc) c}
   4 & 5 & 5 & \text{Titanic} \\
   2 & 1 & 1 & \text{Toy Story} \\
-  1 & 2 & 2 & \text{LORT} \\
+  1 & 2 & 2 & \text{LOTR} \\
   3 & 3 & 3 & \text{Mad Max} \\
   4 & 2 & 2 & \text{E.T.} \\
 \end{block}
@@ -857,13 +857,13 @@ R = \begin{blockarray}{cccc}
 \end{pmatrix}
 ,
 $$
-where $U_1, \cdots U_r$ are the columns of $U$ and $I_1, \cdots I_r$ are the
+where $U_1, \dots, U_r$ are the columns of $U$ and $I_1, \dots, I_r$ are the
 columns of $I$ (i.e. the lines of $I^t$).
 
 When we compute the SVD of $R$, we find in the columns of $U$ some
 \textit{prototype} users that have no real existence, but that can be combined
 (linearly) to build up any of the users: Alice, Bob and Charlie are linear
-combinations of $U_1, U_2, \dots U_r$. Also, any linear combination of Alice,
+combinations of $U_1, U_2, \dots, U_r$. Also, any linear combination of Alice,
 Bob and Charlie can be expressed as a linear combination of the $U_i$. Similarly, the columns of $I$ are
 \textit{prototype} movies that do not properly exist but that can be combined
 to build up Titanic, Toy Story, etc., and any of their linear combinations. We can consider each vector $I_i$
@@ -990,7 +990,7 @@ perspective, and was named Probabilistic Matrix Factorization (PMF), leading to
 the following regularized least squares problem:
 
 $$
-\sum_{\rui \in R} \left(\rui - {q_i}^t \cdot p_u \right)^2 +
+\min_{p_u, q_i}\sum_{\rui \in R} \left(\rui - {q_i}^t \cdot p_u \right)^2 +
 \lambda\left(\norm{}{q_i}^2 + \norm{}{p_u}^2\right),
 $$
 where $\lambda$ is a regularization term. Not surprisingly, Stochastic Gradient
@@ -1007,9 +1007,9 @@ comes up as a very popular optimization technique. While a vanilla gradient
 descent would require to compute the derivative of $L$ with respect to
 $\theta$, in SGD we just assume that the derivative of each $L_k$ is enough.
 SGD is an iterative optimization process where the value of $\theta$ is updated
-using the following rule: $\theta = \theta - \alpha \frac{\partial
+using the following rule: $\theta \leftarrow \theta - \alpha \frac{\partial
 L_k}{\partial \theta}$, where $\alpha$ is the learning rate (or stepsize). This
-update is performed over all $k$s for a given number of times. Various
+update is performed over all $k$'s for a given number of times. Various
 theoretical guarantees about the convergence of this algorithm have been
 derived, that obviously depend on the stepsize and on some regularity
 conditions on the loss function $L$: see \cite{BotCurNoc16} for a recent

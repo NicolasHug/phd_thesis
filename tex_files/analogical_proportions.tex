@@ -122,7 +122,7 @@ in proportion, i.e. $30: 60 :: 25: 50$. We recognize here the \textbf{geometric
 \end{testexample}
 
 \begin{definition}[Geometric proportion]
-  Four elements $a, b, c, d$ in $\mathbb{R}$ are in \textbf{geometric
+  Four elements $a, b, c, d$ in $\mathbb{R}^*$ are in \textbf{geometric
   proportion} if
   $$\frac{a}{b} = \frac{c}{d},$$
   or equivalently if
@@ -136,17 +136,17 @@ stated the three aforementioned axioms on the basis of the geometric
 proportion.
 
 In fact, when $\mathbb{R}$ is equipped with the multiplication $\times$, the
-couple $(\mathbb{R}, \times)$ is a group (i.e. a set equipped with an operation
+pair $(\mathbb{R}, \times)$ is a group (i.e. a set equipped with an operation
 that satisfies  closure, associativity, identity and invertibility). When
 dealing with a group (instead of a semigroup), Definition
 \ref{DEF:proportion_semi_group} can be greatly simplified:
 
-\begin{definition}[Proportion in groups]
-  \label{DEF:proportion_group}
+\begin{proposition}[Proportion in groups]
+  \label{PROP:proportion_group}
 Let $(U, \oplus)$ be a group.  Four elements $a, b, c, d \in U$, are in
   proportion if:
   $$a \oplus d = b \oplus c.$$
-\end{definition}
+\end{proposition}
 
 The geometric proportion is clearly a direct instance of this definition.
 Another proportion can be defined over real numbers, using this time the
@@ -225,7 +225,7 @@ A more formal definition has been given in \cite{StrYvoREPORT05}:
 
 \begin{definition}[Proportion between sets (i)]
   \label{DEF:analogy_set_facto}
-  Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if there exists
+  Let $A, B, C, D \subset X$. $A, B, C, D$ are in proportion if there exist
   four subsets $U, V, W$ and $Z$ (not necessarily disjoint) such that:
   $$
   \begin{cases}
@@ -415,16 +415,16 @@ directly from the $3$ axioms of an analogical proportion: the first axiom tells
 us that the proportion $a:b::a:b$ holds for any value of $a$ and $b$ in
 $\mathbb{B}$. This means that the four following proportions are valid:
 \begin{itemize}
-  \item $0 : 1 :: 0 :1$ ;
-  \item $1 : 0 :: 1 :0$ ;
-  \item $0 : 0 :: 0 :0$ ;
+  \item $0 : 1 :: 0 :1$;
+  \item $1 : 0 :: 1 :0$;
+  \item $0 : 0 :: 0 :0$;
   \item $1 : 1 :: 1 :1$.
 \end{itemize}
 Using the central permutation axiom $(a:b::c:d \iff a:c::b:d$), we can then
 derive two additional proportions, which makes a total of $6$ proportions that
 are indeed those of Table \ref{TAB:six_valid_patterns}:
 \begin{itemize}
-  \item $1 : 1 :: 0 : 0$ ;
+  \item $1 : 1 :: 0 : 0$;
   \item $0 : 0 :: 1 : 1$.
 \end{itemize}
 
@@ -488,7 +488,7 @@ classifiers than using the standard modeling.
 In fact, Klein's definition of the Boolean proportion $a:b::c:d \iff a
 \oplus b = c \oplus d$ is equivalent to $a \oplus d = b \oplus c$, due to the
 singular properties of the XOR operator. This definition is actually a direct
-instance of Definition \ref{DEF:proportion_group} (analogies in groups), which
+instance of Proposition \ref{PROP:proportion_group} (analogies in groups), which
 is natural because of the fact that when the set $B = \Set{0, 1}$ is equipped
 with the XOR operator, we obtain a group.
 
@@ -505,7 +505,7 @@ Piaget never made any reference to analogy in this work.
 
 This concept of \textbf{logical proportion} has been generalized in recent
 works (see e.g. \cite{PraRic13LU}). A logical proportion is here defined as a
-couple of equivalences of the form:
+pair of equivalences of the form:
 
 $$I_1(a, b) \leftrightarrow I_2(c, d) ~~ \wedge ~~ I_3(a, b) \leftrightarrow I_4(c,
 d),$$
@@ -550,7 +550,7 @@ $A(a, b, c, d) \iff \left[(a \wedge \neg b) \leftrightarrow (c \wedge \neg
 d)\right]  \wedge \left[(\neg a \wedge b)\leftrightarrow (\neg c \wedge
 d)\right]$, and using the following mapping between operators:
 \begin{itemize}
-  \item The central $\wedge$ becomes to the min operator.
+  \item The central $\wedge$ becomes the min operator.
   \item $x \leftrightarrow y$ becomes $1 - |x - y|$.
   \item $x \wedge \neg y$ becomes $\max(0, x-y)$.
 \end{itemize}
@@ -605,10 +605,11 @@ extended to the Boolean setting.
 
 Before moving on to the geometric insights, we will first make a quick
 detour in the first subsection, and describe what we call the
-\textbf{equivalence classes} of analogical proportions. We chose to introduce
-these general concepts here, because they are best illustrated by examples from
-the arithmetic and Boolean proportions, and because they are paramount to
-properly understand the geometrical properties of these proportions.
+\textbf{equivalence classes} of analogical proportions. We have chosen to
+introduce these general concepts here, because they are best illustrated by
+examples from the arithmetic and Boolean proportions, and because they are
+paramount to properly understand the geometrical properties of these
+proportions.
 
 \subsection{Equivalence classes of analogical proportions}
 
@@ -690,7 +691,7 @@ involves the four vertices of a parallelogram. As for the Boolean proportion,
 we know from Definition \ref{DEF:analogy_for_vectors} that four Boolean vectors
 $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}$ are in proportion if each
 component build up a valid proportion, i.e. that each of the $(a_i, b_i, c_i,
-d_i)$ follow one of the $6$ valid patterns of Table
+d_i)$ follows one of the $6$ valid patterns of Table
 \ref{TAB:six_valid_patterns} on page \pageref{TAB:six_valid_patterns}.
 \begin{testexample}
 For example in $\mathbb{B}^2$, the four vectors $\mathbf{a} = (0, 0),~
@@ -845,7 +846,7 @@ elements for which $f(\mathbf{x})$ is known is called the \textbf{training
 set}. For any element $\mathbf{x} \notin S$, $f(\mathbf{x})$ is unknown and our
 goal is to guess it: this is a binary \textbf{classification problem}.
 
-Suppose we're in $\mathbb{B}^3$ and consider Figure
+Let us suppose that we are in $\mathbb{B}^3$ and consider Figure
 \ref{FIG:classification_problem}.
 \begin{figure}[!h]
 \centering
@@ -1027,8 +1028,8 @@ to guess the value of $f(\mathbf{h})$:
   \item We first looked at all the $3$-tuples $(\mathbf{x}, \mathbf{y}, \mathbf{z}) \in
     \mathbf{B}^3$ such that:
     \begin{itemize}
-      \item $f(\mathbf{x}), f(\mathbf{y})$ and $f(\mathbf{z})$ are known ;
-      \item $\mathbf{x}:\mathbf{y}::\mathbf{z}:\mathbf{h}$ holds ;
+      \item $f(\mathbf{x}), f(\mathbf{y})$ and $f(\mathbf{z})$ are known;
+      \item $\mathbf{x}:\mathbf{y}::\mathbf{z}:\mathbf{h}$ holds;
       \item the \textbf{class equation} $f(\mathbf{x}) :f(\mathbf{y}) ::
         f(\mathbf{z}) :s$ is \textbf{solvable}. $s$ is called a
         \textbf{candidate solution}.
@@ -1104,7 +1105,7 @@ want to exclude from the $6^m$ proportions those that comply with one of the
 following patterns:
 
 \begin{itemize}
-  \item $\mathbf{a}: \mathbf{a} :: \mathbf{a} : \mathbf{a}$ ;
+  \item $\mathbf{a}: \mathbf{a} :: \mathbf{a} : \mathbf{a}$;
   \item $\mathbf{a}: \mathbf{b} :: \mathbf{a} : \mathbf{b}$, and its three
     equivalent forms $\mathbf{a}: \mathbf{a} :: \mathbf{b} : \mathbf{b}$,~
     $\mathbf{b}: \mathbf{a} :: \mathbf{b} : \mathbf{a}$, and $\mathbf{b}:
@@ -1120,9 +1121,9 @@ Now, let's count them.
   \item Every pair $(\mathbf{a}, \mathbf{b})$ of vertices will generate four
     proportions:
     \begin{itemize}
-      \item $\mathbf{a}: \mathbf{b} :: \mathbf{a} : \mathbf{b}$ ;
-      \item $\mathbf{a}: \mathbf{a} :: \mathbf{b} : \mathbf{b}$ ;
-      \item $\mathbf{b}: \mathbf{a} :: \mathbf{b} : \mathbf{a}$ ;
+      \item $\mathbf{a}: \mathbf{b} :: \mathbf{a} : \mathbf{b}$;
+      \item $\mathbf{a}: \mathbf{a} :: \mathbf{b} : \mathbf{b}$;
+      \item $\mathbf{b}: \mathbf{a} :: \mathbf{b} : \mathbf{a}$;
       \item $\mathbf{b}: \mathbf{b} :: \mathbf{a} : \mathbf{a}$.
     \end{itemize}
     There are $\binom{2^m}{2}$ distinct pairs of vertices, so in total this
@@ -1172,8 +1173,8 @@ This sequence actually describes \textit{the number of rectangles that can be
 formed from the vertices of an $m$-dimensional cube}, which is exactly
 equivalent to the number of \textit{useful} proportions that we wanted to
 compute. The formula given by the OEIS is:
-$$P_m = \frac{6^m}{8} - 4^{m - 1} + 2^{m - 3},$$
-and using the fact that $\binom{n}{k} = \frac{n}{k}\binom{n - 1}{k - 1}$, it
+$$P_m = \frac{6^m}{8} - 4^{m - 1} + 2^{m - 3}.$$
+Using the fact that $\binom{n}{k} = \frac{n}{k}\binom{n - 1}{k - 1}$, it
 can be shown that the two formulas $\frac{1}{8} \left[6^m - 2^m -
 4\cdot\binom{2^m}{2} \right]$ and $\frac{6^m}{8} - 4^{m - 1} + 2^{m- 3}$ are,
 fortunately, equivalent. It would be interesting to find out how the OEIS
