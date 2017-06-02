@@ -946,7 +946,7 @@ Let $I = \Set{i_1, i_2, ..., i_m}$ be a set of $m$ items, and let $T =
 is a subset of $I$: $\forall i, ~ t_i \subseteq I$. A transaction simply is a set of items
 that are purchased together. An association rule is expressed in the form $ X
 \implies
-Y$, where $ X \subset I, ~ Y \subset I$, and $X \cap Y = \varnothing$. $X$ and
+Y$, where $ X \subsetneq I, ~ Y \subsetneq I$, and $X \cap Y = \varnothing$. $X$ and
 $ Y $ are sets of items that we will call \textbf {itemsets}, and usually $Y$
 is restricted to a single item. We define the \textbf{support} $\supp (X) $ of
 an itemset $X$ as the proportion of transactions that contain it:

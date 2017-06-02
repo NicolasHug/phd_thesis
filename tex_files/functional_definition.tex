@@ -704,7 +704,7 @@ elements the $k$ \textbf{nearest analogical neighbors} of $\mathbf{x}$:
 
 \begin{definition}[The $k$ nearest analogical neighbors]
   \label{DEF:knan}
-  For any $\mathbf{x} \in X^m$, and any training set $S \subset X$, we define
+  For any $\mathbf{x} \in X^m$, and any training set $S \subsetneq X$, we define
   the \textbf{$k$ nearest analogical neighbors of $\mathbf{x}$} as the set:
   $$k\text{-nan}\left(\mathbf{x}, S\right) \eqdef \Set{\argmin_{\mathbf{d}' \in
   A_E^Y(S)}^k
@@ -849,7 +849,7 @@ context as the work of Cover \& Hart who studied the 1-NN algorithm
   To prove this result, they simply start from the fact that
   $\delta(\mathbf{x}, \nn(\mathbf{x}, S_n))$ converges in probability towards
   $0$:
-  $$\forall \varepsilon > 0,~~P\Big(\delta(\mathbf{x}, \nn(\mathbf{x}, S_n)) >
+  $$\forall \varepsilon > 0,~~\lim_{n \to \infty}P\Big(\delta(\mathbf{x}, \nn(\mathbf{x}, S_n)) >
   \varepsilon\Big) = 0.$$
   Using the previous fact that $\delta(\mathbf{x}, \nan(\mathbf{x},S_n)) \leq
   \delta(\mathbf{x}, \nn(\mathbf{x},S_n))$, the convergence in probability of
@@ -979,7 +979,7 @@ classifiers.
 In this section, we study the accuracy of an analogical classifier, and more
 particularly that of the $\NAN$ classifier. As explained in Section
 \ref{SEC:functional_definition}, for a given $\mathbf{x} \in X^m$ and a
-training set $S \subset X^m$, the prediction $\hat{f}(\mathbf{x})$ is set as:
+training set $S \subsetneq X^m$, the prediction $\hat{f}(\mathbf{x})$ is set as:
 $$
 \hat{f}(\mathbf{x}) ~ \eqdef ~ \albl{\nan(\mathbf{x}, S)} ~ \eqdef ~ \albl{\nn(\mathbf{x}, \esf)}.
 $$
@@ -1098,7 +1098,7 @@ to the consistent facts:
 
 \begin{definition}[Quality of the analogical extension $\omegasf$]
   \label{DEF:omega}
-  Given a training set $S\subset X^m$ and a ground truth function $f$, the
+  Given a training set $S\subsetneq X^m$ and a ground truth function $f$, the
   \textbf{quality} of the analogical extension $\esf$ is defined as:
   $$
   \omegasf \eqdef P\left(\albl{\mathbf{x}} = f(\mathbf{x}) \given[\big]
