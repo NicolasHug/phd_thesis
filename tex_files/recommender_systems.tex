@@ -385,15 +385,15 @@ need to compare multiple algorithms before knowing what can be thought of as a
 good RMSE, which by the way highly depends on  the rating scale.
 
 Another issue with RMSE is that they do not properly reflect the way users
-interact with a recommendation system.  Ultimately, the most important feature
-of a recommender system probably is how well it can \textbf{order} the
-different items for a given user, with regards to their preferences. Indeed, it
-would be harmful to rank a disliked item higher than an item for which the user
-has a strong preference, and conversely predicting a rating $\predrui$ of $2.5$
-while the true rating is $1$ (i.e. with a potentially high error) is not as
-serious, because the corresponding item would not have been recommended anyway.
-The point here is that providing accurate predictions is crucial, but only on a
-particular subset of predictions.
+interact with a recommendation system \cite{JanResTuzZan16}.  Ultimately, the
+most important feature of a recommender system probably is how well it can
+\textbf{order} the different items for a given user, with regards to their
+preferences. Indeed, it would be harmful to rank a disliked item higher than an
+item for which the user has a strong preference, and conversely predicting a
+rating $\predrui$ of $2.5$ while the true rating is $1$ (i.e. with a
+potentially high error) is not as serious, because the corresponding item would
+not have been recommended anyway.  The point here is that providing accurate
+predictions is crucial, but only on a particular subset of predictions.
 
 A related concern is that when using a suitable loss function, some algorithms
 relying on an optimization process
