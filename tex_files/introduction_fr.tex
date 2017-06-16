@@ -1,0 +1,189 @@
+Le raisonnement par analogie est largement considéré comme une caractéristiques
+clef de l'intelligence humaine. Il permet d'arriver à de potentielles
+conclusions pour de nouvelles situations, en établissant des liens entre des
+domaines en apparence très différent. Un exemple connu  est celui du modèle de
+l'atome de Rutherford-Bohr, où les électrons gravitent autour du noyau, comme
+les planètes du système solaire gravitent autour du soleil. Ce type de
+raisonnement a fait l'objet de nombreuses études de la part des psychologues et
+des philosophes, mais il intéresse aussi la communauté de l'intelligence
+artificielle.
+
+Ce travail s'intéresse à un mode particulier de raisonnement par analogie, à
+savoir le raisonnement par proportions analogiques. Une proportion analogique
+est une proposition de la forme \textit{a est à b comme c est à d}, et exprime
+le fait que $a$ diffère de $b$ comme $c$ diffère de $d$. On pourrait par
+exemple affirmer que la \textit{France est à Paris ce que l'Allemagne est à
+Berlin}, ou encore que \textit{les électrons sont au noyau ce que les planètes
+sont au soleil}. Dans certains cas, lorsque l'élément $d$ n'est pas connu, on
+pourra l'inférer à partir des trois autres éléments $a$, $b$, et $c$. Il semble
+en effet naturel qu'un enfant doté  de connaissances géographiques basiques
+pourrait répondre à la question \textit{La France est Paris ce que l'Allemagne
+est à quoi ?} Et même dans l'éventualité où l'enfant ne connaîtrait pas le nom
+de la ville \textit{Berlin}, il pourrait tout de même s'imaginer une
+hypothétique ville au nom inconnu, mais qui serait la capitale de l'Allemagne.
+L'utilisation des proportions analogiques nous permet ici de toucher du doigt
+deux processus cognitifs clef : l'inférence, et la créativité.
+
+En tant qu'outil permettant une forme d'inférence inductive, le raisonnement
+par analogie a déjà été envisagé pour des problèmes d'apprentissage artificiel.
+On pourra citer par exemple \cite{StrYvoCNLL05} pour une application en
+linguistique, ainsi que \cite{BayMicDelIJCAI07} pour des problèmes de
+classification dans des domaines booléens. Nos recherches s'inscrivent
+dans la lignée de ces deux précédents travaux, et le but de cette thèse est
+double. Le premier sujet de recherche est d'appliquer le raisonnement
+analogique à des problèmes concrets, et le second et d'étudier les classifieurs
+analogiques d'un point de vue théorique, afin d'en exhiber des propriété
+théoriques intéressantes.
+
+L'application du raisonnement analogique à des problèmes concrets est motivée
+par le fait que les précédentes recherches ont principalement été menées d'un
+point de vue expérimental, dans des environnements assez artificiels. A notre
+connaissance, aucun travail n'avait été mené pour évaluer la pertinence des
+classifieurs analogiques sur des tâches concrètes, où les critères de succès
+sont souvent différent. Nous avons ici choisi d'appliquer le raisonnement
+analogique au problème de la recommandation, et plus particulièrement à celui
+de la prédiction de notes.
+
+D'autre part, nos recherches théoriques sont motivées par le fait que
+jusqu'alors, les classifieurs analogiques n'étaient connus que via leurs
+descriptions algorithmiques. On avait une connaissance claire de comment
+calculer la sortie d'un classifieur analogique, mais la nature de ce qui était
+effectivement calculé restait encore assez floue. On manquait alors d'outils
+pour caractériser les forces et les faiblesses de tels classifieurs.
+
+\paragraph{Annonce du plan et contributions\\}
+
+Chronologiquement, nous nous sommes d'abord intéressé à la partie applicative :
+nos premières contributions concernaient l'application du raisonnement
+analogique à la recommandation. Ensuite, dans un second temps, nous nous sommes
+intéressés à la partie théorique.
+
+Nous avons choisi de présenter nos travaux d'une manière quelque peu
+différente. Nous allons d'abord exposer les connaissances requises sur les
+proportions analogiques dans les chapitres
+\ref{CHAP:computational_models_of_analogical_reasoning}  et
+\ref{CHAP:formal_analogical_proportions}, puis nous présenterons une partie de
+nos résultats théoriques dans le chapitre  \ref{CHAP:functional_definition}.
+Ensuite, nous nous attaquerons à la partie applicative dans les chapitres
+\ref{CHAP:background_reco_systems} et \ref{CHAP:analogical_recommendation}.
+Enfin dans le chapitre \ref{CHAP:analogy_preserving_functions},  nous
+reviendrons sur des aspects théoriques.
+
+Ce choix est en fait motivé par des raisons pédagogiques. En effet, il
+apparaîtra clair que le sujet de la recommandation analogique (chapitres
+\ref{CHAP:background_reco_systems} et \ref{CHAP:analogical_recommendation})
+s'introduit et se comprend beaucoup plus facilement une fois que l'on a déjà
+étudié le chapitre \ref{CHAP:functional_definition} qui traite de
+recommandation analogique. De plus, bien que l'on aurait pu s'attaquer au
+chapitre  \ref{CHAP:analogy_preserving_functions} directement après le chapitre
+\ref{CHAP:functional_definition}, il sera d'autant plus intéressant d'étudier
+le chapitre  \ref{CHAP:analogy_preserving_functions} à la lumière des es
+conclusions des chapitres \ref{CHAP:background_reco_systems} et
+\ref{CHAP:analogical_recommendation}.
+
+Ce document est organisé comme suit.\\
+
+Le premier chapitre donnera les prérequis nécessaires sur différents modèles de
+raisonnement par analogique, en insistant particulièrement sur les modèles
+permettant l'inférence. Il apparaîtra clair que ces modèles sont, pour la
+plupart, motivés par des recherches en sciences cognitives ou psychologiques,
+ce qui les distingue de notre principal outil : les proportions analogiques.\\
+
+Les proportions analogiques sont l'objet du deuxième chapitre. Nous donnerons
+leurs définitions dans différents domaines algébriques, en insistant sur les
+deux proportions que nous utiliseront le plus : la proportion arithmétique et
+la proportion booléenne. De plus, nous essaierons d'aborder ces proportions
+d'un point de vue géométrique afin d'en mieux saisir les différentes
+caractéristiques. Nous étudierons aussi un problème de classification
+\textit{jouet}, ce qui nous permettra d'introduire la notion de résolution
+d'équation analogique, ainsi que le principe d'inférence analogique qui est
+sous-jacent à toutes  nos recherches. Dans un contexte de classification, ce
+principe stipule que si $a$ est à $b$ ce que $c$ est à $d$, alors on devrait
+aussi avoir que $f(a)$ est à $f(b)$ comme $f(c)$ est à $f(d)$, où $f(x)$ est la
+fonction qui détermine la classe de l'élément $x$. Ce principe est évidemment
+non correct, dans le sens où la conclusion (les classes sont en proportion)
+n'est pas logiquement déductible de la prémisse (les éléments sont en
+proportion). Comme nous le verrons, il reste utilisable dans des tâches de
+classification, ce qui est l'objet du troisième chapitre.\\
+
+
+L'étude des classifieurs analogiques est en effet le sujet du chapitre
+\ref{CHAP:functional_definition}. Ce chapitre correspond à une version étendue
+d'un papier reçu à l'ECAI \cite{HugPraRicSerECAI16}. Nous commencerons ici à
+nous attaquer à un des deux thèmes principaux de cette thèse : identifier des
+propriétés théoriques des classifieurs analogiques. Notre première contribution
+sera de proposer une définition fonctionnelle des classifieurs analogiques, qui
+unifie les deux approches préexistantes déjà mentionnées (\cite{StrYvoCNLL05}
+et \cite{BayMicDelIJCAI07}). Cette nouvelle définition nous permettra de
+dériver des résultats relatifs à la VC-dimension des classifieurs, ainsi que
+leur taux d'erreur. Cette définition fonctionnelle permettra aussi de mettre
+clairement en lumière les liens qui relient les classifieurs de type
+plus-proches-voisins ($k$-NN) et les classifieurs analogiques. En effet, on
+montrera que la classification analogique peut se concevoir comme la
+successions de deux étapes. Dans un premier temps, on étend l'ensemble
+d'apprentissage  en ajoutant de nouveaux exemples, puis on utilise ensuite un
+classifieur $k$-NN sur cet ensemble étendu (appelé extension analogique). Il
+est ici intéressant que les deux processus cognitifs mentionnés précédemment au
+sujet des proportions analogiques (créativité et inférence) sont ici intimement
+liés. De ces résultats, une question naturelle se pose : comment assurer que
+l'extension analogique soit saine, c'est à dire comment être certain que les
+exemples générés ont été associés à la bonne classe ? Cette question sera
+résolue dans le chapitre \ref{CHAP:analogy_preserving_functions}, mais les deux
+chapitres suivant s'intéresseront à l'application du raisonnement par analogie
+au problème de la recommandation.\\
+
+
+Le chapitre  \ref{CHAP:background_reco_systems} sera dédié aux prérequis
+nécessaires sur les systèmes de recommandation. Nous décrierons brièvement les
+trois principales familles de système de recommandation, à savoir les
+techniques \textit{content-based}, le filtrage collaboratif, et les techniques
+\textit{knowledge-based}. Nous décrirons aussi formellement le problème que
+l'on se propose d'étudier, qui est celui de la prédiction de notes : étant
+donné un ensemble de notes données par des utilisateurs pour des items, le but
+est de prédire d'autres notes qui ne sont pas de la base de données. Les
+différentes mesures qui permettent d'évaluer la qualité d'un système de
+recommandation seront présentées. Enfin, comme nos algorithmes seront de type
+\textit{filtrage collaboratif}, nous décrirons en détail deux techniques de
+prédiction collaborative qui nous serviront à comparer les performances de nos
+algorithmes : les méthodes de voisinage, et les méthodes fondées sur la
+factorisation de matrice.\\
+
+
+Danse le chapitre \ref{CHAP:analogical_recommendation}, nous présenterons nos
+contributions au problème de la recommandation. Nous décrirons d'abord nos
+première investigations, qui sont une adaptation directe des classifieurs
+analogiques décrits dans le chapitre \ref{CHAP:functional_definition}. Ces
+recherches ont fait l'objet d'un papier publié à ISMIS \cite{HugPraRicISMIS15}.
+Il apparaîtra que ces algorithmes, bien que proposant une précision semblable à
+celle des méthodes par voisinage, se révèlent d'une complexité calculatoire
+telle qu'il n'est pas raisonnable de les envisager comme des candidats
+potentiels à une l'implémentation dans un système effectif. Fort de ce constat,
+nous avons développé une autre version de recommandation analogique, cette fois
+fondée sur le fait que les utilisateurs ont tous une différente interprétation
+de l'échelle de note. Les algorithmes qui en découleront proposeront une
+complexité algorithmique tout à fait raisonnable et sont l'objet d'un papier
+Fuzz-IEEE  \cite{HugPraRicSerFuzzIEEE16}. Enfin, nous nous intéresseront au
+problème de la fouille de proportions analogique dans une base de donnée
+partiellement renseignée, telle que celles dont on dispose lorsque l'on
+s'attaque à la prédiction de notes. Les résultats obtenus nous permettront de
+rétrospectivement interpréter les modestes performances de nos premiers
+algorithmes de recommandation analogique : même si cela semble tristement
+banal, il apparaîtra qu'il n'existait probablement tout simplement pas de
+bonnes analogiques dans les bases de données utilisées.\\
+
+
+Mais cette observation quelque peu terre-à-terre ne nous empêchera pas de
+remettre en question le principe d'inférence analogique même. Dans le dernier
+chapitre, nous reviendrons à nos considérations théoriques, et nous proposeront
+un critère qui permet d'appliquer ce principe d'inférence de manière correcte.
+Nous avons brièvement décrit ce principe, qui stipule que si quatre élément $a,
+b, c, d$ sont en proportion, alors leurs classes $f(a), f(b), f(c), f(d)$
+doivent aussi être en proportion. Nous donneront une caractérisation complète
+des fonctions $f$ telles que lorsque quatre éléments sont en proportion, alors
+leurs images par $f$ le sont aussi. Ces fonctions permettent d'utiliser le
+principe d'inférence analogique de manière sûre, et assurent une extension
+analogique saine (c'est à dire sans erreur). Nous les appelleront les fonctions
+qui préservent l'analogie, et nous montrerons qu'elles correspondent aux
+fonctions affines dans les domaines booléens et réels. Ces travaux ont
+abouti à la publication d'un papier IJCAI \cite{CouHugPraRicIJCAI17}, et
+ouvrent la voie à différentes pistes de recherche.

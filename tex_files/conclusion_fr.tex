@@ -1,0 +1,148 @@
+Les deux principaux objectifs de cette thèse étaient les suivants : exhiber des
+propriétés théoriques des classifieurs analogiques, et appliquer le
+raisonnement analogique au problème de la recommandation. Commençons par
+rappeler succinctement les principaux résultats et contributions apportées dans
+ce document (on ne suivra pas nécessairement l'ordre des chapitres).
+
+\paragraph{Contributions\\}
+
+Le premier chapitre était dévoué aux prérequis nécessaires sur les modèles de
+raisonnement analogique existant, en accordant une attention particulière aux
+modèles qui permettent l'implémentation de programmes informatiques. Dans le
+deuxième chapitre, nous avons décrit en détail différentes définitions de
+proportions analogiques, en insistant particulièrement sur les proportions
+booléennes et arithmétiques. Nous avons essayé d'apporter au lecteurs quelques
+intuitions géométriques sur les propriétés de ces proportions. Enfin, nous
+avons considéré un problème de classification booléenne basique, qui nous a
+permis d'introduire le processus de résolution d'équation analogique, ainsi que
+le principe d'inférence analogique. Ce principe stipule que si l'on a
+$a:b::c:d$, alors on devrait aussi avoir $f(a):f(b)::f(c):f(d)$, où $f(x)$
+détermine la classe de $x$. Lorsque $f(d)$ est inconnu, on peut l'inférer à
+partir des valeurs de $f(a), f(b)$ et $f(c)$ ce qui nous permet d'appliquer ce
+type d'inférence à des tâches de classification ou des problèmes plus généraux
+encore comme celui de la prédiction de notes.\\
+
+La recommandation analogique fut l'objet des chapitres
+\ref{CHAP:background_reco_systems} et \ref{CHAP:analogical_recommendation}.
+Chapitre \ref{CHAP:background_reco_systems} était un chapitre de prérequis, où
+nous avons clairement défini le problème de la prédiction de notes, et décrit
+deux familles d'algorithmes (les méthodes par voisinage et par factorisation de
+matrice) qui nous servent de base pour comparer nos algorithmes.
+
+Nous avons ensuite développé dans le chapitre
+\ref{CHAP:analogical_recommendation} un premier algorithme pour la prédiction
+de notes  \cite{HugPraRicISMIS15}, fondé sur l'idée que si quatre utilisateurs
+sont en proportion (c.a.d. que leurs notes respectives sont en proportion
+géométrique), alors cela doit aussi être vrai pour un item que l'un des
+utilisateurs n'a pas encore noté. Cette approche est directement inspirée des
+travaux en classification analogique. Nos expériences ont montré que les
+performances de ces algorithmes sont proches de celles des techniques par
+voisinage, mais leur complexité cubique conduisent à des temps de calculs
+prohibitifs.
+
+Cela nous a conduit à considérer une autre approche pour la recommandation
+analogique, qui ne repose pas sur la recherche de triplets d'utilisateurs.
+Cette approche \cite{HugPraRicSerFuzzIEEE16} qui repose sur la notion de
+``\textit{clones}'', prend en compte le fait que chaque utilisateur a une
+appréciation bien particulière de l'échelle de note qui est utilisée. Nos
+résultats montrent que le concept de clone est très important et qu'il est
+primordial de l'intégrer d'une manière ou d'une autre dans un algorithme de
+prédiction de notes. Il est cependant nécessaire de noter que ce type de biais
+de les notes avait déjà été considéré dans de précédents travaux. Nous noterons
+cependant que nos travaux sur les systèmes de recommandation nous ont conduit à
+développer une bibliothèque Python \cite{Surprise} qui permet de facilement
+tester et développer des algorithmes de prédiction de note.
+
+Enfin, nous avons proposé un algorithme pour la fouille de proportions
+analogiques dans des bases de données incomplètes \cite{HugPraRicSerLFA16}, en
+nous inspirant fortement des travaux en fouille de règles d'associations. Nous
+avons utilisé cet algorithme pour extraire des proportions analogiques entre
+films dans la base de données MovieLens, qui était celle que nous utilisions
+pour nos algorithmes de prédiction de note. Les résultats suggèrent qu'en fait,
+les analogiques potentielles restent d'un intérêt relativement faible, en ceci
+qu'elle mettaient généralement en jeu des items soit également appréciés, soit
+également désapprouvés. En d'autre termes, les notes relatives aux différents
+utilisateurs pour les quatre films d'une même proportion étaient souvent les
+mêmes. Ceci nous permet de rétrospectivement interpréter les résultats modestes
+de notre premier algorithme pour la prédiction de note, car cela suggère que
+finalement, l'algorithme ne pouvait trouver que trop peu de bonnes proportions
+pour produire des estimations de qualité.\\
+
+
+Dans le chapitre \ref{CHAP:functional_definition}, nous avons décrit nos
+contributions au problème de la classification analogique
+\ref{CHAP:functional_definition}. Notre première contribution a été de proposer
+une définition fonctionnelle des classifieurs analogiques, qui a a
+particularité d'unifier les approches préexistantes. A partir de cette
+définition, nous avons été capables de dériver différentes propriétés
+théoriques. En particulier, nous avons montré que la VC-dimension des
+classifieurs analogiques était infinie, et que leur taux d'erreur est
+intimement lié à celui des algorithmes $k$-NN. En fait, notre définition
+fonctionnelle établie clairement le lien qui relie la classification analogique
+et la classification par plus-proches-voisins. Nous avons montré en effet que
+la classification se traduit en deux étapes. La première étape consiste à
+étendre l'ensemble d'apprentissage en ajoutant de nouveaux exemples dont la
+classe est estimée en utilisant le principe d'inférence analogique. Ensuite,
+sur la base de cette extension analogique, un algorithme $k$-NN est utilisé
+pour classer le reste des éléments qui ne sont pas dans l'extension. Ce nouveau
+point de vue est assez intéressant car il fait clairement intervenir deux des
+principales caractéristiques des proportions analogiques, à savoir la
+créativité et l'inférence.
+
+Dans le chapitre \ref{CHAP:analogy_preserving_functions}, nous nous sommes
+intéressés à une question qui découle naturellement des conclusions du chapitre
+\ref{CHAP:functional_definition}: comment assurer que l'extension analogique
+soit saine ? En d'autres termes, existe-t-il un critère qui nous permette
+d'être sûr que les éléments de l'extension analogique sont correctement
+classés ? Nous avons été capables de répondre à cette question  pour les
+domaines booléens : l'extension analogique est parfaitement saine si (et
+seulement si) la fonction booléenne $f$ qui détermine les labels est une
+fonction affine. Nous avons étendu ces résultats aux domaines réels, et au cas
+où les attributs ont des valeurs nominales. Cette série de travaux ouvre la
+porte à divers pistes de recherches futures, que nous mentionnons maintenant.
+
+\paragraph{Axes de recherches futures\\}
+
+Dans la section \ref{SEC:approximate_ap_functions}, nous avons présenté le
+concept de fonction approximativement AP (fonction qui préserve
+approximativement l'analogie). En effet en pratique, il n'y a aucun moyen de
+savoir si la fonction cible $f$ est vraiment affine. Ainsi, il est d'un intérêt
+crucial d'obtenir des garanties statistiques relatives à la qualité de
+l'extension analogique lorsque la fonction $f$ s'éloigne de l'ensemble des
+fonctions affines. Un résultat comme le suivant serait très intéressant :
+
+$$P(\omegasf \geq \eta) > 1 - \delta,$$
+où $\eta \in [0, 1]$ et $\delta \in [0, \frac{1}{2}]$ sont des fonctions 
+qui dépendent de $\varepsilon$ et de $\mid S \mid$. La valeur $\varepsilon$
+indique que $f$ est $\varepsilon$-proche de l'ensemble des fonctions affines.
+Pour le moment, nous nous intéressons à un problème un peu plus simple. On se
+propose en effet de chercher une borne $\delta$ telle que :
+
+$$P(\omegasf < 1) < \delta,$$
+où $\delta$ toujours fonction de $\varepsilon$.  En d'autres termes, on
+cherche à borner la probabilité de l'événement ``\textit{$\esfs$ contient des
+erreurs}''\\
+
+
+Nous avons aussi remarqué lors de nos expérimentations que même lorsqu'une
+fonction ne préserve pas du tout l'analogie, la qualité de l'extension
+analogique peut tout de même être très bonne. Cela est du au fait que la
+procédure de vote majoritaire permet parfois de contrebalancer les erreurs de
+certains predicteurs. Il est clair qu'une compréhension profonde du rôle de ce
+vote majoritaire reste une étape clef dans l'étude des classifieurs
+analogiques.
+
+Un autre axe de recherche possible serait de tirer partie du fait que toute
+fonction booléenne est en fait affine par morceaux. Si l'on peut être sûr que
+quatre éléments sont dans un domaine où $f$ est affine, alors on peut appliquer
+de manière correct le principe d'inférence analogique. Pour l'instant, nous
+n'avons mené que des expérimentations très préliminaires  à ce sujet.\\
+
+Enfin, nous terminerons cette discussion en évoquant l'apprentissage par
+transfert (\textit{transfer learning}). L'apprentissage par transfert est un
+sujet assez populaire de nos jours dans la communauté de l'apprentissage
+artificiel, dont le but est de transférer des connaissances d'un problème
+source $S$ pour les appliquer à un problème moins bien connu $T$.
+Indubitablement, l'essence même de l'analogie est d'opérer un transfert de
+connaissance. L'usage des proportions analogiques à un tel domaine
+d'application reste encore entièrement à explorer.
