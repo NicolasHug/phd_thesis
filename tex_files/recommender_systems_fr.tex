@@ -1,0 +1,44 @@
+\paragraph{Résumé du chapitre}
+
+Nous avons vu dans le chapitre précédent que les classifieurs analogiques
+proposaient des résultats prometteurs dans des domaines booléens,
+comparativement aux classifieurs $k$-NN. Nous nous intéressons, dans ce
+chapitre et dans le suivant, à l'usage de l'apprentissage par analogique à des
+tâches plus concrètes, telles que celle de la recommandation.
+
+Les systèmes de recommandation sont des outils de filtrage automatique qui
+permettent de fournir des suggestions d'items aux utilisateurs d'un système.
+Ils permettent de répondre à des questions aussi variées que ``dans quel
+restaurant manger?'', ``quel film visionner?'', etc. Pour cela, les systèmes de
+recommandation fournissent des listes de suggestions aux utilisateurs.
+
+Le but de ce chapitre est de donner les prérequis nécessaires au sujet de
+systèmes de recommandation, en vue du chapitre suivant où nous décrirons nos
+contribution à la recommandation analogique.
+
+Nous avons vu qu'il existe trois familles principales de systèmes de
+recommandation : les méthodes \textit{content-based}, les méthodes par filtrage
+collaboratif, et les méthodes dites \textit{knowledge-based}. Le problème que
+nous nous proposons d'étudier ici est celui de la prédiction de notes : étant
+donné un ensemble de notes passées caractérisant les interactions d'un groupe
+d'utilisateurs avec un groupe d'items, le but d'un algorithme de prédiction est
+d'estimer les notes manquantes. Pour ce genre de problèmes, les systèmes
+collaboratifs sont généralement nettement plus performants que les méthodes
+\textit{content-based}. Nos contributions seront donc de nature collaborative.
+
+Nous avons décrit en détail deux techniques populaires de filtrage
+collaboratif. La première est la technique par voisinage, qui est une
+généralisation directe des méthodes $k$-NN. Pour prédire la note d'un
+utilisateur pour un item, le \textit{voisinage} de l'utilisateur est estimé,
+puis on procède à une agrégation des notes des voisins pour l'item cible. Le
+voisinage est généralement estimé à l'aide d'une mesure de similarité qui
+caractérise à quel point deux utilisateurs ont tendance à noter les items avec
+les mêmes notes. Ce genre de méthode a tendance à  modéliser des interactions
+locales sous-jacentes aux données, contrairement aux méthodes par factorisation
+de matrice qui modélisent des effets globaux. Les techniques par factorisation
+de matrice modélisaient les utilisateurs et les items comme des vecteurs de
+\textit{facteurs latents}, lesquels sont estimés via un problème
+d'optimisation. La note d'un utilisateur pour un item est alors donnée par le
+produit scalaire entre leurs deux vecteurs respectifs. Ces deux familles de
+méthodes (voisinage et factorisation de matrice) nous servirons à comparer les
+performances de nos algorithmes dans le prochain chapitre.

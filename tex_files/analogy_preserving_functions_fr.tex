@@ -1,0 +1,62 @@
+\paragraph{Résumé du chapitre}
+
+Nous avons introduit le principe d'inférence analogique au chapitre
+\ref{CHAP:formal_analogical_proportions}. Ce principe stipule que si quatre
+éléments sont en proportion, alors cela doit aussi être vrai pour leurs classes
+(ou n'importe quel autre attribut). C'est évidemment un principe non-correct,
+puisque la conclusion ne se déduit pas logiquement de la prémisse. Néanmoins,
+on a pu observer au chapitre \ref{CHAP:functional_definition}, ainsi que dans
+\cite{BayMicDelIJCAI07}, que les classifieurs analogiques semblaient afficher
+des résultats prometteurs (au moins sur certains problèmes). Le but de ce
+chapitre est d'identifier clairement et de caractériser les types de problèmes
+sur lesquels le principe d'inférence analogique est correct. En d'autres
+termes, nous proposons de caractériser les fonctions booléennes $f$ telles que
+l'inférence suivante soit correcte:
+
+$$
+\inferrule{\mathbf{a} : \mathbf{b} :: \mathbf{c} : \mathbf{d}}{ f(\mathbf{a}) :
+f(\mathbf{b}) :: f(\mathbf{c}) : f(\mathbf{d})}
+$$
+
+Il est en effet assez facile de construire des problèmes simples où
+l'application du principe d'inférence analogique mène a des résultats
+désastreux. Considérons par exemple celui de la figure \ref{FIG:classif_in_R2}:
+l'ensemble d'apprentissage $S$ (à gauche) est linéairement séparable par une
+droite verticale. Cependant, lorsqu'il est étendu pour former son extension
+analogique (à droite), on constate que l'espace entier est criblé de points
+appartenant à l'une ou l'autre des deux classes. Utiliser cette extension
+analogique comme ensemble d'apprentissage mènera nécessairement à de très
+mauvais résultats.
+
+Les fonctions $f$ qui sont compatibles avec le principe d'inférence analogiques
+sont les fonctions dites \textit{qui préservent l'analogique} (fonctions AP),
+c'est à dire des fonctions qui satisfont $f(\mathbf{a}) :f(\mathbf{b})::
+f(\mathbf{c}): f(\mathbf{d})$  dès lors que $a:b::c:d$ est vrai (en fait, une
+définition moins restrictive et plus utile en pratique consiste à ajouter la
+prémisse selon laquelle $f(\mathbf{a}) :f(\mathbf{b}):: f(\mathbf{c}):y$ est
+soluble).
+
+
+Dans un contexte booléen, nous avons prouvé que les fonctions AP sont les
+fonctions affines. Notre preuve repose sur l'utilisation d'outils algébriques
+tels que la forme normale algébrique des fonctions booléennes. Tout fonction
+booléenne peut être exprimée sous la forme d'un polynôme, et notre preuve
+consiste d'abord  à montrer que les polynômes de degré $1$ (c'est à dire les
+fonctions affines) sont AP, puis à montrer que tout polynôme de degré supérieur
+ou égal à $2$ n'est pas AP.
+
+Évidemment, dans des problèmes pratiques les fonctions $f$ rencontrée sont très
+variées et ne se cantonnent pas à l'ensemble des fonctions affines. Aussi,
+nous avons expérimentalement étudié la qualité de l'extension analogique
+lorsque la fonction $f$ s'éloigne de l'ensemble des fonctions AP de différentes
+manières. D'abord, nous avons observé les variations de la qualité de
+l'extension en fonction de la distance $\varepsilon$ de $f$ à l'ensemble des
+fonctions affines. Ensuite, nous avons observé que même lorsqu'une fonction
+n'est vraiment pas AP (car une partie des prédicteurs se trompent
+régulièrement), il est toujours possible d'obtenir une très bonne qualité de
+l'extension analogique grâce à la procédure de votre majoritaire qui permet de
+compenser les erreurs des mauvais prédicteurs.
+
+Enfin, nous avons partiellement étendu nos résultats au cas où la fonction $f$
+est une fonction réelles, et au cas où les attributs ne sont plus booléens mais
+plutôt nominaux.

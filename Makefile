@@ -14,7 +14,7 @@ spellcheck:
 	for file in abstract acknowledgements introduction computational_models analogical_proportions functional_definition recommender_systems analogical_recommendation analogy_preserving_functions conclusion; do \
 		aspell --lang=en --mode=tex check tex_files/$$file.tex --extra-dicts=./aspell_dict_en.pws ;\
 	done ;\
-	for file in abstract_fr introduction_fr conclusion_fr ; do \
+	for file in abstract_fr introduction_fr conclusion_fr computational_models_fr analogical_proportions_fr functional_definition_fr recommender_systems_fr analogical_recommendation_fr analogy_preserving_functions_fr  ; do \
 		aspell --lang=fr --mode=tex check tex_files/$$file.tex --extra-dicts=./aspell_dict_fr.pws ;\
 	done
 
