@@ -25,7 +25,7 @@
 \title{Contributions to the use of analogical proportions for machine learning}
 \subtitle{Theoretical properties and application to recommendation}
 \date{July 5, 2017}
-\author{Nicolas Hug}
+\author{Nicolas Hug  ------ Gilles Richard, Mathieu Serrurier}
 \institute{Université Toulouse Paul Sabatier}
 % \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
 
@@ -367,13 +367,13 @@ Our approach:
           (\mathbf{a},\mathbf{b},\mathbf{c}) \in S^3, ~ \mathbf{a} : \mathbf{b}
           :: \mathbf{c} : \mathbf{x}\\
           &\text{ and } f(\mathbf{a}) : f(\mathbf{b}) ::
-          f(\mathbf{c}) : y \text{ is solvable}\}.
+          f(\mathbf{c}) : y \text{ is solvable}\}
         \end{align*}
       \item \alert{Analogical root}
       \begin{align*}
         \rsfx \eqdef \{(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in S^3 |
         &\mathbf{a}:\mathbf{b}::\mathbf{c}:\mathbf{x}\\ &\text{ and }
-        f(\mathbf{a}):f(\mathbf{b})::f(\mathbf{c}):y \text{ is solvable}\}.
+        f(\mathbf{a}):f(\mathbf{b})::f(\mathbf{c}):y \text{ is solvable}\}
       \end{align*}
 
     \item \alert{Analogical label}
@@ -464,19 +464,19 @@ Our approach:
 
 \begin{frame}{Rewriting analogical dissimilarity}
 
-$$\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{d})=\norm{}{\mathbf{d} -
-(\mathbf{c}-\mathbf{a}+\mathbf{b})}=\norm{}{\mathbf{d} - \mathbf{d}'}$$
+$$\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{x})=\norm{}{\mathbf{x} -
+(\mathbf{c}-\mathbf{a}+\mathbf{b})}=\norm{}{\mathbf{x} - \mathbf{d}'}$$
 \begin{center}
-  \includegraphics[width=.2\textwidth]{figures/analogical_dissimilarity.pdf}
+  \includegraphics[width=.3\textwidth]{figures/analogical_dissimilarity_pres.pdf}
 \end{center}
 
   With $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{c}}, \esf = \Set{\mathbf{a},
-  \mathbf{b}, \mathbf{c}, \mathbf{d}}, ~~ \AD(\mathbf{a}, \mathbf{b},
-  \mathbf{c}, \mathbf{d}') = \delta(\mathbf{d}', \mathbf{d})$
+  \mathbf{b}, \mathbf{c}, \mathbf{x}}, ~~ \AD(\mathbf{a}, \mathbf{b},
+  \mathbf{c}, \mathbf{x}) = \delta(\mathbf{d}', \mathbf{x})$
 
-  and $\hat{f}(\mathbf{d}') = \albl{\mathbf{d}}$
+  and $\hat{f}(\mathbf{x}) = \albl{\mathbf{d}'}$
 
-  $\mathbf{d}$ is the \alert{nan} of $\mathbf{d}'$
+  $\mathbf{d}'$ is the \alert{nan} of $\mathbf{x}$
 \end{frame}
 
 \begin{frame}{Functional definition}
