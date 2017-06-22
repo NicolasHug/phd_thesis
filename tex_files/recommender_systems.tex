@@ -88,7 +88,7 @@ recommendation, users are more likely to accept the recommendation if they
 understand and acknowledge the underlying process.
 
 However, content-based systems are prone to various behaviours that tend to make
-them less competitive with collaborative filtering methods. The first obvious drawback, known as
+them less competitive than collaborative filtering methods. The first obvious drawback, known as
 the problem of \textit{limited content analysis}, is precisely the need to
 describe items with metadata (remember our movie example with
 genre, actors, etc.). Such descriptions can be extremely costly to acquire, and can only
@@ -292,7 +292,7 @@ When using a unary or binary rating scale, these two stages are usually
 indistinguishable: it is natural to recommend an item to a user if the
 estimated predicted rating is $1$. In practice, the recommendation strategy
 depends a lot on the pragmatic constraints of the system: a store manager may
-want to push forward a given item to boost its sells, regardless of the
+want to push forward a given item to boost its sales, regardless of the
 rating predictions outputted by the algorithm. As a result, most of the
 research has focused on the prediction algorithms, and so will we. Note also
 that this view is only meaningful for non-ordinal rating scale. When the output
@@ -504,7 +504,7 @@ There are  many other measures that can assess the performances of a
 recommender system (see \cite{ShaGun11} for an extensive survey). We can cite
 for example \textbf{trust} which characterizes the confidence that a user would
 put into a recommendation, or also \textbf{diversity} that evaluates how
-the recommendations are distinct from each others.  Unfortunately these
+the recommendations are distinct from each other.  Unfortunately these
 dimensions are actually a lot harder to assess in an off-line setting, and
 there are no popular quantitative measure that can evaluate them in a
 satisfactory way.
@@ -547,8 +547,8 @@ weighted by the similarity between $u$ and $v$:
   denoted $k$-NN here) is:
   $$\predrui = \frac{\sum\limits_{v \in N_i^k(u)} r_{vi} \cdot \text{sim}(u, v)}
   {\sum\limits_{v \in N_i^k(u)}\text{sim}(u, v)},$$
-  where $N_i^k(u)$ is the set of users having rated $i$ with the highest $k$
-  values of sim with $u$:
+  where $N_i^k(u)$ is the set of users having rated $i$ and having the highest
+  $k$ values of sim with $u$:
   $$N_i^k(u) \eqdef \Set{v \in U | \rvi \in R,~v\in \argmax_{u' \in
   U}^k\left[\text{sim}(u, u')\right]}$$
 \end{definition}
@@ -883,7 +883,7 @@ tastes toward some particular kind of movies. Obviously in practice, there is
 no way to associate a clear semantic meaning to the different $U_i$ or $I_i$,
 and the way they are defined only depends on the matrix $R$. We have here
 chosen to interpret the prototype movies as \textit{action movie} or
-\textit{romantic movie} for the sake of interpretation.
+\textit{romantic movie} for the sake of simplicity.
 
 Moving further, let us now focus on the modeling of a single rating $r_{ui}$.
 Each $\rui \in R$ is defined as a dot product $\rui =
@@ -963,7 +963,7 @@ showed that \textbf{we should actually just not care} that the matrix $R$ is
 sparse, and still solve the same optimization problem only using the known
 ratings.  When $R$ is sparse, the problem is not convex in both $p_u$ and $q_i$
 so this optimization will only lead to a local minimum, but this method turned
-out very efficient in practice. Before that, techniques usually involved  a
+out to be very efficient in practice. Before that, techniques usually involved  a
 preliminary step where the matrix $R$ was filled using some heuristic, in order
 to have a fully defined problem \cite{SarKarKonRie00}. Funk's contribution led
 him to the top 10 competitors of the Netflix competition at the time, and was
