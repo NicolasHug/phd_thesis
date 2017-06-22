@@ -7,6 +7,10 @@ work:
 	terminator -x vim &
 	latexmk -pvc phd.tex
 
+work_pres:
+	terminator -x vim &
+	latexmk -pvc pres.tex
+
 view:
 	zathura phd.pdf
 

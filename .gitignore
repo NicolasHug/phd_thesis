@@ -18,9 +18,12 @@
 *.out
 *.swo
 *.loe
+*.nav
+*.snm
 
 
 *.swp
 *.bak
 
 phd.pdf
+pres.pdf
