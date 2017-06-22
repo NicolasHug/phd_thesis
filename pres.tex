@@ -25,7 +25,7 @@
 \title{Contributions to the use of analogical proportions for machine learning}
 \subtitle{Theoretical properties and application to recommendation}
 \date{July 5, 2017}
-\author{Nicolas Hug  ------ Gilles Richard, Mathieu Serrurier}
+\author{Nicolas Hug  ------ Henri Prade, Gilles Richard, Mathieu Serrurier}
 \institute{Université Toulouse Paul Sabatier}
 % \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
 
@@ -48,6 +48,7 @@
   \end{block}
   \begin{block}{Previous works in machine learning}
     \begin{itemize}
+      \item Linguistics \cite{Lep03}
       \item Automatic verb conjugation \cite{StrYvoREPORT05}
       \item Boolean classification \cite{BayMicDelIJCAI07}
     \end{itemize}
@@ -76,89 +77,21 @@
 %    subsectionstyle=show/shaded/hide
 %]
 
-\begin{frame}{First attemps by P\'olya \& Hesse}
+\begin{frame}{}
   \begin{itemize}
-    \item \alert{George P\'olya} \cite{Pol54}
-    $$
-    \inferrule{a \text{ is analogous to } $b$ \\\\ a \text{ is true}}{ $b$
-      \text{ is more credible} }
-    $$
-
-  \item \alert{Mary Hesse}  \cite{Hes66}
-    {\tiny
-    \begin{columns}
-      \begin{column}{0.4\textwidth}
-        \begin{itemize}
-          \item Requirement of material analogy
-          \item Causal relationship
-          \item No essential difference
-        \end{itemize}
-      \end{column}
-      \begin{column}{0.4\textwidth}
-        \begin{table}[t]
-          \centering
-          \begin{tabular}{ll}
-            \toprule
-            Bovine & Equid\\
-            \midrule
-            Is mammal & Is mammal\\
-            Has hoofs & Has hoofs\\
-            Eats grass & Eats grass\\
-            $\sim$ 1.6 meters high & $\sim$ 1.6 meters high\\
-            Harmless & Harmless\\
-            Domesticated & \textit{Domesticable}?\\
-            \bottomrule
-          \end{tabular}
-        \end{table}
-      \end{column}
-      \end{columns}
-      }
+    \item P\'olya \cite{Pol45}, Hesse  \cite{Hes59}
+    \item Gentner's Structure Mapping Theory \cite{Gen83} (also \cite{Win80})
+    \item Constraint Satisfaction Theory \cite{HolTha89}, HDTP \cite{GusKunSchTCS06}
+    \item Davies \& Russel \cite{DavRus87}: logical view
+    \item Cornuéjols' model \cite{CorJFA96}: based on MDL principle
+    \item Mitchell's CopyCat \cite{Mit93}: $abc : abd :: mrrjjj :~?$
+    \item \alert{Evans' program} \cite{Eva64}: geometrical problem solving
+    \item \alert{Rumelhar \& Abrahamsen} \cite{RumAbr73}: distance minimization
   \end{itemize}
+
 \end{frame}
 
-\begin{frame}{SMT \& pals}
-  \begin{itemize}
-    \item Structure Mapping Theory \cite{Gen83}
-      \begin{itemize}
-        \item Objects, \sout{properties} and relations (first, second order...)
-        \item Map \alert{high order} (structural) relations between $S$ and $T$
-        \item Computational tool: SME
-      \end{itemize}
-      \pause
-    \item Prior to SMT: Winston's theory \cite{Win80}. Already said everything?
-      \pause
-    \item Constraint Satisfaction Theory \cite{HolTha89}
-      \begin{itemize}
-        \item Consider semantics
-        \item Consider \alert{contraints} rather than intangible rules
-        \item Computational tool: ACME
-      \end{itemize}
-      \pause
-    \item Heuristic-Driven Theory Projection \cite{GusKunSchTCS06}
-      \begin{itemize}
-        \item Description in first order logic (\textit{facts} + \textit{laws})
-        \item Anti-unification: \alert{generalization} of $S$ and $T$ into $G$
-          (second order logic)
-      \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{A logical view}
-  Davies \& Russel \cite{DavRus87}: how could it be sound?
-  $$\inferrule{P(S) \wedge Q(S) \\\\ P(T)}{Q(T)}$$
-
-  \begin{itemize}
-    \item First option (not compliant with analogy):
-      $$\forall x, P(x) \implies Q(x)$$
-    \item Second option \alert{Determination rule}:
-      $$\left(\forall x ~ P(x) \implies Q(x)\right) \vee \left(\forall x ~ P(x)
-      \implies \neg Q(x)\right)$$
-  \end{itemize}
-\end{frame}
-
-%\subsection{Models with proportions}
-
-\begin{frame}{Evan's program \cite{Eva64}}
+\begin{frame}{Evans' program \cite{Eva64}}
   \begin{center}
   \includegraphics[width=0.7\textwidth]{figures/evans.pdf}
   \end{center}
@@ -173,35 +106,15 @@
   \begin{center}
   \includegraphics[width=0.5\textwidth]{figures/rumelhart_model.pdf}
   \end{center}
-  \alert{Exactly} what analogical classification does
+  \alert{Exactly} what \cite{BayMicDelIJCAI07} does
 \end{frame}
 
-\begin{frame}{CopyCat program}
-  Mitchell's cooperative / adaptative program \cite{Mit93}
-  \begin{center}
-  \includegraphics[width=0.5\textwidth]{figures/copycat.png}
-  \end{center}
-  $$\mathbf{abc} : \mathbf{abd} :: \mathbf{mrrjjj} : x$$
-\end{frame}
-
-\begin{frame}{Analogy and MDP with Kolmogorov complexity}
-  Cornuéjols' model \cite{CorJFA96}
-  \begin{center}
-  \includegraphics[width=0.25\textwidth]{figures/cornuejols_model.pdf}
-  \end{center}
-  The best analogy is that which minimizes:
-  $$K(M_S) + K(x_S \given M_S) + K(f_S \given M_S) + K(M_T \given M_S) + K(x_T
-  \given M_T) + K(f_T \given M_T)$$
-
-  Applications: copycat microworld, transfer learning \cite{CorMur16}
-\end{frame}
-
-\begin{frame}{Case-based reasoning}
+\begin{frame}{Links with CBR}
   CBR:
 \begin{itemize}
   \item Problem $P$, solution $S$ unkown
-  \item Look for similar problems $P_i$ with known solutions $S_i$.
-  \item Make up $S$ from $\{S_i\}$.
+  \item Look for similar problems $P_i$ with known solutions $S_i$
+  \item Make up $S$ from $\{S_i\}$
 \end{itemize}
 
 Our approach:
@@ -210,7 +123,7 @@ Our approach:
   \item Make up $S$ from $\{ \text{solutions to } S_i: S_j :: S_k : x\}$
 \end{itemize}
   `Similar' $\rightarrow$ `\alert{adaptable}'. Frontiers and differences with
-  analogical reasoning are really not that clear.
+  analogical reasoning are really not that clear
 \end{frame}
 
 \section[Analogical proportions]{Formal models of analogical proportions}
@@ -247,9 +160,9 @@ Our approach:
   \begin{itemize}
     \item Proportion in a group $(U, \oplus)$ \cite{StrYvoREPORT05}:
       $$a \oplus d = b \oplus c$$
-    \item Geometric proportion $(\mathbf{R}, \times)$:
+    \item Geometric proportion $(\mathbb{R}, \times)$:
       $$a \times d = b\times c$$
-    \item Arithmetic proportion $(\mathbf{R}, +)$:
+    \item Arithmetic proportion $(\mathbb{R}, +)$:
       $$a + d = b + c \iff a - b = c - d$$
   \end{itemize}
 \end{frame}
@@ -276,8 +189,13 @@ Our approach:
     a = c \text{ and } b = d,
   \end{cases}
   $$
+      \alert{
   or equivalently if
+}
   $$a - b = c - d$$
+
+      {\fontencoding{U}\fontfamily{futs}\selectfont\char 66\relax} $\mathbb{B}$
+      is not closed for addition / subtraction
     \end{column}
     \begin{column}{0.4\textwidth}
   \begin{table}[t]
@@ -331,8 +249,8 @@ Our approach:
             1 & 1 & 0 & 0 \\
             0 & 1 & 0 & 1 \\
             1 & 0 & 1 & 0 \\
-            1 & 0 & 0 &?\\
-            0 & 1 & 1 &?\\
+            1 & 0 & 0 &\times\\
+            0 & 1 & 1 &\times\\
             \bottomrule
           \end{tabular}
         \end{table}
@@ -345,12 +263,20 @@ Our approach:
       f(\mathbf{t})}
       $$
       \begin{itemize}
-        \item $\mathbf{a} : \mathbf{b} :: \mathbf{g} : \mathbf{h} \rightarrow
-          \hat{f}(\mathbf{h}) = 1$
+          \alert{
+        \item $\mathbf{a} : \mathbf{b} :: \mathbf{g} : \mathbf{h}$
+          \begin{itemize}
+            \item $f(\mathbf{a}) : f(\mathbf{b}) :: f(\mathbf{g}) :~?$
+            \item $0:1::0:~?$
+            \item $\hat{f}(\mathbf{h}) = 1$
+          \end{itemize}
+            }
         \item $\mathbf{a} : \mathbf{d} :: \mathbf{e} : \mathbf{h}\rightarrow
           \hat{f}(\mathbf{h}) = 1$
         \item $\mathbf{a} : \mathbf{c} :: \mathbf{f} : \mathbf{h}\rightarrow
           \hat{f}(\mathbf{h}) = 1$
+        \item $\mathbf{b} : \mathbf{d} :: \mathbf{f} : \mathbf{h}\rightarrow
+          \times$\\(not solvable)
       \end{itemize}
 
     \end{column}
@@ -369,15 +295,11 @@ Our approach:
           &\text{ and } f(\mathbf{a}) : f(\mathbf{b}) ::
           f(\mathbf{c}) : y \text{ is solvable}\}
         \end{align*}
-      \item \alert{Analogical root}
-      \begin{align*}
-        \rsfx \eqdef \{(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in S^3 |
-        &\mathbf{a}:\mathbf{b}::\mathbf{c}:\mathbf{x}\\ &\text{ and }
-        f(\mathbf{a}):f(\mathbf{b})::f(\mathbf{c}):y \text{ is solvable}\}
-      \end{align*}
+
+      \item remettre root (et suivante aussi)
 
     \item \alert{Analogical label}
-      $\albl{\mathbf{x}} \eqdef $ most common solution $y$.
+      $$\albl{\mathbf{x}} \eqdef \text{ most common solution }y$$
   \end{itemize}
 \end{frame}
 
@@ -385,14 +307,20 @@ Our approach:
   \begin{center}
     \includegraphics[width=.7\textwidth]{figures/ae_example.pdf}
   \end{center}
-  \begin{itemize}
-    \item$S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{d}, \mathbf{e}}$
-    \item $\esfs = \Set{\mathbf{c}, \mathbf{f}}$
-    \item $\aroot{S}{f}{\mathbf{c}} = \Set{(\mathbf{b}, \mathbf{d},
-      \mathbf{a})}$,~~~ $\aroot{S}{f}{\mathbf{f}} = \Set{(\mathbf{a}, \mathbf{b},
-      \mathbf{e})}$
-    \item $\albl{\mathbf{c}} = 1$, ~~~ $\albl{\mathbf{f}} = 1$.
-  \end{itemize}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{align*}
+        S &= \Set{\mathbf{a}, \mathbf{b}, \mathbf{d}, \mathbf{e}}\\
+        \esfs &= \Set{\mathbf{c}, \mathbf{f}}
+      \end{align*}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{align*}
+        \albl{\mathbf{c}} &= 1\\
+         \albl{\mathbf{f}} &= 1
+      \end{align*}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Conservative classifier\cite{StrYvoREPORT05}}
@@ -410,8 +338,8 @@ Our approach:
       \end{center}
       \begin{itemize}
       \item $\esfs = \Set{\mathbf{c}, \mathbf{f}}$
-      \item $\hat{f}(\mathbf{c}) \eqdef \albl{\mathbf{c}} = 1$, ~~~
-        $\hat{f}(\mathbf{f}) \eqdef \albl{\mathbf{f}} = 1$.
+      \item $\hat{f}(\mathbf{c}) \eqdef \albl{\mathbf{c}} = 1$\\
+        $\hat{f}(\mathbf{f}) \eqdef \albl{\mathbf{f}} = 1$
       \item $\hat{f}(\mathbf{g}) =~?, ~~~ \hat{f}(\mathbf{h}) =~?$
       \end{itemize}
     \end{column}
@@ -490,6 +418,7 @@ $$\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{x})=\norm{}{\mathbf{x} -
       $$\hat{f}(\mathbf{x}) \eqdef \text{Mode}\Set{\albl{\mathbf{d}'} | \mathbf{d}'
       \in k\text{-nan}\left(\mathbf{x}, S\right)}
       $$
+      (Mode = Majority vote)
     \end{column}
     \begin{column}{.4\textwidth}
       \begin{center}
@@ -587,7 +516,7 @@ More than 99\% entries are missing.
       \includegraphics[width=0.2\textwidth]{figures/analogical_recommendation.pdf}
     \end{center}
   \item Comes with various tweaks
-  \item Experiments: close to neighborhood approach, but too expensive
+  \item Experiments: close to neighborhood approach, but $\mathcal{O}(n^3)$
   \end{itemize}
 \end{frame}
 
@@ -716,10 +645,16 @@ More than 99\% entries are missing.
     \emph{solvable}(f(\mathbf{a}), f(\mathbf{b}),  f(\mathbf{c}))
   \end{cases}
   \implies \emph{sol}\left(f(\mathbf{a}),  f(\mathbf{b}),  f(\mathbf{c})\right) =
-  f(\mathbf{d}). $$
+  f(\mathbf{d})$$
 
   \alert{Main result}: AP functions are the Boolean affine functions (XOR
-  functions)
+  functions):
+  $$f(x_1,\ldots , x_m)=\alpha_1\cdot x_1+\ldots +\alpha_m\cdot x_m+\alpha_0$$
+
+  \begin{center}
+  `$+$' $\leftrightarrow$ XOR\\
+  `$\cdot$' $\leftrightarrow $ AND
+  \end{center}
 \end{frame}
 
 \begin{frame}{AP functions - affine functions}
@@ -754,34 +689,35 @@ More than 99\% entries are missing.
 
 \begin{frame}{Contributions}
   \begin{itemize}
-    \item Two algorithms for analogical recommendation \cite{HugPraRicISMIS15,
-      HugPraRicSerFuzzIEEE16}
-    \item An algorithm for analogical proportion mining
-      \cite{HugPraRicSerLFA16}
-    \item A Python RS engine \cite{Surprise}
+    \item Two algorithms for analogical recommendation (\alert{ISMIS'15},
+      \alert{FuzzIEEE'16})
+    \item An algorithm for analogical proportion mining (\alert{LFA'16})
+    \item A Python RS engine (\url{http://surpriselib.com})
     \item Functional (unifying) definition of analogical classifiers
-      \cite{HugPraRicSerECAI16}
+      (\alert{ECAI'16})
       \begin{itemize}
         \item Clear links with $k$-NN
         \item Convergence, VC-dim, accuracy
       \end{itemize}
     \item Characterization of functions leading to a perfect analogical
-      extension \cite{CouHugPraRicIJCAI17}
+      extension (\alert{IJCAI'17})
   \end{itemize}
 \end{frame}
 
 \begin{frame}{Future works}
   \begin{itemize}
-    \item Approximate AP functions
-      $$P(\omegasf \geq \eta) > 1 - \delta$$
     \item Role of majority vote procedure
     \item Piecewise affine functions?
     \item Transfer learning?
+    \item Approximate AP functions
+      $$P(\omegasf \geq \eta) > 1 - \delta$$
   \end{itemize}
 \end{frame}
 
 \begin{frame}{That's it}
+  \begin{center}
     Thanks!
+  \end{center}
 \end{frame}
 
 \bibliographystyle{alpha}
