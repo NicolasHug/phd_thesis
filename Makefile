@@ -24,7 +24,7 @@ spellcheck:
 
 clean:
 	latexmk -c
-	rm -rf phd.bbl phd.glg phd.glo phd.gls phd.ist phd.brf *.fls phd.mtc* phd.maf phd.loe
+	rm -rf *.bbl phd.glg phd.glo phd.gls phd.ist phd.brf *.fls phd.mtc* phd.maf phd.loe pres.snm pres.nav
 
 clean_all: clean
 	rm -rf phd.pdf
