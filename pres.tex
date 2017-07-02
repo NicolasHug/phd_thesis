@@ -219,14 +219,14 @@ Our approach:
 
 \begin{frame}{Geometrical insights}
   \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/cubes_in_B3.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/cubes_in_B3_pres.png}
   \end{center}
 \end{frame}
 
 %\subsection{Toy classification problem}
 \begin{frame}{Problem}
   \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/classification_problem.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/classification_problem_pres.png}
   \end{center}
 \end{frame}
 
@@ -234,7 +234,7 @@ Our approach:
   \begin{columns}
     \begin{column}{0.4\textwidth}
       \begin{center}
-        \includegraphics[width=0.9\textwidth]{figures/classification_problem.pdf}
+        \includegraphics[width=0.9\textwidth]{figures/classification_problem_pres.png}
       \end{center}
       {\tiny
         \begin{table}[t]
@@ -296,7 +296,12 @@ Our approach:
           f(\mathbf{c}) : y \text{ is solvable}\}
         \end{align*}
 
-      \item remettre root (et suivante aussi)
+      \item \alert{Analogical root}
+      \begin{align*}
+        \rsfx \eqdef \{(\mathbf{a}, \mathbf{b}, \mathbf{c}) \in S^3 |
+        &\mathbf{a}:\mathbf{b}::\mathbf{c}:\mathbf{x}\\ &\text{ and }
+        f(\mathbf{a}):f(\mathbf{b})::f(\mathbf{c}):y \text{ is solvable}\}
+      \end{align*}
 
     \item \alert{Analogical label}
       $$\albl{\mathbf{x}} \eqdef \text{ most common solution }y$$
@@ -305,13 +310,16 @@ Our approach:
 
 \begin{frame}{A few definitions -- examples}
   \begin{center}
-    \includegraphics[width=.7\textwidth]{figures/ae_example.pdf}
+    \includegraphics[width=.7\textwidth]{figures/ae_example_pres.png}
   \end{center}
   \begin{columns}
     \begin{column}{.5\textwidth}
       \begin{align*}
-        S &= \Set{\mathbf{a}, \mathbf{b}, \mathbf{d}, \mathbf{e}}\\
-        \esfs &= \Set{\mathbf{c}, \mathbf{f}}
+        &\textcolor{orange}{S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{d}, \mathbf{e}}}\\
+        &\textcolor{grey}{\esfs = \Set{\mathbf{c}, \mathbf{f}}}\\
+        &\aroot{S}{f}{\mathbf{c}} = \Set{(\mathbf{b}, \mathbf{d},
+        \mathbf{a})}\\
+        &\aroot{S}{f}{\mathbf{f}} = \Set{(\mathbf{a}, \mathbf{b}, \mathbf{e})}
       \end{align*}
     \end{column}
     \begin{column}{.5\textwidth}
@@ -334,7 +342,7 @@ Our approach:
     \end{column}
     \begin{column}{0.5\textwidth}
       \begin{center}
-        \includegraphics[width=.9\textwidth]{figures/ae_example.pdf}
+        \includegraphics[width=.9\textwidth]{figures/ae_example_pres.png}
       \end{center}
       \begin{itemize}
       \item $\esfs = \Set{\mathbf{c}, \mathbf{f}}$
@@ -358,7 +366,7 @@ Our approach:
         f(\mathbf{b}) :: f(\mathbf{c}) : y$.
     \end{enumerate}
       \begin{center}
-        \includegraphics[width=.8\textwidth]{figures/ae_example.pdf}
+        \includegraphics[width=.8\textwidth]{figures/ae_example2_pres.png}
       \end{center}
     \end{column}
     \begin{column}{0.5\textwidth}
@@ -381,10 +389,10 @@ Our approach:
       $$
       }
       \begin{itemize}
-      \item $\hat{f}(\mathbf{c}) = 1$, ~~~
-        $\hat{f}(\mathbf{f}) = 1$.
-      \item $\hat{f}(\mathbf{g}) = 1$, ~~~
-        $\hat{f}(\mathbf{h}) = 1$.
+      \item $\hat{f}(\mathbf{c}) = 1$ ~~~
+        $\hat{f}(\mathbf{f}) = 1$
+      \item $\hat{f}(\mathbf{g}) = 1$ ~~~
+        $\hat{f}(\mathbf{h}) = 1$
       \end{itemize}
     \end{column}
   \end{columns}
@@ -393,36 +401,36 @@ Our approach:
 \begin{frame}{Rewriting analogical dissimilarity}
 
 $$\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{x})=\norm{}{\mathbf{x} -
-(\mathbf{c}-\mathbf{a}+\mathbf{b})}=\norm{}{\mathbf{x} - \mathbf{d}'}$$
+(\mathbf{c}-\mathbf{a}+\mathbf{b})}=\norm{}{\mathbf{x} - \mathbf{d}}$$
 \begin{center}
   \includegraphics[width=.3\textwidth]{figures/analogical_dissimilarity_pres.pdf}
 \end{center}
 
   With $S = \Set{\mathbf{a}, \mathbf{b}, \mathbf{c}}, \esf = \Set{\mathbf{a},
   \mathbf{b}, \mathbf{c}, \mathbf{x}}, ~~ \AD(\mathbf{a}, \mathbf{b},
-  \mathbf{c}, \mathbf{x}) = \delta(\mathbf{d}', \mathbf{x})$
+  \mathbf{c}, \mathbf{x}) = \delta(\mathbf{d}, \mathbf{x})$
 
-  and $\hat{f}(\mathbf{x}) = \albl{\mathbf{d}'}$
+  and $\hat{f}(\mathbf{x}) = \albl{\mathbf{d}}$
 
-  $\mathbf{d}'$ is the \alert{nan} of $\mathbf{x}$
+  $\mathbf{d}$ is the \alert{nan} of $\mathbf{x}$
 \end{frame}
 
 \begin{frame}{Functional definition}
   \begin{columns}
     \begin{column}{.6\textwidth}
       $$
-      k\text{-nan}\left(\mathbf{x}, S\right) \eqdef \Set{\argmin_{\mathbf{d}' \in
+      k\text{-nan}\left(\mathbf{x}, S\right) \eqdef \Set{\argmin_{\mathbf{d} \in
       A_E^Y(S)}^k
-      \delta(\mathbf{x},\mathbf{d}')}
+      \delta(\mathbf{x},\mathbf{d})}
       $$
-      $$\hat{f}(\mathbf{x}) \eqdef \text{Mode}\Set{\albl{\mathbf{d}'} | \mathbf{d}'
+      $$\hat{f}(\mathbf{x}) \eqdef \text{Mode}\Set{\albl{\mathbf{d}} | \mathbf{d}
       \in k\text{-nan}\left(\mathbf{x}, S\right)}
       $$
       (Mode = Majority vote)
     \end{column}
     \begin{column}{.4\textwidth}
       \begin{center}
-        \includegraphics[width=.9\textwidth]{figures/extended_classifier.pdf}
+        \includegraphics[width=.9\textwidth]{figures/extended_classifier_pres.pdf}
       \end{center}
     \end{column}
   \end{columns}
@@ -438,16 +446,14 @@ $$\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{x})=\norm{}{\mathbf{x} -
     \end{column}
     \begin{column}{.5\textwidth}
       \begin{center}
-        \includegraphics[width=.8\textwidth]{figures/ae_example.pdf}
+        \includegraphics[width=.8\textwidth]{figures/ae_example2_pres.png}
       \end{center}
-      \begin{itemize}
-      \item $\albl{\mathbf{c}} = 1$, ~~~
-        $\albl{\mathbf{f}} = 1$.
-      \item $\hat{f}(\mathbf{g}) = \text{Mode}\{f(\mathbf{e}),
-        \albl{\mathbf{c}}\}$, ~~~
-            $\hat{f}(\mathbf{h}) = \text{Mode}\{f(\mathbf{d}),
-            \albl{\mathbf{f}}\}$
-      \end{itemize}
+        \begin{align*}
+          \hat{f}(\mathbf{c}) &= \albl{\mathbf{c}}\\
+          \hat{f}(\mathbf{f}) &= \albl{\mathbf{f}}\\
+          \hat{f}(\mathbf{g}) &= \text{Mode}\{f(\mathbf{e}), \albl{\mathbf{c}}\}\\
+          \hat{f}(\mathbf{h}) &= \text{Mode}\{f(\mathbf{d}), \albl{\mathbf{f}}\}
+        \end{align*}
     \end{column}
   \end{columns}
 \end{frame}
@@ -480,12 +486,12 @@ $$\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{x})=\norm{}{\mathbf{x} -
 \begin{frame}{Problem}
 $$
 R= \begin{pmatrix}
-1 & ? & 2 & ? & ?\\
-? & ? & ? & ? & 4\\
-2 & ? & 4 & 5 & ?\\
-? & ? & 3 & ? & ?\\
-? & 1 & ? & 3 & ?\\
-5 & ? & ? & ? & 2\\
+1 & \textcolor{orange}{?} & 2 & \textcolor{orange}{?} & \textcolor{orange}{?}\\
+\textcolor{orange}{?} & \textcolor{orange}{?} & \textcolor{orange}{?} & \textcolor{orange}{?} & 4\\
+2 & \textcolor{orange}{?} & 4 & 5 & \textcolor{orange}{?}\\
+\textcolor{orange}{?} & \textcolor{orange}{?} & 3 & \textcolor{orange}{?} & \textcolor{orange}{?}\\
+\textcolor{orange}{?} & 1 & \textcolor{orange}{?} & 3 & \textcolor{orange}{?}\\
+5 & \textcolor{orange}{?} & \textcolor{orange}{?} & \textcolor{orange}{?} & 2\\
 \end{pmatrix}
 \begin{matrix}
 \text{Alice}\\
@@ -499,7 +505,7 @@ $$
 
 More than 99\% entries are missing
 \begin{itemize}
-  \item Predict the $?$ with a prediction algorithm
+  \item Predict the $\textcolor{orange}{?}$ with a prediction algorithm
   \item Recommend items based on the estimated ratings
 \end{itemize}
 \end{frame}
@@ -513,7 +519,7 @@ More than 99\% entries are missing
       \includegraphics[width=0.2\textwidth]{figures/analogical_recommendation.pdf}
     \end{center}
   \item Comes with various tweaks
-  \item Experiments: close to neighborhood approach, but $\mathcal{O}(n^3)$
+  \item \alert{Experiments}: close to neighborhood approach, but $\mathcal{O}(n^3)$
   \end{itemize}
 \end{frame}
 
@@ -543,7 +549,7 @@ More than 99\% entries are missing
     \end{pmatrix}
   $$
 
-  Based on Apriori algorithm:
+  Based on \alert{Apriori} algorithm:
   \begin{itemize}
     \item Find all $4$-itemsets with Apriori
     \item Filter them with a quality function
@@ -594,11 +600,10 @@ More than 99\% entries are missing
 }
 \end{frame}
 
-\begin{frame}{Conclusion}
+\begin{frame}{Take-away}
   \begin{itemize}
-    \item Some sort of clustering
-    \item Proportions are not really \textit{interesting}
-    \item Could explain results of first experiments
+    \item Available proportions are a bit trivial
+    \item Could explain results of first experiments (close to $k$-NN)
   \end{itemize}
 \end{frame}
 
@@ -617,7 +622,7 @@ More than 99\% entries are missing
         \item No need to use $k$-NN
         \item How to ensure a sound extention?
         \item How to ensure that $\albl{\mathbf{x}} = f(\mathbf{x})$?
-        \item How to make this valid?
+        \item \alert{How to make this valid?}
         $$
         \infer{\mathbf{x} : \mathbf{y} ::
         \mathbf{z} : \mathbf{t}}{f(\mathbf{x}) : f(\mathbf{y}) :: f(\mathbf{z}) :
@@ -657,7 +662,7 @@ More than 99\% entries are missing
 \begin{frame}{AP functions - affine functions}
   \begin{columns}
     \begin{column}{.5\textwidth}
-      \includegraphics[width=.9\textwidth]{figures/affine_functions_neighbors.pdf}
+      \includegraphics[width=.9\textwidth]{figures/affine_functions_neighbors.png}
     \end{column}
     \begin{column}{.5\textwidth}
       Proof sketch:
@@ -676,9 +681,11 @@ More than 99\% entries are missing
     \item Real case: AP functions $\approx$ affine functions
     \item Multiple-valued attributes: a bit trickier
     \item \alert{Approximate} AP functions: $\varepsilon$-close functions to
-      $L$. $\omegasf \eqdef P\left(\albl{\mathbf{x}} = f(\mathbf{x})
-      \given[\big] \mathbf{x} \in \esfs\right)$. What about
-      $$P(\omegasf \geq \eta) > 1 - \delta \text{?}$$
+      $L$
+      $$P(\omegasf \geq \eta) > 1 - \delta$$
+     $$\omegasf \eqdef P\left(\albl{\mathbf{x}} = f(\mathbf{x}) \given[\big]
+      \mathbf{x} \in \esfs\right)$$
+      $$\textcolor{orange}{\eta = ?,~ \delta = ?}$$
   \end{itemize}
 \end{frame}
 
