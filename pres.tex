@@ -26,7 +26,7 @@
 \subtitle{Theoretical properties and application to recommendation}
 \date{July 5, 2017}
 \author{Nicolas Hug  ------ Henri Prade, Gilles Richard, Mathieu Serrurier}
-\institute{Université Toulouse Paul Sabatier}
+\institute{Université Toulouse III Paul Sabatier - IRIT}
 % \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
 
 \begin{document}
@@ -460,12 +460,9 @@ $$\AD(\mathbf{a},\mathbf{b},\mathbf{c},\mathbf{x})=\norm{}{\mathbf{x} -
     \item $\acc(\NAN_S, X^m) = ~\acc(\NN_S, A) \cdot \alpha ~ +
       \acc(\NN_{\esfs}, B) \cdot (1 - \alpha) $
     \begin{itemize}
-    \item $A \eqdef \set{\mathbf{x} \in X^m | \nan(\mathbf{x}, S) \in S}$: the
-      elements that have their nan in $S$.
-    \item $B \eqdef \set{\mathbf{x} \in X^m | \nan(\mathbf{x}, S) \in \esfs}$: the
-      elements that have their nan in $\esfs$.
-    \item $\alpha \eqdef P(\mathbf{x} \in A)$ and $1 - \alpha = P(\mathbf{x} \in
-      B)$.
+    \item $A$: the elements that have their nan in $S$
+    \item $B$: the elements that have their nan in $\esfs$
+    \item $\alpha \eqdef P(\mathbf{x} \in A)$
   \end{itemize}
   \end{itemize}
 \end{frame}
@@ -500,7 +497,7 @@ R= \begin{pmatrix}
 \end{matrix}
 $$
 
-More than 99\% entries are missing.
+More than 99\% entries are missing
 \begin{itemize}
   \item Predict the $?$ with a prediction algorithm
   \item Recommend items based on the estimated ratings
@@ -665,10 +662,10 @@ More than 99\% entries are missing.
     \begin{column}{.5\textwidth}
       Proof sketch:
       \begin{enumerate}
-        \item All Boolean functions are polynoms (affine functions have degree
-          $<2$)
-        \item Prove that affine functions are AP
-        \item Prove that if $d(f) \geq 2$ then $f$ is not AP
+        \item All Boolean functions are polynoms\\
+          $f$ affine $\iff \text{deg}(f) < 2$
+        \item $f$ affine $\implies$ $f$ AP
+        \item $\text{deg}(f) \geq 2 \implies f$ not AP
       \end{enumerate}
     \end{column}
   \end{columns}

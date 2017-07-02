@@ -17,16 +17,16 @@ possible de considérer des proportions entre items plutôt que des proportions
 entre utilisateurs.
 
 Nous avons comparé cet algorithme avec les deux principales approches de
-filtrage collaboratif : les méthodes par voisinage et les méthodes par
+filtrage collaboratif~: les méthodes par voisinage et les méthodes par
 factorisation de matrice. Les performances de notre algorithme sont raisonnables
 du point de vue de la précision, comparativement aux méthodes par voisinage.
-Cependant, leur complexité algorithmique leur est bien supérieur et les rend
+Cependant, leur complexité algorithmique leur est bien supérieure et les rend
 inadaptés à des usages où le temps de calcul est une des contraintes
 principales.
 
 Ces observations nous on conduit à proposer un autre point de vue selon lequel
 l'usage des proportions analogiques pourrait  être utilisé  à des fins de
-prédiction de note. Pour cela, nous avons introduit la notions de
+prédiction de note. Pour cela, nous avons introduit la notion de
 \textit{clones}: deux utilisateurs sont des clones s'ils ont tendance à donner
 des notes \textit{sémantiquement} équivalentes. Cependant, cette équivalence
 sémantique n'est pas forcément reflétée dans les notes : pour un utilisateur
@@ -38,7 +38,7 @@ motivée par le fait que certains utilisateurs ont tendance à donner des notes
 plus élevées que d'autres, et que certains items ont tendance à être noté avec
 plus de clémence. Nous avons expliqué par quels aspects ces deux approches se
 rapprochent et diffèrent l'une de l'autre. D'un point de vue de performances,
-les deux méthodes restent assez similaire avec tout de même un léger avantage
+les deux méthodes restent assez similaires avec tout de même un léger avantage
 pour les méthodes qui ne reposent pas sur les \textit{clones}.
 
 
@@ -48,35 +48,35 @@ générale s'applique parfaitement au problème de la fouille de proportions
 analogiques entre utilisateurs ou entre items, dans une base de notes telle que
 celle utilisée dans nos précédentes expérimentations. Notre algorithme est
 inspiré de la fouille de règles d'associations et repose sur l'algorithme
-Apriori pour extraire des analogiques potentielles de manière efficace. Nous
+Apriori pour extraire des analogies potentielles de manière efficace. Nous
 avons proposé divers fonctions de qualité permettant d'évaluer la qualité d'une
-proportion, lesquels sont très proches de la dissimilarité analogique décrite
+proportion, lesquelles sont très proches de la dissimilarité analogique décrite
 dans le chapitre \ref{CHAP:functional_definition}. Nous avons donné divers
 exemples de proportions trouvées dans la base de notes, révélant des
-proportions entre films. Une des principales observations est que les meilleurs
-analogiques que l'on pouvait extraire de cette base ne mettaient en jeu que des
+proportions entre films. Une des principales observations est que les meilleures
+analogies que l'on pouvait extraire de cette base ne mettaient en jeu que des
 utilisateurs avec des goûts similaires : les quatre films d'une même
-proportions étaient généralement également aimés, ou également rejetés. En ce
-sens, on peut considérer que les quatre items d'une même proportions sont en
+proportion étaient généralement également aimés, ou également rejetés. En ce
+sens, on peut considérer que les quatre items d'une même proportion sont en
 fait des voisins.
 
 Ceci nous permet d'interpréter rétrospectivement les résultats modestes de nos
-premières expérimentations sur la prédiction de note. nous avons vu que les
+premières expérimentations sur la prédiction de note. Nous avons vu que les
 résultats de notre algorithme étaient proches de ceux des méthodes par
-voisinage, ce qui s'explique maintenant par le fait que les meilleurs
+voisinage, ce qui s'explique maintenant par le fait que les meilleures
 proportions dont l'algorithme disposait mettaient en jeu des voisins. En
 quelque sorte, notre algorithme analogique était réduit à une approche par
 voisinage classique. Il est clair que dans ce cas là, l'usage de la
-recommandation analogique n'en vaut as la peine puisque l'on est obligé de
+recommandation analogique n'en vaut pas la peine puisque l'on est obligé de
 payer le prix d'une complexité cubique. Il reste à noter que ces résultats ont
 été obtenus sur la base de données MovieLens : on peut toujours supposer que
 sur une autre base, les proportions potentielles restent significatives et
 qu'alors l'usage de la recommandation analogique reste intéressant.
 
-Pour finir, permettons nous de mentionner que nos expérimentations sur la
-recommandation analogique nous ont conduit à développer un package Python
-appelé Surprise \cite{Surprise}, dont les principales fonctionnalités sont les
-suivantes
+Pour finir, permettons-nous de mentionner que nos expérimentations sur la
+recommandation nous ont conduit à développer un package Python appelé Surprise
+\cite{Surprise} consacré aux algorithmes de prédiction de notes, dont les
+principales fonctionnalités sont les suivantes :
 
 \begin{itemize}
   \item Les utilisateurs peuvent avoir un contrôle total sur le protocole
@@ -93,6 +93,6 @@ suivantes
   \item Les procédure de validation croisée sont faciles à implémenter. Une autre
     fonctionnalité intéressante est la possibilité d'effectuer des recherches
     exhaustives sur l'espace des paramètres d'un algorithme, pour déterminer la
-    combinaison de paramètre qui produit les meilleurs résultats (\textit{grid
+    combinaison de paramètres qui produit les meilleurs résultats (\textit{grid
     search}).
 \end{itemize}

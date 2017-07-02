@@ -1,7 +1,7 @@
-Le raisonnement par analogie est largement considéré comme une caractéristiques
+Le raisonnement par analogie est largement considéré comme une caractéristique
 clef de l'intelligence humaine. Il permet d'arriver à de potentielles
 conclusions pour de nouvelles situations, en établissant des liens entre des
-domaines en apparence très différent. Un exemple connu  est celui du modèle de
+domaines en apparence très différents. Un exemple connu  est celui du modèle de
 l'atome de Rutherford-Bohr, où les électrons gravitent autour du noyau, comme
 les planètes du système solaire gravitent autour du soleil. Ce type de
 raisonnement a fait l'objet de nombreuses études de la part des psychologues et
@@ -31,7 +31,7 @@ linguistique, ainsi que \cite{BayMicDelIJCAI07} pour des problèmes de
 classification dans des domaines booléens. Nos recherches s'inscrivent
 dans la lignée de ces deux précédents travaux, et le but de cette thèse est
 double. Le premier sujet de recherche est d'appliquer le raisonnement
-analogique à des problèmes concrets, et le second et d'étudier les classifieurs
+analogique à des problèmes concrets, et le second est d'étudier les classifieurs
 analogiques d'un point de vue théorique, afin d'en exhiber des propriété
 théoriques intéressantes.
 
@@ -40,7 +40,7 @@ par le fait que les précédentes recherches ont principalement été menées d'
 point de vue expérimental, dans des environnements assez artificiels. A notre
 connaissance, aucun travail n'avait été mené pour évaluer la pertinence des
 classifieurs analogiques sur des tâches concrètes, où les critères de succès
-sont souvent différent. Nous avons ici choisi d'appliquer le raisonnement
+sont souvent différents. Nous avons ici choisi d'appliquer le raisonnement
 analogique au problème de la recommandation, et plus particulièrement à celui
 de la prédiction de notes.
 
@@ -53,7 +53,7 @@ pour caractériser les forces et les faiblesses de tels classifieurs.
 
 \paragraph{Annonce du plan et contributions\\}
 
-Chronologiquement, nous nous sommes d'abord intéressé à la partie applicative :
+Chronologiquement, nous nous sommes d'abord intéressés à la partie applicative :
 nos premières contributions concernaient l'application du raisonnement
 analogique à la recommandation. Ensuite, dans un second temps, nous nous sommes
 intéressés à la partie théorique.
@@ -74,17 +74,17 @@ apparaîtra clair que le sujet de la recommandation analogique (chapitres
 \ref{CHAP:background_reco_systems} et \ref{CHAP:analogical_recommendation})
 s'introduit et se comprend beaucoup plus facilement une fois que l'on a déjà
 étudié le chapitre \ref{CHAP:functional_definition} qui traite de
-recommandation analogique. De plus, bien que l'on aurait pu s'attaquer au
+classification analogique. De plus, bien que l'on aurait pu s'attaquer au
 chapitre  \ref{CHAP:analogy_preserving_functions} directement après le chapitre
 \ref{CHAP:functional_definition}, il sera d'autant plus intéressant d'étudier
-le chapitre  \ref{CHAP:analogy_preserving_functions} à la lumière des es
+le chapitre  \ref{CHAP:analogy_preserving_functions} à la lumière des
 conclusions des chapitres \ref{CHAP:background_reco_systems} et
 \ref{CHAP:analogical_recommendation}.
 
 Ce document est organisé comme suit.\\
 
 Le premier chapitre donnera les prérequis nécessaires sur différents modèles de
-raisonnement par analogique, en insistant particulièrement sur les modèles
+raisonnement par analogie, en insistant particulièrement sur les modèles
 permettant l'inférence. Il apparaîtra clair que ces modèles sont, pour la
 plupart, motivés par des recherches en sciences cognitives ou psychologiques,
 ce qui les distingue de notre principal outil : les proportions analogiques.\\
@@ -109,7 +109,7 @@ classification, ce qui est l'objet du troisième chapitre.\\
 
 L'étude des classifieurs analogiques est en effet le sujet du chapitre
 \ref{CHAP:functional_definition}. Ce chapitre correspond à une version étendue
-d'un papier reçu à l'ECAI \cite{HugPraRicSerECAI16}. Nous commencerons ici à
+d'un papier publié à l'ECAI \cite{HugPraRicSerECAI16}. Nous commencerons ici à
 nous attaquer à un des deux thèmes principaux de cette thèse : identifier des
 propriétés théoriques des classifieurs analogiques. Notre première contribution
 sera de proposer une définition fonctionnelle des classifieurs analogiques, qui
@@ -122,8 +122,8 @@ plus-proches-voisins ($k$-NN) et les classifieurs analogiques. En effet, on
 montrera que la classification analogique peut se concevoir comme la
 successions de deux étapes. Dans un premier temps, on étend l'ensemble
 d'apprentissage  en ajoutant de nouveaux exemples, puis on utilise ensuite un
-classifieur $k$-NN sur cet ensemble étendu (appelé extension analogique). Il
-est ici intéressant que les deux processus cognitifs mentionnés précédemment au
+classifieur $k$-NN sur cet ensemble étendu (appelé extension analogique). On
+remarquera que les deux processus cognitifs mentionnés précédemment au
 sujet des proportions analogiques (créativité et inférence) sont ici intimement
 liés. De ces résultats, une question naturelle se pose : comment assurer que
 l'extension analogique soit saine, c'est à dire comment être certain que les
@@ -135,12 +135,12 @@ au problème de la recommandation.\\
 
 Le chapitre  \ref{CHAP:background_reco_systems} sera dédié aux prérequis
 nécessaires sur les systèmes de recommandation. Nous décrierons brièvement les
-trois principales familles de système de recommandation, à savoir les
+trois principales familles de systèmes de recommandation, à savoir les
 techniques \textit{content-based}, le filtrage collaboratif, et les techniques
 \textit{knowledge-based}. Nous décrirons aussi formellement le problème que
 l'on se propose d'étudier, qui est celui de la prédiction de notes : étant
 donné un ensemble de notes données par des utilisateurs pour des items, le but
-est de prédire d'autres notes qui ne sont pas de la base de données. Les
+est de prédire d'autres notes qui ne sont pas dand la base de données. Les
 différentes mesures qui permettent d'évaluer la qualité d'un système de
 recommandation seront présentées. Enfin, comme nos algorithmes seront de type
 \textit{filtrage collaboratif}, nous décrirons en détail deux techniques de
@@ -149,7 +149,7 @@ algorithmes : les méthodes de voisinage, et les méthodes fondées sur la
 factorisation de matrice.\\
 
 
-Danse le chapitre \ref{CHAP:analogical_recommendation}, nous présenterons nos
+Dans le chapitre \ref{CHAP:analogical_recommendation}, nous présenterons nos
 contributions au problème de la recommandation. Nous décrirons d'abord nos
 première investigations, qui sont une adaptation directe des classifieurs
 analogiques décrits dans le chapitre \ref{CHAP:functional_definition}. Ces
@@ -157,13 +157,13 @@ recherches ont fait l'objet d'un papier publié à ISMIS \cite{HugPraRicISMIS15}
 Il apparaîtra que ces algorithmes, bien que proposant une précision semblable à
 celle des méthodes par voisinage, se révèlent d'une complexité calculatoire
 telle qu'il n'est pas raisonnable de les envisager comme des candidats
-potentiels à une l'implémentation dans un système effectif. Fort de ce constat,
-nous avons développé une autre version de recommandation analogique, cette fois
+potentiels à une implémentation dans un système effectif. Fort de ce constat,
+nous avons envisagé une autre version de la recommandation analogique, cette fois
 fondée sur le fait que les utilisateurs ont tous une différente interprétation
 de l'échelle de note. Les algorithmes qui en découleront proposeront une
 complexité algorithmique tout à fait raisonnable et sont l'objet d'un papier
 Fuzz-IEEE  \cite{HugPraRicSerFuzzIEEE16}. Enfin, nous nous intéresseront au
-problème de la fouille de proportions analogique dans une base de donnée
+problème de la fouille de proportions analogique dans une base de données
 partiellement renseignée, telle que celles dont on dispose lorsque l'on
 s'attaque à la prédiction de notes. Les résultats obtenus nous permettront de
 rétrospectivement interpréter les modestes performances de nos premiers

@@ -11,7 +11,7 @@ work_pres:
 	terminator -x vim &
 	latexmk -pvc pres.tex
 
-view:
+view: compile
 	zathura phd.pdf
 
 spellcheck:

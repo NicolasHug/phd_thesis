@@ -1318,11 +1318,10 @@ these functions are the Boolean affine functions. One may wonder what would
 these functions be in a real setting, i.e. using functions  from $\mathbb{R}^m$
 to $\mathbb{R}$ with the arithmetic proportion?
 
-Well, we already know that the Boolean proportion and the arithmetic proportion
+We already know that the Boolean proportion and the arithmetic proportion
 are really close. Once again, we will witness this close bond: in a real
-setting, the class of AP functions is also the class of real affine functions.
-Luckily, the proof is a lot easier to derive.  Let us first (re)define the
-arithmetic proportion:
+setting, the affine functions are also AP. Luckily, the proof is a lot easier
+to derive.  Let us first (re)define the arithmetic proportion:
 \begin{property}
   \label{PROPER:sol_arithm_prop}
   Four elements $\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d} \in
@@ -1333,59 +1332,21 @@ arithmetic proportion:
   solvable and the solution is $\emph{sol}(a, b, c) = c - a + b$.
 \end{property}
 
-Please note that here, $+$ is the regular addition operator (not the
-modulo-2 addition as in the previous sections). We will also use a simple property of
-affine functions:
+Please note that here, $+$ is the regular addition operator (not the modulo-2
+addition as in the previous sections).
 
-\begin{property}
-  \label{PROPRE:f_affine_real}
+\begin{definition}{Real affine functions}
+  \label{DEF:real_affine}
   A real function $f$ from $\mathbb{R}^m$ to $\mathbb{R}$ is affine if f is of
   the form: $$f(\mathbf{x}) = \boldsymbol{\alpha} \cdot \mathbf{x} +
   \alpha_0,$$
   where $\boldsymbol{\alpha} \in \mathbb{R}^m$, $\alpha_0  = f(\mathbf{0})
-  \in \mathbb{R}$, and $\cdot$ is here the usual dot product.  Also, $f$ is affine iff $\forall \mathbf{a}, \mathbf{b},
-  \mathbf{c} \in
-  \mathbb{R}^m$:
-
-  $$f(\mathbf{c} - \mathbf{a} + \mathbf{b}) = f(\mathbf{c}) - f(\mathbf{a}) +
-  f(\mathbf{b}).$$
-\end{property}
-\begin{proof}
-  Let $f$ be an affine function.
-  $\forall \mathbf{a}, \mathbf{b}, \mathbf{c} \in \mathbb{R}^m$,
-  \begin{align*}
-    f(\mathbf{c} - \mathbf{a} + \mathbf{b}) &= \boldsymbol{\alpha} \cdot (\mathbf{c}
-    - \mathbf{a} + \mathbf{b}) + \alpha_0\\
-    &= \boldsymbol{\alpha} \cdot \mathbf{c} - \boldsymbol{\alpha} \cdot
-    \mathbf{a} + \boldsymbol{\alpha} \cdot \mathbf{b} + \alpha_0\\
-    &= f(\mathbf{c}) - f(\mathbf{a}) + f(\mathbf{b}).
-  \end{align*}
-
-  Now, let $f$ be a function such that $f(\mathbf{c} - \mathbf{a} +
-  \mathbf{b}) = f(\mathbf{c}) - f(\mathbf{a}) + f(\mathbf{b})$, and consider
-  the function $g$ defined by $g(\mathbf{x}) = f(\mathbf{x}) - f(\mathbf{0}).$
-  \begin{align*}
-    g(\mathbf{x} + \mathbf{y}) &= f(\mathbf{x} + \mathbf{y}) - f(\mathbf{0})\\
-    &= f(\mathbf{x} - \mathbf{0} + \mathbf{y}) - f(\mathbf{0})\\
-    &= f(\mathbf{x}) + f(\mathbf{y}) - 2f(\mathbf{0})\\
-    &= g(\mathbf{x}) + g(\mathbf{y}).
-  \end{align*}
-
-  So $g(\mathbf{x} + \mathbf{y}) = g(\mathbf{x)} + g(\mathbf{y})$ and by
-  definition, $g$ is linear and can be written as:
-  $$g(\mathbf{x}) = \boldsymbol{\alpha} \cdot \mathbf{x}.$$
-
-  So $f(\mathbf{x}) = \boldsymbol{\alpha} \cdot \mathbf{x} + f(\mathbf{0}),$
-  which makes $f$ affine.
-\end{proof}
-
-We will now prove that the real AP functions are the real affine functions, just
-like the Boolean AP functions are the Boolean affine functions.
+  \in \mathbb{R}$, and $\cdot$ is here the usual dot product.
+\end{definition}
 
 \begin{proposition}
   \label{PROPOS:arithm_AP_func_affine_func}
-  With the arithmetic proportion, the set of real AP functions from
-  $\mathbb{R}^m$ to $\mathbb{R}$ is the set of affine functions.
+  All real affine functions are AP (w.r.t. the the arithmetic proportion)
 \end{proposition}
 \begin{proof}
   A real function $f$ is AP iff for all $\mathbf{a}, \mathbf{b}, \mathbf{c},
@@ -1399,7 +1360,16 @@ like the Boolean AP functions are the Boolean affine functions.
   f(\mathbf{c}) - f(\mathbf{a}) +  f(\mathbf{b}) = f( \mathbf{c} - \mathbf{a} +
   \mathbf{b}).$$
 
-  From Property \ref{PROPRE:f_affine_real}, this is true iff $f$ is affine.
+  Let $f$ be an affine function.
+  $\forall \mathbf{a}, \mathbf{b}, \mathbf{c} \in \mathbb{R}^m$,
+  \begin{align*}
+    f(\mathbf{c} - \mathbf{a} + \mathbf{b}) &= \boldsymbol{\alpha} \cdot (\mathbf{c}
+    - \mathbf{a} + \mathbf{b}) + \alpha_0\\
+    &= \boldsymbol{\alpha} \cdot \mathbf{c} - \boldsymbol{\alpha} \cdot
+    \mathbf{a} + \boldsymbol{\alpha} \cdot \mathbf{b} + \alpha_0\\
+    &= f(\mathbf{c}) - f(\mathbf{a}) + f(\mathbf{b}),
+  \end{align*}
+  which means that $f$ is AP.
 \end{proof}
 
 Proposition \ref{PROPOS:arithm_AP_func_affine_func} is illustrated in Figure
@@ -1412,20 +1382,24 @@ Proposition \ref{PROPOS:arithm_AP_func_affine_func} is illustrated in Figure
 \label{FIG:real_AP_func}
 \end{figure}
 
-In fact, Proposition \ref{PROPOS:AP_is_L} for Boolean functions can be
-proved in a much simpler way than what was used in Section
-\ref{SEC:a_complete_characterization_of_AP_functions}, using
-the same outline as Proposition \ref{PROPOS:arithm_AP_func_affine_func}. The
-first step is to see that a Boolean function is affine iff $f(\mathbf{a} +
-\mathbf{b} + \mathbf{c}) = f(\mathbf{a}) + f(\mathbf{b}) + f(\mathbf{c})$,
-where $+$ is now the modulo-2 addition. Also, noting that $\mathbf{a} :
-\mathbf{b} :: \mathbf{c} : \mathbf{d} \implies \mathbf{d} = \mathbf{a} +
-\mathbf{b} + \mathbf{c}$ and that for any $a, b, c \in \mathbb{B}$ we have
-$\sol(a, b, c) = a + b + c$, the proof can be derived easily. We chose to give
-the longest one in Section
-\ref{SEC:a_complete_characterization_of_AP_functions} because this is the one
-that was originally derived (plus, it was the one that was used in our
-publication \cite{CouHugPraRicIJCAI17}).
+In contrast with the Boolean setting, the equivalence between AP functions and
+affine functions does not hold in the real case. It is indeed possible to find
+functions $f: \mathbb{R} \to \mathbb{R}$ satisfying $f(c - a + b) = f(c) - f(a)
++ f(b)$ that are not affine. Using a result from Darboux \cite{RadRadAnd09}
+about Cauchy's functional equation\footnote{Cauchy's functional equation is:
+$f(x + y) = f(x) + f(y)$ with $x, y \in \mathbb{R}$}, we can show that these
+functions are highly pathological: they are for instance discontinuous at every
+point, and clearly they would never be encountered in a regression problem.
+To our knowledge, no such result has been proved for functions $f: \mathbb{R}^m
+\to \mathbb{R}$ ($m > 1$), but we may still conjecture that AP functions that
+are not affine would be quite pathological.
+
+In any case, let us note that the fact that real affine functions are AP is not
+really significant: when the function is (supposed to be) affine, there are
+much more efficient techniques such as least-squares regression. Using
+analogical learning in such settings would not be reasonable. This property is
+mainly interesting because it stresses once again the close links between the
+arithmetic and Boolean proportion.
 
 \section*{Conclusion}
 
@@ -1482,12 +1456,10 @@ domains, there is no known structure or operators, so it was not possible to
 give a clear identification of AP functions such as that of Boolean AP
 functions. We were however able to provide a clear link between these AP
 functions and the Boolean AP functions by embedding the multi-valued space
-into a partially defined Boolean space. We also provided a clear identification
-of AP functions in a real setting, i.e. for functions from $\mathbb{R}^m$ to
-$\mathbb{R}$. It turns out that the class of real AP functions is the class of
-real affine functions, just like the class of Boolean AP functions is the class
-of Boolean affine functions. The result for real functions was much easier to
-prove and in the end quite trivial, and seems to strongly limit the use of the
-analogical inference principle in a real setting.
+into a partially defined Boolean space. We also proved that in a real setting,
+affine functions are also AP (the reverse implication does not necessarily
+hold). This result for real functions was much easier to prove and in the end
+quite trivial, but it should be noted that proportion-based learning in
+regression problems is not very reasonable.
 
 \input{tex_files/analogy_preserving_functions_fr.tex}
