@@ -16,7 +16,9 @@ analogical equation $a:b::c:~?$.
 The first two chapters of this document will provide the necessary background
 on formal analogical models and especially analogical proportions. In this
 first chapter, we provide an overview of various attempts to formalize
-analogical reasoning, with a strong emphasis on computational models. In the
+analogical reasoning, with a strong emphasis on computational models (the
+interested reader may refer to \cite{PraRic14b} for an historical overview of
+analogical reasoning models). In the
 next chapter we will describe in more details the modeling of analogical
 proportions, especially in the Boolean and real settings and their application
 to machine learning tasks. This chapter is structured as follows.
@@ -193,10 +195,10 @@ maximum common subgraph between two graphs, namely those representing the
 source and the target domains. As such, SME is part of the connectionist
 approaches.
 
-In  \cite{ChaFreHof92}, authors point out various concerns about SMT and SME.
-Among them is the fact that SME is too reliant on the (human-made) description
-inputs of the source and target domains, and that the intelligence mostly comes
-from these descriptions:
+In  \cite{ChaFreHof92}, Chalmers, French, and Hofstadter point out various
+concerns about SMT and SME.  Among them is the fact that SME is too reliant on
+the (human-made) description inputs of the source and target domains, and that
+the intelligence mostly comes from these descriptions:
 
 \begin{quote}
   when the program's discovery of the correspondences between the two situations
@@ -210,7 +212,7 @@ from these descriptions:
 Also, while the systematicity principle is undoubtedly at the core of many
 analogies, it should seem natural to challenge it in some other situations. It
 is indeed quite easy to find analogies were superficial features are the most
-decisive ones \cite{Bar10}.
+decisive ones \cite{Bar10, Bar16}.
 
 \paragraph{Prior to SMT: Winston's theory\\}
 
@@ -226,7 +228,7 @@ For Winston, the matching between the two situations should not only involve
 high order relations, but also the attributes of the objects. Moreover, he
 acknowledges the importance of \textbf{causal} relations to guide the mapping
 process, which is compliant with Hesse's theory. Winston also considers that
-the mapping process is \textit{constraint-based}, which probably inspired the
+the mapping process is \textit{constraint-based}, which may have inspired the
 model of Holyoak and Thagard that we describe now.
 
 \paragraph{The Constraint Satisfaction Theory\\}
@@ -340,9 +342,10 @@ expresses that the car $x$ has the price \$10,000, then the expression
 $\left[\exists x~ P(x, y) \wedge Q(x, z)\right] \implies\left[\forall x~ P(x,
 y) \implies Q(x, z)\right]$ means that if we can find a yellow car that costs
 \$10,000, then \textbf{all} yellow cars cost \$10,000. Because of the
-universal quantifier $\forall(y, z)$, this determination rule should have to be checked for
-every possible color, and every possible price. Unfortunately, this quickly
-becomes impractical because of the computation complexity.
+universal quantifier $\forall(y, z)$, this determination rule should have to be
+checked for every possible color, and every possible price. Unfortunately, this
+quickly becomes impractical because of the computational complexity, and
+because it is fairly unlikely to observe data satisfying these conditions.
 
 
 \section{Models with analogical proportions}
@@ -357,7 +360,7 @@ analogical proportions.
 The ANALOGY program of Thomas Evans \cite{Eva64} is one of the pioneer works in
 the design of programs capable of analogical reasoning. ANALOGY, written in
 LISP\footnote{And according to its author, the largest LISP program at the
-time!}, is able to solve analogical equations in the form of geometrical
+time (1963)!}, is able to solve analogical equations in the form of geometrical
 problems, such as that of Figure \ref{FIG:evans}: given three geometrical
 patterns, choose the fourth among a list of candidates that leads to the best
 proportion.
