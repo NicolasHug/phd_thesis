@@ -22,7 +22,7 @@ est à quoi ?} Et même dans l'éventualité où l'enfant ne connaîtrait pas le
 de la ville \textit{Berlin}, il pourrait tout de même s'imaginer une
 hypothétique ville au nom inconnu, mais qui serait la capitale de l'Allemagne.
 L'utilisation des proportions analogiques nous permet ici de toucher du doigt
-deux processus cognitifs clef : l'inférence, et la créativité.
+deux processus cognitifs clefs : l'inférence, et la créativité.
 
 En tant qu'outil permettant une forme d'inférence inductive, le raisonnement
 par analogie a déjà été envisagé pour des problèmes d'apprentissage artificiel.
@@ -89,9 +89,9 @@ permettant l'inférence. Il apparaîtra clair que ces modèles sont, pour la
 plupart, motivés par des recherches en sciences cognitives ou psychologiques,
 ce qui les distingue de notre principal outil : les proportions analogiques.\\
 
-Les proportions analogiques sont l'objet du deuxième chapitre. Nous donnerons
+Les proportions analogiques seront l'objet du deuxième chapitre. Nous donnerons
 leurs définitions dans différents domaines algébriques, en insistant sur les
-deux proportions que nous utiliseront le plus : la proportion arithmétique et
+deux proportions que nous utiliserons le plus : la proportion arithmétique et
 la proportion booléenne. De plus, nous essaierons d'aborder ces proportions
 d'un point de vue géométrique afin d'en mieux saisir les différentes
 caractéristiques. Nous étudierons aussi un problème de classification
@@ -103,11 +103,11 @@ aussi avoir que $f(a)$ est à $f(b)$ comme $f(c)$ est à $f(d)$, où $f(x)$ est 
 fonction qui détermine la classe de l'élément $x$. Ce principe est évidemment
 non correct, dans le sens où la conclusion (les classes sont en proportion)
 n'est pas logiquement déductible de la prémisse (les éléments sont en
-proportion). Comme nous le verrons, il reste utilisable dans des tâches de
-classification, ce qui est l'objet du troisième chapitre.\\
+proportion). Comme nous le verrons, il reste néanmoins utilisable dans des
+tâches de classification, ce qui sera l'objet du troisième chapitre.\\
 
 
-L'étude des classifieurs analogiques est en effet le sujet du chapitre
+L'étude des classifieurs analogiques sera en effet le sujet du chapitre
 \ref{CHAP:functional_definition}. Ce chapitre correspond à une version étendue
 d'un papier publié à l'ECAI \cite{HugPraRicSerECAI16}. Nous commencerons ici à
 nous attaquer à un des deux thèmes principaux de cette thèse : identifier des
@@ -126,11 +126,12 @@ classifieur $k$-NN sur cet ensemble étendu (appelé extension analogique). On
 remarquera que les deux processus cognitifs mentionnés précédemment au
 sujet des proportions analogiques (créativité et inférence) sont ici intimement
 liés. De ces résultats, une question naturelle se pose : comment assurer que
-l'extension analogique soit saine, c'est à dire comment être certain que les
+l'extension analogique soit saine, c'est-à-dire comment être certain que les
 exemples générés ont été associés à la bonne classe ? Cette question sera
 résolue dans le chapitre \ref{CHAP:analogy_preserving_functions}, mais les deux
-chapitres suivant s'intéresseront à l'application du raisonnement par analogie
-au problème de la recommandation.\\
+chapitres suivants (\ref{CHAP:background_reco_systems} et
+\ref{CHAP:analogical_recommendation}) s'intéresseront à l'application du
+raisonnement par analogie au problème de la recommandation.\\
 
 
 Le chapitre  \ref{CHAP:background_reco_systems} sera dédié aux prérequis
@@ -151,19 +152,19 @@ factorisation de matrice.\\
 
 Dans le chapitre \ref{CHAP:analogical_recommendation}, nous présenterons nos
 contributions au problème de la recommandation. Nous décrirons d'abord nos
-première investigations, qui sont une adaptation directe des classifieurs
+premières investigations, qui sont une adaptation directe des classifieurs
 analogiques décrits dans le chapitre \ref{CHAP:functional_definition}. Ces
 recherches ont fait l'objet d'un papier publié à ISMIS \cite{HugPraRicISMIS15}.
 Il apparaîtra que ces algorithmes, bien que proposant une précision semblable à
 celle des méthodes par voisinage, se révèlent d'une complexité calculatoire
 telle qu'il n'est pas raisonnable de les envisager comme des candidats
 potentiels à une implémentation dans un système effectif. Fort de ce constat,
-nous avons envisagé une autre version de la recommandation analogique, cette fois
+nous envisagerons une autre version de la recommandation analogique, cette fois
 fondée sur le fait que les utilisateurs ont tous une différente interprétation
 de l'échelle de note. Les algorithmes qui en découleront proposeront une
 complexité algorithmique tout à fait raisonnable et sont l'objet d'un papier
-Fuzz-IEEE  \cite{HugPraRicSerFuzzIEEE16}. Enfin, nous nous intéresseront au
-problème de la fouille de proportions analogique dans une base de données
+Fuzz-IEEE  \cite{HugPraRicSerFuzzIEEE16}. Enfin, nous nous intéresserons au
+problème de la fouille de proportions analogiques dans une base de données
 partiellement renseignée, telle que celles dont on dispose lorsque l'on
 s'attaque à la prédiction de notes. Les résultats obtenus nous permettront de
 rétrospectivement interpréter les modestes performances de nos premiers
@@ -174,15 +175,15 @@ bonnes analogiques dans les bases de données utilisées.\\
 
 Mais cette observation quelque peu terre-à-terre ne nous empêchera pas de
 remettre en question le principe d'inférence analogique même. Dans le dernier
-chapitre, nous reviendrons à nos considérations théoriques, et nous proposeront
+chapitre, nous reviendrons à nos considérations théoriques, et nous proposerons
 un critère qui permet d'appliquer ce principe d'inférence de manière correcte.
 Nous avons brièvement décrit ce principe, qui stipule que si quatre élément $a,
 b, c, d$ sont en proportion, alors leurs classes $f(a), f(b), f(c), f(d)$
-doivent aussi être en proportion. Nous donneront une caractérisation complète
+doivent aussi être en proportion. Nous donnerons une caractérisation complète
 des fonctions $f$ telles que lorsque quatre éléments sont en proportion, alors
 leurs images par $f$ le sont aussi. Ces fonctions permettent d'utiliser le
 principe d'inférence analogique de manière sûre, et assurent une extension
-analogique saine (c'est à dire sans erreur). Nous les appelleront les fonctions
+analogique saine (c'est-à-dire sans erreur). Nous les appellerons les fonctions
 qui préservent l'analogie, et nous montrerons qu'elles correspondent aux
 fonctions affines dans les domaines booléens et réels. Ces travaux ont
 abouti à la publication d'un papier IJCAI \cite{CouHugPraRicIJCAI17}, et

@@ -18,16 +18,15 @@ entre utilisateurs.
 
 Nous avons comparé cet algorithme avec les deux principales approches de
 filtrage collaboratif~: les méthodes par voisinage et les méthodes par
-factorisation de matrice. Les performances de notre algorithme sont raisonnables
-du point de vue de la précision, comparativement aux méthodes par voisinage.
-Cependant, leur complexité algorithmique leur est bien supérieure et les rend
-inadaptés à des usages où le temps de calcul est une des contraintes
+factorisation de matrice. Les performances de notre algorithme sont
+raisonnables du point de vue de la précision, comparativement aux méthodes par
+voisinage.  Cependant, sa complexité algorithmique leur est bien supérieure et
+le rend inadapté à des usages où le temps de calcul est une des contraintes
 principales.
 
-Ces observations nous on conduit à proposer un autre point de vue selon lequel
-l'usage des proportions analogiques pourrait  être utilisé  à des fins de
-prédiction de note. Pour cela, nous avons introduit la notion de
-\textit{clones}: deux utilisateurs sont des clones s'ils ont tendance à donner
+Ces observations nous ont conduit à proposer une autre façon d'envisager la
+recommandation analogique. Pour cela, nous avons introduit la notion de
+\textit{clones} : deux utilisateurs sont des clones s'ils ont tendance à donner
 des notes \textit{sémantiquement} équivalentes. Cependant, cette équivalence
 sémantique n'est pas forcément reflétée dans les notes : pour un utilisateur
 $u$, une note  de $3$ peut représenter une bonne note, alors que pour
@@ -35,9 +34,9 @@ l'utilisateur $v$ cela représenterait une mauvaise note, ou juste une note
 moyenne. Nous avons proposé deux algorithmes qui suivent cette idée. Nous avons
 aussi présenté une contribution récente de technique par filtrage collaboratif
 motivée par le fait que certains utilisateurs ont tendance à donner des notes
-plus élevées que d'autres, et que certains items ont tendance à être noté avec
+plus élevées que d'autres, et que certains items ont tendance à être notés avec
 plus de clémence. Nous avons expliqué par quels aspects ces deux approches se
-rapprochent et diffèrent l'une de l'autre. D'un point de vue de performances,
+rapprochent et diffèrent l'une de l'autre. Du point de vue des performances,
 les deux méthodes restent assez similaires avec tout de même un léger avantage
 pour les méthodes qui ne reposent pas sur les \textit{clones}.
 
@@ -45,11 +44,11 @@ pour les méthodes qui ne reposent pas sur les \textit{clones}.
 Enfin, nous avons proposé un algorithme pour la fouille de proportions
 analogiques dans des bases de données partiellement complètes. Cette méthode
 générale s'applique parfaitement au problème de la fouille de proportions
-analogiques entre utilisateurs ou entre items, dans une base de notes telle que
+entre utilisateurs ou entre items, dans une base de notes telle que
 celle utilisée dans nos précédentes expérimentations. Notre algorithme est
 inspiré de la fouille de règles d'associations et repose sur l'algorithme
 Apriori pour extraire des analogies potentielles de manière efficace. Nous
-avons proposé divers fonctions de qualité permettant d'évaluer la qualité d'une
+avons proposé diverses fonctions de qualité permettant d'évaluer la qualité d'une
 proportion, lesquelles sont très proches de la dissimilarité analogique décrite
 dans le chapitre \ref{CHAP:functional_definition}. Nous avons donné divers
 exemples de proportions trouvées dans la base de notes, révélant des
@@ -66,8 +65,8 @@ résultats de notre algorithme étaient proches de ceux des méthodes par
 voisinage, ce qui s'explique maintenant par le fait que les meilleures
 proportions dont l'algorithme disposait mettaient en jeu des voisins. En
 quelque sorte, notre algorithme analogique était réduit à une approche par
-voisinage classique. Il est clair que dans ce cas là, l'usage de la
-recommandation analogique n'en vaut pas la peine puisque l'on est obligé de
+voisinage classique. Il est clair que dans ce cas là, il  n'est pas nécessaire
+d'avoir recours à la recommandation analogique, puisque l'on est obligé de
 payer le prix d'une complexité cubique. Il reste à noter que ces résultats ont
 été obtenus sur la base de données MovieLens : on peut toujours supposer que
 sur une autre base, les proportions potentielles restent significatives et
@@ -81,18 +80,18 @@ principales fonctionnalités sont les suivantes :
 \begin{itemize}
   \item Les utilisateurs peuvent avoir un contrôle total sur le protocole
     expérimental mis en oeuvre. A cet effet, une attention particulière a été
-    attachée à la documentation, que l'on a essayé de rendre le plus claire
+    attachée à la documentation, que l'on a essayé de rendre la plus claire
     et détaillée possible.
-  \item La gestion des jeux de données est rendue facile. Certaines bases de
+  \item La gestion des jeux de données est facilitée. Certaines bases de
     données classiques sont pre-intégrées, telle que les bases MovieLens.
   \item Divers algorithmes de prédiction sont implémentés, tels que les
     méthodes de voisinage, des méthodes par factorisation de matrice, et
     d'autres. D'autre part, plusieurs mesures de similarité sont disponibles
     d'office.
-  \item Le création de nouveaux algorithmes de prédiction est extrêmement simple.
-  \item Les procédure de validation croisée sont faciles à implémenter. Une autre
-    fonctionnalité intéressante est la possibilité d'effectuer des recherches
-    exhaustives sur l'espace des paramètres d'un algorithme, pour déterminer la
-    combinaison de paramètres qui produit les meilleurs résultats (\textit{grid
-    search}).
+  \item La création de nouveaux algorithmes de prédiction est extrêmement simple.
+  \item Les procédures de validation croisée sont faciles à implémenter. Une
+    autre fonctionnalité intéressante est la possibilité d'effectuer des
+    recherches exhaustives sur l'espace des paramètres d'un algorithme, pour
+    déterminer la combinaison de paramètres qui produit les meilleurs résultats
+    (\textit{grid search}).
 \end{itemize}
