@@ -13,11 +13,11 @@ glimpsed before. Also, we will describe our contributions to this problem.
 
 A first form of analogical classifiers has been defined in the works of Stroppa
 and Yvon \cite{StrYvoCNLL05}, which we will refer to as \textbf{conservative
-classifiers}. These works extend some previous investigations on natural
-language processing \cite{PirYvo99}. Another form of analogical classifiers has
-later been proposed in the works of Bayoudh, Delhay and Miclet
-\cite{MicBayDelJAIR08, BayMicDelIJCAI07}, referred-to here as \textbf{extended
-classifiers}.
+classifiers}. These works extend some previous proposal on learning by analogy
+in the setting of natural language processing \cite{PirYvo99}. Another form of
+analogical classifiers has later been proposed in the works of Bayoudh, Delhay
+and Miclet \cite{MicBayDelJAIR08, BayMicDelIJCAI07}, referred-to here as
+\textbf{extended classifiers}.
 
 Though the theoretical groundings of the conservative and extended
 classifiers have a lot in common (they are both analogical classifiers after
@@ -122,9 +122,10 @@ The fix here is to consider that the prediction $\hat{f}(\mathbf{x})$ will be
 the most common candidate solution among all the predictors. This definition of
 analogical classification comes from the work of Stroppa and Yvon
 \cite{StrYvoCNLL05, StrYvoREPORT05}, and to our knowledge it is the first
-instance of analogical learner that has ever been proposed. We note however
-that the authors did not explicitly state that the class equations must be
-solvable to be useful.
+instance of analogical learner that has ever been proposed, following ideas
+that can be already found in \cite{PirYvo99}. We note however that the authors
+did not explicitly state that the class equations must be solvable to be
+useful.
 
 Note that if the multiset $\mathbf{C}(\mathbf{x})$ is empty, i.e. if we cannot find
 $3$-tuples in $S^3$ such that they are in proportion with $\mathbf{x}$ and such
